@@ -3,7 +3,8 @@
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![Github All Releases](https://img.shields.io/github/downloads/jasonmoy28/psycModel/total.svg)]()
+[![R package version](https://img.shields.io/github/r-package/v/jasonmoy28/psycCleaning)]()
+[![Github last commit](https://img.shields.io/github/last-commit/jasonmoy28/psycCleaning)]()
 <!-- badges: end -->
 
 ## Installation
