@@ -27,7 +27,7 @@ cfa_groupwise(data = iris,group = 'Species',items = c(everything(), - Species))
 
 }
 \references{
-Moy, J. H. (2021). psycModel: Intergrated Toolkit for Pyschological Analysis and Modelling in R. Retrieved from https://github.com/jasonmoy28/psycModel.
+Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.#'
 
 Rosseel Y (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1–36. https://www.jstatsoft.org/v48/i02/.
 }

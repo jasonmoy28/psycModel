@@ -12,8 +12,7 @@
 #' @param plot_color logical. default as F. Set to T if you want to plot in color
 #'
 #' @references
-#' Moy, J. H. (2021). psycModel: Intergrated Toolkit for Pyschological Analysis and Modelling in R. Retrieved from https://github.com/jasonmoy28/psycModel.
-#'
+#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.#'
 #' @return ggplot object. two-way interaction plot
 #' @export
 #'

@@ -54,7 +54,7 @@ Jöreskog, K. G. (1971). Simultaneous factor analysis in several populations. Ps
 
 Jorgensen, T. D., Pornprasertmanit, S., Schoemann, A. M., & Rosseel, Y. (2021). semTools: Useful tools for structural equation modeling. R package version 0.5-4. Retrieved from https://CRAN.R-project.org/package=semTools
 
-Moy, J. H. (2021). psycModel: Intergrated Toolkit for Pyschological Analysis and Modelling in R. Retrieved from https://github.com/jasonmoy28/psycModel.
+Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.#'
 
 Rosseel Y (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1–36. https://www.jstatsoft.org/v48/i02/.
 }

@@ -1,6 +1,6 @@
 Package: psycModel
 Type: Package
-Title: Intergrated Toolkit for Pyschological Analysis and Modelling in R
+Title: Integrated Toolkit for Psychological Analysis and Modelling in R
 Version: 0.1.0
 Author: Jason Moy
 Maintainer: Jason Moy <jasonmoy28@gmail.com>

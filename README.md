@@ -21,7 +21,8 @@ The package consists of three types of function: descriptive statistics, mixed e
 ## Credit
 **Authors:** [Jason Moy](https://jasonmoy.us)
 
-**Citation:** Moy, J. H. (2021). psycModel: Intergrated Toolkit for Pyschological Analysis and Modelling in R. Retrieved from https://github.com/jasonmoy28/psycModel.
+**Citation:** Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.
+
 
 **BibTex Entry:**
   @Manual {,  
