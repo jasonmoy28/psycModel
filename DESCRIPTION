@@ -4,8 +4,8 @@ Title: Integrated Toolkit for Psychological Analysis and Modelling in R
 Version: 0.1.0
 Author: Jason Moy
 Maintainer: Jason Moy <jasonmoy28@gmail.com>
-Description: An convenient R packages used for HLM analysis based on the nlme & lmer packages. 
-License: MIT + file LICENSE
+Description: Useful R package that integrate many analysis that is used in psychology
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1

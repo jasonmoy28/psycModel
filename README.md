@@ -2,9 +2,12 @@
 ## Intergrated Toolkit for Pyschological Analysis and Modelling in R
 
 <!-- badges: start -->
+
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R package version](https://img.shields.io/github/r-package/v/jasonmoy28/psycCleaning)]()
 [![Github last commit](https://img.shields.io/github/last-commit/jasonmoy28/psycCleaning)]()
+[![GPLv3license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://perso.crans.org/besson/LICENSE.html)
+
 <!-- badges: end -->
 
 ## Installation
