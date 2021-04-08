@@ -1,7 +1,5 @@
----
-title: "pscyModel"
-output: github_document
----
+# psycModel
+## Intergrated Toolkit for Pyschological Analysis and Modelling in R
 
 [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
 
@@ -21,17 +19,16 @@ The package consists of three types of function: descriptive statistics, mixed e
 
 
 ## Credit
-**Authors:** [Jason Moy](https://jasonmoy.us) 
-<div itemscope itemtype="https://schema.org/Person"><a itemprop="sameAs" content="https://orcid.org/0000-0001-8795-3311" href="https://orcid.org/0000-0001-8795-3311" target="orcid.widget" rel="me noopener noreferrer" style="vertical-align:top;"><img src="https://orcid.org/sites/default/files/images/orcid_16x16.png" style="width:1em;margin-right:.5em;" alt="ORCID iD icon">https://orcid.org/0000-0001-8795-3311</a></div>
+**Authors:** [Jason Moy](https://jasonmoy.us)
 
 **Citation:** Moy, J. H. (2021). psycModel: Intergrated Toolkit for Pyschological Analysis and Modelling in R. Retrieved from https://github.com/jasonmoy28/psycModel.
 
 **BibTex Entry:**
-  @Manual {,
-    title = {{psycModel}Intergrated Toolkit for Pyschological Analysis and Modelling in R},
-    author = {Jason Moy},
-    year = {2021},
-    url = {https://github.com/jasonmoy28/psycModel},
+  @Manual {,  
+            title = {{psycModel}Intergrated Toolkit for Pyschological Analysis and Modelling in R},  
+            author = {Jason Moy},  
+            year = {2021},  
+            url = {https://github.com/jasonmoy28/psycModel},  
   }
 
 ## Updates
