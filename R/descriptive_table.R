@@ -6,7 +6,8 @@
 #' @param cols vector or tidyselect syntax or helpers. column(s) need to be included in the table.
 #' @param cor_sig_test adjusted or raw. Default as adjusted. See psych::corr.test to learn more.
 #' @param cor_digit number of digit for correlation table
-#' @param mean_sd_digit number of digit for mean and sd tables
+#' @param descriptive_indicator Default is mean, sd, cor. Options are missing (missing value count), non_missing (non-missing value count), cor (correlation table), n, mean, sd, median, trimmed (trimmed mean), median, mad (median absolute deviation from the median), min, max, range, skew, kurtosis, se (standard error)
+#' @param descriptive_indicator_digit number of digit for the descriptive table 
 #' @param filepath provide full path to pass into the write.csv(file = filepath)
 #'
 #' @export
@@ -19,10 +20,17 @@
 #' descriptive_table(iris,cols = tidyr::everything()) # all columns
 #' descriptive_table(iris,cols = where(is.numeric)) # all numeric columns
 
-descriptive_table =  function(data,cols,cor_sig_test = 'raw',cor_digit = 3,mean_sd_digit = 3, filepath = NULL) {
+descriptive_table =  function(data,
+                              cols,
+                              cor_sig_test = 'raw',
+                              cor_digit = 3,
+                              descriptive_indicator = c('mean','sd','cor'),
+                              descriptive_indicator_digit = 3,
+                              filepath = NULL) {
   cols = ggplot2::enquo(cols)
   data = data %>% dplyr::select(!!cols)
-
+  compute_cor_table = any(descriptive_indicator %in% 'cor')
+  
   datatype = as.vector(sapply(data, class))
   if(all(datatype == 'numeric'| datatype == 'factor' | datatype == 'integer')){
     data = data %>% dplyr::mutate(dplyr::across(tidyr::everything(),as.numeric))
@@ -30,21 +38,43 @@ descriptive_table =  function(data,cols,cor_sig_test = 'raw',cor_digit = 3,mean_
     print('Error: All columns must be dummy coded or factored. Consider using as.factor() or as.numeric()')
     return()
   }
+  return_df = tibble::tibble(rowname = colnames(data))
+  
+  # compute the missing table 
+  if (any(descriptive_indicator %in% 'missing')) {
+    missing_df = data %>%
+      dplyr::summarize(dplyr::across(!!cols, ~ sum(is.na(.)))) %>%
+      tidyr::pivot_longer(tidyr::everything(),names_to = 'rowname', values_to = 'missing_n')
+    return_df = return_df %>% dplyr::full_join(missing_df,by = 'rowname')
+  }
+  
+  # compute the non-missing table 
+  if (any(descriptive_indicator %in% 'non_missing')) {
+    non_missing_df = data %>%
+      dplyr::summarize(dplyr::across(!!cols, ~ sum(!is.na(.)))) %>%
+      tidyr::pivot_longer(tidyr::everything(),names_to = 'rowname', values_to = 'non_missing_n')
+    return_df = return_df %>% dplyr::full_join(non_missing_df,by = 'rowname')
+  }
 
-  mean_table = data %>% dplyr::summarise(dplyr::across(!!cols, ~ mean(., na.rm = T))) %>%
-    dplyr::mutate(dplyr::across(where(is.numeric), ~ format(round(., mean_sd_digit),nsmall = mean_sd_digit))) %>%
-    tidyr::pivot_longer(cols = tidyr::everything(),names_to = 'rowname',values_to = 'mean')
-
-  sd_table = data %>% dplyr::summarise(dplyr::across(!!cols, ~ stats::sd(., na.rm = T))) %>%
-    dplyr::mutate(dplyr::across(where(is.numeric), ~ format(round(., mean_sd_digit),nsmall = mean_sd_digit))) %>%
-    tidyr::pivot_longer(cols = tidyr::everything(),names_to = 'rowname',values_to = 'sd')
-
-  cor_table = data %>% cor_test(cols = !!cols, sig_test = cor_sig_test,digit = cor_digit,descriptive_table_use = T)
-
-  return_df = mean_table %>%
-    dplyr::full_join(sd_table,by = 'rowname') %>%
-    dplyr::full_join(cor_table,by = 'rowname') %>%
-    tibble::column_to_rownames('rowname')
+  # compute the descriptive table  
+  # remove cor, non_missing, missing indicator as they have been processed
+  descriptive_indicator = descriptive_indicator[!descriptive_indicator %in% c('missing','non_missing','cor')]
+  if (length(descriptive_indicator) > 0) {
+    descriptive_indicator = ggplot2::enquo(descriptive_indicator)
+    descriptive_table = psych::describe(x = data) %>% 
+      as.data.frame() %>% 
+      dplyr::select(!!descriptive_indicator) %>% 
+      dplyr::mutate(dplyr::across(where(is.numeric), ~ format(round(., descriptive_indicator_digit),nsmall = descriptive_indicator_digit))) %>% 
+      tibble::rownames_to_column(var = 'rowname') 
+    return_df = return_df %>% dplyr::full_join(descriptive_table,by = 'rowname')
+  }
+  # compute the correlation table
+  if (compute_cor_table == T) {
+    cor_table = data %>% cor_test(cols = !!cols, sig_test = cor_sig_test,digit = cor_digit,descriptive_table_use = T)
+    return_df = return_df %>% dplyr::full_join(cor_table,by = 'rowname')
+  }
+  
+  return_df = return_df %>% tibble::column_to_rownames()
 
   if (!is.null(filepath)) {
     utils::write.csv(x = return_df, file = filepath)

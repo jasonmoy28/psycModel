@@ -9,7 +9,8 @@ descriptive_table(
   cols,
   cor_sig_test = "raw",
   cor_digit = 3,
-  mean_sd_digit = 3,
+  descriptive_indicator = c("mean", "sd", "cor"),
+  descriptive_indicator_digit = 3,
   filepath = NULL
 )
 }
@@ -22,7 +23,9 @@ descriptive_table(
 
 \item{cor_digit}{number of digit for correlation table}
 
-\item{mean_sd_digit}{number of digit for mean and sd tables}
+\item{descriptive_indicator}{Default is mean, sd, cor. Options are missing (missing value count), non_missing (non-missing value count), cor (correlation table), n, mean, sd, median, trimmed (trimmed mean), median, mad (median absolute deviation from the median), min, max, range, skew, kurtosis, se (standard error)}
+
+\item{descriptive_indicator_digit}{number of digit for the descriptive table}
 
 \item{filepath}{provide full path to pass into the write.csv(file = filepath)}
 }
