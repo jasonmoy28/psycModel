@@ -4,18 +4,17 @@
 [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
 
 ## Installation
-Install using `devtools`
 ```R
 devtools::install_github('jasonmoy28/psycModel')
 ```
-## Functions
-The package consists of three types of function: descriptive statistics, mixed effect model, and latent variable modelling.
+## Feature
+The package consists of three types of analysis: descriptive statistics, mixed effect model, latent variable model
 
-1. Descriptive statistics: `cor_test`, `descriptive_table`
+1. Descriptive statistics: correlation (`cor_test`); descriptive statistics table (`descriptive_table`)
 
-2. Mixed effect model: `lme_model`, `glme_model`, `two_way_interaction_plot`, `three_way_interaction_plot`, `model_summary`, `model_summary_with_plot`
+2. Mixed effect model: linear mixed effect model (`lme_model`); generalized linear mixed effect model (`glme_model`); mixed effect model interaction plot (`two_way_interaction_plot`, `three_way_interaction_plot`); mixed effect model summary (`model_summary`, `model_summary_with_plot`)
 
-3. Latent variable modelling: `cfa_summary`, `measurement_invariance`
+3. Latent variable modelling: Confirmatory factor analysis (`cfa_summary`, `measurement_invariance`)
 
 
 ## Credit
@@ -26,10 +25,10 @@ The package consists of three types of function: descriptive statistics, mixed e
 
 **BibTex Entry:**
   @Manual {,  
-            title = {{psycModel}Intergrated Toolkit for Pyschological Analysis and Modelling in R},  
-            author = {Jason Moy},  
-            year = {2021},  
-            url = {https://github.com/jasonmoy28/psycModel},  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title = {{psycModel}Intergrated Toolkit for Pyschological Analysis and Modelling in R},  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;author = {Jason Moy},  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;year = {2021},  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url = {https://github.com/jasonmoy28/psycModel},  
   }
 
 ## Updates
