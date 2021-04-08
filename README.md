@@ -3,6 +3,7 @@
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Github All Releases](https://img.shields.io/github/downloads/jasonmoy28/psycModel/total.svg)]()
 <!-- badges: end -->
 
 ## Installation
