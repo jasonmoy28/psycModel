@@ -7,7 +7,7 @@
 [![R package version](https://img.shields.io/github/r-package/v/jasonmoy28/psycModel)]()
 [![Github last commit](https://img.shields.io/github/last-commit/jasonmoy28/psycModel)]()
 [![GPLv3license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://perso.crans.org/besson/LICENSE.html)
-[![DOI](https://zenodo.org/badge/355611696.svg)](https://zenodo.org/badge/latestdoi/4671923)
+[![DOI](https://zenodo.org/badge/355611696.svg)](https://doi.org/10.5281/zenodo.4671947)
 <!-- badges: end -->
 
 ## Installation
