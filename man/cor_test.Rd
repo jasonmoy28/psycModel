@@ -16,14 +16,15 @@ cor_test(data, cols, sig_test = "raw", digit = 3, ...)
 \item{digit}{number of digits}
 }
 \description{
-This function uses the psych::corr.test (Revelle, 2021) function to generated the correlation. One potential problem with the current version of the function is that if the correlation between the two item is too high (rounded as 1), then that cell will become blank. This is a very rare problem, and I have not yet figure out how to solve this.
+This function uses the psych::corr.test (Revelle, 2021) function to generated the pearson correlation table associated its significance values.
 }
 \examples{
 cor_test(iris,1:4)
+cor_test(iris,where(is.numeric))
 
 }
 \references{
 Revelle, W. (2021). psych: Procedures for Psychological, Psychometric, and Personality Research. Northwestern University, Evanston, Illinois. R package version 2.1.3, https://CRAN.R-project.org/package=psych.
 
-Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.#'
+Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.
 }

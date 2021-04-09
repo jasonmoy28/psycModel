@@ -1,19 +1,20 @@
 #' Correlation table
 #'
-#' This function uses the psych::corr.test (Revelle, 2021) function to generated the correlation. One potential problem with the current version of the function is that if the correlation between the two item is too high (rounded as 1), then that cell will become blank. This is a very rare problem, and I have not yet figure out how to solve this.
-#' @param data a dataframe
+#' This function uses the psych::corr.test (Revelle, 2021) function to generated the pearson correlation table and their associated significance values. 
+#' @param data data frame
 #' @param cols vector or tidyselect syntax or helpers. column(s) that need to be recoded.
 #' @param digit number of digits
-#' @param sig_test adjusted or raw. Default as adjusted. See psych::corr.test to learn more.
+#' @param sig_test adjusted or raw. Default is raw. See ?psych::corr.test to learn more.
 #'
 #' @export
 #' @references 
 #' Revelle, W. (2021). psych: Procedures for Psychological, Psychometric, and Personality Research. Northwestern University, Evanston, Illinois. R package version 2.1.3, https://CRAN.R-project.org/package=psych.
 #' 
-#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.#'
+#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.
 #'
 #' @examples
 #' cor_test(iris,1:4)
+#' cor_test(iris,where(is.numeric))
 #'
 
 cor_test =  function(data,cols,sig_test = 'raw',digit = 3,...) {
@@ -47,33 +48,31 @@ cor_test =  function(data,cols,sig_test = 'raw',digit = 3,...) {
                                                    . < 0.05 & . >= 0.01 ~ '*',
                                                    T ~ '')))
 
-
+  # concat sig_df with cor_df
   for (i in c(1:ncol(sig_df))) {
     c_vec = stringr::str_c(cor_df[[i + 1]], sig_df[[i]])
     cor_df[[i + 1]] = c_vec
   }
   if (sig_test == 'raw') {
-    for (columns in colnames(cor_df)) {
-      if (columns != 'rowname') { # skip the first column
-        diagonal_value = which(grepl(paste(cor_df_raw[1,1],'\\*+',sep = ''),cor_df[,columns]))
-        cor_df[1:diagonal_value,columns] = ''
-      }
+    index = 1
+    for (columns in colnames(cor_df[-1])) { 
+      cor_df[1:index,columns] = ''
+      index = index + 1
     }
   } else if (sig_test == 'adjusted'){
-    for (columns in colnames(cor_df)) {
-      if (columns != 'rowname') { # skip the first column
-        diagonal_value = which(grepl(paste(cor_df_raw[1,1],'\\*+',sep = ''),cor_df[,columns]))
-        cor_df[diagonal_value:nrow(cor_df),columns] = ''
-      }
+    index = 1
+    for (columns in colnames(cor_df)[-1]) {
+        cor_df[index:nrow(cor_df),columns] = ''
+        index = index + 1
     }
   }
+  
   dots = list(...)
   if (length(dots) > 0) {
     if (dots$descriptive_table_use == T){
       return(cor_df)
     }
   }
-
   cor_df = cor_df %>% dplyr::select(-rowname)
 
     # printing warning meesage, non-essential block
