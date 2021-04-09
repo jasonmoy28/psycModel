@@ -1,7 +1,7 @@
 #' Measurement Invariance
 #' 
 #' `r lifecycle::badge("stable")` \cr
-#' Compute the measurement invariance model (i.e., measurement equivalence model) using multi-group confirmatory factor analysis (MGCFA; Jöreskog, 1971). This function uses the lavaan::cfa (Rosseel, 2012) and the semTools::compareFit (Jorgensen, 2021) function. Users can run the configural-metric or the configural-metric-scalar comparisons (see below for detail instruction). 
+#' Compute the measurement invariance model (i.e., measurement equivalence model) using multi-group confirmatory factor analysis (MGCFA; Jöreskog, 1971). This function uses the lavaan::cfa (Rosseel, 2012). Users can run the configural-metric or the configural-metric-scalar comparisons (see below for detail instruction). 
 #' 
 #' @param data data frame
 #' @param model explicit lavaan model. Either the `model` argument or the `items` argument must be specified.
@@ -10,11 +10,10 @@
 #' @param ordered logical. default is F. If it is set to T, lavaan will treat it as a ordinal variable and use DWLS instead of ML
 #' @param group_partial items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').
 #' @param invariance_level "metric" or "scalar". Default is 'metric'. Set as 'metric' for configural-metric comparison, and set as 'scalar' for configural-metric-scalar comparison. 
+#' @param digits number of digit to round
 #'
 #' @references 
 #' Jöreskog, K. G. (1971). Simultaneous factor analysis in several populations. Psychometrika, 36(4), 409-426.
-#' 
-#' Jorgensen, T. D., Pornprasertmanit, S., Schoemann, A. M., & Rosseel, Y. (2021). semTools: Useful tools for structural equation Modeling. R package version 0.5-4. Retrieved from https://CRAN.R-project.org/package=semTools
 #' 
 #' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 #' 
@@ -43,7 +42,8 @@ measurement_invariance = function(data,
                                   group,
                                   ordered = F,
                                   group_partial = NULL,
-                                  invariance_level = 'metric') {
+                                  invariance_level = 'metric',
+                                  digits = 3) {
   
   items = ggplot2::enquo(items)
   if (is.null(model)) {
@@ -72,8 +72,7 @@ measurement_invariance = function(data,
       group.partial = group_partial
     )
     
-    require('semTools') # loaded semTools package for compareFit function
-    fit = semTools::compareFit(config_model, metric_model)
+    fit = compare_fit(list(config_model,metric_model),digits = digits)
     return(fit)
     
   } else if(invariance_level == 'scalar'){
@@ -104,8 +103,7 @@ measurement_invariance = function(data,
       ordered = ordered,
       group.partial = group_partial
     )
-    require('semTools') # loaded semTools package for compareFit function
-    fit = semTools::compareFit(config_model, metric_model,scalar_model)
+    fit = compare_fit(list(config_model,metric_model,scalar_model),digits = digits)
     return(fit)
     
   } else{
