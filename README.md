@@ -50,7 +50,7 @@ The package consists of three types of analysis: descriptive statistics, mixed e
 
 **Bugs fixed:**
 * Fixed the cor_test bug that the function return a correlation matrix with blank cells if the correlation is too high between the two items (rounded to 1).
-Add a data_check function that warns the users if non-numeric variables are coerced into numeric.
+* Add a data_check function that warns the users if non-numeric variables are coerced into numeric.
 
 ### version 0.1.0 (released on 4/8/2021)
 * initial build of package
