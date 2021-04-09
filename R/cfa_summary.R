@@ -1,12 +1,12 @@
 #' Confirmatory Factor Analysis
 #'
-#' The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. In addition to passing an explicit lavaan model, users can fit a unifactor CFA using the `items` argument. Moreoever, users can request 3 types of summary for the model (see below for options). 
+#' The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. In addition to passing an explicit lavaan model, users can fit a uni-factor CFA using the `items` argument. Moreover, users can request 3 types of summary for the model (see below for options). 
 #'
 #' @param data data frame
 #' @param model explicit lavaan model. Either the `model` argument or the `items` argument must be specified.
 #' @param group optional character. default is NULL. the nested variable for multilevel dataset (e.g., Country)
 #' @param items vector of tidyselect syntax or helpers. default to NULL if the model is specified. The argument will be ignored if the model is explicitly specified.
-#' @param summary_item vector of fit indices. Default is cfi, rmsea, tli, and srmr. 
+#' @param summary_item vector of fit indices. Default is CFI, RMSEA, TLI, and SRMR. 
 #' @param ordered logical. default is F. If it is set to T, lavaan will treat it as a ordinal variable and use DWLS instead of ML
 #' @param return_result Default is model. Options are 'model' (lavaan model), 'short_summary' (fit index summary only), 'long_summary' (lavaan full summary), or 'bruceR_summary' (uses the bruceR::CFA (Bao, 2021) function. Require the bruceR package. Please note that bruceR package may take a long time to install due to its dependencies)
 #' @param quite default as F. If set to true, it will not print the running model statement. 
@@ -15,7 +15,7 @@
 #' @references 
 #' Bao, H.-W.-S. (2021). bruceR: Broadly useful convenient and efficient R functions. R package version 0.6.0. https://CRAN.R-project.org/package=bruceR 
 #' 
-#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.#'
+#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 #' 
 #' Rosseel Y (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1–36. https://www.jstatsoft.org/v48/i02/.
 #' 

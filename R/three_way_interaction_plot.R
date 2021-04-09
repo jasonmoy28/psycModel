@@ -2,7 +2,7 @@
 #'
 #' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. 
 #'
-#' @param data dataframe
+#' @param data data frame
 #' @param model lme object or lmerModLmerTest object
 #' @param response_var response variable name
 #' @param predict_var_name vector of length 3. the variables' name for the two-way interaction plot
@@ -12,7 +12,7 @@
 #' @param plot_color logical. default as F. Set to T if you want to plot in color
 #'
 #' @references
-#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.#'
+#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 #'
 #' @return ggplot object. three-way interaction plot
 #'
@@ -29,13 +29,8 @@ three_way_interaction_plot = function(data,
                                       graph_label_name = NULL,
                                       y_lim = NULL,
                                       plot_color = F){
-  # Convert to numeric if convertiable
-  datatype = as.vector(sapply(data, class))
-  if(all(datatype == 'numeric'| datatype == 'factor' | datatype == 'integer')){
-    data = dplyr::mutate_all(data, as.numeric)
-  } else{
-    return('Error: All columns must be dummy coded or factored. Consider using as.factor() or as.numeric()')
-  }
+  
+  data = data_check(data) #check data and coerced into numeric
 
   predict_var1 = predict_var_name[1]
   predict_var2 = predict_var_name[2]

@@ -10,7 +10,7 @@
 #' @references 
 #' Revelle, W. (2021). psych: Procedures for Psychological, Psychometric, and Personality Research. Northwestern University, Evanston, Illinois. R package version 2.1.3, https://CRAN.R-project.org/package=psych.
 #' 
-#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.
+#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 #'
 #' @examples
 #' cor_test(iris,1:4)
@@ -20,14 +20,7 @@
 cor_test =  function(data,cols,sig_test = 'raw',digit = 3,...) {
   cols = ggplot2::enquo(cols)
   data = data %>% dplyr::select(!!cols)
-
-  datatype = as.vector(sapply(data, class))
-  if(all(datatype == 'numeric'| datatype == 'factor' | datatype == 'integer')){
-    data = data %>% dplyr::mutate(dplyr::across(!!cols,as.numeric))
-  } else{
-    print('Error: All columns must be dummy coded or factored. Consider using as.factor() or as.numeric()')
-    return()
-  }
+  data = data_check(data)
 
   cor_test_df = data %>%
     dplyr::mutate(dplyr::across(!!cols,as.numeric)) %>%

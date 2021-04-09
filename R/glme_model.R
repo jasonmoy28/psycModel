@@ -2,11 +2,11 @@
 #'
 #' Generalized linear mixed effect model. The function uses the `lme4::glmer`(Bates et al., 2014) function
 #'
-#' @param data dataframe
+#' @param data data frame
 #' @param response_variable character or vector of length 1
 #' @param level_1_factors vector. Level-1 variables (e.g., individual-level)
 #' @param level_2_factors optional vector. level-2 variables (e.g., group-level)
-#' @param family a GLM family. It will pased to the family argument in glmer. See `?glmer` for possible options. It will also call glmer.nb if family = 'negbin'
+#' @param family a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options. It will also call glmer.nb if family = 'negbin'
 #' @param two_way_interaction_factor optional vector of length more than 2. Default to `null`
 #' @param three_way_interaction_factor optional vector of length 3. Do not include two-way interaction factors if this is not null. Default to `null`
 #' @param id character or vector of length 1. The nesting variable (e.g. group)
@@ -18,7 +18,7 @@
 #' @references
 #' Bates, D., Mächler, M., Bolker, B., & Walker, S. (2014). Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software, 67(1), 1–48. doi: 10.18637/jss.v067.i01.
 #'
-#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.#'
+#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 #'
 #' @return An object of class "glmerMod" representing the linear mixed-effects model fit.
 #' @export
@@ -47,6 +47,9 @@ glme_model <- function(data,
                        na.action = na.exclude,
                        quite = F)
 {
+  data = data %>% dplyr::select(response_variable,level_1_factors,level_2_factors,two_way_interaction_factor,three_way_interaction_factor,id)
+  data = data_check(data) #check data and coerced into numeric
+  
   # Fixed factor inlcude both level factor
   fixed_factors = c(level_1_factors, level_2_factors)
 

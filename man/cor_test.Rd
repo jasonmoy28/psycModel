@@ -7,16 +7,16 @@
 cor_test(data, cols, sig_test = "raw", digit = 3, ...)
 }
 \arguments{
-\item{data}{a dataframe}
+\item{data}{data frame}
 
 \item{cols}{vector or tidyselect syntax or helpers. column(s) that need to be recoded.}
 
-\item{sig_test}{adjusted or raw. Default as adjusted. See psych::corr.test to learn more.}
+\item{sig_test}{adjusted or raw. Default is raw. See ?psych::corr.test to learn more.}
 
 \item{digit}{number of digits}
 }
 \description{
-This function uses the psych::corr.test (Revelle, 2021) function to generated the pearson correlation table associated its significance values.
+This function uses the psych::corr.test (Revelle, 2021) function to generated the pearson correlation table and their associated significance values.
 }
 \examples{
 cor_test(iris,1:4)
@@ -26,5 +26,5 @@ cor_test(iris,where(is.numeric))
 \references{
 Revelle, W. (2021). psych: Procedures for Psychological, Psychometric, and Personality Research. Northwestern University, Evanston, Illinois. R package version 2.1.3, https://CRAN.R-project.org/package=psych.
 
-Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.
+Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 }

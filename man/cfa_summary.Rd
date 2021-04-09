@@ -25,7 +25,7 @@ cfa_summary(
 
 \item{items}{vector of tidyselect syntax or helpers. default to NULL if the model is specified. The argument will be ignored if the model is explicitly specified.}
 
-\item{summary_item}{vector of fit indices. Default is cfi, rmsea, tli, and srmr.}
+\item{summary_item}{vector of fit indices. Default is CFI, RMSEA, TLI, and SRMR.}
 
 \item{ordered}{logical. default is F. If it is set to T, lavaan will treat it as a ordinal variable and use DWLS instead of ML}
 
@@ -36,7 +36,7 @@ cfa_summary(
 \item{group_partial}{Items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').}
 }
 \description{
-The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. In addition to passing an explicit lavaan model, users can fit a unifactor CFA using the `items` argument. Moreoever, users can request 3 types of summary for the model (see below for options).
+The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. In addition to passing an explicit lavaan model, users can fit a uni-factor CFA using the `items` argument. Moreover, users can request 3 types of summary for the model (see below for options).
 }
 \examples{
 # Fitting a CFA model by passing explicit lavaan model. 
@@ -54,7 +54,7 @@ cfa_summary(items = x1:x3,
 \references{
 Bao, H.-W.-S. (2021). bruceR: Broadly useful convenient and efficient R functions. R package version 0.6.0. https://CRAN.R-project.org/package=bruceR 
 
-Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.#'
+Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 
 Rosseel Y (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1–36. https://www.jstatsoft.org/v48/i02/.
 }

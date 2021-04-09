@@ -16,7 +16,7 @@ three_way_interaction_plot(
 )
 }
 \arguments{
-\item{data}{dataframe}
+\item{data}{data frame}
 
 \item{model}{lme object or lmerModLmerTest object}
 
@@ -42,5 +42,5 @@ The function creates a two-way interaction plot. It will creates a plot with ± 
 
 }
 \references{
-Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.#'
+Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 }

@@ -20,7 +20,7 @@ glme_model(
 )
 }
 \arguments{
-\item{data}{dataframe}
+\item{data}{data frame}
 
 \item{response_variable}{character or vector of length 1}
 
@@ -28,7 +28,7 @@ glme_model(
 
 \item{level_2_factors}{optional vector. level-2 variables (e.g., group-level)}
 
-\item{family}{a GLM family. It will pased to the family argument in glmer. See `?glmer` for possible options. It will also call glmer.nb if family = 'negbin'}
+\item{family}{a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options. It will also call glmer.nb if family = 'negbin'}
 
 \item{two_way_interaction_factor}{optional vector of length more than 2. Default to `null`}
 
@@ -65,5 +65,5 @@ glme_model(data = test_df,
 \references{
 Bates, D., Mächler, M., Bolker, B., & Walker, S. (2014). Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software, 67(1), 1–48. doi: 10.18637/jss.v067.i01.
 
-Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.#'
+Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 }

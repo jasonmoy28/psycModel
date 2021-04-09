@@ -20,7 +20,7 @@ lme_model(
 )
 }
 \arguments{
-\item{data}{dataframe}
+\item{data}{data frame}
 
 \item{response_variable}{character or vector of length 1}
 
@@ -48,7 +48,7 @@ lme_model(
 An object of class `lme` of `lmerModLmerTest` representing the linear mixed-effects model fit.
 }
 \description{
-Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the `nlme::lme` (Pinheiro, 2006)  or the `lmerTest::lmer` (Kuznetsova, 2017) fucntion.
+Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the `nlme::lme` (Pinheiro, 2006)  or the `lmerTest::lmer` (Kuznetsova, 2017) function.
 }
 \examples{
 lme_model(response_variable = 'Reaction',
@@ -61,7 +61,7 @@ lme_model(response_variable = 'Reaction',
 \references{
 Kuznetsova, A., Brockhoff, P. B., & Christensen, R. H. (2017). lmerTest package: tests in linear mixed effects models. Journal of statistical software, 82(13), 1-26.
 
-Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.#'
+Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 
 Pinheiro, J., Bates, D., DebRoy, S., Sarkar, D., & Team, R. C. (2006). nlme: Linear and nonlinear mixed effects models. R package version, 3(4), 109.
 }

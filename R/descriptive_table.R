@@ -1,24 +1,26 @@
 #' Mean, SD, and Correlation table
 #'
-#' This function uses the psych::corr.test (Revelle, 2021) function to generated the correlation. One potential problem with the current version of the function is that if the correlation between the two item is too high (rounded as 1), then that cell will become blank. This is a very rare problem, and I have not yet figure out how to solve this.
-#'
-#' @param data a dataframe
+#' This function generates a table of descriptive statistics (mainly using psych::describe; Revelle, 2021) and or a correlation table. User can export this to a csv file (optionally, using the file_path argument). Users can open the csv file with MS Excel then copy and paste the table into MS Word table.
+#' 
+#' @param data data frame
 #' @param cols vector or tidyselect syntax or helpers. column(s) need to be included in the table.
 #' @param cor_sig_test adjusted or raw. Default as adjusted. See psych::corr.test to learn more.
 #' @param cor_digit number of digit for correlation table
 #' @param descriptive_indicator Default is mean, sd, cor. Options are missing (missing value count), non_missing (non-missing value count), cor (correlation table), n, mean, sd, median, trimmed (trimmed mean), median, mad (median absolute deviation from the median), min, max, range, skew, kurtosis, se (standard error)
 #' @param descriptive_indicator_digit number of digit for the descriptive table 
-#' @param filepath provide full path to pass into the write.csv(file = filepath)
+#' @param file_path file path for export. The function will implicitly pass this argument to the write.csv(file = file_path)
 #'
 #' @export
 #' @references 
 #' Revelle, W. (2021). psych: Procedures for Psychological, Psychometric, and Personality Research. Northwestern University, Evanston, Illinois. R package version 2.1.3, https://CRAN.R-project.org/package=psych.
 #' 
-#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.#'
+#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 #' 
 #' @examples
 #' descriptive_table(iris,cols = tidyr::everything()) # all columns
+#' 
 #' descriptive_table(iris,cols = where(is.numeric)) # all numeric columns
+#' 
 
 descriptive_table =  function(data,
                               cols,
@@ -26,18 +28,15 @@ descriptive_table =  function(data,
                               cor_digit = 3,
                               descriptive_indicator = c('mean','sd','cor'),
                               descriptive_indicator_digit = 3,
-                              filepath = NULL) {
+                              file_path = NULL) {
   cols = ggplot2::enquo(cols)
   data = data %>% dplyr::select(!!cols)
+  data = data_check(data)
+  
+  # check whether to compute cor_test
   compute_cor_table = any(descriptive_indicator %in% 'cor')
   
-  datatype = as.vector(sapply(data, class))
-  if(all(datatype == 'numeric'| datatype == 'factor' | datatype == 'integer')){
-    data = data %>% dplyr::mutate(dplyr::across(tidyr::everything(),as.numeric))
-  } else{
-    print('Error: All columns must be dummy coded or factored. Consider using as.factor() or as.numeric()')
-    return()
-  }
+  # init return_df
   return_df = tibble::tibble(rowname = colnames(data))
   
   # compute the missing table 
@@ -76,8 +75,8 @@ descriptive_table =  function(data,
   
   return_df = return_df %>% tibble::column_to_rownames()
 
-  if (!is.null(filepath)) {
-    utils::write.csv(x = return_df, file = filepath)
+  if (!is.null(file_path)) {
+    utils::write.csv(x = return_df, file = file_path)
   }
   return(return_df)
 }

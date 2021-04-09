@@ -31,25 +31,27 @@ model_summary_with_plot(
 )
 }
 \arguments{
-\item{data}{required dataframe}
+\item{data}{data frame}
 
-\item{response_variable}{required character or vector of length 1}
+\item{response_variable}{character. name of the response variable.}
 
-\item{level_1_factors}{vector. Level-1 variables (e.g., individual-level)}
+\item{level_1_factors}{vector. level-1 variables (e.g., individual-level)}
 
 \item{level_2_factors}{optional vector. level-2 variables (e.g., group-level)}
 
-\item{two_way_interaction_factor}{optional vector of length more than 2. Default to `null`.}
+\item{two_way_interaction_factor}{optional vector of length >= 2.}
+
+\item{three_way_interaction_factor}{optional vector of length 3. Do not specify two-way interaction factors if you specify the three-way interaction factor}
 
 \item{cateogrical_var}{list. use the form list(var_name1 = c(upper_bound1, lower_bound1), [var_name2 = c(upper_bound2, lower_bound2]).}
 
-\item{id}{character or vector of length 1. The nesting variable (e.g. group).}
+\item{id}{character. The nesting variable (e.g. group, time).}
 
-\item{family}{a GLM family. It will pased to the family argument in glmer. See `?glmer` for possible options. It will also call glmer.nb if family = 'negbin'}
+\item{family}{a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options. It will also call glmer.nb if family = 'negbin'}
 
-\item{graph_label_name}{optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, [predict_var3]). Function should be passed as a switch function. See below for an example.}
+\item{graph_label_name}{optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, [predict_var3]). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)}
 
-\item{estimation_method}{character. `ML` or `REML` default to `REML`.}
+\item{estimation_method}{character. `ML` or `REML` default is `REML`.}
 
 \item{opt_control}{character. default to `optim` for `lme` and `bobyqa` for lmerTest}
 
@@ -71,17 +73,15 @@ model_summary_with_plot(
 
 \item{performance_round}{numeric. number of digit to round to for the performance statistics (e.g., R2)}
 
-\item{use_package}{character. Only avaliable for linear mixed effect model. Options are "nlme" or "lmerTest". Default is "nlme".}
+\item{use_package}{character. Only available for linear mixed effect model. Options are "nlme" or "lmerTest". Default is "nlme".}
 
 \item{quite}{default to F. If set to `T`, it will not print the fitting model statement}
-
-\item{three_way_interaction_factoroptional}{vector of length 3. Do not include two-way interaction factors if this is not null. Default to `null`.}
 }
 \value{
 return a list of all requested items in the order of model, short_summary, long_summary, plot
 }
 \description{
-It will first compute the mixed effect model. It will use either the nlme::lme ((Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way interaction_plot (Moy, 2021). If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019). If you requested bruceR_summary, it will uses the bruceR::HLM_summary (Bao, 2021)
+It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019). If you requested bruceR_summary, it will uses the bruceR::HLM_summary (Bao, 2021)
 }
 \examples{
 
@@ -93,6 +93,7 @@ model_summary_with_plot(response_variable = 'incidence',
                         data = lme4::cbpp,
                         use_package = 'lmerTest', #use lmerTest
                         model_performance = NULL)
+
 
 }
 \references{
@@ -106,7 +107,7 @@ Long J. A. (2019). interactions: Comprehensive, User-Friendly Toolkit for Probin
 
 Lüdecke, D., Makowski, D., Waggoner, P., Patil I (2020). performance: Assessment of Regression Models Performance. CRAN. doi: 10.5281/zenodo.3952174, R package, https://easystats.github.io/performance/.
 
-Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.#'
+Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 
 Nakagawa, S., & Schielzeth, H. (2013). A general and simple method for obtaining R2 from generalized linear mixed-effects models. Methods in Ecology and Evolution, 4(2), 133–142. https://doi.org/10.1111/j.2041-210x.2012.00261.x
 

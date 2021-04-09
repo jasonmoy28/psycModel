@@ -2,23 +2,57 @@
 #'
 #' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. 
 #'
-#' @param data dataframe.
+#' @param data data frame.
 #' @param model lme object from `nlme::lme`
 #' @param response_var response variable name
 #' @param predict_var_name vector of length 2. predictive variable names
-#' @param graph_label_name vector of length 3 or function. Vector should be passed in the form of c(response_var, predict_var1, predict_var2). Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)
-#' @param cateogrical_var list. use the form list(var_name1 = c(upper_bound1, lower_bound1), [var_name2 = c(upper_bound2, lower_bound2])
-#' @param y_lim vector of length 2. c(lower_limit, upper_limit)
+#' @param graph_label_name vector of length 3 or function. Vector should be passed in the form of `c(response_var, predict_var1, predict_var2)`. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)
+#' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
+#' @param y_lim vector of length 2. c(lower_limit, upper_limit). Default is +0.5 of the max -0.5 of the min Y value
 #' @param plot_color logical. default as F. Set to T if you want to plot in color
 #'
 #' @references
-#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.#'
+#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 #' @return ggplot object. two-way interaction plot
 #' @export
 #'
 #' @examples
+#' # run the fit model first
+#' fit = lme_model(response_variable = 'incidence',
+#'                 level_1_factors = 'size',
+#'                 level_2_factors = 'herd',
+#'                 two_way_interaction_factor = c('size','herd'),
+#'                 id = 'period',
+#'                 data = lme4::cbpp,
+#'                 use_package = 'lmerTest') #use lmerTest
+#'                 
+#' two_way_interaction_plot(data = lme4::cbpp,
+#'                          model = fit,
+#'                          response_var = 'incidence',
+#'                          predict_var_name = c('size','herd'),
+#'                          graph_label_name = c('Y','X','legend')) # this will change the plot name 
 #'
-#'
+#' # Customize variable name using the switch function. This is useful if you are running many models.
+#' # You should store this in a separate script, and load this function using source(). 
+#' label_name <- function(var_name) {
+#'  var_name_processed = switch (var_name,
+#'                              'incidence' = 'Y',
+#'                              'size' = 'X',
+#'                              'herd' = 'legend'
+#'  )
+#'  if (is.null(var_name_processed)) {
+#'    var_name_processed = var_name
+#'  }
+#'  return(var_name_processed)
+#'}
+#'                    
+#' two_way_interaction_plot(data = lme4::cbpp,
+#'                          model = fit,
+#'                          response_var = 'incidence',
+#'                          predict_var_name = c('size','herd'),
+#'                          graph_label_name = label_name,
+#'                          plot_color = T)
+#'                          
 two_way_interaction_plot = function(data,
                                     model,
                                     response_var,
@@ -28,13 +62,9 @@ two_way_interaction_plot = function(data,
                                     y_lim = NULL,
                                     plot_color = F) {
 
-  datatype = as.vector(sapply(data, class))
-  if(all(datatype == 'numeric'| datatype == 'factor' | datatype == 'integer')){
-    data = dplyr::mutate_all(data, as.numeric)
-  } else{
-    return('Error: All columns must be dummy coded or factored. Consider using as.factor() or as.numeric()')
-  }
-
+  data = data_check(data) #check data and coerced into numeric
+  
+  
   predict_var1 = predict_var_name[1]
   predict_var2 = predict_var_name[2]
   mean_df = dplyr::summarise_all(data, mean,na.rm = T)
@@ -51,7 +81,7 @@ two_way_interaction_plot = function(data,
       lower_df[name] = cateogrical_var[[name]][2]
     }
   }
-  # Get the variable names of the model
+  
 
   # Update values in the new_data_df to the values in predicted_df & get the predicted value
   upper_upper_df = mean_df

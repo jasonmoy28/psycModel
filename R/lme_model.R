@@ -1,8 +1,8 @@
 #' Linear Mixed Effect Model
 #'
-#' Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the `nlme::lme` (Pinheiro, 2006)  or the `lmerTest::lmer` (Kuznetsova, 2017) fucntion.
+#' Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the `nlme::lme` (Pinheiro, 2006)  or the `lmerTest::lmer` (Kuznetsova, 2017) function.
 #'
-#' @param data dataframe
+#' @param data data frame
 #' @param response_variable character or vector of length 1
 #' @param level_1_factors vector. Level-1 variables (e.g., individual-level)
 #' @param level_2_factors optional vector. level-2 variables (e.g., group-level)
@@ -22,7 +22,7 @@
 #'
 #' Kuznetsova, A., Brockhoff, P. B., & Christensen, R. H. (2017). lmerTest package: tests in linear mixed effects models. Journal of statistical software, 82(13), 1-26.
 #'
-#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. R package version 0.1.0, https://github.com/jasonmoy28/psycModel.#'
+#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 #'
 #' Pinheiro, J., Bates, D., DebRoy, S., Sarkar, D., & Team, R. C. (2006). nlme: Linear and nonlinear mixed effects models. R package version, 3(4), 109.
 #'
@@ -46,7 +46,10 @@ lme_model <- function(data,
                       use_package = 'nlme',
                       quite = F)
 {
-  # Fixed factor inlcude both level factor
+  data = data %>% dplyr::select(response_variable,level_1_factors,level_2_factors,two_way_interaction_factor,three_way_interaction_factor,id)
+  data = data_check(data) #check data and coerced into numeric
+  
+  # Fixed factor include both level factor
   fixed_factors = c(level_1_factors, level_2_factors)
 
   # Random factor only include individual_level factor
