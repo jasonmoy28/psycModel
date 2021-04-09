@@ -11,12 +11,12 @@
 #' @param three_way_interaction_factor optional vector of length 3. Do not specify two-way interaction factors if you specify the three-way interaction factor 
 #' @param id character. The nesting variable (e.g. group, time).
 #' @param family a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options. It will also call glmer.nb if family = 'negbin'
-#' @param graph_label_name optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, [predict_var3]). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)
+#' @param graph_label_name optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)
 #' @param estimation_method character. `ML` or `REML` default is `REML`.
 #' @param return_result optional vector. Choose from  `model`,`plot`,`short_summary`,`long_summary`,`bruceR_summary`.`model` return the model object. `plot` return the interaction plot.`short_summary` return a short model summary. `long_summary` return the summary. `bruceR_summary` uses the bruceR::HLM_summary (Bao, 2021) function. 
 #' @param print_result  optional vector. Choose from `model`,`plot`,`short_summary`,`long_summary`.`model` return the model object. `plot` return the interaction plot.`short_summary` return a short model summary. `long_summary` return the summary.
-#' @param na.action default to `na.exclude`.
-#' @param cateogrical_var list. use the form list(var_name1 = c(upper_bound1, lower_bound1), [var_name2 = c(upper_bound2, lower_bound2]).
+#' @param na.action default to `stats::na.exclude`.
+#' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
 #' @param opt_control character. default to `optim` for `lme` and `bobyqa` for lmerTest
 #' @param model_performance  vector. `R2_full_model` for conditional R2 and `R2_fixed_effect` for marginal R2 (Nakagawa, 2013). `icc` for intraclass correlation coefficient. The function calls the performance package for R2 and ICC (Lüdecke et al., 2020). 
 #' @param y_lim vector of length 2. c(lower_limit, upper_limit)
@@ -72,7 +72,7 @@ model_summary_with_plot = function(data,
                                    graph_label_name = NULL,
                                    estimation_method = 'REML',
                                    opt_control = 'optim',
-                                   na.action = na.exclude,
+                                   na.action = stats::na.exclude,
                                    model_performance = c('R2_fixed_effect','R2_full_model'),
                                    return_result = NULL,
                                    print_result = c('short_summary','plot'),
@@ -234,7 +234,7 @@ model_summary_with_plot = function(data,
       return(summary(model = model))
     } else{return_long_summary = NULL}
 
-    return_list = list(return_model,return_short_summary,return_long_summary,return_bruceR_summary,return_plot)
+    return_list = list(return_model,return_short_summary,return_long_summary,return_plot)
     return_list = return_list[!sapply(return_list,is.null)]
     return(return_list)
   }

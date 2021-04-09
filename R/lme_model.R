@@ -12,7 +12,7 @@
 #' @param three_way_interaction_factor optional vector of length 3. Do not include two-way interaction factors if this is not null. Default to `null`
 #' @param id character or vector of length 1. The nesting variable (e.g. group)
 #' @param estimation_method character. `ML` or `REML` default to `REML`.
-#' @param na.action default to `na.exclude`.
+#' @param na.action default to `stats::na.exclude`.
 #' @param opt_control character. default to `optim` for `lme` and `bobyqa` for lmerTest
 #' @param use_package character. `nlme` or `lmerTest`. Default is `nlme`.
 #' @param quite default to F. If set to `T`, it will not print the fitting model statement
@@ -44,7 +44,7 @@ lme_model <- function(data,
                       id,
                       estimation_method = 'REML',
                       opt_control = 'optim',
-                      na.action = na.exclude,
+                      na.action = stats::na.exclude,
                       use_package = 'nlme',
                       quite = F)
 {

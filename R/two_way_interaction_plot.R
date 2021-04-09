@@ -17,8 +17,7 @@
 #' @return ggplot object. two-way interaction plot
 #' @export
 #'
-#' @examples
-#' # run the fit model first
+#' @examples # run the fit model first
 #' fit = lme_model(response_variable = 'incidence',
 #'                 level_1_factors = 'size',
 #'                 level_2_factors = 'herd',
@@ -52,7 +51,7 @@
 #'                          response_var = 'incidence',
 #'                          predict_var_name = c('size','herd'),
 #'                          graph_label_name = label_name,
-#'                          plot_color = T)
+#'                          plot_color = TRUE)
 #'                          
 two_way_interaction_plot = function(data,
                                     model,

@@ -6,8 +6,6 @@
 #' @return vector. The vector is essential for the lme formula used in function `HLM.Model::HLM_Model`
 #' @export
 #'
-#' @examples
-#'
 #'
 two_way_interaction_terms <- function(interaction_terms) {
   index = 1

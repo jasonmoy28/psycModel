@@ -15,7 +15,3 @@ vector. The vector is essential for the lme formula used in function \code{HLM.M
 \description{
 Essential for HLM.Model::HLM_Model
 }
-\examples{
-
-
-}

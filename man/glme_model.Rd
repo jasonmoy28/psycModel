@@ -15,7 +15,7 @@ glme_model(
   id,
   estimation_method = "REML",
   opt_control = "bobyqa",
-  na.action = na.exclude,
+  na.action = stats::na.exclude,
   quite = F
 )
 }
@@ -28,7 +28,7 @@ glme_model(
 
 \item{level_2_factors}{optional vector. level-2 variables (e.g., group-level)}
 
-\item{family}{a GLM family. It will passed to the family argument in glmer. See \code{?glmer} for possible options. It will also call glmer.nb if family = 'negbin'}
+\item{family}{a GLM family. It will passed to the family argument in glmer. See \code{?glmer} for possible options.}
 
 \item{two_way_interaction_factor}{optional vector of length more than 2. Default to \code{null}}
 
@@ -40,7 +40,7 @@ glme_model(
 
 \item{opt_control}{character. default to \code{bobyqa}}
 
-\item{na.action}{default to \code{na.exclude}.}
+\item{na.action}{default to \code{stats::na.exclude}.}
 
 \item{quite}{default to F. If set to \code{T}, it will not print the fitting model statement}
 }

@@ -24,7 +24,7 @@ three_way_interaction_plot(
 
 \item{predict_var_name}{vector of length 3. the variables' name for the two-way interaction plot}
 
-\item{cateogrical_var}{list. use the form list(var_name1 = c(upper_bound1, lower_bound1), \link{var_name2 = c(upper_bound2, lower_bound2})}
+\item{cateogrical_var}{list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of \code{list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))}}
 
 \item{graph_label_name}{vector of length 3 or function. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, predict_var3). Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)}
 
@@ -40,6 +40,8 @@ ggplot object. three-way interaction plot
 The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable.
 }
 \examples{
+# see ?two_way_interaction_plot for example. 
+# The examples work with three_way_interaction_plot with easy modification
 
 }
 \references{

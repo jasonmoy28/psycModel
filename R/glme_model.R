@@ -7,12 +7,12 @@
 #' @param response_variable character or vector of length 1
 #' @param level_1_factors vector. Level-1 variables (e.g., individual-level)
 #' @param level_2_factors optional vector. level-2 variables (e.g., group-level)
-#' @param family a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options. It will also call glmer.nb if family = 'negbin'
+#' @param family a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options. 
 #' @param two_way_interaction_factor optional vector of length more than 2. Default to `null`
 #' @param three_way_interaction_factor optional vector of length 3. Do not include two-way interaction factors if this is not null. Default to `null`
 #' @param id character or vector of length 1. The nesting variable (e.g. group)
 #' @param estimation_method character. `ML` or `REML` default to `REML`.
-#' @param na.action default to `na.exclude`.
+#' @param na.action default to `stats::na.exclude`.
 #' @param opt_control character. default to `bobyqa`
 #' @param quite default to F. If set to `T`, it will not print the fitting model statement
 #'
@@ -45,7 +45,7 @@ glme_model <- function(data,
                        id,
                        estimation_method = 'REML',
                        opt_control = 'bobyqa',
-                       na.action = na.exclude,
+                       na.action = stats::na.exclude,
                        quite = F)
 {
   data = data %>% dplyr::select(response_variable,level_1_factors,level_2_factors,two_way_interaction_factor,three_way_interaction_factor,id)
@@ -91,11 +91,12 @@ glme_model <- function(data,
   }
 
   if (any(family %in% 'negbin')) {
-    library(lme4) # need to figure out why it doesn't work
-    model = do.call(getfun("lme4::glmer.nb"), list(formula = glmerformula,
-                                                   data = data,
-                                                   na.action = na.action,
-                                                   control = glmerCtr))
+    return('Error: Sorry, we do not support negative binomial distribution yet.')
+    # library(lme4) # need to figure out why it doesn't work
+    # model = do.call(getfun("lme4::glmer.nb"), list(formula = glmerformula,
+    #                                                data = data,
+    #                                                na.action = na.action,
+    #                                                control = glmerCtr))
   } else {
     model = do.call(getfun("lme4::glmer"), list(formula = glmerformula,
                                                 data = data,

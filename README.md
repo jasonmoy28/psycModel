@@ -8,6 +8,7 @@
 [![Github last commit](https://img.shields.io/github/last-commit/jasonmoy28/psycModel)]()
 [![GPLv3license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://perso.crans.org/besson/LICENSE.html)
 [![DOI](https://zenodo.org/badge/355611696.svg)](https://doi.org/10.5281/zenodo.4671947)
+[![R-CMD-check](https://github.com/jasonmoy28/psycModel/workflows/R-CMD-check/badge.svg)](https://github.com/jasonmoy28/psycModel/actions)
 <!-- badges: end -->
 
 ## Installation
@@ -43,6 +44,8 @@ The package consists of three types of analysis: descriptive statistics, mixed e
 1. Support mediation, moderated mediation analysis
 2. Support latent class and profile analysis (possible latent transition analysis)
 3. Support model assumption checking tools
+4. Support `lm` and `glm` 
+6. Support exploratory factor analysis
 
 ### version 0.1.1 (released on 4/9/2021)
 **New Feature:**

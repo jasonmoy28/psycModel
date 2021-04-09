@@ -14,7 +14,7 @@ lme_model(
   id,
   estimation_method = "REML",
   opt_control = "optim",
-  na.action = na.exclude,
+  na.action = stats::na.exclude,
   use_package = "nlme",
   quite = F
 )
@@ -38,7 +38,7 @@ lme_model(
 
 \item{opt_control}{character. default to \code{optim} for \code{lme} and \code{bobyqa} for lmerTest}
 
-\item{na.action}{default to \code{na.exclude}.}
+\item{na.action}{default to \code{stats::na.exclude}.}
 
 \item{use_package}{character. \code{nlme} or \code{lmerTest}. Default is \code{nlme}.}
 

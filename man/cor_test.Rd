@@ -14,6 +14,8 @@ cor_test(data, cols, sig_test = "raw", digit = 3, ...)
 \item{sig_test}{adjusted or raw. Default is raw. See ?psych::corr.test to learn more.}
 
 \item{digit}{number of digits}
+
+\item{...}{additional argument.}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr

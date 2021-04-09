@@ -2,10 +2,12 @@
 #' 
 #' `r lifecycle::badge("stable")` \cr
 #' This function uses the psych::corr.test (Revelle, 2021) function to generated the pearson correlation table and their associated significance values. 
+#'
 #' @param data data frame
 #' @param cols vector or tidyselect syntax or helpers. column(s) that need to be recoded.
 #' @param digit number of digits
 #' @param sig_test adjusted or raw. Default is raw. See ?psych::corr.test to learn more.
+#' @param ... additional argument.
 #'
 #' @export
 #' @references 
@@ -31,7 +33,7 @@ cor_test =  function(data,cols,sig_test = 'raw',digit = 3,...) {
     dplyr::mutate(dplyr::across(where(is.numeric), ~ format(round(., digit),nsmall = digit)))
 
   cor_df = cor_df_raw %>%
-    dplyr::mutate(rowname = colnames(cor_df_raw)) %>%
+    dplyr::mutate('rowname' = colnames(cor_df_raw)) %>%
     dplyr::select('rowname',tidyr::everything())
 
 
@@ -67,9 +69,9 @@ cor_test =  function(data,cols,sig_test = 'raw',digit = 3,...) {
       return(cor_df)
     }
   }
-  cor_df = cor_df %>% dplyr::select(-rowname)
+  cor_df = cor_df %>% dplyr::select(-'rowname')
 
-    # printing warning meesage, non-essential block
+    # printing warning message, non-essential block
   coreced_name = NULL
   coreced_name = data %>% dplyr::select(!where(is.numeric)) %>% names(.)
   if (length(coreced_name) != 0) {

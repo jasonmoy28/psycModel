@@ -3,6 +3,7 @@
 export("%>%")
 export(cfa_groupwise)
 export(cfa_summary)
+export(compare_fit)
 export(cor_test)
 export(descriptive_table)
 export(glme_model)

@@ -74,7 +74,7 @@ two_way_interaction_plot(data = lme4::cbpp,
                          response_var = 'incidence',
                          predict_var_name = c('size','herd'),
                          graph_label_name = label_name,
-                         plot_color = T)
+                         plot_color = TRUE)
                          
 }
 \references{
