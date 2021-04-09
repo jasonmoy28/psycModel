@@ -1,5 +1,6 @@
 #' Confirmatory Factor Analysis
-#'
+#' 
+#' `r lifecycle::badge("stable")` \cr
 #' The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. In addition to passing an explicit lavaan model, users can fit a uni-factor CFA using the `items` argument. Moreover, users can request 3 types of summary for the model (see below for options). 
 #'
 #' @param data data frame

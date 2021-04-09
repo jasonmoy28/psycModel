@@ -10,7 +10,7 @@ two_way_interaction_terms(interaction_terms)
 \item{interaction_terms}{vector. names of the interaction terms}
 }
 \value{
-vector. The vector is essential for the lme formula used in function `HLM.Model::HLM_Model`
+vector. The vector is essential for the lme formula used in function \code{HLM.Model::HLM_Model}
 }
 \description{
 Essential for HLM.Model::HLM_Model

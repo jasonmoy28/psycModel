@@ -1,5 +1,6 @@
 #' Generalized Linear Mixed Effect Model
-#'
+#' 
+#' `r lifecycle::badge("experimental")` \cr
 #' Generalized linear mixed effect model. The function uses the `lme4::glmer`(Bates et al., 2014) function
 #'
 #' @param data data frame

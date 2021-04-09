@@ -1,5 +1,6 @@
 #' Three-way Interaction Plot
-#'
+#' 
+#' `r lifecycle::badge("experimental")` \cr
 #' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. 
 #'
 #' @param data data frame

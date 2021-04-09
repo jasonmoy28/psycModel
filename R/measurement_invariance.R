@@ -1,5 +1,6 @@
 #' Measurement Invariance
-#'
+#' 
+#' `r lifecycle::badge("stable")` \cr
 #' Compute the measurement invariance model (i.e., measurement equivalence model) using multi-group confirmatory factor analysis (MGCFA; Jöreskog, 1971). This function uses the lavaan::cfa (Rosseel, 2012) and the semTools::compareFit (Jorgensen, 2021) function. Users can run the configural-metric or the configural-metric-scalar comparisons (see below for detail instruction). 
 #' 
 #' @param data data frame

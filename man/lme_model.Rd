@@ -28,27 +28,28 @@ lme_model(
 
 \item{level_2_factors}{optional vector. level-2 variables (e.g., group-level)}
 
-\item{two_way_interaction_factor}{optional vector of length more than 2. Default to `null`}
+\item{two_way_interaction_factor}{optional vector of length more than 2. Default to \code{null}}
 
-\item{three_way_interaction_factor}{optional vector of length 3. Do not include two-way interaction factors if this is not null. Default to `null`}
+\item{three_way_interaction_factor}{optional vector of length 3. Do not include two-way interaction factors if this is not null. Default to \code{null}}
 
 \item{id}{character or vector of length 1. The nesting variable (e.g. group)}
 
-\item{estimation_method}{character. `ML` or `REML` default to `REML`.}
+\item{estimation_method}{character. \code{ML} or \code{REML} default to \code{REML}.}
 
-\item{opt_control}{character. default to `optim` for `lme` and `bobyqa` for lmerTest}
+\item{opt_control}{character. default to \code{optim} for \code{lme} and \code{bobyqa} for lmerTest}
 
-\item{na.action}{default to `na.exclude`.}
+\item{na.action}{default to \code{na.exclude}.}
 
-\item{use_package}{character. `nlme` or `lmerTest`. Default is `nlme`.}
+\item{use_package}{character. \code{nlme} or \code{lmerTest}. Default is \code{nlme}.}
 
-\item{quite}{default to F. If set to `T`, it will not print the fitting model statement}
+\item{quite}{default to F. If set to \code{T}, it will not print the fitting model statement}
 }
 \value{
-An object of class `lme` of `lmerModLmerTest` representing the linear mixed-effects model fit.
+An object of class \code{lme} of \code{lmerModLmerTest} representing the linear mixed-effects model fit.
 }
 \description{
-Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the `nlme::lme` (Pinheiro, 2006)  or the `lmerTest::lmer` (Kuznetsova, 2017) function.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
+Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the \code{nlme::lme} (Pinheiro, 2006)  or the \code{lmerTest::lmer} (Kuznetsova, 2017) function.
 }
 \examples{
 lme_model(response_variable = 'Reaction',

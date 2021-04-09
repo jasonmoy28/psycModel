@@ -1,5 +1,6 @@
 #' Model Summary for Mixed Effect Model
-#'
+#' 
+#' `r lifecycle::badge("stable")` \cr
 #' The function will extract the relevant coefficients from the linear mixed effect models (see supported model below). 
 #' 
 #' @param model an object from nlme::lme, lmerTest::lmer, or lme4::glmer

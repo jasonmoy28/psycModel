@@ -19,7 +19,7 @@ cfa_summary(
 \arguments{
 \item{data}{data frame}
 
-\item{model}{explicit lavaan model. Either the `model` argument or the `items` argument must be specified.}
+\item{model}{explicit lavaan model. Either the \code{model} argument or the \code{items} argument must be specified.}
 
 \item{group}{optional character. default is NULL. the nested variable for multilevel dataset (e.g., Country)}
 
@@ -36,7 +36,8 @@ cfa_summary(
 \item{group_partial}{Items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').}
 }
 \description{
-The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. In addition to passing an explicit lavaan model, users can fit a uni-factor CFA using the `items` argument. Moreover, users can request 3 types of summary for the model (see below for options).
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
+The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. In addition to passing an explicit lavaan model, users can fit a uni-factor CFA using the \code{items} argument. Moreover, users can request 3 types of summary for the model (see below for options).
 }
 \examples{
 # Fitting a CFA model by passing explicit lavaan model. 
@@ -52,7 +53,7 @@ cfa_summary(items = x1:x3,
 
 }
 \references{
-Bao, H.-W.-S. (2021). bruceR: Broadly useful convenient and efficient R functions. R package version 0.6.0. https://CRAN.R-project.org/package=bruceR 
+Bao, H.-W.-S. (2021). bruceR: Broadly useful convenient and efficient R functions. R package version 0.6.0. https://CRAN.R-project.org/package=bruceR
 
 Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 

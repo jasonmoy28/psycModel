@@ -1,7 +1,9 @@
 #' Linear Mixed Effect Model
-#'
+#' 
+#' `r lifecycle::badge("experimental")` \cr
 #' Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the `nlme::lme` (Pinheiro, 2006)  or the `lmerTest::lmer` (Kuznetsova, 2017) function.
-#'
+#' 
+#' 
 #' @param data data frame
 #' @param response_variable character or vector of length 1
 #' @param level_1_factors vector. Level-1 variables (e.g., individual-level)
@@ -14,7 +16,7 @@
 #' @param opt_control character. default to `optim` for `lme` and `bobyqa` for lmerTest
 #' @param use_package character. `nlme` or `lmerTest`. Default is `nlme`.
 #' @param quite default to F. If set to `T`, it will not print the fitting model statement
-#'
+#' 
 #' @return An object of class `lme` of `lmerModLmerTest` representing the linear mixed-effects model fit.
 #' @export
 #'

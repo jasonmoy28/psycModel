@@ -16,7 +16,7 @@ model_summary(
 \arguments{
 \item{model}{an object from nlme::lme, lmerTest::lmer, or lme4::glmer}
 
-\item{model_performance}{vector. `R2_full_model` for conditional R2 and `R2_fixed_effect` for marginal R2 (Nakagawa, 2013). `icc` for intraclass correlation coefficient. The function calls the performance package for R2 and ICC (Lüdecke et al., 2020).}
+\item{model_performance}{vector. \code{R2_full_model} for conditional R2 and \code{R2_fixed_effect} for marginal R2 (Nakagawa, 2013). \code{icc} for intraclass correlation coefficient. The function calls the performance package for R2 and ICC (Lüdecke et al., 2020).}
 
 \item{estimate_round}{numeric. number of digit to round to for the slope estimate}
 
@@ -30,6 +30,7 @@ model_summary(
 a dataframe with estimate, degree of freedom, p_value, and whether that p-value is significant
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 The function will extract the relevant coefficients from the linear mixed effect models (see supported model below).
 }
 \examples{

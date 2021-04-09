@@ -1,5 +1,6 @@
 #' Model Summary with Interaction Plot
 #'
+#' `r lifecycle::badge("experimental")` \cr
 #' It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019). If you requested bruceR_summary, it will uses the bruceR::HLM_summary (Bao, 2021)
 #'
 #' @param data data frame

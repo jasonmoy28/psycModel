@@ -9,7 +9,7 @@ cfa_groupwise(data, model = NULL, group, items = NULL, ordered = F)
 \arguments{
 \item{data}{data frame}
 
-\item{model}{explicit lavaan model. Either the `model` argument or the `items` argument must be specified.}
+\item{model}{explicit lavaan model. Either the \code{model} argument or the \code{items} argument must be specified.}
 
 \item{group}{character. group variable.}
 
@@ -18,6 +18,7 @@ cfa_groupwise(data, model = NULL, group, items = NULL, ordered = F)
 \item{ordered}{logical. default is F. If it is set to T, lavaan will treat it as a ordinal variable and use DWLS instead of ML}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 This function will run a series of CFA (n = length(group)) with respect to each group. The function is intended to help you get a better understanding of which group has abnormal fit indicator
 }
 \examples{

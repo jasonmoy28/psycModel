@@ -43,25 +43,25 @@ model_summary_with_plot(
 
 \item{three_way_interaction_factor}{optional vector of length 3. Do not specify two-way interaction factors if you specify the three-way interaction factor}
 
-\item{cateogrical_var}{list. use the form list(var_name1 = c(upper_bound1, lower_bound1), [var_name2 = c(upper_bound2, lower_bound2]).}
+\item{cateogrical_var}{list. use the form list(var_name1 = c(upper_bound1, lower_bound1), \link{var_name2 = c(upper_bound2, lower_bound2}).}
 
 \item{id}{character. The nesting variable (e.g. group, time).}
 
-\item{family}{a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options. It will also call glmer.nb if family = 'negbin'}
+\item{family}{a GLM family. It will passed to the family argument in glmer. See \code{?glmer} for possible options. It will also call glmer.nb if family = 'negbin'}
 
-\item{graph_label_name}{optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, [predict_var3]). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)}
+\item{graph_label_name}{optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, \link{predict_var3}). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)}
 
-\item{estimation_method}{character. `ML` or `REML` default is `REML`.}
+\item{estimation_method}{character. \code{ML} or \code{REML} default is \code{REML}.}
 
-\item{opt_control}{character. default to `optim` for `lme` and `bobyqa` for lmerTest}
+\item{opt_control}{character. default to \code{optim} for \code{lme} and \code{bobyqa} for lmerTest}
 
-\item{na.action}{default to `na.exclude`.}
+\item{na.action}{default to \code{na.exclude}.}
 
-\item{model_performance}{vector. `R2_full_model` for conditional R2 and `R2_fixed_effect` for marginal R2 (Nakagawa, 2013). `icc` for intraclass correlation coefficient. The function calls the performance package for R2 and ICC (Lüdecke et al., 2020).}
+\item{model_performance}{vector. \code{R2_full_model} for conditional R2 and \code{R2_fixed_effect} for marginal R2 (Nakagawa, 2013). \code{icc} for intraclass correlation coefficient. The function calls the performance package for R2 and ICC (Lüdecke et al., 2020).}
 
-\item{return_result}{optional vector. Choose from  `model`,`plot`,`short_summary`,`long_summary`,`bruceR_summary`.`model` return the model object. `plot` return the interaction plot.`short_summary` return a short model summary. `long_summary` return the summary. `bruceR_summary` uses the bruceR::HLM_summary (Bao, 2021) function.}
+\item{return_result}{optional vector. Choose from  \code{model},\code{plot},\code{short_summary},\code{long_summary},\code{bruceR_summary}.\code{model} return the model object. \code{plot} return the interaction plot.\code{short_summary} return a short model summary. \code{long_summary} return the summary. \code{bruceR_summary} uses the bruceR::HLM_summary (Bao, 2021) function.}
 
-\item{print_result}{optional vector. Choose from `model`,`plot`,`short_summary`,`long_summary`.`model` return the model object. `plot` return the interaction plot.`short_summary` return a short model summary. `long_summary` return the summary.}
+\item{print_result}{optional vector. Choose from \code{model},\code{plot},\code{short_summary},\code{long_summary}.\code{model} return the model object. \code{plot} return the interaction plot.\code{short_summary} return a short model summary. \code{long_summary} return the summary.}
 
 \item{y_lim}{vector of length 2. c(lower_limit, upper_limit)}
 
@@ -75,12 +75,13 @@ model_summary_with_plot(
 
 \item{use_package}{character. Only available for linear mixed effect model. Options are "nlme" or "lmerTest". Default is "nlme".}
 
-\item{quite}{default to F. If set to `T`, it will not print the fitting model statement}
+\item{quite}{default to F. If set to \code{T}, it will not print the fitting model statement}
 }
 \value{
 return a list of all requested items in the order of model, short_summary, long_summary, plot
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
 It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019). If you requested bruceR_summary, it will uses the bruceR::HLM_summary (Bao, 2021)
 }
 \examples{

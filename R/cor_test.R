@@ -1,5 +1,6 @@
 #' Correlation table
-#'
+#' 
+#' `r lifecycle::badge("stable")` \cr
 #' This function uses the psych::corr.test (Revelle, 2021) function to generated the pearson correlation table and their associated significance values. 
 #' @param data data frame
 #' @param cols vector or tidyselect syntax or helpers. column(s) that need to be recoded.

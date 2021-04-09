@@ -17,7 +17,7 @@ measurement_invariance(
 \arguments{
 \item{data}{data frame}
 
-\item{model}{explicit lavaan model. Either the `model` argument or the `items` argument must be specified.}
+\item{model}{explicit lavaan model. Either the \code{model} argument or the \code{items} argument must be specified.}
 
 \item{items}{vector of tidyselect syntax or helpers. default to NULL if the model is specified. The argument will be ignored if the model is explicitly specified.}
 
@@ -33,6 +33,7 @@ measurement_invariance(
 return the compareFit object
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 Compute the measurement invariance model (i.e., measurement equivalence model) using multi-group confirmatory factor analysis (MGCFA; Jöreskog, 1971). This function uses the lavaan::cfa (Rosseel, 2012) and the semTools::compareFit (Jorgensen, 2021) function. Users can run the configural-metric or the configural-metric-scalar comparisons (see below for detail instruction).
 }
 \examples{

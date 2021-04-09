@@ -2,9 +2,7 @@
 #'
 #' @param data data frame
 #'
-#' @return
 #'
-#' @examples
 
 data_check = function(data){
   datatype = as.vector(sapply(data, class))

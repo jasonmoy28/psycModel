@@ -25,4 +25,6 @@ Imports:
     utils,
     tidyr,
     psych,
-    interactions
+    interactions,
+    lifecycle
+Roxygen: list(markdown = TRUE)

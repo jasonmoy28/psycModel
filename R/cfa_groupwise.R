@@ -1,5 +1,6 @@
 #' Confirmatory Factor Analysis (groupwise)
-#'
+#' 
+#' `r lifecycle::badge("stable")` \cr
 #' This function will run a series of CFA (n = length(group)) with respect to each group. The function is intended to help you get a better understanding of which group has abnormal fit indicator
 #'
 #' @param data data frame

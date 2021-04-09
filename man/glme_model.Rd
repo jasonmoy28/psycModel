@@ -28,27 +28,28 @@ glme_model(
 
 \item{level_2_factors}{optional vector. level-2 variables (e.g., group-level)}
 
-\item{family}{a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options. It will also call glmer.nb if family = 'negbin'}
+\item{family}{a GLM family. It will passed to the family argument in glmer. See \code{?glmer} for possible options. It will also call glmer.nb if family = 'negbin'}
 
-\item{two_way_interaction_factor}{optional vector of length more than 2. Default to `null`}
+\item{two_way_interaction_factor}{optional vector of length more than 2. Default to \code{null}}
 
-\item{three_way_interaction_factor}{optional vector of length 3. Do not include two-way interaction factors if this is not null. Default to `null`}
+\item{three_way_interaction_factor}{optional vector of length 3. Do not include two-way interaction factors if this is not null. Default to \code{null}}
 
 \item{id}{character or vector of length 1. The nesting variable (e.g. group)}
 
-\item{estimation_method}{character. `ML` or `REML` default to `REML`.}
+\item{estimation_method}{character. \code{ML} or \code{REML} default to \code{REML}.}
 
-\item{opt_control}{character. default to `bobyqa`}
+\item{opt_control}{character. default to \code{bobyqa}}
 
-\item{na.action}{default to `na.exclude`.}
+\item{na.action}{default to \code{na.exclude}.}
 
-\item{quite}{default to F. If set to `T`, it will not print the fitting model statement}
+\item{quite}{default to F. If set to \code{T}, it will not print the fitting model statement}
 }
 \value{
 An object of class "glmerMod" representing the linear mixed-effects model fit.
 }
 \description{
-Generalized linear mixed effect model. The function uses the `lme4::glmer`(Bates et al., 2014) function
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
+Generalized linear mixed effect model. The function uses the \code{lme4::glmer}(Bates et al., 2014) function
 }
 \examples{
 x <- rnorm(200)

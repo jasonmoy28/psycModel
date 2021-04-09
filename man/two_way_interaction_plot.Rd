@@ -18,15 +18,15 @@ two_way_interaction_plot(
 \arguments{
 \item{data}{data frame.}
 
-\item{model}{lme object from `nlme::lme`}
+\item{model}{lme object from \code{nlme::lme}}
 
 \item{response_var}{response variable name}
 
 \item{predict_var_name}{vector of length 2. predictive variable names}
 
-\item{graph_label_name}{vector of length 3 or function. Vector should be passed in the form of `c(response_var, predict_var1, predict_var2)`. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)}
+\item{graph_label_name}{vector of length 3 or function. Vector should be passed in the form of \code{c(response_var, predict_var1, predict_var2)}. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)}
 
-\item{cateogrical_var}{list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`}
+\item{cateogrical_var}{list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of \code{list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))}}
 
 \item{y_lim}{vector of length 2. c(lower_limit, upper_limit). Default is +0.5 of the max -0.5 of the min Y value}
 
@@ -36,6 +36,7 @@ two_way_interaction_plot(
 ggplot object. two-way interaction plot
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
 The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable.
 }
 \examples{

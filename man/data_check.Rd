@@ -9,9 +9,6 @@ data_check(data)
 \arguments{
 \item{data}{data frame}
 }
-\value{
-
-}
 \description{
 Data Check (do not call directly)
 }
