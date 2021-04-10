@@ -14,7 +14,7 @@
 #' @param estimation_method character. `ML` or `REML` default to `REML`.
 #' @param na.action default to `stats::na.exclude`.
 #' @param opt_control character. default to `optim` for `lme` and `bobyqa` for lmerTest
-#' @param use_package character. `nlme` or `lmerTest`. Default is `nlme`.
+#' @param use_package character. `nlme` or `lmerTest`, or `lme4`. Default is `nlme`.
 #' @param quite default to F. If set to `T`, it will not print the fitting model statement
 #' 
 #' @return An object of class `lme` of `lmerModLmerTest` representing the linear mixed-effects model fit.
@@ -102,7 +102,7 @@ lme_model <- function(data,
                                               control = ctrl,
                                               method = estimation_method))
 
-  } else if (use_package == 'lmerTest') {
+  } else if (use_package == 'lmerTest' | use_package == 'lme4') {
     # change the default optimzer to bobyqa for lmerTest
     if (opt_control == 'optim') {
       opt_control = 'bobyqa'
@@ -129,10 +129,18 @@ lme_model <- function(data,
         x
       }
     }
-    model = do.call(getfun("lmerTest::lmer"), list(formula = lmerformula,
-                                                   data = data,
-                                                   na.action = na.action,
-                                                   control = lmerCtr))
+    if (use_package == 'lmerTest') {
+      model = do.call(getfun("lmerTest::lmer"), list(formula = lmerformula,
+                                                     data = data,
+                                                     na.action = na.action,
+                                                     control = lmerCtr))
+    } else if(use_package == 'lme4'){
+      model = do.call(getfun("lme4::lmer"), list(formula = lmerformula,
+                                                     data = data,
+                                                     na.action = na.action,
+                                                     control = lmerCtr))
+    }
+
   }
   return(model)
 }

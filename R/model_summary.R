@@ -18,7 +18,7 @@
 #' 
 #' Nakagawa, S., & Schielzeth, H. (2013). A general and simple method for obtaining R2 from generalized linear mixed-effects models. Methods in Ecology and Evolution, 4(2), 133–142. https://doi.org/10.1111/j.2041-210x.2012.00261.x
 #' 
-#' @return a dataframe with estimate, degree of freedom, p_value, and whether that p-value is significant
+#' @return a data frame with estimate, degree of freedom, p_value, and whether the p-value is significant
 #' @export
 #'
 #' @examples
@@ -59,7 +59,7 @@ model_summary <- function(model,
     # lmer model
   } else if (class(model) == 'lmerModLmerTest' | class(model) == 'lmerMod' | model_fit == 'lmer') {
     if (class(model) == 'lmerMod') {
-      lmerTest::as_lmerModLmerTest(model = model)
+      model = lmerTest::as_lmerModLmerTest(model = model)
       print('Degree of freedom and p-value is extracted from lmerTest')
     }
 
