@@ -14,6 +14,10 @@
 compare_fit = function(models,
                        digits = 3)
 {
+  if (class(models) != 'list') {
+    stop(paste('models must be list. Considering wrapping the objects in a list'))
+    }
+    
   # lavaan models
   if (all(sapply(models, class) %in% 'lavaan')) {
     blank_df = tibble::tibble(chisq = '', df = '', pvalue = '', cfi = '', rmsea = '',srmr = '',tli = '',aic = '', bic = '', bic2 = '',rowname ='.') %>% tibble::column_to_rownames()
@@ -57,17 +61,16 @@ compare_fit = function(models,
   } else if (all(sapply(models, class) %in% c('lme','lmerModLmerTest','glmerMod','lmerMod'))) {
     return_df = tibble::tibble(AIC = NULL, BIC = NULL, R2_conditional = NULL, R2_marginal = NULL, ICC = NULL, RMSE = NULL, Sigma = NULL)
     for (model in models) {
-      model_performance_df = tibble::as_tibble(performance::model_performance(model))
+      model_performance_df = tibble::as_tibble(performance::model_performance(model)) %>% 
+        dplyr::rename(R2_full_model = .data$R2_conditional) %>% 
+        dplyr::rename(R2_fixed_effect = .data$R2_marginal) 
       return_df = rbind(return_df,model_performance_df)
     }
+    message('R2_full_model is formally known as R2 conditional, R2_fixed_effect is formally known as R2 marginal')
     return_df = return_df %>% 
       dplyr::mutate(dplyr::across(tidyr::everything(), ~ format(round(., digits = digits),nsmall = digits)))
     return(return_df)
   } else{
-    if (class(models) != 'list') {
-      return(paste('Error: please wrap the object in a list'))
-    } else{
-      return(paste('Error: object class',class(models[[1]]),'is not supported'))
+      stop(paste('Object class',class(models[[1]]),'is not supported'))
     }
-  }
 }

@@ -90,7 +90,7 @@ glme_model <- function(data,
   }
 
   if (any(family %in% 'negbin')) {
-    return('Error: Sorry, we do not support negative binomial distribution yet.')
+    stop('Sorry, we do not support negative binomial distribution yet.')
     # library(lme4) # need to figure out why it doesn't work
     # model = do.call(getfun("lme4::glmer.nb"), list(formula = glmerformula,
     #                                                data = data,

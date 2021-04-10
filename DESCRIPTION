@@ -8,7 +8,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "jasonmoy28@gmail.com",
            comment = c(ORCID = "0000-0001-8795-3311")))
-Description: Useful R package that integrate many analysis that is used in psychology.
+Description: The package integrated many useful functions from a variety of popular R packages. The package is aimed researchers in psychology or related field.  
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -29,7 +29,8 @@ Imports:
     utils,
     psych,
     lifecycle,
-    rlang
+    rlang,
+    qqplotr
 Roxygen: list(markdown = TRUE)
 Suggests: 
     rmarkdown,
