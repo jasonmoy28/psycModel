@@ -1,10 +1,10 @@
 #' Three-way Interaction Plot
 #' 
 #' `r lifecycle::badge("experimental")` \cr
-#' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. 
+#' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model
 #'
 #' @param data data frame
-#' @param model lme object or lmerModLmerTest object
+#' @param model lme, lmerMod, lmerModLmerTest object. Partially support glmer object (beta testing)
 #' @param response_var response variable name
 #' @param predict_var_name vector of length 3. the variables' name for the two-way interaction plot
 #' @param graph_label_name vector of length 3 or function. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, predict_var3). Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)
@@ -15,7 +15,7 @@
 #' @references
 #' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 #'
-#' @return ggplot object. three-way interaction plot
+#' @return ggplot object.
 #'
 #' @export
 #'
@@ -115,7 +115,7 @@ three_way_interaction_plot = function(data,
     upper_lower_lower_predicted_value = stats::predict(model,newdata = upper_lower_lower_df,level = 0)
     lower_upper_lower_predicted_value = stats::predict(model,newdata = lower_upper_lower_df,level = 0)
     lower_lower_lower_predicted_value = stats::predict(model,newdata = lower_lower_lower_df,level = 0)
-  } else if(class(model) == 'lmerModLmerTest'| class(model) == 'glmerMod'){
+  } else if(class(model) == 'lmerModLmerTest'| class(model) == 'glmerMod' | class(model) == 'lmerMod'){
     upper_upper_lower_predicted_value = stats::predict(model,newdata = upper_upper_lower_df,allow.new.levels = T)
     upper_lower_lower_predicted_value = stats::predict(model,newdata = upper_lower_lower_df,allow.new.levels = T)
     lower_upper_lower_predicted_value = stats::predict(model,newdata = lower_upper_lower_df,allow.new.levels = T)

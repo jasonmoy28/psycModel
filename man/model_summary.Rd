@@ -27,7 +27,7 @@ model_summary(
 \item{model_fit}{if you know your model produce same result as one of the object specify in the model argument, then you can try pass it to the function. Do it at your own risk.}
 }
 \value{
-a dataframe with estimate, degree of freedom, p_value, and whether that p-value is significant
+a data frame with estimate, degree of freedom, p_value, and whether the p-value is significant
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr

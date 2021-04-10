@@ -23,10 +23,10 @@ model_summary_with_plot(
   print_result = c("short_summary", "plot"),
   y_lim = NULL,
   plot_color = F,
-  estimate_round = 3,
-  p_value_round = 3,
-  performance_round = 3,
+  digit = c(3, 3, 3),
   use_package = "nlme",
+  simple_slope = F,
+  check_assumption = F,
   quite = F
 )
 }
@@ -47,7 +47,7 @@ model_summary_with_plot(
 
 \item{id}{character. The nesting variable (e.g. group, time).}
 
-\item{family}{a GLM family. It will passed to the family argument in glmer. See \code{?glmer} for possible options. It will also call glmer.nb if family = 'negbin'}
+\item{family}{a GLM family. It will passed to the family argument in glmer. See \code{?glmer} for possible options.}
 
 \item{graph_label_name}{optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)}
 
@@ -59,7 +59,7 @@ model_summary_with_plot(
 
 \item{model_performance}{vector. \code{R2_full_model} for conditional R2 and \code{R2_fixed_effect} for marginal R2 (Nakagawa, 2013). \code{icc} for intraclass correlation coefficient. The function calls the performance package for R2 and ICC (Lüdecke et al., 2020).}
 
-\item{return_result}{optional vector. Choose from  \code{model},\code{plot},\code{short_summary},\code{long_summary},\code{bruceR_summary}.\code{model} return the model object. \code{plot} return the interaction plot.\code{short_summary} return a short model summary. \code{long_summary} return the summary. \code{bruceR_summary} uses the bruceR::HLM_summary (Bao, 2021) function.}
+\item{return_result}{optional vector. Choose from  \code{model},\code{plot},\code{short_summary},\code{long_summary}. \code{model} return the model object. \code{plot} return the interaction plot.\code{short_summary} return a short model summary. \code{long_summary} return the summary.}
 
 \item{print_result}{optional vector. Choose from \code{model},\code{plot},\code{short_summary},\code{long_summary}.\code{model} return the model object. \code{plot} return the interaction plot.\code{short_summary} return a short model summary. \code{long_summary} return the summary.}
 
@@ -67,13 +67,13 @@ model_summary_with_plot(
 
 \item{plot_color}{logical. default as F. Set to T if you want to plot in color}
 
-\item{estimate_round}{numeric. number of digit to round to for the slope estimate.}
+\item{digit}{number of digit. Specify as a vector with c(estimate_digit, p_value_digit, model_performance_digit)}
 
-\item{p_value_round}{numeric. number of digit to round to for the p-value.}
+\item{use_package}{character. Default is "nlme". Only available for linear mixed effect model. Options are \code{nlme} or \code{lmerTest},\code{lme4}(\verb{'lme4} return similiar result as \code{lmerTest} except the return model)}
 
-\item{performance_round}{numeric. number of digit to round to for the performance statistics (e.g., R2)}
+\item{simple_slope}{default is F. compute simple slope using interaction:sim_slopes (Long, 2019)}
 
-\item{use_package}{character. Only available for linear mixed effect model. Options are "nlme" or "lmerTest". Default is "nlme".}
+\item{check_assumption}{default is F. generated an panel of plots that check major assumptions. It uses the performance::check_model (Lüdecke, 2020). see ?performance::check_model to learn mode (it supports a wider array of object)}
 
 \item{quite}{default to F. If set to \code{T}, it will not print the fitting model statement}
 }
@@ -82,7 +82,7 @@ return a list of all requested items in the order of model, short_summary, long_
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
-It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019). If you requested bruceR_summary, it will uses the bruceR::HLM_summary (Bao, 2021)
+It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019). If you requested , it will uses the bruceR::HLM_summary (Bao, 2021)
 }
 \examples{
 
@@ -98,8 +98,6 @@ model_summary_with_plot(response_variable = 'incidence',
 
 }
 \references{
-Bao, H.-W.-S. (2021). bruceR: Broadly useful convenient and efficient R functions. R package version 0.6.0. https://CRAN.R-project.org/package=bruceR
-
 Bates, D., Mächler, M., Bolker, B., & Walker, S. (2014). Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software, 67(1), 1–48. doi: 10.18637/jss.v067.i01.
 
 Kuznetsova, A., Brockhoff, P. B., & Christensen, R. H. (2017). lmerTest package: tests in linear mixed effects models. Journal of statistical software, 82(13), 1-26.

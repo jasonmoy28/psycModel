@@ -40,7 +40,7 @@ lme_model(
 
 \item{na.action}{default to \code{stats::na.exclude}.}
 
-\item{use_package}{character. \code{nlme} or \code{lmerTest}. Default is \code{nlme}.}
+\item{use_package}{character. \code{nlme} or \code{lmerTest}, or \code{lme4}. Default is \code{nlme}.}
 
 \item{quite}{default to F. If set to \code{T}, it will not print the fitting model statement}
 }

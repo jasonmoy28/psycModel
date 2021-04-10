@@ -18,7 +18,7 @@ three_way_interaction_plot(
 \arguments{
 \item{data}{data frame}
 
-\item{model}{lme object or lmerModLmerTest object}
+\item{model}{lme, lmerMod, lmerModLmerTest object. Partially support glmer object (beta testing)}
 
 \item{response_var}{response variable name}
 
@@ -33,11 +33,11 @@ three_way_interaction_plot(
 \item{plot_color}{logical. default as F. Set to T if you want to plot in color}
 }
 \value{
-ggplot object. three-way interaction plot
+ggplot object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
-The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable.
+The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model
 }
 \examples{
 # see ?two_way_interaction_plot for example. 

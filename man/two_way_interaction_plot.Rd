@@ -33,7 +33,7 @@ two_way_interaction_plot(
 \item{plot_color}{logical. default as F. Set to T if you want to plot in color}
 }
 \value{
-ggplot object. two-way interaction plot
+ggplot object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr

@@ -14,7 +14,7 @@
 #'
 #' @references
 #' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
-#' @return ggplot object. two-way interaction plot
+#' @return ggplot object.
 #' @export
 #'
 #' @examples # run the fit model first
@@ -104,7 +104,7 @@ two_way_interaction_plot = function(data,
     upper_lower_predicted_value = stats::predict(model,newdata = upper_lower_df,level = 0)
     lower_upper_predicted_value = stats::predict(model,newdata = lower_upper_df,level = 0)
     lower_lower_predicted_value = stats::predict(model,newdata = lower_lower_df,level = 0)
-  } else if(class(model) == 'lmerModLmerTest' | class(model) == 'glmerMod') {
+  } else if(class(model) == 'lmerModLmerTest' | class(model) == 'glmerMod' | class(model) == 'lmerMod') {
     upper_upper_predicted_value = stats::predict(model,newdata = upper_upper_df,allow.new.levels = T)
     upper_lower_predicted_value = stats::predict(model,newdata = upper_lower_df,allow.new.levels = T)
     lower_upper_predicted_value = stats::predict(model,newdata = lower_upper_df,allow.new.levels = T)
