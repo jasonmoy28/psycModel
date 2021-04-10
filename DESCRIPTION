@@ -2,8 +2,12 @@ Package: psycModel
 Type: Package
 Title: Integrated Toolkit for Psychological Analysis and Modeling in R
 Version: 0.1.1
-Author: Jason Moy
-Maintainer: Jason Moy <jasonmoy28@gmail.com>
+Authors@R: 
+  c(person(given = "Jason",
+           family = "Moy",
+           role = c("aut", "cre"),
+           email = "jasonmoy28@gmail.com",
+           comment = c(ORCID = "0000-0001-8795-3311")))
 Description: Useful R package that integrate many analysis that is used in psychology.
 License: GPL (>= 3)
 Encoding: UTF-8
@@ -33,4 +37,3 @@ Suggests:
     knitr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-VignetteBuilder: knitr
