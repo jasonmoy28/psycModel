@@ -46,11 +46,11 @@ The package consists of three types of analysis: descriptive statistics, mixed e
 
 ### version 0.1.1 (released on 4/9/2021)
 **New Feature:**
-* descriptive_table support wider array of descriptive indicator (e.g., median, range) and missing & non_missing values count
+* `descriptive_table` support wider array of descriptive indicator (e.g., median, range) and missing & non_missing values count
 
 **Bugs fixed:**
-* Fixed the cor_test bug that the function return a correlation matrix with blank cells if the correlation is too high between the two items (rounded to 1).
-* Add a data_check function that warns the users if non-numeric variables are coerced into numeric.
+* Fixed the `cor_test` bug that the function return a correlation matrix with blank cells if the correlation is too high between the two items (rounded to 1).
+* Add a `data_check` function that warns the users if non-numeric variables are coerced into numeric.
 
 ### version 0.1.0 (released on 4/8/2021)
 * initial build of package
