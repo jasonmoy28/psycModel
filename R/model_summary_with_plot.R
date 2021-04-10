@@ -1,7 +1,7 @@
 #' Model Summary with Interaction Plot
 #'
 #' `r lifecycle::badge("experimental")` \cr
-#' It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019). If you requested bruceR_summary, it will uses the bruceR::HLM_summary (Bao, 2021)
+#' It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019). If you requested , it will uses the bruceR::HLM_summary (Bao, 2021)
 #'
 #' @param data data frame
 #' @param response_variable character. name of the response variable.
@@ -10,10 +10,10 @@
 #' @param two_way_interaction_factor optional vector of length >= 2.
 #' @param three_way_interaction_factor optional vector of length 3. Do not specify two-way interaction factors if you specify the three-way interaction factor 
 #' @param id character. The nesting variable (e.g. group, time).
-#' @param family a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options. It will also call glmer.nb if family = 'negbin'
+#' @param family a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options.
 #' @param graph_label_name optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)
 #' @param estimation_method character. `ML` or `REML` default is `REML`.
-#' @param return_result optional vector. Choose from  `model`,`plot`,`short_summary`,`long_summary`,`bruceR_summary`.`model` return the model object. `plot` return the interaction plot.`short_summary` return a short model summary. `long_summary` return the summary. `bruceR_summary` uses the bruceR::HLM_summary (Bao, 2021) function. 
+#' @param return_result optional vector. Choose from  `model`,`plot`,`short_summary`,`long_summary`. `model` return the model object. `plot` return the interaction plot.`short_summary` return a short model summary. `long_summary` return the summary.
 #' @param print_result  optional vector. Choose from `model`,`plot`,`short_summary`,`long_summary`.`model` return the model object. `plot` return the interaction plot.`short_summary` return a short model summary. `long_summary` return the summary.
 #' @param na.action default to `stats::na.exclude`.
 #' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
@@ -21,15 +21,13 @@
 #' @param model_performance  vector. `R2_full_model` for conditional R2 and `R2_fixed_effect` for marginal R2 (Nakagawa, 2013). `icc` for intraclass correlation coefficient. The function calls the performance package for R2 and ICC (Lüdecke et al., 2020). 
 #' @param y_lim vector of length 2. c(lower_limit, upper_limit)
 #' @param plot_color logical. default as F. Set to T if you want to plot in color
-#' @param estimate_round  numeric. number of digit to round to for the slope estimate.
-#' @param p_value_round numeric. number of digit to round to for the p-value.
-#' @param performance_round numeric. number of digit to round to for the performance statistics (e.g., R2)
-#' @param use_package character. Only available for linear mixed effect model. Options are "nlme" or "lmerTest". Default is "nlme".
+#' @param use_package character. Default is "nlme". Only available for linear mixed effect model. Options are `nlme` or `lmerTest`,`lme4`(`'lme4` return similiar result as `lmerTest` except the return model)
 #' @param quite default to F. If set to `T`, it will not print the fitting model statement
+#' @param digit number of digit. Specify as a vector with c(estimate_digit, p_value_digit, model_performance_digit)
+#' @param simple_slope default is F. compute simple slope using interaction:sim_slopes (Long, 2019)
+#' @param check_assumption default is F. generated an panel of plots that check major assumptions. It uses the performance::check_model (Lüdecke, 2020). see ?performance::check_model to learn mode (it supports a wider array of object)
 #'
 #' @references
-#' Bao, H.-W.-S. (2021). bruceR: Broadly useful convenient and efficient R functions. R package version 0.6.0. https://CRAN.R-project.org/package=bruceR
-#'
 #' Bates, D., Mächler, M., Bolker, B., & Walker, S. (2014). Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software, 67(1), 1–48. doi: 10.18637/jss.v067.i01.
 #'
 #' Kuznetsova, A., Brockhoff, P. B., & Christensen, R. H. (2017). lmerTest package: tests in linear mixed effects models. Journal of statistical software, 82(13), 1-26.
@@ -78,10 +76,10 @@ model_summary_with_plot = function(data,
                                    print_result = c('short_summary','plot'),
                                    y_lim = NULL,
                                    plot_color = F,
-                                   estimate_round = 3,
-                                   p_value_round = 3,
-                                   performance_round = 3,
+                                   digit = c(3,3,3),
                                    use_package = 'nlme',
+                                   simple_slope = F,
+                                   check_assumption = F, 
                                    quite = F) {
 
   # Temporary disable plots for glmer object
@@ -157,9 +155,9 @@ model_summary_with_plot = function(data,
   if (any(print_result %in% 'short_summary') | any(return_result %in% 'short_summary')) {
     model_summary_df = model_summary(model = model,
                                      model_performance = model_performance,
-                                     estimate_round = estimate_round,
-                                     p_value_round = p_value_round,
-                                     performance_round = performance_round)
+                                     estimate_round = digit[1],
+                                     p_value_round = digit[2],
+                                     performance_round = digit[3])
   } else {
     model_summary_df = NULL
   }
@@ -182,37 +180,38 @@ model_summary_with_plot = function(data,
   }
 
   # Check print result
+  if (any(print_result %in% 'model')) {
+    print(model)
+  }
+  
   if (any(print_result %in% 'short_summary')) {
     print(model_summary_df)
   }
-
-  # if(any(print_result %in% 'bruceR_summary')){
-  #   check_package = requireNamespace('bruceR')
-  #   if (check_package == F) {
-  #     response = readline('Install bruceR package? It may take a long time to install. Enter Y/N ')
-  #     if (stringr::str_to_upper(response) == 'Y') {
-  #       utils::install.packages('bruceR')
-  #       bruceR::HLM_summary(model = model,nsmall = estimate_round)
-  #     } else{
-  #       print('Installation Halted. Please do not pass "bruceR_summary" to the print_result argument')
-  #     } 
-  #   } else{
-  #     bruceR::HLM_summary(model = model,nsmall = estimate_round)
-  #   }
-  # }
 
   if(any(print_result %in% 'long_summary')){
     print(summary(model = model))
   }
 
-  if(any(print_result %in% 'simple_slope')){
-    print(simple_slope)
-  }
-
   if(any(print_result %in% 'plot')){
     try(print(interaction_plot))
   }
-
+  
+  if(simple_slope == T){
+    print(simple_slope)
+    warning('This may override the other plot. Set simple_slope to FALSE to see interaction plot. For best experience, knit a Rmd file to see all plots.')
+  }
+  
+  if (check_assumption == T) {
+    print(try(performance::check_model(model)))
+    if (simple_slope == T) {
+      warning('Overrided simple slope plot. Set check_assumption to FALSE to see simple slope plot. Knit a Rmd file to see all plots for better experience.')
+    } 
+    if (any(print_result %in% 'plot')) {
+      warning('Overrided interaction plot. Set check_assumption to FALSE to see interaction plot. Knit a Rmd file to see all plots for better experience.')
+    }
+    
+  }
+  
 
   # Check return result
   if (length(return_result) != 0) {
@@ -227,7 +226,6 @@ model_summary_with_plot = function(data,
     if(any(return_result %in% 'model')) {
       return_model = model
     } else{return_model = NULL}
-
 
     if(any(return_result %in% 'long_summary')) {
       return(summary(model = model))
