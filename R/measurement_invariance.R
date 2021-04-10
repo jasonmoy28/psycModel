@@ -47,7 +47,7 @@ measurement_invariance = function(data,
   
   items = ggplot2::enquo(items)
   if (is.null(model)) {
-    cfa_items = data %>% dplyr::select(!!items) %>% names(.)
+    cfa_items = data %>% dplyr::select(!!items) %>% names()
     model = paste('DV =~', paste(cfa_items, collapse = ' + '))
   }
   

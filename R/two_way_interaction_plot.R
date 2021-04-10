@@ -148,9 +148,9 @@ two_way_interaction_plot = function(data,
 
   if (plot_color){
     plot =
-      ggplot2::ggplot(final_df, ggplot2::aes(y = value, x = var1_category, color = var2_category)) +
+      ggplot2::ggplot(final_df, ggplot2::aes(y = .data$value, x = .data$var1_category, color = .data$var2_category)) +
       ggplot2::geom_point() +
-      ggplot2::geom_line(ggplot2::aes(group = var2_category)) +
+      ggplot2::geom_line(ggplot2::aes(group = .data$var2_category)) +
       ggplot2::labs(y = response_var_plot_label,
            x = predict_var1_plot_label,
            color = predict_var2_plot_label) +
@@ -158,9 +158,9 @@ two_way_interaction_plot = function(data,
       ggplot2::ylim(y_lim[1],y_lim[2])
   } else{
     plot =
-      ggplot2::ggplot(final_df, ggplot2::aes(y = value, x = var1_category, group = var2_category)) +
+      ggplot2::ggplot(final_df, ggplot2::aes(y = .data$value, x = .data$var1_category, group = .data$var2_category)) +
       ggplot2::geom_point() +
-      ggplot2::geom_line(ggplot2::aes(linetype = var2_category)) +
+      ggplot2::geom_line(ggplot2::aes(linetype = .data$var2_category)) +
       ggplot2::labs(y = response_var_plot_label,
            x = predict_var1_plot_label,
            linetype = predict_var2_plot_label) +

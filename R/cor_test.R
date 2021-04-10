@@ -19,6 +19,7 @@
 #' cor_test(iris,1:4)
 #' cor_test(iris,where(is.numeric))
 #'
+utils::globalVariables('where')
 
 cor_test =  function(data,cols,sig_test = 'raw',digit = 3,...) {
   cols = ggplot2::enquo(cols)
@@ -73,7 +74,7 @@ cor_test =  function(data,cols,sig_test = 'raw',digit = 3,...) {
 
     # printing warning message, non-essential block
   coreced_name = NULL
-  coreced_name = data %>% dplyr::select(!where(is.numeric)) %>% names(.)
+  coreced_name = data %>% dplyr::select(!where(is.numeric)) %>% names()
   if (length(coreced_name) != 0) {
     warning_message = paste(paste(coreced_name, collapse = ', '),'were coreced into numeric')
     warning(warning_message)

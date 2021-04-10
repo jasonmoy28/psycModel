@@ -27,7 +27,8 @@ Imports:
     psych,
     interactions,
     lifecycle,
-    bruceR
+    bruceR,
+    rlang
 Roxygen: list(markdown = TRUE)
 Suggests: 
     rmarkdown,

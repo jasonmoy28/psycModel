@@ -44,9 +44,9 @@ compare_fit = function(models,
     }
     
     fit_indices_df = fit_indices_df %>% 
-      dplyr::mutate(across(tidyr::everything(), ~ format(round(., digits = digits),nsmall = digits)))
+      dplyr::mutate(dplyr::across(tidyr::everything(), ~ format(round(., digits = digits),nsmall = digits)))
     compare_fit_df = compare_fit_df %>% 
-      dplyr::mutate(across(tidyr::everything(), ~ format(round(., digits = digits),nsmall = digits)))
+      dplyr::mutate(dplyr::across(tidyr::everything(), ~ format(round(., digits = digits),nsmall = digits)))
     
     return_df = 
       rbind(fit_indices_df,blank_df,compare_fit_df)

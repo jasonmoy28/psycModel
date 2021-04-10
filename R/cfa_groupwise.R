@@ -32,7 +32,7 @@ cfa_groupwise = function(data,
   
   if (is.null(model)) {
     data = data %>% dplyr::select(!!items, !!group)
-    cfa_items = data %>% dplyr::select(!!items) %>% names(.)
+    cfa_items = data %>% dplyr::select(!!items) %>% names()
     model = paste('DV =~', paste(cfa_items, collapse = ' + '))
   }
   

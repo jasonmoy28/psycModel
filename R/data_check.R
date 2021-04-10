@@ -1,13 +1,13 @@
 #' Data Check (do not call directly)
 #'
 #' @param data data frame
-#'
+#' @export
 #'
 
 data_check = function(data){
   datatype = as.vector(sapply(data, class))
   if(all(datatype == 'numeric'| datatype == 'factor' | datatype == 'integer')){
-    non_numeric_columns = data %>% dplyr::select(where(~ !is.numeric(.))) %>% names(.)
+    non_numeric_columns = data %>% dplyr::select(where(~ !is.numeric(.))) %>% names()
     data = data %>% dplyr::mutate_all(as.numeric)
     if (length(non_numeric_columns) > 0) {
       warning(paste('The following columns are coerced into numeric:',paste(non_numeric_columns,collapse = ', ')))
