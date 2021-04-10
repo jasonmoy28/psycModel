@@ -48,7 +48,6 @@ lme_model <- function(data,
                       use_package = 'nlme',
                       quite = F)
 {
-  data = data %>% dplyr::select(response_variable,level_1_factors,level_2_factors,two_way_interaction_factor,three_way_interaction_factor,id)
   data = data_check(data) #check data and coerced into numeric
   
   # Fixed factor include both level factor

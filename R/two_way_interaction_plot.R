@@ -64,7 +64,6 @@ two_way_interaction_plot = function(data,
 
   data = data_check(data) #check data and coerced into numeric
   
-  
   predict_var1 = predict_var_name[1]
   predict_var2 = predict_var_name[2]
   mean_df = dplyr::summarise_all(data, mean,na.rm = T)
@@ -154,7 +153,9 @@ two_way_interaction_plot = function(data,
       ggplot2::labs(y = response_var_plot_label,
            x = predict_var1_plot_label,
            color = predict_var2_plot_label) +
-      papaja::theme_apa() +
+      ggplot2::theme_minimal() + 
+      ggplot2::theme(panel.grid.major = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_blank(),
+                     panel.background = ggplot2::element_blank(),axis.line = ggplot2::element_line(colour = "black")) + 
       ggplot2::ylim(y_lim[1],y_lim[2])
   } else{
     plot =
@@ -164,7 +165,9 @@ two_way_interaction_plot = function(data,
       ggplot2::labs(y = response_var_plot_label,
            x = predict_var1_plot_label,
            linetype = predict_var2_plot_label) +
-      papaja::theme_apa() +
+      ggplot2::theme_minimal() + 
+      ggplot2::theme(panel.grid.major = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_blank(),
+            panel.background = ggplot2::element_blank(),axis.line = ggplot2::element_line(colour = "black")) + 
       ggplot2::ylim(y_lim[1],y_lim[2])
   }
 

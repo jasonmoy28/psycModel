@@ -185,7 +185,9 @@ three_way_interaction_plot = function(data,
                     x = predict_var1_plot_label,
                     color = predict_var2_plot_label) +
       ggplot2::facet_wrap(~var3_category) +
-      papaja::theme_apa() +
+      ggplot2::theme_minimal() + 
+      ggplot2::theme(panel.grid.major = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_blank(),
+                     panel.background = ggplot2::element_blank(),axis.line = ggplot2::element_line(colour = "black")) + 
       ggplot2::ylim(y_lim[1],y_lim[2])
 
   } else{
@@ -197,7 +199,9 @@ three_way_interaction_plot = function(data,
                     x = predict_var1_plot_label,
                     linetype = predict_var2_plot_label) +
       ggplot2::facet_wrap(~var3_category) +
-      papaja::theme_apa() +
+      ggplot2::theme_minimal() + 
+      ggplot2::theme(panel.grid.major = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_blank(),
+                     panel.background = ggplot2::element_blank(),axis.line = ggplot2::element_line(colour = "black")) + 
       ggplot2::ylim(y_lim[1],y_lim[2])
   }
 

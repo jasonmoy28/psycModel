@@ -88,7 +88,6 @@ model_summary_with_plot = function(data,
   if (!is.null(family)) {
     warning('The interaction plots produced is not fully tested. Please use it at your own risk')
   }
-  data = data %>% dplyr::select(response_variable,level_1_factors,level_2_factors,two_way_interaction_factor,three_way_interaction_factor,id)
   data = data_check(data) #check data and coerced into numeric
   
   if (!is.null(two_way_interaction_factor) & !is.null(three_way_interaction_factor)) {

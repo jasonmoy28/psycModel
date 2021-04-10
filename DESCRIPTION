@@ -10,22 +10,20 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
 Imports: 
-    papaja,
     ggplot2,
     dplyr,
-    nlme,
     stringr,
+    tidyr,
     tibble,
-    performance,
     magrittr,
+    nlme,
     lmerTest,
     lme4,
-    lavaan,
-    semTools,
-    utils,
-    tidyr,
-    psych,
     interactions,
+    performance,
+    lavaan,
+    utils,
+    psych,
     lifecycle,
     bruceR,
     rlang
