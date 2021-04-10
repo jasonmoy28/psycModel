@@ -3,3 +3,4 @@
 ^LICENSE\.md$
 ^\.github$
 update_list.md
+^data-raw$
