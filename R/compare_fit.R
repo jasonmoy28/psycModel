@@ -14,7 +14,8 @@
 compare_fit = function(models,
                        digits = 3)
 {
-  if (class(models[[1]]) == 'lavaan') {
+  # lavaan models
+  if (all(sapply(models, class) %in% 'lavaan')) {
     blank_df = tibble::tibble(chisq = '', df = '', pvalue = '', cfi = '', rmsea = '',srmr = '',tli = '',aic = '', bic = '', bic2 = '',rowname ='.') %>% tibble::column_to_rownames()
     return_df = tibble::tibble(chisq = NULL, df = NULL, pvalue = NULL, cfi = NULL, rmsea = NULL,srmr = NULL,tli = NULL,aic = NULL, bic = NULL, bic2 = NULL)
     fit_indices_df = tibble::tibble(chisq = NULL, df = NULL, pvalue = NULL, cfi = NULL, rmsea = NULL,srmr = NULL,tli = NULL,aic = NULL, bic = NULL, bic2 = NULL)
@@ -51,5 +52,22 @@ compare_fit = function(models,
     return_df = 
       rbind(fit_indices_df,blank_df,compare_fit_df)
     return(return_df)
+    
+    ## lme & glme models
+  } else if (all(sapply(models, class) %in% c('lme','lmerModLmerTest','glmerMod','lmerMod'))) {
+    return_df = tibble::tibble(AIC = NULL, BIC = NULL, R2_conditional = NULL, R2_marginal = NULL, ICC = NULL, RMSE = NULL, Sigma = NULL)
+    for (model in models) {
+      model_performance_df = tibble::as_tibble(performance::model_performance(model))
+      return_df = rbind(return_df,model_performance_df)
+    }
+    return_df = return_df %>% 
+      dplyr::mutate(dplyr::across(tidyr::everything(), ~ format(round(., digits = digits),nsmall = digits)))
+    return(return_df)
+  } else{
+    if (class(models) != 'list') {
+      return(paste('Error: please wrap the object in a list'))
+    } else{
+      return(paste('Error: object class',class(models[[1]]),'is not supported'))
+    }
   }
 }
