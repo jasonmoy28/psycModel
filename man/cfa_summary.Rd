@@ -6,9 +6,9 @@
 \usage{
 cfa_summary(
   data,
+  ...,
   model = NULL,
   group = NULL,
-  items = NULL,
   summary_item = c("cfi", "rmsea", "tli", "srmr"),
   ordered = F,
   return_result = "model",
@@ -19,17 +19,17 @@ cfa_summary(
 \arguments{
 \item{data}{data frame}
 
-\item{model}{explicit lavaan model. Either the \code{model} argument or the \code{items} argument must be specified.}
+\item{...}{CFA items. Multi-factor CFA items should be separated by comma (as different argument).}
 
-\item{group}{optional character. default is NULL. the nested variable for multilevel dataset (e.g., Country)}
+\item{model}{explicit lavaan model. Must be specify with \code{model = lavaan_model_syntax}.}
 
-\item{items}{vector of tidyselect syntax or helpers. default to NULL if the model is specified. The argument will be ignored if the model is explicitly specified.}
+\item{group}{optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country)}
 
 \item{summary_item}{vector of fit indices. Default is CFI, RMSEA, TLI, and SRMR.}
 
 \item{ordered}{logical. default is F. If it is set to T, lavaan will treat it as a ordinal variable and use DWLS instead of ML}
 
-\item{return_result}{Default is model. Options are 'model' (lavaan model), 'short_summary' (fit index summary only), 'long_summary' (lavaan full summary), or 'bruceR_summary' (uses the bruceR::CFA (Bao, 2021) function. Require the bruceR package. Please note that bruceR package may take a long time to install due to its dependencies)}
+\item{return_result}{Default is model. Options are 'model' (lavaan model), 'short_summary' (fit index summary only), 'long_summary' (lavaan full summary).}
 
 \item{quite}{default as F. If set to true, it will not print the running model statement.}
 
@@ -37,20 +37,45 @@ cfa_summary(
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. In addition to passing an explicit lavaan model, users can fit a uni-factor CFA using the \code{items} argument. Moreover, users can request 3 types of summary for the model (see below for options).
+The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Users can fit single and multiple factors CFA (read details), and it also supports multilevel CFA (specifying the group). Users can pass the items (see below for example) or an explicit lavaan model for more versatile usage.
+}
+\details{
+All argument must be explicitly specified. If not, all arguments will be treated as CFA items.
 }
 \examples{
-# Fitting a CFA model by passing explicit lavaan model. 
-cfa_summary(model = 'visual  =~ x1 + x2 + x3
+            
+# Fitting a single factor CFA model
+cfa_summary(data = lavaan::HolzingerSwineford1939,
+            x1:x3)
+
+ # Fitting a multilevel single factor CFA model
+cfa_summary(data = lavaan::HolzingerSwineford1939,
+            x1:x3, 
+            group = 'sex')
+            
+# Fitting a multiple factor CFA model 
+cfa_summary(data = lavaan::HolzingerSwineford1939,
+            x1:x3,
+            x4:x6,
+            x7:x9)
+            
+# Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)
+# Note in the below function how I added `model = ` in front of the lavaan model. 
+# Similarly, the same rule apply for all arguments (e.g., `ordered = F` instead of `F`)
+cfa_summary(model = 'visual  =~ x1 + x2 + x3  
                      textual =~ x4 + x5 + x6
                      speed   =~ x7 + x8 + x9 ',
             data = lavaan::HolzingerSwineford1939)
-            
-# Fitting a unifactor CFA model by passing items.
-cfa_summary(items = x1:x3,
+
+\dontrun{
+# This will fail because I did not add `model = ` in front of the lavaan model. 
+# Therefore,you must add the tag in front of all arguments 
+# For example, `return_result = 'model'` instaed of `model`
+cfa_summary('visual  =~ x1 + x2 + x3  
+             textual =~ x4 + x5 + x6
+             speed   =~ x7 + x8 + x9 ',
             data = lavaan::HolzingerSwineford1939)
-
-
+}          
 }
 \references{
 Bao, H.-W.-S. (2021). bruceR: Broadly useful convenient and efficient R functions. R package version 0.6.0. https://CRAN.R-project.org/package=bruceR

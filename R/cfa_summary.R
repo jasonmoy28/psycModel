@@ -1,18 +1,21 @@
 #' Confirmatory Factor Analysis
 #' 
 #' `r lifecycle::badge("stable")` \cr
-#' The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. In addition to passing an explicit lavaan model, users can fit a uni-factor CFA using the `items` argument. Moreover, users can request 3 types of summary for the model (see below for options). 
+#' The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Users can fit single and multiple factors CFA (read details), and it also supports multilevel CFA (specifying the group). Users can pass the items (see below for example) or an explicit lavaan model for more versatile usage. 
 #'
 #' @param data data frame
-#' @param model explicit lavaan model. Either the `model` argument or the `items` argument must be specified.
-#' @param group optional character. default is NULL. the nested variable for multilevel dataset (e.g., Country)
-#' @param items vector of tidyselect syntax or helpers. default to NULL if the model is specified. The argument will be ignored if the model is explicitly specified.
+#' @param ... CFA items. Multi-factor CFA items should be separated by comma (as different argument). 
+#' @param model explicit lavaan model. Must be specify with `model = lavaan_model_syntax`. 
+#' @param group optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country)
 #' @param summary_item vector of fit indices. Default is CFI, RMSEA, TLI, and SRMR. 
 #' @param ordered logical. default is F. If it is set to T, lavaan will treat it as a ordinal variable and use DWLS instead of ML
-#' @param return_result Default is model. Options are 'model' (lavaan model), 'short_summary' (fit index summary only), 'long_summary' (lavaan full summary), or 'bruceR_summary' (uses the bruceR::CFA (Bao, 2021) function. Require the bruceR package. Please note that bruceR package may take a long time to install due to its dependencies)
+#' @param return_result Default is model. Options are 'model' (lavaan model), 'short_summary' (fit index summary only), 'long_summary' (lavaan full summary). 
 #' @param quite default as F. If set to true, it will not print the running model statement. 
 #' @param group_partial Items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').
 #'
+#' @details 
+#' All argument must be explicitly specified. If not, all arguments will be treated as CFA items.
+#' 
 #' @references 
 #' Bao, H.-W.-S. (2021). bruceR: Broadly useful convenient and efficient R functions. R package version 0.6.0. https://CRAN.R-project.org/package=bruceR 
 #' 
@@ -22,55 +25,73 @@
 #' 
 #' @export
 #' @examples
-#' # Fitting a CFA model by passing explicit lavaan model. 
-#' cfa_summary(model = 'visual  =~ x1 + x2 + x3
+#'             
+#' # Fitting a single factor CFA model
+#' cfa_summary(data = lavaan::HolzingerSwineford1939,
+#'             x1:x3)
+#'
+#'  # Fitting a multilevel single factor CFA model
+#' cfa_summary(data = lavaan::HolzingerSwineford1939,
+#'             x1:x3, 
+#'             group = 'sex')
+#'             
+#' # Fitting a multiple factor CFA model 
+#' cfa_summary(data = lavaan::HolzingerSwineford1939,
+#'             x1:x3,
+#'             x4:x6,
+#'             x7:x9)
+#'             
+#' # Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)
+#' # Note in the below function how I added `model = ` in front of the lavaan model. 
+#' # Similarly, the same rule apply for all arguments (e.g., `ordered = F` instead of `F`)
+#' cfa_summary(model = 'visual  =~ x1 + x2 + x3  
 #'                      textual =~ x4 + x5 + x6
 #'                      speed   =~ x7 + x8 + x9 ',
 #'             data = lavaan::HolzingerSwineford1939)
-#'             
-#' # Fitting a unifactor CFA model by passing items.
-#' cfa_summary(items = x1:x3,
+#'
+#'\dontrun{
+#' # This will fail because I did not add `model = ` in front of the lavaan model. 
+#' # Therefore,you must add the tag in front of all arguments 
+#' # For example, `return_result = 'model'` instaed of `model`
+#' cfa_summary('visual  =~ x1 + x2 + x3  
+#'              textual =~ x4 + x5 + x6
+#'              speed   =~ x7 + x8 + x9 ',
 #'             data = lavaan::HolzingerSwineford1939)
-#' 
-#' 
+#'}          
 cfa_summary = function(data,
+                       ...,
                        model = NULL,
                        group = NULL,
-                       items = NULL,
                        summary_item = c('cfi', 'rmsea', 'tli','srmr'),
                        ordered = F,
                        return_result = 'model',
                        quite = F,
                        group_partial = NULL) {
   
-  items = ggplot2::enquo(items)
-  
-  if (is.null(model)) {
-    cfa_items = data %>% dplyr::select(!!items) %>% names()
-    model = paste('DV =~', paste(cfa_items, collapse = ' + '))
+ 
+  if (is.null(model)) { # construct model if explicit model is not passed
+    items = ggplot2::enquos(...)
+    model = ''
+    index = 1
+    for (item in items) {
+      cfa_items = data %>% dplyr::select(!!item) %>% names()
+      factor_name = paste('DV',index,sep = '')
+      loop_model = paste(factor_name,' =~ ', paste(cfa_items, collapse = ' + '),'\n ', sep = '')
+      model = paste(model, loop_model)
+      index = index + 1
+    }
   }
-  
+
   # Print statement
   if (quite == F) {
-    print(paste('Computing CFA using:',model))
+    cat('Computing CFA using:\n',model)
   }
   
-  # for long summary result, run CFA using bruceR
-  # if(return_result == 'bruceR_summary') {
+  # for long summary result, run CFA using bruceR if(return_result == 'bruceR_summary') {
   #   if (!is.null(group)) {
   #     warning('Group variable is ignored. Multilevel CFA is only supported with returning model or short_summary')
   #   }
-  #   check_package = requireNamespace('bruceR')
-  #   if (check_package == F) {
-  #     response = readline('Install bruceR package? It may take a long time to install. Enter Y/N ')
-  #     if (stringr::str_to_upper(response) == 'Y') {
-  #       utils::install.packages('bruceR')
-  #       bruceR::CFA(data = data, model = model)
-  #     } else{
-  #       print('Installation Halted. Please do not pass "bruceR_summary" to the return_result argument')
-  #     } 
-  #   } else{
-  #   bruceR::CFA(data = data, model = model)
+  # 
   #   }
   # }
 

@@ -4,16 +4,16 @@
 \alias{cfa_groupwise}
 \title{Confirmatory Factor Analysis (groupwise)}
 \usage{
-cfa_groupwise(data, model = NULL, group, items = NULL, ordered = F)
+cfa_groupwise(data, ..., model = NULL, group, ordered = F)
 }
 \arguments{
 \item{data}{data frame}
 
-\item{model}{explicit lavaan model. Either the \code{model} argument or the \code{items} argument must be specified.}
+\item{...}{CFA items.}
+
+\item{model}{explicit lavaan model. Must be specify with \code{model = lavaan_model_syntax}.}
 
 \item{group}{character. group variable.}
-
-\item{items}{vector of tidyselect syntax or helpers. default to NULL if the model is specified. The argument will be ignored if the model is explicitly specified.}
 
 \item{ordered}{logical. default is F. If it is set to T, lavaan will treat it as a ordinal variable and use DWLS instead of ML}
 }
@@ -21,10 +21,17 @@ cfa_groupwise(data, model = NULL, group, items = NULL, ordered = F)
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 This function will run a series of CFA (n = length(group)) with respect to each group. The function is intended to help you get a better understanding of which group has abnormal fit indicator
 }
+\details{
+All argument must be explicitly specified. If not, all arguments will be treated as CFA items
+}
 \examples{
 # The example is used as the illustration of the function output only.
 # It does not imply the data is appropriate for the analysis. 
-cfa_groupwise(data = iris,group = 'Species',items = c(everything(), - Species))
+cfa_groupwise(data = lavaan::HolzingerSwineford1939,
+              group = 'school',
+              x1:x3, 
+              x4:x6,
+              x7:x9)
 
 }
 \references{
