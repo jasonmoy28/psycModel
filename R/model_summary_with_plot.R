@@ -14,7 +14,7 @@
 #' @param family a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options. Early stage feature. Have not tested nor fully supported. `r lifecycle::badge("experimental")` \cr
 #' @param graph_label_name optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)
 #' @param estimation_method character. `ML` or `REML` default is `REML`.
-#' @param return_result optional vector. Choose from  `model`,`plot`,`short_summary`,`long_summary`. `model` return the model object. `plot` return the interaction plot.`short_summary` return a short model summary. `long_summary` return the summary.
+#' @param return_result default is F. If set to T, it will return the `model`, `model_summary`, and `plot` (if the interaction term is included)
 #' @param print_result  optional vector. Choose from `model`,`plot`,`short_summary`,`long_summary`.`model` return the model object. `plot` return the interaction plot.`short_summary` return a short model summary. `long_summary` return the summary.
 #' @param na.action default to `stats::na.exclude`.
 #' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
@@ -74,7 +74,7 @@ model_summary_with_plot = function(data,
                                    opt_control = 'optim',
                                    na.action = stats::na.exclude,
                                    model_performance = c('R2_fixed_effect','R2_full_model'),
-                                   return_result = NULL,
+                                   return_result = F,
                                    print_result = c('short_summary','plot'),
                                    y_lim = NULL,
                                    plot_color = F,
@@ -83,7 +83,7 @@ model_summary_with_plot = function(data,
                                    simple_slope = F,
                                    check_assumption = F, 
                                    quite = F) {
-
+  
   # Temporary disable plots for glmer object
   if (!is.null(family)) {
     warning('The interaction plots produced is not fully tested. Please use it at your own risk')
@@ -99,11 +99,10 @@ model_summary_with_plot = function(data,
   if (!is.null(two_way_interaction_factor) & !is.null(three_way_interaction_factor)) {
     stop('Do not specify both two_way_interaction_factor and three_way_interaction_factor. Passing three_way_interaction_factor automatically include all two-way interactions.')
   }
-
-  if(any(print_result %in% 'long_summary') | any(return_result %in% 'long_summary') |
-     any(print_result %in% 'simple_slope') | any(return_result %in% 'simple_slope')){
+  
+  if(any(print_result %in% 'simple_slope') | any(return_result %in% 'simple_slope')){
     if (use_package == 'nlme'){
-      warning('use_package switch to lmerTest since you requested long_summary or simple_slope. Currently, we only support ModLmerTest (i.e, lmerTest) object for the two summary requests')
+      warning('Switched use_package to lmerTest since you requested simple_slope')
       use_package = 'lmerTest'
     }
   }
@@ -123,19 +122,19 @@ model_summary_with_plot = function(data,
                       quite = quite)
   } else{
     model = glme_model(data = data,
-                      response_variable = response_variable,
-                      level_1_factors = level_1_factors,
-                      level_2_factors = level_2_factors,
-                      family = family,
-                      two_way_interaction_factor = two_way_interaction_factor,
-                      three_way_interaction_factor = three_way_interaction_factor,
-                      id = id,
-                      na.action = na.action,
-                      estimation_method = estimation_method,
-                      quite = quite)
+                       response_variable = response_variable,
+                       level_1_factors = level_1_factors,
+                       level_2_factors = level_2_factors,
+                       family = family,
+                       two_way_interaction_factor = two_way_interaction_factor,
+                       three_way_interaction_factor = three_way_interaction_factor,
+                       id = id,
+                       na.action = na.action,
+                       estimation_method = estimation_method,
+                       quite = quite)
   }
-
-  if (!is.null(two_way_interaction_factor) & (any(print_result %in% 'plot') | any(return_result %in% 'plot'))) {
+  interaction_plot = NULL
+  if (!is.null(two_way_interaction_factor) & (any(print_result %in% 'plot') | return_result == T)) {
     if (length(two_way_interaction_factor) > 2) {
       warning('Length of two_way_interaction_factor > 2: Plot the two-way interaction using the first 2')
     }
@@ -147,8 +146,8 @@ model_summary_with_plot = function(data,
                                                 graph_label_name = graph_label_name,
                                                 y_lim = y_lim,
                                                 plot_color = plot_color)
-
-  } else if (!is.null(three_way_interaction_factor) & (any(print_result %in% 'plot') | any(return_result %in% 'plot'))) {
+    
+  } else if (!is.null(three_way_interaction_factor) & (any(print_result %in% 'plot') | return_result == T)) {
     interaction_plot = three_way_interaction_plot(data = data,
                                                   model = model,
                                                   response_var = response_variable,
@@ -160,8 +159,8 @@ model_summary_with_plot = function(data,
   } else{
     interaction_plot = NULL
   }
-
-  if (any(print_result %in% 'short_summary') | any(return_result %in% 'short_summary')) {
+  
+  if (any(print_result %in% 'short_summary') | return_result == T) {
     model_summary_df = model_summary(model = model,
                                      model_performance = model_performance,
                                      estimate_round = digit[1],
@@ -170,7 +169,7 @@ model_summary_with_plot = function(data,
   } else {
     model_summary_df = NULL
   }
-
+  
   if(any(print_result %in% 'simple_slope')){
     if(!is.null(two_way_interaction_factor)){
       simple_slope = interactions::sim_slopes(model = model,
@@ -178,7 +177,7 @@ model_summary_with_plot = function(data,
                                               modx = !!two_way_interaction_factor[2],
                                               jnplot = T)
     }
-
+    
     if(!is.null(three_way_interaction_factor)){
       simple_slope = interactions::sim_slopes(model = model,
                                               pred = !!three_way_interaction_factor[1],
@@ -187,7 +186,7 @@ model_summary_with_plot = function(data,
                                               jnplot = T)
     }
   }
-
+  
   # Check print result
   if (any(print_result %in% 'model')) {
     print(model)
@@ -196,11 +195,11 @@ model_summary_with_plot = function(data,
   if (any(print_result %in% 'short_summary')) {
     print(model_summary_df)
   }
-
+  
   if(any(print_result %in% 'long_summary')){
     print(summary(model = model))
   }
-
+  
   if(any(print_result %in% 'plot')){
     try(print(interaction_plot))
   }
@@ -220,30 +219,10 @@ model_summary_with_plot = function(data,
     }
     
   }
-  
-
-  # Check return result
-  if (length(return_result) != 0) {
-    if(any(return_result %in% 'plot')) {
-      return_plot = interaction_plot
-    } else{return_plot = NULL}
-
-    if (any(return_result %in% 'short_summary')) {
-      return_short_summary = model_summary_df
-    } else{return_short_summary = NULL}
-
-    if(any(return_result %in% 'model')) {
-      return_model = model
-    } else{return_model = NULL}
-
-    if(any(return_result %in% 'long_summary')) {
-      return(summary(model = model))
-    } else{return_long_summary = NULL}
-
-    return_list = list(return_model,return_short_summary,return_long_summary,return_plot)
-    return_list = return_list[!sapply(return_list,is.null)]
+  if (return_result == T) {
+    return_list = list(model = model,summary = model_summary_df,plot = interaction_plot)
     return(return_list)
   }
-
+  
 }
 

@@ -20,7 +20,7 @@ model_summary_with_plot(
   opt_control = "optim",
   na.action = stats::na.exclude,
   model_performance = c("R2_fixed_effect", "R2_full_model"),
-  return_result = NULL,
+  return_result = F,
   print_result = c("short_summary", "plot"),
   y_lim = NULL,
   plot_color = F,
@@ -62,7 +62,7 @@ model_summary_with_plot(
 
 \item{model_performance}{vector. \code{R2_full_model} for conditional R2 and \code{R2_fixed_effect} for marginal R2 (Nakagawa, 2013). \code{icc} for intraclass correlation coefficient. The function calls the performance package for R2 and ICC (Lüdecke et al., 2020).}
 
-\item{return_result}{optional vector. Choose from  \code{model},\code{plot},\code{short_summary},\code{long_summary}. \code{model} return the model object. \code{plot} return the interaction plot.\code{short_summary} return a short model summary. \code{long_summary} return the summary.}
+\item{return_result}{default is F. If set to T, it will return the \code{model}, \code{model_summary}, and \code{plot} (if the interaction term is included)}
 
 \item{print_result}{optional vector. Choose from \code{model},\code{plot},\code{short_summary},\code{long_summary}.\code{model} return the model object. \code{plot} return the interaction plot.\code{short_summary} return a short model summary. \code{long_summary} return the summary.}
 
