@@ -186,20 +186,20 @@ model_summary_with_plot = function(data,
     print(model_summary_df)
   }
 
-  if(any(print_result %in% 'bruceR_summary')){
-    check_package = requireNamespace('bruceR')
-    if (check_package == F) {
-      response = readline('Install bruceR package? It may take a long time to install. Enter Y/N ')
-      if (stringr::str_to_upper(response) == 'Y') {
-        utils::install.packages('bruceR')
-        bruceR::HLM_summary(model = model,nsmall = estimate_round)
-      } else{
-        print('Installation Halted. Please do not pass "bruceR_summary" to the print_result argument')
-      } 
-    } else{
-      bruceR::HLM_summary(model = model,nsmall = estimate_round)
-    }
-  }
+  # if(any(print_result %in% 'bruceR_summary')){
+  #   check_package = requireNamespace('bruceR')
+  #   if (check_package == F) {
+  #     response = readline('Install bruceR package? It may take a long time to install. Enter Y/N ')
+  #     if (stringr::str_to_upper(response) == 'Y') {
+  #       utils::install.packages('bruceR')
+  #       bruceR::HLM_summary(model = model,nsmall = estimate_round)
+  #     } else{
+  #       print('Installation Halted. Please do not pass "bruceR_summary" to the print_result argument')
+  #     } 
+  #   } else{
+  #     bruceR::HLM_summary(model = model,nsmall = estimate_round)
+  #   }
+  # }
 
   if(any(print_result %in% 'long_summary')){
     print(summary(model = model))

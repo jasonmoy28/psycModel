@@ -29,7 +29,6 @@ Imports:
     utils,
     psych,
     lifecycle,
-    bruceR,
     rlang
 Roxygen: list(markdown = TRUE)
 Suggests: 

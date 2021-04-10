@@ -56,23 +56,23 @@ cfa_summary = function(data,
   }
   
   # for long summary result, run CFA using bruceR
-  if(return_result == 'bruceR_summary') {
-    if (!is.null(group)) {
-      warning('Group variable is ignored. Multilevel CFA is only supported with returning model or short_summary')
-    }
-    check_package = requireNamespace('bruceR')
-    if (check_package == F) {
-      response = readline('Install bruceR package? It may take a long time to install. Enter Y/N ')
-      if (stringr::str_to_upper(response) == 'Y') {
-        utils::install.packages('bruceR')
-        bruceR::CFA(data = data, model = model)
-      } else{
-        print('Installation Halted. Please do not pass "bruceR_summary" to the return_result argument')
-      } 
-    } else{
-    bruceR::CFA(data = data, model = model)
-    }
-  }
+  # if(return_result == 'bruceR_summary') {
+  #   if (!is.null(group)) {
+  #     warning('Group variable is ignored. Multilevel CFA is only supported with returning model or short_summary')
+  #   }
+  #   check_package = requireNamespace('bruceR')
+  #   if (check_package == F) {
+  #     response = readline('Install bruceR package? It may take a long time to install. Enter Y/N ')
+  #     if (stringr::str_to_upper(response) == 'Y') {
+  #       utils::install.packages('bruceR')
+  #       bruceR::CFA(data = data, model = model)
+  #     } else{
+  #       print('Installation Halted. Please do not pass "bruceR_summary" to the return_result argument')
+  #     } 
+  #   } else{
+  #   bruceR::CFA(data = data, model = model)
+  #   }
+  # }
 
   cfa_model = lavaan::cfa(
     model = model,
