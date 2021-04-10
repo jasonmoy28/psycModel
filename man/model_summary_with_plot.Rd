@@ -2,17 +2,18 @@
 % Please edit documentation in R/model_summary_with_plot.R
 \name{model_summary_with_plot}
 \alias{model_summary_with_plot}
-\title{Model Summary with Interaction Plot}
+\title{Integrated Function for Mixed Effect Model}
 \usage{
 model_summary_with_plot(
   data,
-  response_variable,
-  level_1_factors,
+  model = NULL,
+  response_variable = NULL,
+  level_1_factors = NULL,
   level_2_factors = NULL,
   two_way_interaction_factor = NULL,
   three_way_interaction_factor = NULL,
   cateogrical_var = NULL,
-  id,
+  id = NULL,
   family = NULL,
   graph_label_name = NULL,
   estimation_method = "REML",
@@ -33,6 +34,8 @@ model_summary_with_plot(
 \arguments{
 \item{data}{data frame}
 
+\item{model}{lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates.}
+
 \item{response_variable}{character. name of the response variable.}
 
 \item{level_1_factors}{vector. level-1 variables (e.g., individual-level)}
@@ -47,7 +50,7 @@ model_summary_with_plot(
 
 \item{id}{character. The nesting variable (e.g. group, time).}
 
-\item{family}{a GLM family. It will passed to the family argument in glmer. See \code{?glmer} for possible options.}
+\item{family}{a GLM family. It will passed to the family argument in glmer. See \code{?glmer} for possible options. Early stage feature. Have not tested nor fully supported. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr}
 
 \item{graph_label_name}{optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)}
 
@@ -81,7 +84,7 @@ model_summary_with_plot(
 return a list of all requested items in the order of model, short_summary, long_summary, plot
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019). If you requested , it will uses the bruceR::HLM_summary (Bao, 2021)
 }
 \examples{

@@ -6,6 +6,7 @@
 \usage{
 lme_model(
   data,
+  model = NULL,
   response_variable,
   level_1_factors,
   level_2_factors = NULL,
@@ -21,6 +22,8 @@ lme_model(
 }
 \arguments{
 \item{data}{data frame}
+
+\item{model}{lme4 model syntax.}
 
 \item{response_variable}{character or vector of length 1}
 
@@ -48,7 +51,7 @@ lme_model(
 An object of class \code{lme} of \code{lmerModLmerTest} representing the linear mixed-effects model fit.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the \code{nlme::lme} (Pinheiro, 2006)  or the \code{lmerTest::lmer} (Kuznetsova, 2017) function.
 }
 \examples{

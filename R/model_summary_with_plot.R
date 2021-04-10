@@ -1,16 +1,17 @@
-#' Model Summary with Interaction Plot
+#' Integrated Function for Mixed Effect Model 
 #'
-#' `r lifecycle::badge("experimental")` \cr
+#' `r lifecycle::badge("stable")` \cr
 #' It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019). If you requested , it will uses the bruceR::HLM_summary (Bao, 2021)
 #'
 #' @param data data frame
+#' @param model lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates. 
 #' @param response_variable character. name of the response variable.
 #' @param level_1_factors vector. level-1 variables (e.g., individual-level)
 #' @param level_2_factors optional vector. level-2 variables (e.g., group-level)
 #' @param two_way_interaction_factor optional vector of length >= 2.
 #' @param three_way_interaction_factor optional vector of length 3. Do not specify two-way interaction factors if you specify the three-way interaction factor 
 #' @param id character. The nesting variable (e.g. group, time).
-#' @param family a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options.
+#' @param family a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options. Early stage feature. Have not tested nor fully supported. `r lifecycle::badge("experimental")` \cr
 #' @param graph_label_name optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)
 #' @param estimation_method character. `ML` or `REML` default is `REML`.
 #' @param return_result optional vector. Choose from  `model`,`plot`,`short_summary`,`long_summary`. `model` return the model object. `plot` return the interaction plot.`short_summary` return a short model summary. `long_summary` return the summary.
@@ -59,13 +60,14 @@
 #' 
 #'
 model_summary_with_plot = function(data, 
-                                   response_variable,
-                                   level_1_factors,
+                                   model = NULL,
+                                   response_variable = NULL,
+                                   level_1_factors = NULL,
                                    level_2_factors = NULL,
                                    two_way_interaction_factor = NULL,
                                    three_way_interaction_factor = NULL,
                                    cateogrical_var = NULL,
-                                   id,
+                                   id = NULL,
                                    family = NULL,
                                    graph_label_name = NULL,
                                    estimation_method = 'REML',
@@ -86,10 +88,16 @@ model_summary_with_plot = function(data,
   if (!is.null(family)) {
     warning('The interaction plots produced is not fully tested. Please use it at your own risk')
   }
+  
+  if (is.null(model)) {
+    if (is.null(response_variable) | is.null(level_1_factors) | is.null(id)) {
+      stop('response_variable, level_1_factors, id cannot be NULL if model is NULL. ')
+    }
+  }
   data = data_check(data) #check data and coerced into numeric
   
   if (!is.null(two_way_interaction_factor) & !is.null(three_way_interaction_factor)) {
-    return('Error: Do not specify both two_way_interaction_factor and three_way_interaction_factor. Passing three_way_interaction_factor automatically include all two-way interactions.')
+    stop('Do not specify both two_way_interaction_factor and three_way_interaction_factor. Passing three_way_interaction_factor automatically include all two-way interactions.')
   }
 
   if(any(print_result %in% 'long_summary') | any(return_result %in% 'long_summary') |
@@ -100,7 +108,8 @@ model_summary_with_plot = function(data,
     }
   }
   if (is.null(family)) {
-    model = lme_model(data = data,
+    model = lme_model(model = model,
+                      data = data,
                       response_variable = response_variable,
                       level_1_factors = level_1_factors,
                       level_2_factors = level_2_factors,
