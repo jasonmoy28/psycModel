@@ -4,3 +4,6 @@
 ^\.github$
 update_list.md
 ^codecov\.yml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
