@@ -92,12 +92,17 @@ model_summary_with_plot <- function(data,
   }
   data <- data_check(data) # check data and coerced into numeric
 
-  if (any(print_result %in% "simple_slope") | any(return_result %in% "simple_slope")) {
+  if (simple_slope == T) {
     if (use_package == "nlme") {
       warning("Switched use_package to lmerTest since you requested simple_slope")
       use_package <- "lmerTest"
     }
   }
+  if (check_assumption == T) {
+    na.action = stats::na.omit
+    warning('Switched to na.omit since you request check_assumption.')
+  }
+    
   if (is.null(family)) {
     model <- lme_model(
       model = model,
@@ -130,8 +135,10 @@ model_summary_with_plot <- function(data,
       quite = quite
     )
   }
+  two_way_interaction_factor = data %>% dplyr::select(!!enquo(two_way_interaction_factor)) %>% names()
+  three_way_interaction_factor = data %>% dplyr::select(!!enquo(three_way_interaction_factor)) %>% names()
   interaction_plot <- NULL
-  if (length(enquo(two_way_interaction_factor)) != 0 & (any(print_result %in% "plot") | return_result == T)) {
+  if (length(two_way_interaction_factor) != 0 & (any(print_result %in% "plot") | return_result == T)) {
     interaction_plot <- two_way_interaction_plot(
       model = model,
       cateogrical_var = cateogrical_var,
@@ -139,7 +146,7 @@ model_summary_with_plot <- function(data,
       y_lim = y_lim,
       plot_color = plot_color
     )
-  } else if (length(enquo(three_way_interaction_factor)) != 0 & (any(print_result %in% "plot") | return_result == T)) {
+  } else if (length(three_way_interaction_factor) != 0 & (any(print_result %in% "plot") | return_result == T)) {
     interaction_plot <- three_way_interaction_plot(
       model = model,
       cateogrical_var = cateogrical_var,
@@ -163,18 +170,20 @@ model_summary_with_plot <- function(data,
     model_summary_df <- NULL
   }
 
-  if (any(print_result %in% "simple_slope")) {
-    if (!is.null(two_way_interaction_factor)) {
-      simple_slope <- interactions::sim_slopes(
+  if (simple_slope == T) {
+    if (length(two_way_interaction_factor) != 0) {
+      simple_slope_model = interactions::sim_slopes(
+        data = data,
         model = model,
         pred = !!two_way_interaction_factor[1],
         modx = !!two_way_interaction_factor[2],
-        jnplot = T
+        jnplot = T,
       )
     }
-
-    if (!is.null(three_way_interaction_factor)) {
-      simple_slope <- interactions::sim_slopes(
+    
+    if (length(three_way_interaction_factor) != 0) {
+      simple_slope_model = interactions::sim_slopes(
+        data = data,
         model = model,
         pred = !!three_way_interaction_factor[1],
         modx = !!three_way_interaction_factor[2],
@@ -202,12 +211,12 @@ model_summary_with_plot <- function(data,
   }
 
   if (simple_slope == T) {
-    print(simple_slope)
-    warning("This may override the other plot. Set simple_slope to FALSE to see interaction plot. For best experience, knit a Rmd file to see all plots.")
+    print(simple_slope_model)
+    warning("Overrided interaction plot. Set simple_slope to FALSE to see interaction plot. Knit a Rmd file to see all plots for better experience.")
   }
 
   if (check_assumption == T) {
-    print(try(performance::check_model(model)))
+    print(performance::check_model(model))
     if (simple_slope == T) {
       warning("Overrided simple slope plot. Set check_assumption to FALSE to see simple slope plot. Knit a Rmd file to see all plots for better experience.")
     }
