@@ -1,43 +1,47 @@
-Package: psycModel
 Type: Package
+Package: psycModel
 Title: Integrated Toolkit for Psychological Analysis and Modeling in R
-Version: 0.1.1
+Version: 0.2.0
 Authors@R: 
-  c(person(given = "Jason",
+    person(given = "Jason",
            family = "Moy",
            role = c("aut", "cre"),
            email = "jasonmoy28@gmail.com",
-           comment = c(ORCID = "0000-0001-8795-3311")))
-Description: The package integrated many useful functions from a variety of popular R packages. The package is aimed researchers in psychology or related field.  
+           comment = c(ORCID = "0000-0001-8795-3311"))
+Description: The package integrated many useful functions from a variety
+    of popular R packages, including descriptive statistics, measurement
+    model, and mixed effect model.
 License: GPL (>= 3)
-Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.1.1
-Imports: 
-    ggplot2,
-    dplyr,
-    stringr,
-    tidyr,
-    tibble,
-    magrittr,
-    nlme,
-    lmerTest,
-    lme4,
-    interactions,
-    performance,
-    lavaan,
-    utils,
-    psych,
-    lifecycle,
-    rlang,
-    qqplotr,
-    tidyselect
-Roxygen: list(markdown = TRUE)
-Suggests: 
-    rmarkdown,
-    knitr,
-    testthat (>= 3.0.0),
-    covr
-Config/testthat/edition: 3
 Depends: 
     R (>= 2.10)
+Imports: 
+    dplyr,
+    ggplot2,
+    interactions,
+    lavaan,
+    lifecycle,
+    lme4,
+    lmerTest,
+    magrittr,
+    nlme,
+    performance,
+    psych,
+    qqplotr,
+    rlang (>= 0.1.2),
+    stringr,
+    tibble,
+    tidyr,
+    tidyselect,
+    utils
+Suggests: 
+    covr,
+    knitr,
+    rmarkdown,
+    roxygen2,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+URL: https://jasonmoy28.github.io/psycModel

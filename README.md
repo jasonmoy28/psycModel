@@ -21,7 +21,7 @@ The package consists of three types of analysis: descriptive statistics, mixed e
 
 2. Mixed effect model: linear mixed effect model (`lme_model`); generalized linear mixed effect model (`glme_model`); mixed effect model interaction plot (`two_way_interaction_plot`, `three_way_interaction_plot`); mixed effect model summary (`model_summary`, `model_summary_with_plot`)
 
-3. Latent variable Modeling: Confirmatory factor analysis (`cfa_summary`, `measurement_invariance`)
+3. Measurement model: Confirmatory factor analysis (`cfa_summary`, `measurement_invariance`)
 
 
 ## Credit
@@ -43,8 +43,27 @@ The package consists of three types of analysis: descriptive statistics, mixed e
 1. Support mediation, moderated mediation analysis
 2. Support latent class and profile analysis (possible latent transition analysis)
 3. Support model assumption checking tools
-4. Support `lm` and `glm` 
-6. Support exploratory factor analysis
+4. Support linear / generalized linear regression
+5. Support exploratory factor analysis
+
+### version 0.2.0 (released on 4/11/2021)
+**New Feature:**
+* `lme_model`, `model_summary_with_plot` support tidyselect syntax 
+* `cfa_summary` support multi-factor CFA with tidyselect syntax 
+* Added `check_assumption` to inspect assumptions for mixed effect models in `model_summary_with_plot`
+* `two_way_interaction_plot`, `three_way_interaction_plot` only require the model object to produce the plot.
+* `lme_model`, `model_summary_with_plot` support using `lme4` package. 
+* `model_summary_with_plot` `lme_model` support passing explicit model
+* `compare_fit` support more model comparison (e.g., lme, glme)
+
+**Bugs fixed:**
+* the current version build pass CMD check 
+* `measurement_invariance` stop using `semTools::compareFit`. Added a self-created `compare_fit` function for the package
+* remove papaja::apa_theme() dependency.
+* use .data from rlang for mutate function
+* remove bruceR import.
+* `model_summary_with_plot` always return list and changed to logical (set to T to return result_list)
+* `model_summary_with_plot` return a named list object
 
 ### version 0.1.1 (released on 4/9/2021)
 **New Feature:**
