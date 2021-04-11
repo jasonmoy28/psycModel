@@ -3,11 +3,8 @@
 #' `r lifecycle::badge("experimental")` \cr
 #' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model
 #'
-#' @param data data frame
-#' @param model lme, lmerMod, lmerModLmerTest object. Partially support glmer object (beta testing)
-#' @param response_var response variable name
-#' @param predict_var_name vector of length 3. the variables' name for the two-way interaction plot
-#' @param graph_label_name vector of length 3 or function. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, predict_var3). Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)
+#' @param model lme, lmerMod, lmerModLmerTest object.
+#' @param graph_label_name vector of length 3 or a switch function (see ?two_way_interaction_plot example). Vector should be passed in the form of c(response_var, predict_var1, predict_var2, predict_var3).
 #' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
 #' @param y_lim vector of two number. set the y_lim of the plot
 #' @param plot_color logical. default as F. Set to T if you want to plot in color
@@ -19,32 +16,58 @@
 #'
 #' @export
 #'
-#' @examples # see ?two_way_interaction_plot for example. 
-#' # The examples work with three_way_interaction_plot with easy modification
+#' @examples 
+#' fit = lme_model(response_variable = JS_Individual,
+#'            level_1_factors = c(Age_Individual,Education_Individual), 
+#'            level_2_factors = contains('Country'),
+#'            three_way_interaction_factor = c('Age_Individual',
+#'                                             'Education_Individual',
+#'                                             'Hofstede_IC_Country'),
+#'            id = Country,
+#'            data = EWCS_2015_shorten)
+#'            
+#' three_way_interaction_plot(fit)           
+#'            
 #'
 
-three_way_interaction_plot = function(data,
-                                      model,
-                                      response_var,
-                                      predict_var_name,
+three_way_interaction_plot = function(model,
                                       cateogrical_var = NULL,
                                       graph_label_name = NULL,
                                       y_lim = NULL,
                                       plot_color = F){
+  interaction_plot_check = function(interaction_term) {
+    if (length(interaction_term) > 1) {
+      interaction_term = interaction_term[1]
+      warning(paste('Inputted > 2 interaction terms. Plotting the first interaction term:\n ',interaction_term))
+    } 
+    return(interaction_term)
+  }
   
-  data = data_check(data) #check data and coerced into numeric
-
-  predict_var1 = predict_var_name[1]
-  predict_var2 = predict_var_name[2]
-  predict_var3 = predict_var_name[3]
+  # get attributes based on mdeol
+  if (class(model) == 'lme') {
+    formula_attribute =  model$terms
+    data = model$data
+  } else if(any(class(model) %in% c('lmerMod', 'lmerModLmerTest'))){
+    formula_attribute = stats::terms(model@call$formula)
+    data = model@call$data
+  } else{
+    stop('It only support linear mixed effect model object from nlme, lme4, and lmerTest')
+  }
+  
+  predict_var = attributes(formula_attribute)$term.labels
+  response_var = as.character(attributes(formula_attribute)$variables)[2]
+  interaction_term = predict_var[stringr::str_detect(predict_var,':.+:')]
+  interaction_term = interaction_plot_check(interaction_term)
+  predict_var1 = gsub(pattern = ':.+','', x = interaction_term)
+  predict_var3 = gsub(pattern = '.+:','', x = interaction_term)
+  remove1 = stringr::str_remove(pattern = predict_var1,string = interaction_term)
+  remove2 = stringr::str_remove(pattern = predict_var3,string = remove1)
+  predict_var2 = gsub(pattern = ':','', x = remove2)
 
   mean_df = dplyr::summarise_all(data, mean,na.rm = T)
+  upper_df = dplyr::summarise_all(data, .funs = function(.){mean(.,na.rm = T) + 1*stats::sd(.,na.rm = T)})
 
-  upper_df =
-    dplyr::summarise_all(data, .funs = function(.){mean(.,na.rm = T) + 1*stats::sd(.,na.rm = T)})
-
-  lower_df =
-    dplyr::summarise_all(data, .funs = function(.){mean(.,na.rm = T) - 1*stats::sd(.,na.rm = T)})
+  lower_df = dplyr::summarise_all(data, .funs = function(.){mean(.,na.rm = T) - 1*stats::sd(.,na.rm = T)})
 
   # Specify the categorical variable upper and lower bound directly
   if (!is.null(cateogrical_var)) {
@@ -82,7 +105,7 @@ three_way_interaction_plot = function(data,
     upper_lower_upper_predicted_value = stats::predict(model,newdata = upper_lower_upper_df,level = 0)
     lower_upper_upper_predicted_value = stats::predict(model,newdata = lower_upper_upper_df,level = 0)
     lower_lower_upper_predicted_value = stats::predict(model,newdata = lower_lower_upper_df,level = 0)
-  } else if(class(model) == 'lmerModLmerTest'){
+  } else if(class(model) == 'lmerModLmerTest' | class(model) == 'lmerMod'){
     upper_upper_upper_predicted_value = stats::predict(model,newdata = upper_upper_upper_df,allow.new.levels = T)
     upper_lower_upper_predicted_value = stats::predict(model,newdata = upper_lower_upper_df,allow.new.levels = T)
     lower_upper_upper_predicted_value = stats::predict(model,newdata = lower_upper_upper_df,allow.new.levels = T)

@@ -5,10 +5,7 @@
 \title{Two-way Interaction Plot}
 \usage{
 two_way_interaction_plot(
-  data,
   model,
-  response_var,
-  predict_var_name,
   graph_label_name = NULL,
   cateogrical_var = NULL,
   y_lim = NULL,
@@ -16,13 +13,7 @@ two_way_interaction_plot(
 )
 }
 \arguments{
-\item{data}{data frame.}
-
-\item{model}{lme object from \code{nlme::lme}}
-
-\item{response_var}{response variable name}
-
-\item{predict_var_name}{vector of length 2. predictive variable names}
+\item{model}{object from nlme, lme4, or lmerTest (linear mixed effect model)}
 
 \item{graph_label_name}{vector of length 3 or function. Vector should be passed in the form of \code{c(response_var, predict_var1, predict_var2)}. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)}
 
@@ -37,31 +28,31 @@ ggplot object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
-The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable.
+The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below
 }
 \examples{
 # run the fit model first
-fit = lme_model(response_variable = 'incidence',
-                level_1_factors = 'size',
-                level_2_factors = 'herd',
-                two_way_interaction_factor = c('size','herd'),
-                id = 'period',
-                data = lme4::cbpp,
-                use_package = 'lmerTest') #use lmerTest
+fit = lme_model(response_variable = JS_Individual,
+           level_1_factors = Age_Individual, 
+           level_2_factors = contains('Country'),
+           two_way_interaction_factor = c('Age_Individual','Hofstede_IC_Country'),
+           id = 'Country',
+           data = EWCS_2015_shorten)
                 
-two_way_interaction_plot(data = lme4::cbpp,
-                         model = fit,
-                         response_var = 'incidence',
-                         predict_var_name = c('size','herd'),
-                         graph_label_name = c('Y','X','legend')) # this will change the plot name 
-
-# Customize variable name using the switch function. This is useful if you are running many models.
+two_way_interaction_plot(model = fit,
+                         # this will change the plot name 
+                         graph_label_name = c('Job Satisfaction',
+                                              'Age',
+                                              'Individualism/Collectivism'))
+                         
+# Below is an equivalent way of changing graph_label_name by using the switch function
 # You should store this in a separate script, and load this function using source(). 
-label_name <- function(var_name) {
+# It is primarily use if you are running many models
+graph_label_name <- function(var_name) {
  var_name_processed = switch (var_name,
-                             'incidence' = 'Y',
-                             'size' = 'X',
-                             'herd' = 'legend'
+                             'JS_Individual' = 'Job Satisfaction',
+                             'Age_Individual' = 'Age',
+                             'Hofstede_IC_Country' = 'Individualism/Collectivism'
  )
  if (is.null(var_name_processed)) {
    var_name_processed = var_name
@@ -69,12 +60,10 @@ label_name <- function(var_name) {
  return(var_name_processed)
 }
                    
-two_way_interaction_plot(data = lme4::cbpp,
-                         model = fit,
-                         response_var = 'incidence',
-                         predict_var_name = c('size','herd'),
-                         graph_label_name = label_name,
-                         plot_color = TRUE)
+ two_way_interaction_plot(model = fit,
+                          # this will change the plot name 
+                          graph_label_name = graph_label_name) 
+
                          
 }
 \references{

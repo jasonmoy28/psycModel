@@ -5,10 +5,7 @@
 \title{Three-way Interaction Plot}
 \usage{
 three_way_interaction_plot(
-  data,
   model,
-  response_var,
-  predict_var_name,
   cateogrical_var = NULL,
   graph_label_name = NULL,
   y_lim = NULL,
@@ -16,17 +13,11 @@ three_way_interaction_plot(
 )
 }
 \arguments{
-\item{data}{data frame}
-
-\item{model}{lme, lmerMod, lmerModLmerTest object. Partially support glmer object (beta testing)}
-
-\item{response_var}{response variable name}
-
-\item{predict_var_name}{vector of length 3. the variables' name for the two-way interaction plot}
+\item{model}{lme, lmerMod, lmerModLmerTest object.}
 
 \item{cateogrical_var}{list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of \code{list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))}}
 
-\item{graph_label_name}{vector of length 3 or function. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, predict_var3). Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)}
+\item{graph_label_name}{vector of length 3 or a switch function (see ?two_way_interaction_plot example). Vector should be passed in the form of c(response_var, predict_var1, predict_var2, predict_var3).}
 
 \item{y_lim}{vector of two number. set the y_lim of the plot}
 
@@ -40,8 +31,17 @@ ggplot object.
 The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model
 }
 \examples{
-# see ?two_way_interaction_plot for example. 
-# The examples work with three_way_interaction_plot with easy modification
+fit = lme_model(response_variable = JS_Individual,
+           level_1_factors = c(Age_Individual,Education_Individual), 
+           level_2_factors = contains('Country'),
+           three_way_interaction_factor = c('Age_Individual',
+                                            'Education_Individual',
+                                            'Hofstede_IC_Country'),
+           id = Country,
+           data = EWCS_2015_shorten)
+           
+three_way_interaction_plot(fit)           
+           
 
 }
 \references{
