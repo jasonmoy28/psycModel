@@ -96,7 +96,7 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/mixed_effect_model.html">mixed_effect_model</a>
+      <a href="../articles/regression_model.html">psycModel: Fitting Regression Model</a>
     </li>
   </ul>
 </li>
@@ -156,7 +156,7 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
     </tr>
     <tr>
       <th>...</th>
-      <td><p>CFA items. Multi-factor CFA items should be separated by comma (as different argument).</p></td>
+      <td><p>CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for example</p></td>
     </tr>
     <tr>
       <th>model</th>
@@ -198,7 +198,7 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
 <p>Rosseel Y (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1–36. https://www.jstatsoft.org/v48/i02/.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
+    <pre class="examples"><div class='input'><span class='co'># REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT</span>
 <span class='co'># Fitting a single factor CFA model</span>
 <span class='fu'>cfa_summary</span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,
