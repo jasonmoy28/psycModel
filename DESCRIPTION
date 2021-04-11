@@ -8,15 +8,17 @@ Authors@R:
            role = c("aut", "cre"),
            email = "jasonmoy28@gmail.com",
            comment = c(ORCID = "0000-0001-8795-3311"))
-Description: The package integrated many useful functions from a variety
-    of popular R packages, including descriptive statistics, measurement
-    model, and mixed effect model.
+Description: Integrated many useful functions from a variety of popular R
+    packages, including descriptive statistics, measurement model, and
+    mixed effect model.
 License: GPL (>= 3)
+URL: https://jasonmoy28.github.io/psycModel
 Depends: 
     R (>= 2.10)
 Imports: 
     dplyr,
     ggplot2,
+    ggrepel,
     interactions,
     lavaan,
     lifecycle,
@@ -27,6 +29,7 @@ Imports:
     performance,
     psych,
     qqplotr,
+    see,
     rlang (>= 0.1.2),
     stringr,
     tibble,
@@ -39,10 +42,10 @@ Suggests:
     rmarkdown,
     roxygen2,
     testthat (>= 3.0.0)
+VignetteBuilder: 
+    knitr
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-URL: https://jasonmoy28.github.io/psycModel
-VignetteBuilder: knitr
