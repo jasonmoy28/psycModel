@@ -32,39 +32,45 @@ The function creates a two-way interaction plot. It will creates a plot with ± 
 }
 \examples{
 # run the fit model first
-fit = lme_model(response_variable = JS_Individual,
-           level_1_factors = Age_Individual, 
-           level_2_factors = contains('Country'),
-           two_way_interaction_factor = c('Age_Individual','Hofstede_IC_Country'),
-           id = 'Country',
-           data = EWCS_2015_shorten)
-                
-two_way_interaction_plot(model = fit,
-                         # this will change the plot name 
-                         graph_label_name = c('Job Satisfaction',
-                                              'Age',
-                                              'Individualism/Collectivism'))
-                         
+fit <- lme_model(
+  response_variable = JS_Individual,
+  level_1_factors = Age_Individual,
+  level_2_factors = contains("Country"),
+  two_way_interaction_factor = c("Age_Individual", "Hofstede_IC_Country"),
+  id = "Country",
+  data = EWCS_2015_shorten
+)
+
+two_way_interaction_plot(
+  model = fit,
+  # this will change the plot name
+  graph_label_name = c(
+    "Job Satisfaction",
+    "Age",
+    "Individualism/Collectivism"
+  )
+)
+
 # Below is an equivalent way of changing graph_label_name by using the switch function
-# You should store this in a separate script, and load this function using source(). 
+# You should store this in a separate script, and load this function using source().
 # It is primarily use if you are running many models
 graph_label_name <- function(var_name) {
- var_name_processed = switch (var_name,
-                             'JS_Individual' = 'Job Satisfaction',
-                             'Age_Individual' = 'Age',
-                             'Hofstede_IC_Country' = 'Individualism/Collectivism'
- )
- if (is.null(var_name_processed)) {
-   var_name_processed = var_name
- }
- return(var_name_processed)
+  var_name_processed <- switch(var_name,
+    "JS_Individual" = "Job Satisfaction",
+    "Age_Individual" = "Age",
+    "Hofstede_IC_Country" = "Individualism/Collectivism"
+  )
+  if (is.null(var_name_processed)) {
+    var_name_processed <- var_name
+  }
+  return(var_name_processed)
 }
-                   
- two_way_interaction_plot(model = fit,
-                          # this will change the plot name 
-                          graph_label_name = graph_label_name) 
 
-                         
+two_way_interaction_plot(
+  model = fit,
+  # this will change the plot name
+  graph_label_name = graph_label_name
+)
 }
 \references{
 Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel

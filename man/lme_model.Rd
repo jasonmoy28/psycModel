@@ -59,37 +59,43 @@ Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel
 }
 \examples{
 # two-level model with level-1 and level-2 variable with random intercept and random slope
-lme_model(response_variable = 'JS_Individual',
-           level_1_factors = Age_Individual, 
-           level_2_factors = contains('Country'),
-           id = 'Country',
-           data = EWCS_2015_shorten)
+lme_model(
+  response_variable = "JS_Individual",
+  level_1_factors = Age_Individual,
+  level_2_factors = contains("Country"),
+  id = "Country",
+  data = EWCS_2015_shorten
+)
 
-lme_model(response_variable = 'JS_Individual',
-           level_1_factors = Age_Individual, 
-           level_2_factors = contains('Country'),
-           two_way_interaction_factor = c('Age_Individual','Hofstede_IC_Country'),
-           id = 'Country',
-           data = EWCS_2015_shorten)
-                        
-           
+lme_model(
+  response_variable = "JS_Individual",
+  level_1_factors = Age_Individual,
+  level_2_factors = contains("Country"),
+  two_way_interaction_factor = c("Age_Individual", "Hofstede_IC_Country"),
+  id = "Country",
+  data = EWCS_2015_shorten
+)
 \donttest{
-lme_model(response_variable = 'JS_Individual',
-           level_1_factors = c(contains('Individual'),-JS_Individual), #!look at the difference here
-           level_2_factors = contains('Country'),
-           id = 'Country',
-           data = EWCS_2015_shorten)
+lme_model(
+  response_variable = "JS_Individual",
+  level_1_factors = c(contains("Individual"), -JS_Individual), # !look at the difference here
+  level_2_factors = contains("Country"),
+  id = "Country",
+  data = EWCS_2015_shorten
+)
 }
-# Equivalent to the above example. 
-# It shows that you don't need to remove response_variable from tidyselect syntax. 
+# Equivalent to the above example.
+# It shows that you don't need to remove response_variable from tidyselect syntax.
 \donttest{
-lme_model(response_variable = 'JS_Individual',
-           level_1_factors = contains('Individual'), #!look at the difference here
-           level_2_factors = contains('Country'),
-           id = 'Country',
-           data = EWCS_2015_shorten) 
-}            
-           
+lme_model(
+  response_variable = "JS_Individual",
+  level_1_factors = contains("Individual"), # !look at the difference here
+  level_2_factors = contains("Country"),
+  id = "Country",
+  data = EWCS_2015_shorten
+)
+}
+
 }
 \references{
 Kuznetsova, A., Brockhoff, P. B., & Christensen, R. H. (2017). lmerTest package: tests in linear mixed effects models. Journal of statistical software, 82(13), 1-26.

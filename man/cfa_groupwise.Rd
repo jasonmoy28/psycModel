@@ -26,13 +26,14 @@ All argument must be explicitly specified. If not, all arguments will be treated
 }
 \examples{
 # The example is used as the illustration of the function output only.
-# It does not imply the data is appropriate for the analysis. 
-cfa_groupwise(data = lavaan::HolzingerSwineford1939,
-              group = 'school',
-              x1:x3, 
-              x4:x6,
-              x7:x9)
-
+# It does not imply the data is appropriate for the analysis.
+cfa_groupwise(
+  data = lavaan::HolzingerSwineford1939,
+  group = "school",
+  x1:x3,
+  x4:x6,
+  x7:x9
+)
 }
 \references{
 Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel

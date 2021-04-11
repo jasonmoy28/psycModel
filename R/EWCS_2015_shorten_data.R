@@ -1,6 +1,6 @@
-#' Shortened Version of EWCS 
+#' Shortened Version of EWCS
 #'
-#' Shortened Version of European Working Condition Survey (EWCS) suited for multilevel modeling. A dataset contains several work-relate variables 
+#' Shortened Version of European Working Condition Survey (EWCS) suited for multilevel modeling. A dataset contains several work-relate variables
 #'
 #' @format A data frame with 1500 rows and 13 variables:
 #' \describe{

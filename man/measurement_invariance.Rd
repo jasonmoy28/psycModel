@@ -40,18 +40,21 @@ return the compareFit object
 Compute the measurement invariance model (i.e., measurement equivalence model) using multi-group confirmatory factor analysis (MGCFA; Jöreskog, 1971). This function uses the lavaan::cfa (Rosseel, 2012). Users can run the configural-metric or the configural-metric-scalar comparisons (see below for detail instruction).
 }
 \examples{
-# Fitting measurement invariance model by passing explicit lavaan model 
-measurement_invariance(model = 'visual  =~ x1 + x2 + x3
+# Fitting measurement invariance model by passing explicit lavaan model
+measurement_invariance(
+  model = "visual  =~ x1 + x2 + x3
                                 textual =~ x4 + x5 + x6
-                                speed   =~ x7 + x8 + x9 ',
-                       data = lavaan::HolzingerSwineford1939,
-                       group = 'school')
+                                speed   =~ x7 + x8 + x9 ",
+  data = lavaan::HolzingerSwineford1939,
+  group = "school"
+)
 
-# Fitting a unifactor measurement invariance model by passing items. 
-measurement_invariance(items = x1:x3,
-                       data = lavaan::HolzingerSwineford1939,
-                       group = 'school')
-
+# Fitting a unifactor measurement invariance model by passing items.
+measurement_invariance(
+  items = x1:x3,
+  data = lavaan::HolzingerSwineford1939,
+  group = "school"
+)
 }
 \references{
 Jöreskog, K. G. (1971). Simultaneous factor analysis in several populations. Psychometrika, 36(4), 409-426.

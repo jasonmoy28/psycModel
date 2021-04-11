@@ -34,10 +34,9 @@ descriptive_table(
 This function generates a table of descriptive statistics (mainly using psych::describe; Revelle, 2021) and or a correlation table. User can export this to a csv file (optionally, using the file_path argument). Users can open the csv file with MS Excel then copy and paste the table into MS Word table.
 }
 \examples{
-descriptive_table(iris,cols = tidyr::everything()) # all columns
+descriptive_table(iris, cols = tidyr::everything()) # all columns
 
-descriptive_table(iris,cols = where(is.numeric)) # all numeric columns
-
+descriptive_table(iris, cols = where(is.numeric)) # all numeric columns
 }
 \references{
 Revelle, W. (2021). psych: Procedures for Psychological, Psychometric, and Personality Research. Northwestern University, Evanston, Illinois. R package version 2.1.3, https://CRAN.R-project.org/package=psych.

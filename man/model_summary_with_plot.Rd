@@ -89,16 +89,16 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
 }
 \examples{
 
-model_summary_with_plot(response_variable = 'incidence',
-                        level_1_factors = 'size',
-                        level_2_factors = 'herd',
-                        two_way_interaction_factor = c('size','herd'),
-                        id = 'period',
-                        data = lme4::cbpp,
-                        use_package = 'lmerTest', #use lmerTest
-                        model_performance = NULL)
-
-
+model_summary_with_plot(
+  response_variable = "incidence",
+  level_1_factors = "size",
+  level_2_factors = "herd",
+  two_way_interaction_factor = c("size", "herd"),
+  id = "period",
+  data = lme4::cbpp,
+  use_package = "lmerTest", # use lmerTest
+  model_performance = NULL
+)
 }
 \references{
 Bates, D., Mächler, M., Bolker, B., & Walker, S. (2014). Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software, 67(1), 1–48. doi: 10.18637/jss.v067.i01.

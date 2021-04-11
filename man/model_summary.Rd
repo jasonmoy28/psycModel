@@ -34,14 +34,14 @@ a data frame with estimate, degree of freedom, p_value, and whether the p-value 
 The function will extract the relevant coefficients from the linear mixed effect models (see supported model below).
 }
 \examples{
-fit = lme_model(response_variable = 'Reaction',
-               level_1_factors = 'Days',
-               id = 'Subject',
-               data = lme4::sleepstudy)
-               
+fit <- lme_model(
+  response_variable = "Reaction",
+  level_1_factors = "Days",
+  id = "Subject",
+  data = lme4::sleepstudy
+)
+
 model_summary(fit)
-
-
 }
 \references{
 Lüdecke, D., Makowski, D., Waggoner, P., Patil I (2020). performance: Assessment of Regression Models Performance. CRAN. doi: 10.5281/zenodo.3952174, R package, https://easystats.github.io/performance/.

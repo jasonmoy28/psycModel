@@ -31,18 +31,20 @@ ggplot object.
 The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model
 }
 \examples{
-fit = lme_model(response_variable = JS_Individual,
-           level_1_factors = c(Age_Individual,Education_Individual), 
-           level_2_factors = contains('Country'),
-           three_way_interaction_factor = c('Age_Individual',
-                                            'Education_Individual',
-                                            'Hofstede_IC_Country'),
-           id = Country,
-           data = EWCS_2015_shorten)
-           
-three_way_interaction_plot(fit)           
-           
+fit <- lme_model(
+  response_variable = JS_Individual,
+  level_1_factors = c(Age_Individual, Education_Individual),
+  level_2_factors = contains("Country"),
+  three_way_interaction_factor = c(
+    "Age_Individual",
+    "Education_Individual",
+    "Hofstede_IC_Country"
+  ),
+  id = Country,
+  data = EWCS_2015_shorten
+)
 
+three_way_interaction_plot(fit)
 }
 \references{
 Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel

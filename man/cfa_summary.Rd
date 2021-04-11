@@ -43,39 +43,47 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
 All argument must be explicitly specified. If not, all arguments will be treated as CFA items.
 }
 \examples{
-            
+
 # Fitting a single factor CFA model
-cfa_summary(data = lavaan::HolzingerSwineford1939,
-            x1:x3)
+cfa_summary(
+  data = lavaan::HolzingerSwineford1939,
+  x1:x3
+)
 
- # Fitting a multilevel single factor CFA model
-cfa_summary(data = lavaan::HolzingerSwineford1939,
-            x1:x3, 
-            group = 'sex')
-            
-# Fitting a multiple factor CFA model 
-cfa_summary(data = lavaan::HolzingerSwineford1939,
-            x1:x3,
-            x4:x6,
-            x7:x9)
-            
+# Fitting a multilevel single factor CFA model
+cfa_summary(
+  data = lavaan::HolzingerSwineford1939,
+  x1:x3,
+  group = "sex"
+)
+
+# Fitting a multiple factor CFA model
+cfa_summary(
+  data = lavaan::HolzingerSwineford1939,
+  x1:x3,
+  x4:x6,
+  x7:x9
+)
+
 # Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)
-# Note in the below function how I added `model = ` in front of the lavaan model. 
+# Note in the below function how I added `model = ` in front of the lavaan model.
 # Similarly, the same rule apply for all arguments (e.g., `ordered = F` instead of `F`)
-cfa_summary(model = 'visual  =~ x1 + x2 + x3  
+cfa_summary(
+  model = "visual  =~ x1 + x2 + x3
                      textual =~ x4 + x5 + x6
-                     speed   =~ x7 + x8 + x9 ',
-            data = lavaan::HolzingerSwineford1939)
-
+                     speed   =~ x7 + x8 + x9 ",
+  data = lavaan::HolzingerSwineford1939
+)
 \dontrun{
-# This will fail because I did not add `model = ` in front of the lavaan model. 
-# Therefore,you must add the tag in front of all arguments 
+# This will fail because I did not add `model = ` in front of the lavaan model.
+# Therefore,you must add the tag in front of all arguments
 # For example, `return_result = 'model'` instaed of `model`
-cfa_summary('visual  =~ x1 + x2 + x3  
+cfa_summary("visual  =~ x1 + x2 + x3
              textual =~ x4 + x5 + x6
-             speed   =~ x7 + x8 + x9 ',
-            data = lavaan::HolzingerSwineford1939)
-}          
+             speed   =~ x7 + x8 + x9 ",
+  data = lavaan::HolzingerSwineford1939
+)
+}
 }
 \references{
 Bao, H.-W.-S. (2021). bruceR: Broadly useful convenient and efficient R functions. R package version 0.6.0. https://CRAN.R-project.org/package=bruceR
