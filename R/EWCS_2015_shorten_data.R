@@ -18,5 +18,5 @@
 #'   \item{Hofstede_LO_Country}{Hofstede measurement on Long-term Orientation (country-level)}
 #'   \item{Hofstede_IR_Country}{Hofstede measurement on Indulgence Restraint (country-level)}
 #' }
-#' @source \url{http://www.diamondse.info/}
+#' @source \url{http://doi.org/10.5255/UKDA-SN-8098-4}
 "EWCS_2015_shorten"

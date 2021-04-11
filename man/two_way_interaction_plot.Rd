@@ -9,7 +9,7 @@ two_way_interaction_plot(
   graph_label_name = NULL,
   cateogrical_var = NULL,
   y_lim = NULL,
-  plot_color = F
+  plot_color = FALSE
 )
 }
 \arguments{

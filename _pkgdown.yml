@@ -1,1 +1,11 @@
+title: psycModel
 url: https://jasonmoy28.github.io/psycModel
+template:
+  params:
+    bootswatch: simplex
+navbar:
+ right:
+    - icon: fab fa-github fa-0.7x
+      text: "GitHub"
+      href: https://github.com/jasonmoy28/psycModel
+      

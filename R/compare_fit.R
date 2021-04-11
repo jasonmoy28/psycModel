@@ -3,14 +3,35 @@
 #' `r lifecycle::badge("experimental")` \cr
 #' Compare the fit indices models (see below for model support)
 #'
-#' @param models list of object from `lavaan` (potential expansion with other models)
+#' @param models list of object from `lavaan` (for measurement invariance only at the moment) or lme, lmer models.
 #' @param digits number of digit to round
 #'
 #' @return
 #' data frame with fit indices and change in fit indices
 #' @export
-#'
-#'
+#' @examples 
+#' # lme model
+#' fit1 = lme_model(
+#'   response_variable = JS_Individual,
+#'   level_1_factors = Age_Individual,
+#'   level_2_factors = Hofstede_IC_Country,
+#'   id = Country,
+#'   data = EWCS_2015_shorten,
+#' )
+#' 
+#' fit2 = lme_model(
+#'   response_variable = JS_Individual,
+#'   level_1_factors = Age_Individual,
+#'   level_2_factors = c(Hofstede_IC_Country,Hofstede_UA_Country),
+#'   id = Country,
+#'   data = EWCS_2015_shorten,
+#' )
+#' 
+#' compare_fit(list(fit1, fit2))
+#' 
+#' # see ?measurement_invariance for measurement invariance example
+#' 
+
 compare_fit <- function(models,
                         digits = 3) {
   if (class(models) != "list") {

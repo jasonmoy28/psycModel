@@ -23,7 +23,7 @@ A data frame with 1500 rows and 13 variables:
 }
 }
 \source{
-\url{http://www.diamondse.info/}
+\url{http://doi.org/10.5255/UKDA-SN-8098-4}
 }
 \usage{
 EWCS_2015_shorten

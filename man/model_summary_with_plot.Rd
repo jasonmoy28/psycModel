@@ -89,15 +89,17 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
 }
 \examples{
 
-model_summary_with_plot(
-  response_variable = "incidence",
-  level_1_factors = "size",
-  level_2_factors = "herd",
-  two_way_interaction_factor = c("size", "herd"),
-  id = "period",
-  data = lme4::cbpp,
-  use_package = "lmerTest", # use lmerTest
-  model_performance = NULL
+fit1 = model_summary_with_plot(
+  response_variable = JS_Individual,
+  level_1_factors = Age_Individual,
+  level_2_factors = Hofstede_IC_Country,
+  two_way_interaction_factor = c(Age_Individual,Hofstede_IC_Country),
+  id = Country,
+  graph_label_name = c('Job Satisfaction', 'Age','Hofstede_IC_Country'),
+  plot_color = TRUE, # plot with color
+  data = EWCS_2015_shorten,
+  check_assumption = TRUE, 
+  simple_slope = TRUE, 
 )
 }
 \references{

@@ -58,7 +58,7 @@ two_way_interaction_plot <- function(model,
                                      graph_label_name = NULL,
                                      cateogrical_var = NULL,
                                      y_lim = NULL,
-                                     plot_color = F) {
+                                     plot_color = FALSE) {
 
   # warning functions of more than two interaction
   interaction_plot_check <- function(interaction_term) {
