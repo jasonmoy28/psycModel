@@ -30,7 +30,8 @@ Imports:
     psych,
     lifecycle,
     rlang,
-    qqplotr
+    qqplotr,
+    tidyselect
 Roxygen: list(markdown = TRUE)
 Suggests: 
     rmarkdown,

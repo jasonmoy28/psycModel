@@ -94,7 +94,7 @@ model_summary <- function(model,
       dplyr::select('variable','estimate', 'z_value', 'p_value','significant')
 
   } else {
-    print('The function currently only support lme,lmerMod,lmerModLmerTest, glmerMod object. You can coerced the function to fit by specifying the model_fit argument.Be aware that result is not teseted.')
+    stop('The function currently only support lme,lmerMod,lmerModLmerTest, glmerMod object. You can coerced the function to fit by specifying the model_fit argument.Be aware that result is not teseted.')
   }
 
   if (class(model) == 'lme' | model_fit == 'lme' | class(model) == 'lmerModLmerTest' | class(model) == 'lmerMod' | model_fit == 'lmer') {

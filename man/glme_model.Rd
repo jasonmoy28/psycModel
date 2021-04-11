@@ -49,7 +49,7 @@ An object of class "glmerMod" representing the linear mixed-effects model fit.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
-Generalized linear mixed effect model. The function uses the \code{lme4::glmer}(Bates et al., 2014) function
+Generalized linear mixed effect model. The function uses the \code{lme4::glmer}(Bates et al., 2014) function. This function is still in very early development stage.
 }
 \examples{
 x <- rnorm(200)
