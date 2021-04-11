@@ -14,15 +14,14 @@
 ```R
 devtools::install_github('jasonmoy28/psycModel')
 ```
-## Feature
-The package consists of three types of analysis: descriptive statistics, mixed effect model, latent variable model
-
-1. Descriptive statistics: correlation (`cor_test`); descriptive statistics table (`descriptive_table`)
-
-2. Mixed effect model: linear mixed effect model (`lme_model`); generalized linear mixed effect model (`glme_model`); mixed effect model interaction plot (`two_way_interaction_plot`, `three_way_interaction_plot`); mixed effect model summary (`model_summary`, `model_summary_with_plot`)
-
-3. Measurement model: Confirmatory factor analysis (`cfa_summary`, `measurement_invariance`)
-
+## Key Features
+<span style="color:#009900">✓</span> Easy to use for R beginners who don't want to find dedicated packages for each analysis  
+<span style="color:#009900">✓</span> Support [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models   
+<span style="color:#009900">✓</span> Two-way and three-way interaction plots for linear models  
+<span style="color:#009900">✓</span> Model assumptions inspection  
+<span style="color:#009900">✓</span> Model comparisons  
+<span style="color:#009900">✓</span> Easy-to-use confirmatory factor analysis (do not need to learn lavaan syntax) and measurement invariance  
+<span style="color:#009900">✓</span> Publication-ready descriptive statistics & correlation table 
 
 ## Credit
 **Authors:** [Jason Moy](https://jasonmoy.us)
@@ -38,13 +37,16 @@ The package consists of three types of analysis: descriptive statistics, mixed e
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url = {https://github.com/jasonmoy28/psycModel},  
   }
 
+## Acknoledgement
+This package was built by standing on the shoulders of giants with special thanks to developers of `lavaan`, `performance`, `lme4`, `lmerTest`, `nlme`, `psych`, all `tidyverse` packages. We would have to pay a lot of money for very expensive software if they have not developed these amazing packages for statistical analysis in R. Additionally, I want to thank the developers for `devtools` and `usethis`. It would have been much much harder (maybe even impossible for me) to write an R package without the help of these two packages. I hope my package can help someone as they had helped me. 
+
 ## Updates
 ### Prospective Features: 
 1. Support mediation, moderated mediation analysis
 2. Support latent class and profile analysis (possible latent transition analysis)
 3. Support model assumption checking tools
 4. Support linear / generalized linear regression
-5. Support exploratory factor analysis
+5. Support exploratory factor analysis and plotting 
 
 ### version 0.2.0 (released on 4/11/2021)
 **New Feature:**
