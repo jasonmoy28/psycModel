@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -88,12 +88,30 @@ Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/mixed_effect_model.html">mixed_effect_model</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/jasonmoy28/psycModel">
+    <span class="fab fa-github fa-0.7x"></span>
+     
+    GitHub
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -206,142 +224,52 @@ Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># two-level model with level-1 and level-2 variable with random intercept and random slope</span>
-<span class='fu'>lme_model</span><span class='op'>(</span>
-  response_variable <span class='op'>=</span> <span class='st'>"JS_Individual"</span>,
+<span class='va'>fit1</span> <span class='op'>=</span> <span class='fu'>lme_model</span><span class='op'>(</span>
+  response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
   level_1_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
   level_2_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
-  id <span class='op'>=</span> <span class='st'>"Country"</span>,
-  data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>
+  id <span class='op'>=</span> <span class='va'>Country</span>,
+  data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>,
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Fitting Model with lme: 
 #&gt;  Fixed = JS_Individual ~ Age_Individual + Hofstede_IC_Country + Hofstede_UA_Country + Hofstede_PD_Country + Hofstede_MF_Country + Hofstede_LO_Country + Hofstede_IR_Country 
-#&gt;  Random = ~ 1 + Age_Individual | Country </div><div class='output co'>#&gt; Linear mixed-effects model fit by REML
-#&gt;   Data: data 
-#&gt;   Log-restricted-likelihood: -906.9185
-#&gt;   Fixed: JS_Individual ~ Age_Individual + Hofstede_IC_Country + Hofstede_UA_Country +      Hofstede_PD_Country + Hofstede_MF_Country + Hofstede_LO_Country +      Hofstede_IR_Country 
-#&gt;         (Intercept)      Age_Individual Hofstede_IC_Country Hofstede_UA_Country 
-#&gt;        0.0811955003       -0.0021916921       -0.0053438927       -0.0048277441 
-#&gt; Hofstede_PD_Country Hofstede_MF_Country Hofstede_LO_Country Hofstede_IR_Country 
-#&gt;       -0.0009059946        0.0014599797       -0.0014450831        0.0035288500 
-#&gt; 
-#&gt; Random effects:
-#&gt;  Formula: ~1 + Age_Individual | Country
-#&gt;  Structure: General positive-definite, Log-Cholesky parametrization
-#&gt;                StdDev      Corr  
-#&gt; (Intercept)    0.198765576 (Intr)
-#&gt; Age_Individual 0.003846902 -0.808
-#&gt; Residual       0.681179184       
-#&gt; 
-#&gt; Number of Observations: 835
-#&gt; Number of Groups: 18 </div><div class='input'>
-<span class='fu'>lme_model</span><span class='op'>(</span>
-  response_variable <span class='op'>=</span> <span class='st'>"JS_Individual"</span>,
+#&gt;  Random = ~ 1 + Age_Individual | Country </div><div class='input'><span class='co'># added two-way interaction factor</span>
+<span class='va'>fit2</span> <span class='op'>=</span> <span class='fu'>lme_model</span><span class='op'>(</span>
+  response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
   level_1_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
   level_2_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
   two_way_interaction_factor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Age_Individual"</span>, <span class='st'>"Hofstede_IC_Country"</span><span class='op'>)</span>,
-  id <span class='op'>=</span> <span class='st'>"Country"</span>,
+  id <span class='op'>=</span> <span class='va'>Country</span>,
   data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Fitting Model with lme: 
 #&gt;  Fixed = JS_Individual ~ Age_Individual + Hofstede_IC_Country + Hofstede_UA_Country + Hofstede_PD_Country + Hofstede_MF_Country + Hofstede_LO_Country + Hofstede_IR_Country + Age_Individual*Hofstede_IC_Country 
-#&gt;  Random = ~ 1 + Age_Individual | Country </div><div class='output co'>#&gt; Linear mixed-effects model fit by REML
-#&gt;   Data: data 
-#&gt;   Log-restricted-likelihood: -914.9022
-#&gt;   Fixed: JS_Individual ~ Age_Individual + Hofstede_IC_Country + Hofstede_UA_Country +      Hofstede_PD_Country + Hofstede_MF_Country + Hofstede_LO_Country +      Hofstede_IR_Country + Age_Individual * Hofstede_IC_Country 
-#&gt;                        (Intercept)                     Age_Individual 
-#&gt;                       7.195725e-02                      -1.958382e-03 
-#&gt;                Hofstede_IC_Country                Hofstede_UA_Country 
-#&gt;                      -3.041801e-03                      -4.839440e-03 
-#&gt;                Hofstede_PD_Country                Hofstede_MF_Country 
-#&gt;                      -9.057604e-04                       1.474654e-03 
-#&gt;                Hofstede_LO_Country                Hofstede_IR_Country 
-#&gt;                      -1.431581e-03                       3.536336e-03 
-#&gt; Age_Individual:Hofstede_IC_Country 
-#&gt;                      -5.487158e-05 
-#&gt; 
-#&gt; Random effects:
-#&gt;  Formula: ~1 + Age_Individual | Country
-#&gt;  Structure: General positive-definite, Log-Cholesky parametrization
-#&gt;                StdDev      Corr  
-#&gt; (Intercept)    0.219111165 (Intr)
-#&gt; Age_Individual 0.004354397 -0.841
-#&gt; Residual       0.681151146       
-#&gt; 
-#&gt; Number of Observations: 835
-#&gt; Number of Groups: 18 </div><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'>lme_model</span><span class='op'>(</span>
-  response_variable <span class='op'>=</span> <span class='st'>"JS_Individual"</span>,
+#&gt;  Random = ~ 1 + Age_Individual | Country </div><div class='input'>
+<span class='co'># \donttest{</span>
+<span class='co'># fit3 is equivalent to fit4</span>
+<span class='va'>fit3</span> <span class='op'>=</span> <span class='fu'>lme_model</span><span class='op'>(</span>
+  response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
   level_1_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Individual"</span><span class='op'>)</span>, <span class='op'>-</span><span class='va'>JS_Individual</span><span class='op'>)</span>, <span class='co'># !look at the difference here</span>
   level_2_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
-  id <span class='op'>=</span> <span class='st'>"Country"</span>,
+  id <span class='op'>=</span> <span class='va'>Country</span>,
   data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Fitting Model with lme: 
 #&gt;  Fixed = JS_Individual ~ Gender_Individual + Age_Individual + Education_Individual + SWB_Individual + Hofstede_IC_Country + Hofstede_UA_Country + Hofstede_PD_Country + Hofstede_MF_Country + Hofstede_LO_Country + Hofstede_IR_Country 
-#&gt;  Random = ~ 1 + Gender_Individual + Age_Individual + Education_Individual + SWB_Individual | Country </div><div class='output co'>#&gt; Linear mixed-effects model fit by REML
-#&gt;   Data: data 
-#&gt;   Log-restricted-likelihood: -838.001
-#&gt;   Fixed: JS_Individual ~ Gender_Individual + Age_Individual + Education_Individual +      SWB_Individual + Hofstede_IC_Country + Hofstede_UA_Country +      Hofstede_PD_Country + Hofstede_MF_Country + Hofstede_LO_Country +      Hofstede_IR_Country 
-#&gt;          (Intercept)    Gender_Individual       Age_Individual 
-#&gt;        -0.1718365968        -0.0061146305        -0.0021178233 
-#&gt; Education_Individual       SWB_Individual  Hofstede_IC_Country 
-#&gt;         0.0493844869         0.3575268872        -0.0025227122 
-#&gt;  Hofstede_UA_Country  Hofstede_PD_Country  Hofstede_MF_Country 
-#&gt;        -0.0031300477        -0.0006183767         0.0019222736 
-#&gt;  Hofstede_LO_Country  Hofstede_IR_Country 
-#&gt;        -0.0021381380         0.0047175673 
-#&gt; 
-#&gt; Random effects:
-#&gt;  Formula: ~1 + Gender_Individual + Age_Individual + Education_Individual +      SWB_Individual | Country
-#&gt;  Structure: General positive-definite, Log-Cholesky parametrization
-#&gt;                      StdDev     Corr                       
-#&gt; (Intercept)          0.52125877 (Intr) Gndr_I Ag_Ind Edct_I
-#&gt; Gender_Individual    0.11380883 -0.634                     
-#&gt; Age_Individual       0.00718994 -0.949  0.421              
-#&gt; Education_Individual 0.02794263 -0.572 -0.213  0.685       
-#&gt; SWB_Individual       0.02762033 -0.138 -0.602  0.311  0.846
-#&gt; Residual             0.61713746                            
-#&gt; 
-#&gt; Number of Observations: 835
-#&gt; Number of Groups: 18 </div><div class='input'><span class='co'># }</span>
+#&gt;  Random = ~ 1 + Gender_Individual + Age_Individual + Education_Individual + SWB_Individual | Country </div><div class='input'><span class='co'># }</span>
 <span class='co'># Equivalent to the above example.</span>
 <span class='co'># It shows that you don't need to remove response_variable from tidyselect syntax.</span>
 <span class='co'># \donttest{</span>
-<span class='fu'>lme_model</span><span class='op'>(</span>
-  response_variable <span class='op'>=</span> <span class='st'>"JS_Individual"</span>,
+<span class='va'>fit4</span> <span class='op'>=</span> <span class='fu'>lme_model</span><span class='op'>(</span>
+  response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
   level_1_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Individual"</span><span class='op'>)</span>, <span class='co'># !look at the difference here</span>
   level_2_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
-  id <span class='op'>=</span> <span class='st'>"Country"</span>,
+  id <span class='op'>=</span> <span class='va'>Country</span>,
   data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Fitting Model with lme: 
 #&gt;  Fixed = JS_Individual ~ Gender_Individual + Age_Individual + Education_Individual + SWB_Individual + Hofstede_IC_Country + Hofstede_UA_Country + Hofstede_PD_Country + Hofstede_MF_Country + Hofstede_LO_Country + Hofstede_IR_Country 
-#&gt;  Random = ~ 1 + Gender_Individual + Age_Individual + Education_Individual + SWB_Individual | Country </div><div class='output co'>#&gt; Linear mixed-effects model fit by REML
-#&gt;   Data: data 
-#&gt;   Log-restricted-likelihood: -838.001
-#&gt;   Fixed: JS_Individual ~ Gender_Individual + Age_Individual + Education_Individual +      SWB_Individual + Hofstede_IC_Country + Hofstede_UA_Country +      Hofstede_PD_Country + Hofstede_MF_Country + Hofstede_LO_Country +      Hofstede_IR_Country 
-#&gt;          (Intercept)    Gender_Individual       Age_Individual 
-#&gt;        -0.1718365968        -0.0061146305        -0.0021178233 
-#&gt; Education_Individual       SWB_Individual  Hofstede_IC_Country 
-#&gt;         0.0493844869         0.3575268872        -0.0025227122 
-#&gt;  Hofstede_UA_Country  Hofstede_PD_Country  Hofstede_MF_Country 
-#&gt;        -0.0031300477        -0.0006183767         0.0019222736 
-#&gt;  Hofstede_LO_Country  Hofstede_IR_Country 
-#&gt;        -0.0021381380         0.0047175673 
-#&gt; 
-#&gt; Random effects:
-#&gt;  Formula: ~1 + Gender_Individual + Age_Individual + Education_Individual +      SWB_Individual | Country
-#&gt;  Structure: General positive-definite, Log-Cholesky parametrization
-#&gt;                      StdDev     Corr                       
-#&gt; (Intercept)          0.52125877 (Intr) Gndr_I Ag_Ind Edct_I
-#&gt; Gender_Individual    0.11380883 -0.634                     
-#&gt; Age_Individual       0.00718994 -0.949  0.421              
-#&gt; Education_Individual 0.02794263 -0.572 -0.213  0.685       
-#&gt; SWB_Individual       0.02762033 -0.138 -0.602  0.311  0.846
-#&gt; Residual             0.61713746                            
-#&gt; 
-#&gt; Number of Observations: 835
-#&gt; Number of Groups: 18 </div><div class='input'><span class='co'># }</span>
+#&gt;  Random = ~ 1 + Gender_Individual + Age_Individual + Education_Individual + SWB_Individual | Country </div><div class='input'><span class='co'># }</span>
 
 </div></pre>
   </div>
