@@ -35,7 +35,8 @@ Imports:
     tibble,
     tidyr,
     tidyselect,
-    utils
+    utils,
+    gridExtra
 Suggests: 
     covr,
     knitr,
