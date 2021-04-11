@@ -88,17 +88,7 @@ model_summary_with_plot = function(data,
   if (!is.null(family)) {
     warning('The interaction plots produced is not fully tested. Please use it at your own risk')
   }
-  
-  if (is.null(model)) {
-    if (is.null(response_variable) | is.null(level_1_factors) | is.null(id)) {
-      stop('response_variable, level_1_factors, id cannot be NULL if model is NULL. ')
-    }
-  }
   data = data_check(data) #check data and coerced into numeric
-  
-  if (!is.null(two_way_interaction_factor) & !is.null(three_way_interaction_factor)) {
-    stop('Do not specify both two_way_interaction_factor and three_way_interaction_factor. Passing three_way_interaction_factor automatically include all two-way interactions.')
-  }
   
   if(any(print_result %in% 'simple_slope') | any(return_result %in% 'simple_slope')){
     if (use_package == 'nlme'){
@@ -109,17 +99,18 @@ model_summary_with_plot = function(data,
   if (is.null(family)) {
     model = lme_model(model = model,
                       data = data,
-                      response_variable = response_variable,
-                      level_1_factors = level_1_factors,
-                      level_2_factors = level_2_factors,
-                      two_way_interaction_factor = two_way_interaction_factor,
-                      three_way_interaction_factor = three_way_interaction_factor,
-                      id = id,
+                      response_variable = rlang::enquo(response_variable),
+                      level_1_factors = rlang::enquo(level_1_factors),
+                      level_2_factors = rlang::enquo(level_2_factors),
+                      two_way_interaction_factor = rlang::enquo(two_way_interaction_factor),
+                      three_way_interaction_factor = rlang::enquo(three_way_interaction_factor),
+                      id = rlang::enquo(id),
                       opt_control = opt_control,
                       na.action = na.action,
                       estimation_method = estimation_method,
                       use_package = use_package,
-                      quite = quite)
+                      quite = quite,
+                      ... = 'model_summary_with_plot')
   } else{
     model = glme_model(data = data,
                        response_variable = response_variable,
@@ -134,24 +125,15 @@ model_summary_with_plot = function(data,
                        quite = quite)
   }
   interaction_plot = NULL
-  if (!is.null(two_way_interaction_factor) & (any(print_result %in% 'plot') | return_result == T)) {
-    if (length(two_way_interaction_factor) > 2) {
-      warning('Length of two_way_interaction_factor > 2: Plot the two-way interaction using the first 2')
-    }
-    interaction_plot = two_way_interaction_plot(data = data,
-                                                model = model,
-                                                response_var = response_variable,
-                                                predict_var_name = two_way_interaction_factor[1:2], #graph the first two factor
+  if (length(rlang::enquo(two_way_interaction_factor)) != 0 & (any(print_result %in% 'plot') | return_result == T)) {
+    interaction_plot = two_way_interaction_plot(model = model,
                                                 cateogrical_var = cateogrical_var,
                                                 graph_label_name = graph_label_name,
                                                 y_lim = y_lim,
                                                 plot_color = plot_color)
     
-  } else if (!is.null(three_way_interaction_factor) & (any(print_result %in% 'plot') | return_result == T)) {
-    interaction_plot = three_way_interaction_plot(data = data,
-                                                  model = model,
-                                                  response_var = response_variable,
-                                                  predict_var_name = three_way_interaction_factor,
+  } else if (length(rlang::enquo(three_way_interaction_factor)) != 0 & (any(print_result %in% 'plot') | return_result == T)) {
+    interaction_plot = three_way_interaction_plot(model = model,
                                                   cateogrical_var = cateogrical_var,
                                                   graph_label_name = graph_label_name,
                                                   y_lim = y_lim,

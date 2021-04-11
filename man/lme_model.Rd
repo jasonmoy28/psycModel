@@ -17,7 +17,8 @@ lme_model(
   opt_control = "optim",
   na.action = stats::na.exclude,
   use_package = "nlme",
-  quite = F
+  quite = F,
+  ...
 )
 }
 \arguments{
@@ -46,21 +47,49 @@ lme_model(
 \item{use_package}{character. \code{nlme} or \code{lmerTest}, or \code{lme4}. Default is \code{nlme}.}
 
 \item{quite}{default to F. If set to \code{T}, it will not print the fitting model statement}
+
+\item{...}{Internal use only. It doesn't work in other cases}
 }
 \value{
 An object of class \code{lme} of \code{lmerModLmerTest} representing the linear mixed-effects model fit.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the \code{nlme::lme} (Pinheiro, 2006)  or the \code{lmerTest::lmer} (Kuznetsova, 2017) function.
+Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the \code{nlme::lme} (Pinheiro, 2006)  or the \code{lmerTest::lmer} (Kuznetsova, 2017) function. The model support all dplyr::select syntax (see \code{?dplyr::select} or \verb{vignette('mixed_effect_model)} for detailed description). It will also automatically remove the response variable and id from other variables (see details below for an example). It currently only support two-level model. More complicated model structure is supported by passing the \code{model} argument.
 }
 \examples{
-lme_model(response_variable = 'Reaction',
-           level_1_factors = 'Days',
-           id = 'Subject',
-           data = lme4::sleepstudy)
+# two-level model with level-1 and level-2 variable with random intercept and random slope
+lme_model(response_variable = 'JS_Individual',
+           level_1_factors = Age_Individual, 
+           level_2_factors = contains('Country'),
+           id = 'Country',
+           data = EWCS_2015_shorten)
 
-
+lme_model(response_variable = 'JS_Individual',
+           level_1_factors = Age_Individual, 
+           level_2_factors = contains('Country'),
+           two_way_interaction_factor = c('Age_Individual','Hofstede_IC_Country'),
+           id = 'Country',
+           data = EWCS_2015_shorten)
+                        
+           
+\donttest{
+lme_model(response_variable = 'JS_Individual',
+           level_1_factors = c(contains('Individual'),-JS_Individual), #!look at the difference here
+           level_2_factors = contains('Country'),
+           id = 'Country',
+           data = EWCS_2015_shorten)
+}
+# Equivalent to the above example. 
+# It shows that you don't need to remove response_variable from tidyselect syntax. 
+\donttest{
+lme_model(response_variable = 'JS_Individual',
+           level_1_factors = contains('Individual'), #!look at the difference here
+           level_2_factors = contains('Country'),
+           id = 'Country',
+           data = EWCS_2015_shorten) 
+}            
+           
 }
 \references{
 Kuznetsova, A., Brockhoff, P. B., & Christensen, R. H. (2017). lmerTest package: tests in linear mixed effects models. Journal of statistical software, 82(13), 1-26.
