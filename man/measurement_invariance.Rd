@@ -6,21 +6,21 @@
 \usage{
 measurement_invariance(
   data,
+  ...,
   model = NULL,
-  items = NULL,
   group,
   ordered = F,
   group_partial = NULL,
-  invariance_level = "metric",
+  invariance_level = "scalar",
   digits = 3
 )
 }
 \arguments{
 \item{data}{data frame}
 
-\item{model}{explicit lavaan model. Either the \code{model} argument or the \code{items} argument must be specified.}
+\item{...}{CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for example}
 
-\item{items}{vector of tidyselect syntax or helpers. default to NULL if the model is specified. The argument will be ignored if the model is explicitly specified.}
+\item{model}{explicit lavaan model. Either the \code{model} argument or the \code{items} argument must be specified.}
 
 \item{group}{character. group variable.}
 
@@ -39,22 +39,39 @@ return the compareFit object
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 Compute the measurement invariance model (i.e., measurement equivalence model) using multi-group confirmatory factor analysis (MGCFA; Jöreskog, 1971). This function uses the lavaan::cfa (Rosseel, 2012). Users can run the configural-metric or the configural-metric-scalar comparisons (see below for detail instruction).
 }
+\details{
+All argument must be explicitly specified. If not, all arguments will be treated as CFA items.
+}
 \examples{
-# Fitting measurement invariance model by passing explicit lavaan model
+# REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT
+# Fitting a multiple-factor measurement invariance model by passing items
 measurement_invariance(
-  model = "visual  =~ x1 + x2 + x3
-                                textual =~ x4 + x5 + x6
-                                speed   =~ x7 + x8 + x9 ",
+  x1:x3,
+  x4:x6,
+  x7:x9,
   data = lavaan::HolzingerSwineford1939,
   group = "school"
 )
 
-# Fitting a unifactor measurement invariance model by passing items.
+# Fitting measurement invariance model by passing explicit lavaan model
 measurement_invariance(
-  items = x1:x3,
+  model = "visual  =~ x1 + x2 + x3;
+           textual =~ x4 + x5 + x6;
+           speed   =~ x7 + x8 + x9",
   data = lavaan::HolzingerSwineford1939,
   group = "school"
 )
+\dontrun{
+# This will fail because I did not add `model = ` in front of the lavaan model.
+# Therefore,you must add the tag in front of all arguments
+# For example, `return_result = 'model'` instaed of `model`
+measurement_invariance(
+             "visual  =~ x1 + x2 + x3;
+             textual =~ x4 + x5 + x6;
+             speed   =~ x7 + x8 + x9",
+  data = lavaan::HolzingerSwineford1939
+)
+}
 }
 \references{
 Jöreskog, K. G. (1971). Simultaneous factor analysis in several populations. Psychometrika, 36(4), 409-426.
