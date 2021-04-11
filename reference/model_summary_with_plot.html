@@ -290,24 +290,38 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
   check_assumption <span class='op'>=</span> <span class='cn'>TRUE</span>, 
   simple_slope <span class='op'>=</span> <span class='cn'>TRUE</span>, 
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; Fitting Model with lme: 
-#&gt;  Fixed = JS_Individual ~ Age_Individual + Hofstede_IC_Country + Age_Individual*Hofstede_IC_Country 
-#&gt;  Random = ~ 1 + Age_Individual | Country 
-#&gt;                             variable estimate  DF p_value significant
-#&gt; 1                        (Intercept)    0.112 815   0.286            
-#&gt; 2                     Age_Individual   -0.002 815   0.378            
-#&gt; 3                Hofstede_IC_Country    0.003  16   0.544            
-#&gt; 4 Age_Individual:Hofstede_IC_Country    0.000 815   0.619            
-#&gt; 5                      R2_full_model    0.058                        
-#&gt; 6                    R2_fixed_effect    0.002                        </div><div class='output co'>#&gt; [1] TRUE</div><div class='output co'>#&gt; <span class='warning'>Warning: This may override the other plot. Set simple_slope to FALSE to see interaction plot. For best experience, knit a Rmd file to see all plots.</span></div><div class='output co'>#&gt; <span style='color: #BB0000;'>Could not compute standard errors from random effects for diagnostic plot.
-#&gt; Homogeneity of variance could not be computed. Cannot extract residual variance from objects of class 'lme'.
-#&gt; </span><span>Error in UseMethod("influence") : 
-#&gt;   no applicable method for 'influence' applied to an object of class "lme"
-#&gt; [1] "Error in UseMethod(\"influence\") : \n  no applicable method for 'influence' applied to an object of class \"lme\"\n"
-#&gt; attr(,"class")
-#&gt; [1] "try-error"
-#&gt; attr(,"condition")
-#&gt; &lt;simpleError in UseMethod("influence"): no applicable method for 'influence' applied to an object of class "lme"&gt;</div><div class='output co'>#&gt; <span class='warning'>Warning: Overrided simple slope plot. Set check_assumption to FALSE to see simple slope plot. Knit a Rmd file to see all plots for better experience.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Overrided interaction plot. Set check_assumption to FALSE to see interaction plot. Knit a Rmd file to see all plots for better experience.</span></div><div class='img'><img src='model_summary_with_plot-1.png' alt='' width='700' height='433' /></div></span></pre>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Switched use_package to lmerTest since you requested simple_slope</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Switched to na.omit since you request check_assumption.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: The default optimizer is changed from optim to bobyqa for lme4 or lmerTest.</span></div><div class='output co'>#&gt; Fitting Model with lmer:
+#&gt;  Formula = JS_Individual ~ Age_Individual + Hofstede_IC_Country + Age_Individual*Hofstede_IC_Country + (1 + Age_Individual | Country)
+#&gt;                             variable estimate     DF p_value significant
+#&gt; 1                        (Intercept)    0.112  9.351   0.312            
+#&gt; 2                     Age_Individual   -0.002 12.135   0.395            
+#&gt; 3                Hofstede_IC_Country    0.003  8.794   0.550            
+#&gt; 4 Age_Individual:Hofstede_IC_Country    0.000 10.931   0.628            
+#&gt; 5                      R2_full_model    0.058                           
+#&gt; 6                    R2_fixed_effect    0.002                           </div><div class='img'><img src='model_summary_with_plot-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span style='font-weight: bold;text-decoration: underline;'>JOHNSON-NEYMAN INTERVAL</span><span> 
+#&gt; 
+#&gt; The Johnson-Neyman interval could not be found. Is the p value for your
+#&gt; interaction term below the specified alpha?
+#&gt; </div><div class='output co'>#&gt; </span><span style='font-weight: bold;text-decoration: underline;'>SIMPLE SLOPES ANALYSIS</span><span> 
+#&gt; 
+#&gt; </span><span style='font-style: italic;'>Slope of Age_Individual when Hofstede_IC_Country = -16.08 (- 1 SD): 
+#&gt; 
+#&gt; </span><span>   Est.   S.E.   t val.      p
+#&gt; ------- ------ -------- ------
+#&gt;   -0.00   0.00    -0.32   0.75
+#&gt; 
+#&gt; </span><span style='font-style: italic;'>Slope of Age_Individual when Hofstede_IC_Country =   2.62 (Mean): 
+#&gt; 
+#&gt; </span><span>   Est.   S.E.   t val.      p
+#&gt; ------- ------ -------- ------
+#&gt;   -0.00   0.00    -0.97   0.35
+#&gt; 
+#&gt; </span><span style='font-style: italic;'>Slope of Age_Individual when Hofstede_IC_Country =  21.32 (+ 1 SD): 
+#&gt; 
+#&gt; </span><span>   Est.   S.E.   t val.      p
+#&gt; ------- ------ -------- ------
+#&gt;   -0.00   0.00    -1.07   0.31
+#&gt; </div><div class='output co'>#&gt; <span class='warning'>Warning: Overrided interaction plot. Set simple_slope to FALSE to see interaction plot. Knit a Rmd file to see all plots for better experience.</span></div><div class='output co'>#&gt; <span class='error'>Error in loadNamespace(name): there is no package called ‘ggrepel’</span></div><div class='img'><img src='model_summary_with_plot-2.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
