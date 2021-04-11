@@ -19,7 +19,7 @@ cfa_summary(
 \arguments{
 \item{data}{data frame}
 
-\item{...}{CFA items. Multi-factor CFA items should be separated by comma (as different argument).}
+\item{...}{CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for example}
 
 \item{model}{explicit lavaan model. Must be specify with \code{model = lavaan_model_syntax}.}
 
@@ -43,7 +43,7 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
 All argument must be explicitly specified. If not, all arguments will be treated as CFA items.
 }
 \examples{
-
+# REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT
 # Fitting a single factor CFA model
 cfa_summary(
   data = lavaan::HolzingerSwineford1939,

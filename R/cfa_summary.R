@@ -4,7 +4,7 @@
 #' The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Users can fit single and multiple factors CFA (read details), and it also supports multilevel CFA (specifying the group). Users can pass the items (see below for example) or an explicit lavaan model for more versatile usage.
 #'
 #' @param data data frame
-#' @param ... CFA items. Multi-factor CFA items should be separated by comma (as different argument).
+#' @param ... CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for example
 #' @param model explicit lavaan model. Must be specify with `model = lavaan_model_syntax`.
 #' @param group optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country)
 #' @param summary_item vector of fit indices. Default is CFI, RMSEA, TLI, and SRMR.
@@ -25,7 +25,7 @@
 #'
 #' @export
 #' @examples
-#'
+#' # REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT
 #' # Fitting a single factor CFA model
 #' cfa_summary(
 #'   data = lavaan::HolzingerSwineford1939,
