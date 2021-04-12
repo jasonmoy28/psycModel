@@ -17,9 +17,13 @@ devtools::install_github('jasonmoy28/psycModel')
 ## Key Features
 <span style="color:#009900">✓</span> Easy to use for R beginners who don't want to find dedicated packages for each analysis  
 <span style="color:#009900">✓</span> Support [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models   
-<span style="color:#009900">✓</span> Support interaction plots, model assumption inspection, model comparisons  
-<span style="color:#009900">✓</span> Easy-to-use confirmatory factor analysis and measurement invariance (do not need to learn lavaan syntax)  
-<span style="color:#009900">✓</span> Publication-ready descriptive statistics & correlation table
+<span style="color:#009900">✓</span> Support plotting based on the model. For example, interaction plot for regression, scree plot for exploratory factor analysis  
+<span style="color:#009900">✓</span> Support model assumption inspection and model performance & comparisons
+
+## Supported Models
+<span style="color:#009900">✓</span> Regression models: Hierarchical linear modeling 
+<span style="color:#009900">✓</span> Measurement models: Exploratory & confirmatory factor analysis, measurement invariance  
+<span style="color:#009900">✓</span> Other models: Descriptive statistics & correlation table  
 
 ## Credit
 **Authors:** [Jason Moy](https://jasonmoy.us)
@@ -36,15 +40,15 @@ devtools::install_github('jasonmoy28/psycModel')
   }
 
 ## Acknoledgement
-This package was built by standing on the shoulders of giants with special thanks to developers of `lavaan`, `performance`, `lme4`, `lmerTest`, `nlme`, `psych`, all `tidyverse` packages. We would have to pay a lot of money for very expensive software if they have not developed these amazing packages for statistical analysis in R. Additionally, I want to thank the developers for `devtools` and `usethis`. It would have been much much harder (maybe even impossible for me) to write an R package without the help of these two packages. I hope my package can help someone as they had helped me. 
+This package was built by standing on the shoulders of giants with special thanks to developers of `jmv`,`lavaan`, `lme4`, `lmerTest`, `nlme`, `performance`, `psych`, all `tidyverse` packages. We would have to pay a lot of money for very expensive software if they have not developed these amazing packages for statistical analysis in R. Additionally, I want to thank the developers for `devtools` and `usethis`. It would have been much much harder (maybe even impossible for me) to write an R package without the help of these two packages. I hope my package can help someone as they had helped me. 
 
 ## Updates
 ### Prospective Features: 
 1. Support mediation, moderated mediation analysis
 2. Support latent class and profile analysis (possible latent transition analysis)
-3. Support model assumption checking tools
-4. Support linear / generalized linear regression
-5. Support exploratory factor analysis and plotting 
+3. Support linear / generalized linear regression
+4. Support reliability analysis
+5. Support outlier detection
 
 ### version 0.2.0 (released on 4/11/2021)
 **New Feature:**
