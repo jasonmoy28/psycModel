@@ -63,7 +63,7 @@ efa_summary <- function(data,
         panel.background = ggplot2::element_blank(), axis.line = ggplot2::element_line(colour = "black")
       ) +
       ggplot2::labs(y = "Explained Variance", x = "Factor #") +
-      ggplot2::scale_color_discrete(labels = c("Cumulative Exp. Var.", "Single Factor Exp. Var.")) +
+      ggplot2::scale_linetype_discrete(labels = c("Cumulative Exp. Var.", "Single Factor Exp. Var.")) +
       ggplot2::ylim(0, 100) +
       ggplot2::geom_text(ggplot2::aes(label = paste(.data$explained_variance, "%", sep = ""), vjust = -1))
     print(plot)

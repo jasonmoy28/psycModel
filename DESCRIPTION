@@ -18,7 +18,6 @@ Depends:
 Imports: 
     dplyr,
     ggplot2,
-    ggrepel,
     gridExtra,
     interactions,
     jmv,
@@ -29,6 +28,7 @@ Imports:
     nlme,
     performance,
     psych,
+    qqplotr,
     rlang (>= 0.1.2),
     see,
     stringr,
@@ -37,9 +37,9 @@ Imports:
     utils
 Suggests:
     covr,
+    ggrepel,
     knitr,
     lifecycle,
-    qqplotr,
     rmarkdown,
     roxygen2,
     testthat (>= 3.0.0),

@@ -99,8 +99,9 @@ model_summary_with_plot <- function(data,
     }
   }
   if (check_assumption == T) {
+    use_package <- "lmerTest"
     na.action <- stats::na.omit
-    warning("Switched to na.omit since you request check_assumption.")
+    warning("Switched to na.action to na.omit and use_package to lme4 since you request check_assumption.")
   }
 
   if (is.null(family)) {
@@ -216,16 +217,17 @@ model_summary_with_plot <- function(data,
 
   if (simple_slope == T) {
     print(simple_slope_model)
-    warning("Overrided interaction plot. Set simple_slope to FALSE to see interaction plot. Knit a Rmd file to see all plots for better experience.")
+    message("Overrided interaction plot. Set simple_slope to FALSE to see interaction plot. Or, knit a Rmd file to see all plots.")
   }
 
   if (check_assumption == T) {
-    print(performance::check_model(model))
+    suppressMessages(print(performance::check_model(model)))
+    print(performance::check_outliers(model))
     if (simple_slope == T) {
-      warning("Overrided simple slope plot. Set check_assumption to FALSE to see simple slope plot. Knit a Rmd file to see all plots for better experience.")
+      message("Overrided simple slope plot. Set check_assumption to FALSE to see simple slope plot. Or, knit a Rmd file to see all plots.")
     }
     if (any(print_result %in% "plot")) {
-      warning("Overrided interaction plot. Set check_assumption to FALSE to see interaction plot. Knit a Rmd file to see all plots for better experience.")
+      message("Overrided interaction plot. Set check_assumption to FALSE to see interaction plot. Or, knit a Rmd file to see all plots")
     }
   }
   if (return_result == T) {
