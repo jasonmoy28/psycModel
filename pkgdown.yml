@@ -3,7 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   regression_model: regression_model.html
-last_built: 2021-04-12T11:21Z
+last_built: 2021-04-12T11:26Z
 urls:
   reference: https://jasonmoy28.github.io/psycModel/reference
   article: https://jasonmoy28.github.io/psycModel/articles
