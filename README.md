@@ -2,10 +2,10 @@
 ## Intergrated Toolkit for Pyschological Analysis and Modeling in R
 
 <!-- badges: start -->
-[![R package version](https://img.shields.io/github/r-package/v/jasonmoy28/psycModel)]()
+[![R package version](https://img.shields.io/github/r-package/v/jasonmoy28/psycModel)
 [![R-CMD-check](https://github.com/jasonmoy28/psycModel/workflows/R-CMD-check/badge.svg)](https://github.com/jasonmoy28/psycModel/actions)
 [![Codecov test coverage](https://codecov.io/gh/jasonmoy28/psycModel/branch/master/graph/badge.svg)](https://codecov.io/gh/jasonmoy28/psycModel?branch=master)
-[![Github last commit](https://img.shields.io/github/last-commit/jasonmoy28/psycModel)]()
+[![Github last commit](https://img.shields.io/github/last-commit/jasonmoy28/psycModel)]
 [![DOI](https://zenodo.org/badge/355611696.svg)](https://doi.org/10.5281/zenodo.4671947)
 
 <!-- badges: end -->

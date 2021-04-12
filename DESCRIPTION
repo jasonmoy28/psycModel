@@ -18,30 +18,31 @@ Depends:
 Imports: 
     dplyr,
     ggplot2,
-    ggrepel,
     interactions,
+    jmv,
     lavaan,
-    lifecycle,
     lme4,
     lmerTest,
     magrittr,
     nlme,
     performance,
     psych,
-    qqplotr,
-    see,
     rlang (>= 0.1.2),
     stringr,
     tibble,
     tidyr,
     tidyselect,
-    utils,
-    gridExtra
-Suggests: 
+    utils
+Suggests:
     covr,
+    ggrepel,
+    gridExtra,
     knitr,
+    lifecycle,
+    qqplotr,
     rmarkdown,
     roxygen2,
+    see,
     testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
