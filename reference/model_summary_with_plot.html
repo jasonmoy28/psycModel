@@ -290,7 +290,7 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
   check_assumption <span class='op'>=</span> <span class='cn'>TRUE</span>,
   simple_slope <span class='op'>=</span> <span class='cn'>TRUE</span>,
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Switched use_package to lmerTest since you requested simple_slope</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Switched to na.omit since you request check_assumption.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: The default optimizer is changed from optim to bobyqa for lme4 or lmerTest.</span></div><div class='output co'>#&gt; Fitting Model with lmer:
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Switched use_package to lmerTest since you requested simple_slope</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Switched to na.action to na.omit and use_package to lme4 since you request check_assumption.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: The default optimizer is changed from optim to bobyqa for lme4 or lmerTest.</span></div><div class='output co'>#&gt; Fitting Model with lmer:
 #&gt;  Formula = JS_Individual ~ Age_Individual + Hofstede_IC_Country + Age_Individual*Hofstede_IC_Country + (1 + Age_Individual | Country)
 #&gt;                             variable estimate     DF p_value significant
 #&gt; 1                        (Intercept)    0.112  9.351   0.312            
@@ -321,7 +321,8 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
 #&gt; </span><span>   Est.   S.E.   t val.      p
 #&gt; ------- ------ -------- ------
 #&gt;   -0.00   0.00    -1.07   0.31
-#&gt; </div><div class='output co'>#&gt; <span class='warning'>Warning: Overrided interaction plot. Set simple_slope to FALSE to see interaction plot. Knit a Rmd file to see all plots for better experience.</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: qqplotr</span></div><div class='img'><img src='model_summary_with_plot-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='warning'>Warning: Overrided simple slope plot. Set check_assumption to FALSE to see simple slope plot. Knit a Rmd file to see all plots for better experience.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Overrided interaction plot. Set check_assumption to FALSE to see interaction plot. Knit a Rmd file to see all plots for better experience.</span></div><div class='img'><img src='model_summary_with_plot-3.png' alt='' width='700' height='433' /></div></span></pre>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>Overrided interaction plot. Set simple_slope to FALSE to see interaction plot. Or, knit a Rmd file to see all plots.</span></div><div class='img'><img src='model_summary_with_plot-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </span><span style='color: #00BB00;'>OK: No outliers detected.
+#&gt; </span><span></div><div class='output co'>#&gt; <span class='message'>Overrided simple slope plot. Set check_assumption to FALSE to see simple slope plot. Or, knit a Rmd file to see all plots.</span></div><div class='output co'>#&gt; <span class='message'>Overrided interaction plot. Set check_assumption to FALSE to see interaction plot. Or, knit a Rmd file to see all plots</span></div><div class='img'><img src='model_summary_with_plot-3.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
