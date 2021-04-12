@@ -45,6 +45,8 @@ fit <- lme_model(
 )
 
 three_way_interaction_plot(fit)
+three_way_interaction_plot(fit,plot_color = T) # plots with color 
+
 }
 \references{
 Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
