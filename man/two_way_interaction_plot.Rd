@@ -69,7 +69,8 @@ graph_label_name <- function(var_name) {
 two_way_interaction_plot(
   model = fit,
   # this will change the plot name
-  graph_label_name = graph_label_name
+  graph_label_name = graph_label_name,
+  plot_color = TRUE
 )
 }
 \references{

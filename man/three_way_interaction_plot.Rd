@@ -45,7 +45,7 @@ fit <- lme_model(
 )
 
 three_way_interaction_plot(fit)
-three_way_interaction_plot(fit,plot_color = T) # plots with color 
+three_way_interaction_plot(fit,plot_color = TRUE) # plots with color 
 
 }
 \references{

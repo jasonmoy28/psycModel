@@ -18,6 +18,8 @@ Depends:
 Imports: 
     dplyr,
     ggplot2,
+    ggrepel,
+    gridExtra,
     interactions,
     jmv,
     lavaan,
@@ -28,22 +30,20 @@ Imports:
     performance,
     psych,
     rlang (>= 0.1.2),
+    see,
     stringr,
     tibble,
     tidyr,
     utils
 Suggests:
-    tidyselect,
     covr,
-    ggrepel,
-    gridExtra,
     knitr,
     lifecycle,
     qqplotr,
     rmarkdown,
     roxygen2,
-    see,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    tidyselect
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3
