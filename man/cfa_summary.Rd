@@ -12,6 +12,7 @@ cfa_summary(
   summary_item = c("cfi", "rmsea", "tli", "srmr"),
   ordered = F,
   return_result = "model",
+  jmv_result = F,
   quite = F,
   group_partial = NULL
 )
@@ -29,7 +30,9 @@ cfa_summary(
 
 \item{ordered}{logical. default is F. If it is set to T, lavaan will treat it as a ordinal variable and use DWLS instead of ML}
 
-\item{return_result}{Default is model. Options are 'model' (lavaan model), 'short_summary' (fit index summary only), 'long_summary' (lavaan full summary).}
+\item{return_result}{default is model. Options are 'model' (lavaan model), 'short_summary' (fit index summary only), 'long_summary' (lavaan full summary).}
+
+\item{jmv_result}{default is F. Print a good-lookng summary use jmv::cfa. It currently only support one-level CFA with latent factors and latent variable. It does not support complex lavaan structure at the momenet. I will work on supporting residual covariance. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr}
 
 \item{quite}{default as F. If set to true, it will not print the running model statement.}
 
@@ -45,35 +48,36 @@ All argument must be explicitly specified. If not, all arguments will be treated
 \examples{
 # REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT
 # Fitting a single factor CFA model
-cfa_summary(
+fit = cfa_summary(
   data = lavaan::HolzingerSwineford1939,
-  x1:x3
+  x1:x3,
+  jmv_result = TRUE
 )
 
 # Fitting a multilevel single factor CFA model
-cfa_summary(
+fit = cfa_summary(
   data = lavaan::HolzingerSwineford1939,
   x1:x3,
   group = "sex"
 )
 
 # Fitting a multiple factor CFA model
-cfa_summary(
+fit = cfa_summary(
   data = lavaan::HolzingerSwineford1939,
   x1:x3,
   x4:x6,
-  x7:x9
+  x7:x9,
 )
 
 # Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)
 # Note in the below function how I added `model = ` in front of the lavaan model.
 # Similarly, the same rule apply for all arguments (e.g., `ordered = F` instead of `F`)
-cfa_summary(
-  model = "visual  =~ x1 + x2 + x3
-                     textual =~ x4 + x5 + x6
-                     speed   =~ x7 + x8 + x9 ",
-  data = lavaan::HolzingerSwineford1939
+fit = cfa_summary(
+ model = "visual  =~ x1 + x2 + x3;textual =~ x4 + x5 + x6;",
+ data = lavaan::HolzingerSwineford1939,
+ jmv_result = TRUE
 )
+
 \dontrun{
 # This will fail because I did not add `model = ` in front of the lavaan model.
 # Therefore,you must add the tag in front of all arguments
