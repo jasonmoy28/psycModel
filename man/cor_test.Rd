@@ -9,7 +9,7 @@ cor_test(data, cols, sig_test = "raw", digit = 3, ...)
 \arguments{
 \item{data}{data frame}
 
-\item{cols}{vector or tidyselect syntax or helpers. column(s) that need to be recoded.}
+\item{cols}{columns. tidyselect syntax or helpers.}
 
 \item{sig_test}{Default is raw. Options are 'adjusted' or 'raw'. Adjusted use holm adjustment method. See ?stats::p.adjust to learn why.}
 
@@ -23,8 +23,7 @@ This function uses the psych::corr.test (Revelle, 2021) function to generated th
 }
 \examples{
 cor_test(iris, where(is.numeric))
-cor_test(iris, where(is.numeric),sig_test = 'adjusted') # use adjusted correlation 
-
+cor_test(iris, where(is.numeric), sig_test = "adjusted") # use adjusted correlation
 }
 \references{
 Revelle, W. (2021). psych: Procedures for Psychological, Psychometric, and Personality Research. Northwestern University, Evanston, Illinois. R package version 2.1.3, https://CRAN.R-project.org/package=psych.

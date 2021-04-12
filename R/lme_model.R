@@ -5,18 +5,18 @@
 #'
 #'
 #' @param data data frame
-#' @param model lme4 model syntax.
-#' @param response_variable character or vector of length 1
-#' @param level_1_factors vector. Level-1 variables (e.g., individual-level)
-#' @param level_2_factors optional vector. level-2 variables (e.g., group-level)
-#' @param two_way_interaction_factor optional vector of length more than 2. Default to `null`
-#' @param three_way_interaction_factor optional vector of length 3. Do not include two-way interaction factors if this is not null. Default to `null`
-#' @param id character or vector of length 1. The nesting variable (e.g. group)
+#' @param model  lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates.
+#' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select` syntax.
+#' @param random_effect_factors random effect factors (level-1 variable for HLM people) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support `dplyr::select` syntax.
+#' @param non_random_effect_factors non-random effect factors (level-2 variable for HLM people). Factors only need to estimate fixed effect. Support `dplyr::select` syntax.
+#' @param two_way_interaction_factor two-way interaction factors. You need to pass 2+ factor. Support `dplyr::select` syntax.
+#' @param three_way_interaction_factor three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support `dplyr::select` syntax.
+#' @param id the nesting variable (e.g. group, time). Length of 1. Support `dplyr::select` syntax.
 #' @param estimation_method character. `ML` or `REML` default to `REML`.
-#' @param na.action default to `stats::na.exclude`.
-#' @param opt_control character. default to `optim` for `lme` and `bobyqa` for lmerTest
-#' @param use_package character. `nlme` or `lmerTest`, or `lme4`. Default is `nlme`.
-#' @param quite default to F. If set to `T`, it will not print the fitting model statement
+#' @param na.action default is `stats::na.exclude`. Required to be `stats::na.omit` if check_assumption if `T`.
+#' @param opt_control default is `optim` for `lme` and `bobyqa` for lmerTest
+#' @param use_package Default is `nlme`. Only available for linear mixed effect model. Options are `nlme` or `lmerTest`,`lme4`(`'lme4` return similiar result as `lmerTest` except the return model)
+#' @param quite default to `F`. If set to `T`, it will not print the fitting model statement
 #' @param ... Internal use only. It doesn't work in other cases
 #'
 #' @return An object of class `lme` of `lmerModLmerTest` representing the linear mixed-effects model fit.
@@ -34,29 +34,28 @@
 #'
 #' @examples
 #' # two-level model with level-1 and level-2 variable with random intercept and random slope
-#' fit1 = lme_model(
+#' fit1 <- lme_model(
 #'   response_variable = JS_Individual,
-#'   level_1_factors = Age_Individual,
-#'   level_2_factors = contains("Country"),
+#'   random_effect_factors = Age_Individual,
+#'   non_random_effect_factors = contains("Country"),
 #'   id = Country,
 #'   data = EWCS_2015_shorten,
 #' )
 #' # added two-way interaction factor
-#' fit2 = lme_model(
+#' fit2 <- lme_model(
 #'   response_variable = JS_Individual,
-#'   level_1_factors = Age_Individual,
-#'   level_2_factors = contains("Country"),
+#'   random_effect_factors = Age_Individual,
+#'   non_random_effect_factors = contains("Country"),
 #'   two_way_interaction_factor = c("Age_Individual", "Hofstede_IC_Country"),
 #'   id = Country,
 #'   data = EWCS_2015_shorten
 #' )
-#' 
 #' \donttest{
 #' # fit3 is equivalent to fit4
-#' fit3 = lme_model(
+#' fit3 <- lme_model(
 #'   response_variable = JS_Individual,
-#'   level_1_factors = c(contains("Individual"), -JS_Individual), # !look at the difference here
-#'   level_2_factors = contains("Country"),
+#'   random_effect_factors = c(contains("Individual"), -JS_Individual), # !look at the difference here
+#'   non_random_effect_factors = contains("Country"),
 #'   id = Country,
 #'   data = EWCS_2015_shorten
 #' )
@@ -64,10 +63,10 @@
 #' # Equivalent to the above example.
 #' # It shows that you don't need to remove response_variable from tidyselect syntax.
 #' \donttest{
-#' fit4 = lme_model(
+#' fit4 <- lme_model(
 #'   response_variable = JS_Individual,
-#'   level_1_factors = contains("Individual"), # !look at the difference here
-#'   level_2_factors = contains("Country"),
+#'   random_effect_factors = contains("Individual"), # !look at the difference here
+#'   non_random_effect_factors = contains("Country"),
 #'   id = Country,
 #'   data = EWCS_2015_shorten
 #' )
@@ -76,8 +75,8 @@
 lme_model <- function(data,
                       model = NULL,
                       response_variable,
-                      level_1_factors,
-                      level_2_factors = NULL,
+                      random_effect_factors,
+                      non_random_effect_factors = NULL,
                       two_way_interaction_factor = NULL,
                       three_way_interaction_factor = NULL,
                       id,
@@ -160,15 +159,15 @@ lme_model <- function(data,
   ###################################### Build model for models without explicit model #############################################
   ## parse tidyselect syntax
   if (all(ellipsis != "model_summary_with_plot")) {
-    # remove response variable and id from level_1_factors
+    # remove response variable and id from random_effect_factors
     response_variable <- data %>%
       dplyr::select(!!enquo(response_variable)) %>%
       names()
-    level_1_factors <- data %>%
-      dplyr::select(!!enquo(level_1_factors)) %>%
+    random_effect_factors <- data %>%
+      dplyr::select(!!enquo(random_effect_factors)) %>%
       names()
-    level_2_factors <- data %>%
-      dplyr::select(!!enquo(level_2_factors)) %>%
+    non_random_effect_factors <- data %>%
+      dplyr::select(!!enquo(non_random_effect_factors)) %>%
       names()
     two_way_interaction_factor <- data %>%
       dplyr::select(!!enquo(two_way_interaction_factor)) %>%
@@ -180,15 +179,15 @@ lme_model <- function(data,
       dplyr::select(!!enquo(id)) %>%
       names()
   } else {
-    # remove response variable and id from level_1_factors
+    # remove response variable and id from random_effect_factors
     response_variable <- data %>%
       dplyr::select(!!response_variable) %>%
       names()
-    level_1_factors <- data %>%
-      dplyr::select(!!level_1_factors) %>%
+    random_effect_factors <- data %>%
+      dplyr::select(!!random_effect_factors) %>%
       names()
-    level_2_factors <- data %>%
-      dplyr::select(!!level_2_factors) %>%
+    non_random_effect_factors <- data %>%
+      dplyr::select(!!non_random_effect_factors) %>%
       names()
     two_way_interaction_factor <- data %>%
       dplyr::select(!!two_way_interaction_factor) %>%
@@ -202,15 +201,15 @@ lme_model <- function(data,
   }
 
 
-  ## remove response variable and id from level_1_factors
-  level_1_factors <- level_1_factors[!level_1_factors %in% c(response_variable, id)]
-  level_2_factors <- level_2_factors[!level_2_factors %in% c(response_variable, id)]
+  ## remove response variable and id from random_effect_factors
+  random_effect_factors <- random_effect_factors[!random_effect_factors %in% c(response_variable, id)]
+  non_random_effect_factors <- non_random_effect_factors[!non_random_effect_factors %in% c(response_variable, id)]
   two_way_interaction_factor <- two_way_interaction_factor[!two_way_interaction_factor %in% c(response_variable, id)]
   three_way_interaction_factor <- three_way_interaction_factor[!three_way_interaction_factor %in% c(response_variable, id)]
 
   # if factors is NULL, assign NULL
-  if (length(level_2_factors) == 0) {
-    level_2_factors <- NULL
+  if (length(non_random_effect_factors) == 0) {
+    non_random_effect_factors <- NULL
   }
   if (length(two_way_interaction_factor) == 0) {
     two_way_interaction_factor <- NULL
@@ -226,10 +225,10 @@ lme_model <- function(data,
   lme_model_check(id, method = "id_check")
 
   # Fixed factor include both level factor
-  fixed_factors <- c(level_1_factors, level_2_factors)
+  fixed_factors <- c(random_effect_factors, non_random_effect_factors)
 
   # Random factor only include individual_level factor
-  random_factors <- level_1_factors
+  random_factors <- random_effect_factors
 
   two_way_interaction_terms <- NULL
   three_way_interaction_terms <- NULL

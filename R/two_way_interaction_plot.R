@@ -6,8 +6,8 @@
 #' @param model object from nlme, lme4, or lmerTest (linear mixed effect model)
 #' @param graph_label_name vector of length 3 or function. Vector should be passed in the form of `c(response_var, predict_var1, predict_var2)`. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)
 #' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
-#' @param y_lim vector of length 2. c(lower_limit, upper_limit). Default is +0.5 of the max -0.5 of the min Y value
-#' @param plot_color logical. default as F. Set to T if you want to plot in color
+#' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
+#' @param plot_color default if `F`. Set to `T` if you want to plot in color
 #'
 #' @references
 #' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
@@ -17,8 +17,8 @@
 #' @examples # run the fit model first
 #' fit <- lme_model(
 #'   response_variable = JS_Individual,
-#'   level_1_factors = Age_Individual,
-#'   level_2_factors = contains("Country"),
+#'   random_effect_factors = Age_Individual,
+#'   non_random_effect_factors = contains("Country"),
 #'   two_way_interaction_factor = c("Age_Individual", "Hofstede_IC_Country"),
 #'   id = "Country",
 #'   data = EWCS_2015_shorten

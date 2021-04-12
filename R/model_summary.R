@@ -4,7 +4,7 @@
 #' The function will extract the relevant coefficients from the linear mixed effect models (see supported model below).
 #'
 #' @param model an object from nlme::lme, lmerTest::lmer, or lme4::glmer
-#' @param model_performance vector. `R2_full_model` for conditional R2 and `R2_fixed_effect` for marginal R2 (Nakagawa, 2013). `icc` for intraclass correlation coefficient. The function calls the performance package for R2 and ICC (Lüdecke et al., 2020).
+#' @param model_performance  Default is `R2_full_model` and `R2_fixed_effect`. Options are `R2_full_model` for conditional R2 and `R2_fixed_effect` for marginal R2 (Nakagawa, 2013). `icc` for intraclass correlation coefficient. The function uses the performance package for R2 and ICC (Lüdecke et al., 2020).
 #' @param estimate_round numeric. number of digit to round to for the slope estimate
 #' @param p_value_round numeric. number of digit to round to for the p-value
 #' @param performance_round numeric. number of digit to round to for the performance statistics (e.g., R2)
@@ -24,7 +24,7 @@
 #' @examples
 #' fit <- lme_model(
 #'   response_variable = "Reaction",
-#'   level_1_factors = "Days",
+#'   random_effect_factors = "Days",
 #'   id = "Subject",
 #'   data = lme4::sleepstudy
 #' )

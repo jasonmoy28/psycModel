@@ -4,9 +4,9 @@
 #' This function uses the psych::corr.test (Revelle, 2021) function to generated the pearson correlation table and their associated significance values.
 #'
 #' @param data data frame
-#' @param cols vector or tidyselect syntax or helpers. column(s) that need to be recoded.
+#' @param cols columns. tidyselect syntax or helpers.
 #' @param digit number of digits
-#' @param sig_test Default is raw. Options are 'adjusted' or 'raw'. Adjusted use holm adjustment method. See ?stats::p.adjust to learn why. 
+#' @param sig_test Default is raw. Options are 'adjusted' or 'raw'. Adjusted use holm adjustment method. See ?stats::p.adjust to learn why.
 #' @param ... additional argument.
 #'
 #' @export
@@ -17,9 +17,7 @@
 #'
 #' @examples
 #' cor_test(iris, where(is.numeric))
-#' cor_test(iris, where(is.numeric),sig_test = 'adjusted') # use adjusted correlation 
-#' 
-
+#' cor_test(iris, where(is.numeric), sig_test = "adjusted") # use adjusted correlation
 cor_test <- function(data, cols, sig_test = "raw", digit = 3, ...) {
   cols <- enquo(cols)
   data <- data %>% dplyr::select(!!cols)

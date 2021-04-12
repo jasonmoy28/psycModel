@@ -8,8 +8,8 @@ lme_model(
   data,
   model = NULL,
   response_variable,
-  level_1_factors,
-  level_2_factors = NULL,
+  random_effect_factors,
+  non_random_effect_factors = NULL,
   two_way_interaction_factor = NULL,
   three_way_interaction_factor = NULL,
   id,
@@ -24,29 +24,29 @@ lme_model(
 \arguments{
 \item{data}{data frame}
 
-\item{model}{lme4 model syntax.}
+\item{model}{lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates.}
 
-\item{response_variable}{character or vector of length 1}
+\item{response_variable}{DV (i.e., outcome variable / response variable). Length of 1. Support \code{dplyr::select} syntax.}
 
-\item{level_1_factors}{vector. Level-1 variables (e.g., individual-level)}
+\item{random_effect_factors}{random effect factors (level-1 variable for HLM people) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support \code{dplyr::select} syntax.}
 
-\item{level_2_factors}{optional vector. level-2 variables (e.g., group-level)}
+\item{non_random_effect_factors}{non-random effect factors (level-2 variable for HLM people). Factors only need to estimate fixed effect. Support \code{dplyr::select} syntax.}
 
-\item{two_way_interaction_factor}{optional vector of length more than 2. Default to \code{null}}
+\item{two_way_interaction_factor}{two-way interaction factors. You need to pass 2+ factor. Support \code{dplyr::select} syntax.}
 
-\item{three_way_interaction_factor}{optional vector of length 3. Do not include two-way interaction factors if this is not null. Default to \code{null}}
+\item{three_way_interaction_factor}{three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support \code{dplyr::select} syntax.}
 
-\item{id}{character or vector of length 1. The nesting variable (e.g. group)}
+\item{id}{the nesting variable (e.g. group, time). Length of 1. Support \code{dplyr::select} syntax.}
 
 \item{estimation_method}{character. \code{ML} or \code{REML} default to \code{REML}.}
 
-\item{opt_control}{character. default to \code{optim} for \code{lme} and \code{bobyqa} for lmerTest}
+\item{opt_control}{default is \code{optim} for \code{lme} and \code{bobyqa} for lmerTest}
 
-\item{na.action}{default to \code{stats::na.exclude}.}
+\item{na.action}{default is \code{stats::na.exclude}. Required to be \code{stats::na.omit} if check_assumption if \code{T}.}
 
-\item{use_package}{character. \code{nlme} or \code{lmerTest}, or \code{lme4}. Default is \code{nlme}.}
+\item{use_package}{Default is \code{nlme}. Only available for linear mixed effect model. Options are \code{nlme} or \code{lmerTest},\code{lme4}(\verb{'lme4} return similiar result as \code{lmerTest} except the return model)}
 
-\item{quite}{default to F. If set to \code{T}, it will not print the fitting model statement}
+\item{quite}{default to \code{F}. If set to \code{T}, it will not print the fitting model statement}
 
 \item{...}{Internal use only. It doesn't work in other cases}
 }
@@ -59,29 +59,28 @@ Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel
 }
 \examples{
 # two-level model with level-1 and level-2 variable with random intercept and random slope
-fit1 = lme_model(
+fit1 <- lme_model(
   response_variable = JS_Individual,
-  level_1_factors = Age_Individual,
-  level_2_factors = contains("Country"),
+  random_effect_factors = Age_Individual,
+  non_random_effect_factors = contains("Country"),
   id = Country,
   data = EWCS_2015_shorten,
 )
 # added two-way interaction factor
-fit2 = lme_model(
+fit2 <- lme_model(
   response_variable = JS_Individual,
-  level_1_factors = Age_Individual,
-  level_2_factors = contains("Country"),
+  random_effect_factors = Age_Individual,
+  non_random_effect_factors = contains("Country"),
   two_way_interaction_factor = c("Age_Individual", "Hofstede_IC_Country"),
   id = Country,
   data = EWCS_2015_shorten
 )
-
 \donttest{
 # fit3 is equivalent to fit4
-fit3 = lme_model(
+fit3 <- lme_model(
   response_variable = JS_Individual,
-  level_1_factors = c(contains("Individual"), -JS_Individual), # !look at the difference here
-  level_2_factors = contains("Country"),
+  random_effect_factors = c(contains("Individual"), -JS_Individual), # !look at the difference here
+  non_random_effect_factors = contains("Country"),
   id = Country,
   data = EWCS_2015_shorten
 )
@@ -89,10 +88,10 @@ fit3 = lme_model(
 # Equivalent to the above example.
 # It shows that you don't need to remove response_variable from tidyselect syntax.
 \donttest{
-fit4 = lme_model(
+fit4 <- lme_model(
   response_variable = JS_Individual,
-  level_1_factors = contains("Individual"), # !look at the difference here
-  level_2_factors = contains("Country"),
+  random_effect_factors = contains("Individual"), # !look at the difference here
+  non_random_effect_factors = contains("Country"),
   id = Country,
   data = EWCS_2015_shorten
 )

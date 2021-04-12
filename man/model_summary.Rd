@@ -16,7 +16,7 @@ model_summary(
 \arguments{
 \item{model}{an object from nlme::lme, lmerTest::lmer, or lme4::glmer}
 
-\item{model_performance}{vector. \code{R2_full_model} for conditional R2 and \code{R2_fixed_effect} for marginal R2 (Nakagawa, 2013). \code{icc} for intraclass correlation coefficient. The function calls the performance package for R2 and ICC (Lüdecke et al., 2020).}
+\item{model_performance}{Default is \code{R2_full_model} and \code{R2_fixed_effect}. Options are \code{R2_full_model} for conditional R2 and \code{R2_fixed_effect} for marginal R2 (Nakagawa, 2013). \code{icc} for intraclass correlation coefficient. The function uses the performance package for R2 and ICC (Lüdecke et al., 2020).}
 
 \item{estimate_round}{numeric. number of digit to round to for the slope estimate}
 
@@ -36,7 +36,7 @@ The function will extract the relevant coefficients from the linear mixed effect
 \examples{
 fit <- lme_model(
   response_variable = "Reaction",
-  level_1_factors = "Days",
+  random_effect_factors = "Days",
   id = "Subject",
   data = lme4::sleepstudy
 )

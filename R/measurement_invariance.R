@@ -11,7 +11,7 @@
 #' @param group_partial items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').
 #' @param invariance_level "metric" or "scalar". Default is 'metric'. Set as 'metric' for configural-metric comparison, and set as 'scalar' for configural-metric-scalar comparison.
 #' @param digits number of digit to round
-#' 
+#'
 #' @details
 #' All argument must be explicitly specified. If not, all arguments will be treated as CFA items.
 #' @references
@@ -27,7 +27,7 @@
 #'
 #' @examples
 #' # REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT
-#' # Fitting a multiple-factor measurement invariance model by passing items. 
+#' # Fitting a multiple-factor measurement invariance model by passing items.
 #' measurement_invariance(
 #'   x1:x3,
 #'   x4:x6,
@@ -35,29 +35,29 @@
 #'   data = lavaan::HolzingerSwineford1939,
 #'   group = "school"
 #' )
-#' 
+#'
 #' # Fitting measurement invariance model by passing explicit lavaan model
-#' # I am also going to only test for metric invariance instead of the default scalar invariance 
+#' # I am also going to only test for metric invariance instead of the default scalar invariance
 #' measurement_invariance(
 #'   model = "visual  =~ x1 + x2 + x3;
 #'            textual =~ x4 + x5 + x6;
 #'            speed   =~ x7 + x8 + x9",
 #'   data = lavaan::HolzingerSwineford1939,
 #'   group = "school",
-#'   invariance_level = 'metric'
+#'   invariance_level = "metric"
 #' )
 #' \dontrun{
 #' # This will fail because I did not add `model = ` in front of the lavaan model.
 #' # Therefore,you must add the tag in front of all arguments
 #' # For example, `return_result = 'model'` instaed of `model`
 #' measurement_invariance(
-#'              "visual  =~ x1 + x2 + x3;
+#'   "visual  =~ x1 + x2 + x3;
 #'              textual =~ x4 + x5 + x6;
 #'              speed   =~ x7 + x8 + x9",
 #'   data = lavaan::HolzingerSwineford1939
 #' )
 #' }
-
+#'
 measurement_invariance <- function(data,
                                    ...,
                                    model = NULL,
@@ -80,7 +80,7 @@ measurement_invariance <- function(data,
       index <- index + 1
     }
   }
-  
+
   # Print statement
   cat("Computing CFA using:\n", model)
 

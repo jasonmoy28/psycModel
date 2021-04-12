@@ -36,12 +36,11 @@ This function generates a table of descriptive statistics (mainly using psych::d
 \examples{
 descriptive_table(iris, cols = where(is.numeric)) # all numeric columns
 
-descriptive_table(iris, 
-                  cols = where(is.numeric),
-                  # get missing count, non-missing count, and mean & sd & correlation table
-                  descriptive_indicator = c('missing','non_missing','mean','sd','cor')) 
-
-
+descriptive_table(iris,
+  cols = where(is.numeric),
+  # get missing count, non-missing count, and mean & sd & correlation table
+  descriptive_indicator = c("missing", "non_missing", "mean", "sd", "cor")
+)
 }
 \references{
 Revelle, W. (2021). psych: Procedures for Psychological, Psychometric, and Personality Research. Northwestern University, Evanston, Illinois. R package version 2.1.3, https://CRAN.R-project.org/package=psych.

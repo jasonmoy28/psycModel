@@ -8,8 +8,8 @@ model_summary_with_plot(
   data,
   model = NULL,
   response_variable = NULL,
-  level_1_factors = NULL,
-  level_2_factors = NULL,
+  random_effect_factors = NULL,
+  non_random_effect_factors = NULL,
   two_way_interaction_factor = NULL,
   three_way_interaction_factor = NULL,
   cateogrical_var = NULL,
@@ -36,19 +36,19 @@ model_summary_with_plot(
 
 \item{model}{lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates.}
 
-\item{response_variable}{character. name of the response variable.}
+\item{response_variable}{DV (i.e., outcome variable / response variable). Length of 1. Support \code{dplyr::select} syntax.}
 
-\item{level_1_factors}{vector. level-1 variables (e.g., individual-level)}
+\item{random_effect_factors}{random effect factors (level-1 variable for HLM people) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support \code{dplyr::select} syntax.}
 
-\item{level_2_factors}{optional vector. level-2 variables (e.g., group-level)}
+\item{non_random_effect_factors}{non-random effect factors (level-2 variable for HLM people). Factors only need to estimate fixed effect. Support \code{dplyr::select} syntax.}
 
-\item{two_way_interaction_factor}{optional vector of length >= 2.}
+\item{two_way_interaction_factor}{two-way interaction factors. You need to pass 2+ factor. Support \code{dplyr::select} syntax.}
 
-\item{three_way_interaction_factor}{optional vector of length 3. Do not specify two-way interaction factors if you specify the three-way interaction factor}
+\item{three_way_interaction_factor}{three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support \code{dplyr::select} syntax.}
 
 \item{cateogrical_var}{list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of \code{list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))}}
 
-\item{id}{character. The nesting variable (e.g. group, time).}
+\item{id}{the nesting variable (e.g. group, time). Length of 1. Support \code{dplyr::select} syntax.}
 
 \item{family}{a GLM family. It will passed to the family argument in glmer. See \code{?glmer} for possible options. Early stage feature. Have not tested nor fully supported. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr}
 
@@ -56,29 +56,29 @@ model_summary_with_plot(
 
 \item{estimation_method}{character. \code{ML} or \code{REML} default is \code{REML}.}
 
-\item{opt_control}{character. default to \code{optim} for \code{lme} and \code{bobyqa} for lmerTest}
+\item{opt_control}{default is \code{optim} for \code{lme} and \code{bobyqa} for lmerTest}
 
-\item{na.action}{default to \code{stats::na.exclude}.}
+\item{na.action}{default is \code{stats::na.exclude}. Required to be \code{stats::na.omit} if check_assumption if \code{T}.}
 
-\item{model_performance}{vector. \code{R2_full_model} for conditional R2 and \code{R2_fixed_effect} for marginal R2 (Nakagawa, 2013). \code{icc} for intraclass correlation coefficient. The function calls the performance package for R2 and ICC (Lüdecke et al., 2020).}
+\item{model_performance}{Default is \code{R2_full_model} and \code{R2_fixed_effect}. Options are \code{R2_full_model} for conditional R2 and \code{R2_fixed_effect} for marginal R2 (Nakagawa, 2013). \code{icc} for intraclass correlation coefficient. The function uses the performance package for R2 and ICC (Lüdecke et al., 2020).}
 
-\item{return_result}{default is F. If set to T, it will return the \code{model}, \code{model_summary}, and \code{plot} (if the interaction term is included)}
+\item{return_result}{default is \code{F}. If set to \code{T}, it will return the \code{model}, \code{model_summary}, and \code{plot} (if the interaction term is included)}
 
-\item{print_result}{optional vector. Choose from \code{model},\code{plot},\code{short_summary},\code{long_summary}.\code{model} return the model object. \code{plot} return the interaction plot.\code{short_summary} return a short model summary. \code{long_summary} return the summary.}
+\item{print_result}{Default is \code{short_summary} and \code{plot}. Options are \code{model},\code{plot},\code{short_summary},\code{long_summary}.\code{model} return the model object. \code{plot} return the interaction plot.\code{short_summary} return a short model summary. \code{long_summary} return the summary.}
 
-\item{y_lim}{vector of length 2. c(lower_limit, upper_limit)}
+\item{y_lim}{the plot's upper and lower limit for the y-axis. Length of 2. Example: \code{c(lower_limit, upper_limit)}}
 
-\item{plot_color}{logical. default as F. Set to T if you want to plot in color}
+\item{plot_color}{default if \code{F}. Set to \code{T} if you want to plot in color}
 
-\item{digit}{number of digit. Specify as a vector with c(estimate_digit, p_value_digit, model_performance_digit)}
+\item{digit}{number of digit. Specify as a vector with \code{c(estimate_digit, p_value_digit, model_performance_digit)}}
 
-\item{use_package}{character. Default is "nlme". Only available for linear mixed effect model. Options are \code{nlme} or \code{lmerTest},\code{lme4}(\verb{'lme4} return similiar result as \code{lmerTest} except the return model)}
+\item{use_package}{Default is \code{nlme}. Only available for linear mixed effect model. Options are \code{nlme} or \code{lmerTest},\code{lme4}(\verb{'lme4} return similiar result as \code{lmerTest} except the return model)}
 
-\item{simple_slope}{default is F. compute simple slope using interaction:sim_slopes (Long, 2019)}
+\item{simple_slope}{default is \code{F}. If \code{T}, it will compute the slope differing with ± 1 SD of the IVs using interaction:sim_slopes function (Long, 2019). See \code{vignette('regression_model')} for more info}
 
-\item{check_assumption}{default is F. generated an panel of plots that check major assumptions. It uses the performance::check_model (Lüdecke, 2020). see ?performance::check_model to learn mode (it supports a wider array of object)}
+\item{check_assumption}{default is \code{F}. If \code{T}, it will generate an panel of plots that check major assumptions. It uses the performance::check_model (Lüdecke, 2020). see ?performance::check_model to learn model}
 
-\item{quite}{default to F. If set to \code{T}, it will not print the fitting model statement}
+\item{quite}{default to \code{F}. If set to \code{T}, it will not print the fitting model statement}
 }
 \value{
 return a list of all requested items in the order of model, short_summary, long_summary, plot
@@ -89,17 +89,17 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
 }
 \examples{
 
-fit1 = model_summary_with_plot(
+fit1 <- model_summary_with_plot(
   response_variable = JS_Individual,
-  level_1_factors = Age_Individual,
-  level_2_factors = Hofstede_IC_Country,
-  two_way_interaction_factor = c(Age_Individual,Hofstede_IC_Country),
+  random_effect_factors = Age_Individual,
+  non_random_effect_factors = Hofstede_IC_Country,
+  two_way_interaction_factor = c(Age_Individual, Hofstede_IC_Country),
   id = Country,
-  graph_label_name = c('Job Satisfaction', 'Age','Hofstede_IC_Country'),
+  graph_label_name = c("Job Satisfaction", "Age", "Hofstede_IC_Country"),
   plot_color = TRUE, # plot with color
   data = EWCS_2015_shorten,
-  check_assumption = TRUE, 
-  simple_slope = TRUE, 
+  check_assumption = TRUE,
+  simple_slope = TRUE,
 )
 }
 \references{

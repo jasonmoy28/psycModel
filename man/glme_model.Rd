@@ -7,8 +7,8 @@
 glme_model(
   data,
   response_variable,
-  level_1_factors,
-  level_2_factors = NULL,
+  random_effect_factors,
+  non_random_effect_factors = NULL,
   family,
   two_way_interaction_factor = NULL,
   three_way_interaction_factor = NULL,
@@ -24,9 +24,9 @@ glme_model(
 
 \item{response_variable}{character or vector of length 1}
 
-\item{level_1_factors}{vector. Level-1 variables (e.g., individual-level)}
+\item{random_effect_factors}{vector. Level-1 variables (e.g., individual-level)}
 
-\item{level_2_factors}{optional vector. level-2 variables (e.g., group-level)}
+\item{non_random_effect_factors}{optional vector. level-2 variables (e.g., group-level)}
 
 \item{family}{a GLM family. It will passed to the family argument in glmer. See \code{?glmer} for possible options.}
 
@@ -56,10 +56,10 @@ x <- rnorm(200)
 y <- rpois(200, exp(1 + x))
 group <- rep(1:10, 20)
 test_df <- as.data.frame(cbind(x, y, group))
-fit = glme_model(
+fit <- glme_model(
   data = test_df,
   response_variable = "y",
-  level_1_factors = "x",
+  random_effect_factors = "x",
   family = poisson(link = "log"),
   id = "group"
 )

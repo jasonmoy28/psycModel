@@ -7,3 +7,5 @@ update_list.md
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^doc$
+^Meta$

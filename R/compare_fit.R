@@ -9,29 +9,27 @@
 #' @return
 #' data frame with fit indices and change in fit indices
 #' @export
-#' @examples 
+#' @examples
 #' # lme model
-#' fit1 = lme_model(
+#' fit1 <- lme_model(
 #'   response_variable = JS_Individual,
-#'   level_1_factors = Age_Individual,
-#'   level_2_factors = Hofstede_IC_Country,
+#'   random_effect_factors = Age_Individual,
+#'   non_random_effect_factors = Hofstede_IC_Country,
 #'   id = Country,
 #'   data = EWCS_2015_shorten,
 #' )
-#' 
-#' fit2 = lme_model(
+#'
+#' fit2 <- lme_model(
 #'   response_variable = JS_Individual,
-#'   level_1_factors = Age_Individual,
-#'   level_2_factors = c(Hofstede_IC_Country,Hofstede_UA_Country),
+#'   random_effect_factors = Age_Individual,
+#'   non_random_effect_factors = c(Hofstede_IC_Country, Hofstede_UA_Country),
 #'   id = Country,
 #'   data = EWCS_2015_shorten,
 #' )
-#' 
+#'
 #' compare_fit(list(fit1, fit2))
-#' 
+#'
 #' # see ?measurement_invariance for measurement invariance example
-#' 
-
 compare_fit <- function(models,
                         digits = 3) {
   if (class(models) != "list") {

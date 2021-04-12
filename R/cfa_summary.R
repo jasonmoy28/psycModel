@@ -1,10 +1,10 @@
 #' Confirmatory Factor Analysis
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Users can fit single and multiple factors CFA (read details), and it also supports multilevel CFA (specifying the group). Users can pass the items (see below for example) or an explicit lavaan model for more versatile usage.
+#' The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Users can fit single and multiple factors CFA (read details), and it also supports multilevel CFA (specifying the group). Users can pass fit the model by passing the items using dplyr::select syntax or an explicit lavaan model for more versatile usage.
 #'
 #' @param data data frame
-#' @param ... CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for example
+#' @param ... CFA items using dplyr::select syntax. Multi-factor CFA items should be separated by comma (as different argument). See below for examples
 #' @param model explicit lavaan model. Must be specify with `model = lavaan_model_syntax`.
 #' @param group optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country)
 #' @param summary_item vector of fit indices. Default is CFI, RMSEA, TLI, and SRMR.
@@ -28,21 +28,21 @@
 #' @examples
 #' # REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT
 #' # Fitting a single factor CFA model
-#' fit = cfa_summary(
+#' fit <- cfa_summary(
 #'   data = lavaan::HolzingerSwineford1939,
 #'   x1:x3,
 #'   jmv_result = TRUE
 #' )
 #'
 #' # Fitting a multilevel single factor CFA model
-#' fit = cfa_summary(
+#' fit <- cfa_summary(
 #'   data = lavaan::HolzingerSwineford1939,
 #'   x1:x3,
 #'   group = "sex"
 #' )
 #'
 #' # Fitting a multiple factor CFA model
-#' fit = cfa_summary(
+#' fit <- cfa_summary(
 #'   data = lavaan::HolzingerSwineford1939,
 #'   x1:x3,
 #'   x4:x6,
@@ -52,12 +52,11 @@
 #' # Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)
 #' # Note in the below function how I added `model = ` in front of the lavaan model.
 #' # Similarly, the same rule apply for all arguments (e.g., `ordered = F` instead of `F`)
-#' fit = cfa_summary(
-#'  model = "visual  =~ x1 + x2 + x3;textual =~ x4 + x5 + x6;",
-#'  data = lavaan::HolzingerSwineford1939,
-#'  jmv_result = TRUE
+#' fit <- cfa_summary(
+#'   model = "visual  =~ x1 + x2 + x3;textual =~ x4 + x5 + x6;",
+#'   data = lavaan::HolzingerSwineford1939,
+#'   jmv_result = TRUE
 #' )
-#' 
 #' \dontrun{
 #' # This will fail because I did not add `model = ` in front of the lavaan model.
 #' # Therefore,you must add the tag in front of all arguments
@@ -75,7 +74,7 @@ cfa_summary <- function(data,
                         summary_item = c("cfi", "rmsea", "tli", "srmr"),
                         ordered = F,
                         return_result = "model",
-                        jmv_result = F, 
+                        jmv_result = F,
                         quite = F,
                         group_partial = NULL) {
   if (is.null(model)) { # construct model if explicit model is not passed
@@ -86,14 +85,13 @@ cfa_summary <- function(data,
       cfa_items <- data %>%
         dplyr::select(!!item) %>%
         names()
-      factor_name = paste("DV", index, sep = "")
-      lavaan_lopp_model = paste(factor_name, " =~ ", paste(cfa_items, collapse = " + "), "\n ", sep = "")
-      jmv_model = 
-        model <- paste(model, lavaan_lopp_model)
+      factor_name <- paste("DV", index, sep = "")
+      lavaan_lopp_model <- paste(factor_name, " =~ ", paste(cfa_items, collapse = " + "), "\n ", sep = "")
+      jmv_model <- model <- paste(model, lavaan_lopp_model)
       index <- index + 1
     }
   }
-  
+
   # Print statement
   if (quite == F) {
     cat("Computing CFA using:\n", model)
@@ -105,7 +103,7 @@ cfa_summary <- function(data,
   #
   #   }
   # }
-  
+
   cfa_model <- lavaan::cfa(
     model = model,
     data = data,
@@ -113,59 +111,61 @@ cfa_summary <- function(data,
     ordered = ordered,
     group.partial = group_partial
   )
-  
+
   if (jmv_result == T) {
     if (!is.null(group)) {
-      warning('Group variable is ignored for jmv result')
+      warning("Group variable is ignored for jmv result")
     }
-    if (length(stringr::str_split(string = model,pattern = '=~')[[1]]) == 2) { 
+    if (length(stringr::str_split(string = model, pattern = "=~")[[1]]) == 2) {
       # single factor CFA
-      jmv = NULL
-      DV_loop = gsub(x = model,pattern = '=~.+',replacement = '') %>% stringr::str_trim()
-      IV_loop = gsub(x = model,pattern = '.+=~',replacement = '') %>% stringr::str_trim() %>% gsub(pattern = ';',replacement = '')
-      IV_loop = stringr::str_split(string = IV_loop, pattern = '\\+')[[1]] %>% stringr::str_trim()
-      jmv_loop = list(label = DV_loop, vars = IV_loop)
-      jmv = append(jmv,list(jmv_loop))
-    } else { 
+      jmv <- NULL
+      DV_loop <- gsub(x = model, pattern = "=~.+", replacement = "") %>% stringr::str_trim()
+      IV_loop <- gsub(x = model, pattern = ".+=~", replacement = "") %>%
+        stringr::str_trim() %>%
+        gsub(pattern = ";", replacement = "")
+      IV_loop <- stringr::str_split(string = IV_loop, pattern = "\\+")[[1]] %>% stringr::str_trim()
+      jmv_loop <- list(label = DV_loop, vars = IV_loop)
+      jmv <- append(jmv, list(jmv_loop))
+    } else {
       # mutiple-factor CFA
-      if (grepl(pattern = ';',model) == F & grepl(pattern = '\n',model) == T) { # seperated by \n
-        split = stringr::str_split(string = model, pattern = '\n')[[1]]
-      } else if (grepl(pattern = ';',model) == T & grepl(pattern = '\n',model) == F) { # seperated by ; 
-        split = stringr::str_split(string = model, pattern = ';')[[1]]
-      } else if(grepl(pattern = ';',model) == T & grepl(pattern = '\n',model) == T){
+      if (grepl(pattern = ";", model) == F & grepl(pattern = "\n", model) == T) { # seperated by \n
+        split <- stringr::str_split(string = model, pattern = "\n")[[1]]
+      } else if (grepl(pattern = ";", model) == T & grepl(pattern = "\n", model) == F) { # seperated by ;
+        split <- stringr::str_split(string = model, pattern = ";")[[1]]
+      } else if (grepl(pattern = ";", model) == T & grepl(pattern = "\n", model) == T) {
         stop("Why can't you just choose either ; or \\n? Why do you want to make my life harder?")
-      } else if(grepl(pattern = ';',model) == F & grepl(pattern = '\n',model) == F){
+      } else if (grepl(pattern = ";", model) == F & grepl(pattern = "\n", model) == F) {
         stop('You need to seperate the factor using ";" or "\\n"')
-      } 
-      DV = NULL
-      IV = NULL
-      jmv = NULL
+      }
+      DV <- NULL
+      IV <- NULL
+      jmv <- NULL
       for (variable in split) {
-        DV_loop = gsub(x = variable,pattern = '=~.+',replacement = '') %>% stringr::str_trim()
-        IV_loop = gsub(x = variable,pattern = '.+=~',replacement = '') %>% stringr::str_trim()
-        IV_loop = stringr::str_split(string = IV_loop, pattern = '\\+')[[1]] %>% stringr::str_trim()
-        jmv_loop = list(label = DV_loop, vars = IV_loop)
-        jmv = append(jmv,list(jmv_loop))
+        DV_loop <- gsub(x = variable, pattern = "=~.+", replacement = "") %>% stringr::str_trim()
+        IV_loop <- gsub(x = variable, pattern = ".+=~", replacement = "") %>% stringr::str_trim()
+        IV_loop <- stringr::str_split(string = IV_loop, pattern = "\\+")[[1]] %>% stringr::str_trim()
+        jmv_loop <- list(label = DV_loop, vars = IV_loop)
+        jmv <- append(jmv, list(jmv_loop))
       }
     }
-    # remove empty list object from jmv 
-    delete_vector = c()
+    # remove empty list object from jmv
+    delete_vector <- c()
     for (i in c(1:length(lengths(jmv)))) {
-      if (any(jmv[[i]] == '')) {
-        delete_vector = c(delete_vector,i)
+      if (any(jmv[[i]] == "")) {
+        delete_vector <- c(delete_vector, i)
       }
     }
-    jmv[delete_vector] = NULL
-    
+    jmv[delete_vector] <- NULL
+
     # run jmv model
-    jmv_model = jmv::cfa(data = data,factors = jmv,resCov = NULL,stdEst = T)
+    jmv_model <- jmv::cfa(data = data, factors = jmv, resCov = NULL, stdEst = T)
     print(jmv_model)
   }
- 
+
   if (ordered == T) {
     summary_item <- paste(summary_item, ".scaled", sep = "")
   }
-  ## return result 
+  ## return result
   if (return_result == "model") {
     return(cfa_model)
   } else if (return_result == "short_summary") {
@@ -173,6 +173,7 @@ cfa_summary <- function(data,
     return(cfa_short_summary)
   } else if (return_result == "long_summary") {
     lavaan::summary(cfa_model, fit.measure = T, standardized = T)
-  } else if(return_result == 'jmv_summary')
+  } else if (return_result == "jmv_summary") {
     return_result(jmv_model)
+  }
 }

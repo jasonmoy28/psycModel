@@ -5,28 +5,28 @@
 #'
 #' @param data data frame
 #' @param model lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates.
-#' @param response_variable character. name of the response variable.
-#' @param level_1_factors vector. level-1 variables (e.g., individual-level)
-#' @param level_2_factors optional vector. level-2 variables (e.g., group-level)
-#' @param two_way_interaction_factor optional vector of length >= 2.
-#' @param three_way_interaction_factor optional vector of length 3. Do not specify two-way interaction factors if you specify the three-way interaction factor
-#' @param id character. The nesting variable (e.g. group, time).
+#' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select` syntax.
+#' @param random_effect_factors random effect factors (level-1 variable for HLM people) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support `dplyr::select` syntax.
+#' @param non_random_effect_factors non-random effect factors (level-2 variable for HLM people). Factors only need to estimate fixed effect. Support `dplyr::select` syntax.
+#' @param two_way_interaction_factor two-way interaction factors. You need to pass 2+ factor. Support `dplyr::select` syntax.
+#' @param three_way_interaction_factor three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support `dplyr::select` syntax.
+#' @param id the nesting variable (e.g. group, time). Length of 1. Support `dplyr::select` syntax.
 #' @param family a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options. Early stage feature. Have not tested nor fully supported. `r lifecycle::badge("experimental")` \cr
 #' @param graph_label_name optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)
 #' @param estimation_method character. `ML` or `REML` default is `REML`.
-#' @param return_result default is F. If set to T, it will return the `model`, `model_summary`, and `plot` (if the interaction term is included)
-#' @param print_result  optional vector. Choose from `model`,`plot`,`short_summary`,`long_summary`.`model` return the model object. `plot` return the interaction plot.`short_summary` return a short model summary. `long_summary` return the summary.
-#' @param na.action default to `stats::na.exclude`.
+#' @param return_result default is `F`. If set to `T`, it will return the `model`, `model_summary`, and `plot` (if the interaction term is included)
+#' @param print_result  Default is `short_summary` and `plot`. Options are `model`,`plot`,`short_summary`,`long_summary`.`model` return the model object. `plot` return the interaction plot.`short_summary` return a short model summary. `long_summary` return the summary.
+#' @param na.action default is `stats::na.exclude`. Required to be `stats::na.omit` if check_assumption if `T`.
 #' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
-#' @param opt_control character. default to `optim` for `lme` and `bobyqa` for lmerTest
-#' @param model_performance  vector. `R2_full_model` for conditional R2 and `R2_fixed_effect` for marginal R2 (Nakagawa, 2013). `icc` for intraclass correlation coefficient. The function calls the performance package for R2 and ICC (Lüdecke et al., 2020).
-#' @param y_lim vector of length 2. c(lower_limit, upper_limit)
-#' @param plot_color logical. default as F. Set to T if you want to plot in color
-#' @param use_package character. Default is "nlme". Only available for linear mixed effect model. Options are `nlme` or `lmerTest`,`lme4`(`'lme4` return similiar result as `lmerTest` except the return model)
-#' @param quite default to F. If set to `T`, it will not print the fitting model statement
-#' @param digit number of digit. Specify as a vector with c(estimate_digit, p_value_digit, model_performance_digit)
-#' @param simple_slope default is F. compute simple slope using interaction:sim_slopes (Long, 2019)
-#' @param check_assumption default is F. generated an panel of plots that check major assumptions. It uses the performance::check_model (Lüdecke, 2020). see ?performance::check_model to learn mode (it supports a wider array of object)
+#' @param opt_control default is `optim` for `lme` and `bobyqa` for lmerTest
+#' @param model_performance  Default is `R2_full_model` and `R2_fixed_effect`. Options are `R2_full_model` for conditional R2 and `R2_fixed_effect` for marginal R2 (Nakagawa, 2013). `icc` for intraclass correlation coefficient. The function uses the performance package for R2 and ICC (Lüdecke et al., 2020).
+#' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
+#' @param plot_color default if `F`. Set to `T` if you want to plot in color
+#' @param use_package Default is `nlme`. Only available for linear mixed effect model. Options are `nlme` or `lmerTest`,`lme4`(`'lme4` return similiar result as `lmerTest` except the return model)
+#' @param quite default to `F`. If set to `T`, it will not print the fitting model statement
+#' @param digit number of digit. Specify as a vector with `c(estimate_digit, p_value_digit, model_performance_digit)`
+#' @param simple_slope default is `F`. If `T`, it will compute the slope differing with ± 1 SD of the IVs using interaction:sim_slopes function (Long, 2019). See `vignette('regression_model')` for more info
+#' @param check_assumption default is `F`. If `T`, it will generate an panel of plots that check major assumptions. It uses the performance::check_model (Lüdecke, 2020). see ?performance::check_model to learn model
 #'
 #' @references
 #' Bates, D., Mächler, M., Bolker, B., & Walker, S. (2014). Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software, 67(1), 1–48. doi: 10.18637/jss.v067.i01.
@@ -48,24 +48,24 @@
 #' @export
 #'
 #' @examples
-#' 
-#' fit1 = model_summary_with_plot(
+#'
+#' fit1 <- model_summary_with_plot(
 #'   response_variable = JS_Individual,
-#'   level_1_factors = Age_Individual,
-#'   level_2_factors = Hofstede_IC_Country,
-#'   two_way_interaction_factor = c(Age_Individual,Hofstede_IC_Country),
+#'   random_effect_factors = Age_Individual,
+#'   non_random_effect_factors = Hofstede_IC_Country,
+#'   two_way_interaction_factor = c(Age_Individual, Hofstede_IC_Country),
 #'   id = Country,
-#'   graph_label_name = c('Job Satisfaction', 'Age','Hofstede_IC_Country'),
+#'   graph_label_name = c("Job Satisfaction", "Age", "Hofstede_IC_Country"),
 #'   plot_color = TRUE, # plot with color
 #'   data = EWCS_2015_shorten,
-#'   check_assumption = TRUE, 
-#'   simple_slope = TRUE, 
+#'   check_assumption = TRUE,
+#'   simple_slope = TRUE,
 #' )
 model_summary_with_plot <- function(data,
                                     model = NULL,
                                     response_variable = NULL,
-                                    level_1_factors = NULL,
-                                    level_2_factors = NULL,
+                                    random_effect_factors = NULL,
+                                    non_random_effect_factors = NULL,
                                     two_way_interaction_factor = NULL,
                                     three_way_interaction_factor = NULL,
                                     cateogrical_var = NULL,
@@ -99,17 +99,17 @@ model_summary_with_plot <- function(data,
     }
   }
   if (check_assumption == T) {
-    na.action = stats::na.omit
-    warning('Switched to na.omit since you request check_assumption.')
+    na.action <- stats::na.omit
+    warning("Switched to na.omit since you request check_assumption.")
   }
-    
+
   if (is.null(family)) {
     model <- lme_model(
       model = model,
       data = data,
       response_variable = enquo(response_variable),
-      level_1_factors = enquo(level_1_factors),
-      level_2_factors = enquo(level_2_factors),
+      random_effect_factors = enquo(random_effect_factors),
+      non_random_effect_factors = enquo(non_random_effect_factors),
       two_way_interaction_factor = enquo(two_way_interaction_factor),
       three_way_interaction_factor = enquo(three_way_interaction_factor),
       id = enquo(id),
@@ -124,8 +124,8 @@ model_summary_with_plot <- function(data,
     model <- glme_model(
       data = data,
       response_variable = response_variable,
-      level_1_factors = level_1_factors,
-      level_2_factors = level_2_factors,
+      random_effect_factors = random_effect_factors,
+      non_random_effect_factors = non_random_effect_factors,
       family = family,
       two_way_interaction_factor = two_way_interaction_factor,
       three_way_interaction_factor = three_way_interaction_factor,
@@ -135,8 +135,12 @@ model_summary_with_plot <- function(data,
       quite = quite
     )
   }
-  two_way_interaction_factor = data %>% dplyr::select(!!enquo(two_way_interaction_factor)) %>% names()
-  three_way_interaction_factor = data %>% dplyr::select(!!enquo(three_way_interaction_factor)) %>% names()
+  two_way_interaction_factor <- data %>%
+    dplyr::select(!!enquo(two_way_interaction_factor)) %>%
+    names()
+  three_way_interaction_factor <- data %>%
+    dplyr::select(!!enquo(three_way_interaction_factor)) %>%
+    names()
   interaction_plot <- NULL
   if (length(two_way_interaction_factor) != 0 & (any(print_result %in% "plot") | return_result == T)) {
     interaction_plot <- two_way_interaction_plot(
@@ -172,7 +176,7 @@ model_summary_with_plot <- function(data,
 
   if (simple_slope == T) {
     if (length(two_way_interaction_factor) != 0) {
-      simple_slope_model = interactions::sim_slopes(
+      simple_slope_model <- interactions::sim_slopes(
         data = data,
         model = model,
         pred = !!two_way_interaction_factor[1],
@@ -180,9 +184,9 @@ model_summary_with_plot <- function(data,
         jnplot = T,
       )
     }
-    
+
     if (length(three_way_interaction_factor) != 0) {
-      simple_slope_model = interactions::sim_slopes(
+      simple_slope_model <- interactions::sim_slopes(
         data = data,
         model = model,
         pred = !!three_way_interaction_factor[1],

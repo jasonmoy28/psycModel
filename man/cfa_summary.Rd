@@ -20,7 +20,7 @@ cfa_summary(
 \arguments{
 \item{data}{data frame}
 
-\item{...}{CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for example}
+\item{...}{CFA items using dplyr::select syntax. Multi-factor CFA items should be separated by comma (as different argument). See below for examples}
 
 \item{model}{explicit lavaan model. Must be specify with \code{model = lavaan_model_syntax}.}
 
@@ -40,7 +40,7 @@ cfa_summary(
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Users can fit single and multiple factors CFA (read details), and it also supports multilevel CFA (specifying the group). Users can pass the items (see below for example) or an explicit lavaan model for more versatile usage.
+The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Users can fit single and multiple factors CFA (read details), and it also supports multilevel CFA (specifying the group). Users can pass fit the model by passing the items using dplyr::select syntax or an explicit lavaan model for more versatile usage.
 }
 \details{
 All argument must be explicitly specified. If not, all arguments will be treated as CFA items.
@@ -48,21 +48,21 @@ All argument must be explicitly specified. If not, all arguments will be treated
 \examples{
 # REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT
 # Fitting a single factor CFA model
-fit = cfa_summary(
+fit <- cfa_summary(
   data = lavaan::HolzingerSwineford1939,
   x1:x3,
   jmv_result = TRUE
 )
 
 # Fitting a multilevel single factor CFA model
-fit = cfa_summary(
+fit <- cfa_summary(
   data = lavaan::HolzingerSwineford1939,
   x1:x3,
   group = "sex"
 )
 
 # Fitting a multiple factor CFA model
-fit = cfa_summary(
+fit <- cfa_summary(
   data = lavaan::HolzingerSwineford1939,
   x1:x3,
   x4:x6,
@@ -72,12 +72,11 @@ fit = cfa_summary(
 # Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)
 # Note in the below function how I added `model = ` in front of the lavaan model.
 # Similarly, the same rule apply for all arguments (e.g., `ordered = F` instead of `F`)
-fit = cfa_summary(
- model = "visual  =~ x1 + x2 + x3;textual =~ x4 + x5 + x6;",
- data = lavaan::HolzingerSwineford1939,
- jmv_result = TRUE
+fit <- cfa_summary(
+  model = "visual  =~ x1 + x2 + x3;textual =~ x4 + x5 + x6;",
+  data = lavaan::HolzingerSwineford1939,
+  jmv_result = TRUE
 )
-
 \dontrun{
 # This will fail because I did not add `model = ` in front of the lavaan model.
 # Therefore,you must add the tag in front of all arguments

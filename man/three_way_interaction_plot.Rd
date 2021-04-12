@@ -19,9 +19,9 @@ three_way_interaction_plot(
 
 \item{graph_label_name}{vector of length 3 or a switch function (see ?two_way_interaction_plot example). Vector should be passed in the form of c(response_var, predict_var1, predict_var2, predict_var3).}
 
-\item{y_lim}{vector of two number. set the y_lim of the plot}
+\item{y_lim}{the plot's upper and lower limit for the y-axis. Length of 2. Example: \code{c(lower_limit, upper_limit)}}
 
-\item{plot_color}{logical. default as F. Set to T if you want to plot in color}
+\item{plot_color}{default if \code{F}. Set to \code{T} if you want to plot in color}
 }
 \value{
 ggplot object.
@@ -33,8 +33,8 @@ The function creates a two-way interaction plot. It will creates a plot with ± 
 \examples{
 fit <- lme_model(
   response_variable = JS_Individual,
-  level_1_factors = c(Age_Individual, Education_Individual),
-  level_2_factors = contains("Country"),
+  random_effect_factors = c(Age_Individual, Education_Individual),
+  non_random_effect_factors = contains("Country"),
   three_way_interaction_factor = c(
     "Age_Individual",
     "Education_Individual",
@@ -45,8 +45,7 @@ fit <- lme_model(
 )
 
 three_way_interaction_plot(fit)
-three_way_interaction_plot(fit,plot_color = TRUE) # plots with color 
-
+three_way_interaction_plot(fit, plot_color = TRUE) # plots with color
 }
 \references{
 Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel

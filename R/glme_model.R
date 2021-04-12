@@ -5,8 +5,8 @@
 #'
 #' @param data data frame
 #' @param response_variable character or vector of length 1
-#' @param level_1_factors vector. Level-1 variables (e.g., individual-level)
-#' @param level_2_factors optional vector. level-2 variables (e.g., group-level)
+#' @param random_effect_factors vector. Level-1 variables (e.g., individual-level)
+#' @param non_random_effect_factors optional vector. level-2 variables (e.g., group-level)
 #' @param family a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options.
 #' @param two_way_interaction_factor optional vector of length more than 2. Default to `null`
 #' @param three_way_interaction_factor optional vector of length 3. Do not include two-way interaction factors if this is not null. Default to `null`
@@ -29,17 +29,17 @@
 #' y <- rpois(200, exp(1 + x))
 #' group <- rep(1:10, 20)
 #' test_df <- as.data.frame(cbind(x, y, group))
-#' fit = glme_model(
+#' fit <- glme_model(
 #'   data = test_df,
 #'   response_variable = "y",
-#'   level_1_factors = "x",
+#'   random_effect_factors = "x",
 #'   family = poisson(link = "log"),
 #'   id = "group"
 #' )
 glme_model <- function(data,
                        response_variable,
-                       level_1_factors,
-                       level_2_factors = NULL,
+                       random_effect_factors,
+                       non_random_effect_factors = NULL,
                        family,
                        two_way_interaction_factor = NULL,
                        three_way_interaction_factor = NULL,
@@ -51,10 +51,10 @@ glme_model <- function(data,
   data <- data_check(data) # check data and coerced into numeric
 
   # Fixed factor inlcude both level factor
-  fixed_factors <- c(level_1_factors, level_2_factors)
+  fixed_factors <- c(random_effect_factors, non_random_effect_factors)
 
   # Random factor only include individual_level factor
-  random_factors <- level_1_factors
+  random_factors <- random_effect_factors
 
   two_way_interaction_terms <- NULL
   three_way_interaction_terms <- NULL
