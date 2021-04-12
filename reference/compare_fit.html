@@ -156,20 +156,20 @@ Compare the fit indices models (see below for model support)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># lme model</span>
-<span class='va'>fit1</span> <span class='op'>=</span> <span class='fu'><a href='lme_model.html'>lme_model</a></span><span class='op'>(</span>
+<span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lme_model.html'>lme_model</a></span><span class='op'>(</span>
   response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
-  level_1_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
-  level_2_factors <span class='op'>=</span> <span class='va'>Hofstede_IC_Country</span>,
+  random_effect_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
+  non_random_effect_factors <span class='op'>=</span> <span class='va'>Hofstede_IC_Country</span>,
   id <span class='op'>=</span> <span class='va'>Country</span>,
   data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>,
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Fitting Model with lme: 
 #&gt;  Fixed = JS_Individual ~ Age_Individual + Hofstede_IC_Country 
 #&gt;  Random = ~ 1 + Age_Individual | Country </div><div class='input'>
-<span class='va'>fit2</span> <span class='op'>=</span> <span class='fu'><a href='lme_model.html'>lme_model</a></span><span class='op'>(</span>
+<span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lme_model.html'>lme_model</a></span><span class='op'>(</span>
   response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
-  level_1_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
-  level_2_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>Hofstede_IC_Country</span>,<span class='va'>Hofstede_UA_Country</span><span class='op'>)</span>,
+  random_effect_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
+  non_random_effect_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>Hofstede_IC_Country</span>, <span class='va'>Hofstede_UA_Country</span><span class='op'>)</span>,
   id <span class='op'>=</span> <span class='va'>Country</span>,
   data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>,
 <span class='op'>)</span>
@@ -183,7 +183,6 @@ Compare the fit indices models (see below for model support)</p>
 #&gt; </span><span style='color: #BCBCBC;'>1</span><span> 1790.366 1823.433 0.057         0.002           0.055 0.675 0.682
 #&gt; </span><span style='color: #BCBCBC;'>2</span><span> 1792.506 1830.287 0.056         0.032           0.025 0.676 0.681</div><div class='input'>
 <span class='co'># see ?measurement_invariance for measurement invariance example</span>
-
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

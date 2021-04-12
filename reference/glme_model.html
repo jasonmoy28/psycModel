@@ -138,8 +138,8 @@ Generalized linear mixed effect model. The function uses the <code><a href='http
     <pre class="usage"><span class='fu'>glme_model</span><span class='op'>(</span>
   <span class='va'>data</span>,
   <span class='va'>response_variable</span>,
-  <span class='va'>level_1_factors</span>,
-  level_2_factors <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>random_effect_factors</span>,
+  non_random_effect_factors <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>family</span>,
   two_way_interaction_factor <span class='op'>=</span> <span class='cn'>NULL</span>,
   three_way_interaction_factor <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -162,11 +162,11 @@ Generalized linear mixed effect model. The function uses the <code><a href='http
       <td><p>character or vector of length 1</p></td>
     </tr>
     <tr>
-      <th>level_1_factors</th>
+      <th>random_effect_factors</th>
       <td><p>vector. Level-1 variables (e.g., individual-level)</p></td>
     </tr>
     <tr>
-      <th>level_2_factors</th>
+      <th>non_random_effect_factors</th>
       <td><p>optional vector. level-2 variables (e.g., group-level)</p></td>
     </tr>
     <tr>
@@ -216,10 +216,10 @@ Generalized linear mixed effect model. The function uses the <code><a href='http
 <span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Poisson.html'>rpois</a></span><span class='op'>(</span><span class='fl'>200</span>, <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>group</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='fl'>20</span><span class='op'>)</span>
 <span class='va'>test_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>group</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>fit</span> <span class='op'>=</span> <span class='fu'>glme_model</span><span class='op'>(</span>
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>glme_model</span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='va'>test_df</span>,
   response_variable <span class='op'>=</span> <span class='st'>"y"</span>,
-  level_1_factors <span class='op'>=</span> <span class='st'>"x"</span>,
+  random_effect_factors <span class='op'>=</span> <span class='st'>"x"</span>,
   family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span><span class='op'>(</span>link <span class='op'>=</span> <span class='st'>"log"</span><span class='op'>)</span>,
   id <span class='op'>=</span> <span class='st'>"group"</span>
 <span class='op'>)</span>

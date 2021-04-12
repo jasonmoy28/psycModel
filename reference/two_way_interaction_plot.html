@@ -160,11 +160,11 @@ The function creates a two-way interaction plot. It will creates a plot with ± 
     </tr>
     <tr>
       <th>y_lim</th>
-      <td><p>vector of length 2. c(lower_limit, upper_limit). Default is +0.5 of the max -0.5 of the min Y value</p></td>
+      <td><p>the plot's upper and lower limit for the y-axis. Length of 2. Example: <code><a href='https://rdrr.io/r/base/c.html'>c(lower_limit, upper_limit)</a></code></p></td>
     </tr>
     <tr>
       <th>plot_color</th>
-      <td><p>logical. default as F. Set to T if you want to plot in color</p></td>
+      <td><p>default if <code>F</code>. Set to <code>T</code> if you want to plot in color</p></td>
     </tr>
     </table>
 
@@ -179,8 +179,8 @@ The function creates a two-way interaction plot. It will creates a plot with ± 
     <pre class="examples"><div class='input'><span class='co'># run the fit model first</span>
 <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lme_model.html'>lme_model</a></span><span class='op'>(</span>
   response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
-  level_1_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
-  level_2_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
+  random_effect_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
+  non_random_effect_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
   two_way_interaction_factor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Age_Individual"</span>, <span class='st'>"Hofstede_IC_Country"</span><span class='op'>)</span>,
   id <span class='op'>=</span> <span class='st'>"Country"</span>,
   data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>

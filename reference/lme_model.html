@@ -139,8 +139,8 @@ Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel
   <span class='va'>data</span>,
   model <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>response_variable</span>,
-  <span class='va'>level_1_factors</span>,
-  level_2_factors <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>random_effect_factors</span>,
+  non_random_effect_factors <span class='op'>=</span> <span class='cn'>NULL</span>,
   two_way_interaction_factor <span class='op'>=</span> <span class='cn'>NULL</span>,
   three_way_interaction_factor <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>id</span>,
@@ -161,31 +161,31 @@ Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel
     </tr>
     <tr>
       <th>model</th>
-      <td><p>lme4 model syntax.</p></td>
+      <td><p>lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates.</p></td>
     </tr>
     <tr>
       <th>response_variable</th>
-      <td><p>character or vector of length 1</p></td>
+      <td><p>DV (i.e., outcome variable / response variable). Length of 1. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
     </tr>
     <tr>
-      <th>level_1_factors</th>
-      <td><p>vector. Level-1 variables (e.g., individual-level)</p></td>
+      <th>random_effect_factors</th>
+      <td><p>random effect factors (level-1 variable for HLM people) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
     </tr>
     <tr>
-      <th>level_2_factors</th>
-      <td><p>optional vector. level-2 variables (e.g., group-level)</p></td>
+      <th>non_random_effect_factors</th>
+      <td><p>non-random effect factors (level-2 variable for HLM people). Factors only need to estimate fixed effect. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>two_way_interaction_factor</th>
-      <td><p>optional vector of length more than 2. Default to <code>null</code></p></td>
+      <td><p>two-way interaction factors. You need to pass 2+ factor. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>three_way_interaction_factor</th>
-      <td><p>optional vector of length 3. Do not include two-way interaction factors if this is not null. Default to <code>null</code></p></td>
+      <td><p>three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>id</th>
-      <td><p>character or vector of length 1. The nesting variable (e.g. group)</p></td>
+      <td><p>the nesting variable (e.g. group, time). Length of 1. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>estimation_method</th>
@@ -193,19 +193,19 @@ Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel
     </tr>
     <tr>
       <th>opt_control</th>
-      <td><p>character. default to <code>optim</code> for <code>lme</code> and <code>bobyqa</code> for lmerTest</p></td>
+      <td><p>default is <code>optim</code> for <code>lme</code> and <code>bobyqa</code> for lmerTest</p></td>
     </tr>
     <tr>
       <th>na.action</th>
-      <td><p>default to <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.exclude</a></code>.</p></td>
+      <td><p>default is <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.exclude</a></code>. Required to be <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.omit</a></code> if check_assumption if <code>T</code>.</p></td>
     </tr>
     <tr>
       <th>use_package</th>
-      <td><p>character. <code>nlme</code> or <code>lmerTest</code>, or <code>lme4</code>. Default is <code>nlme</code>.</p></td>
+      <td><p>Default is <code>nlme</code>. Only available for linear mixed effect model. Options are <code>nlme</code> or <code>lmerTest</code>,<code>lme4</code>(<code>'lme4</code> return similiar result as <code>lmerTest</code> except the return model)</p></td>
     </tr>
     <tr>
       <th>quite</th>
-      <td><p>default to F. If set to <code>T</code>, it will not print the fitting model statement</p></td>
+      <td><p>default to <code>F</code>. If set to <code>T</code>, it will not print the fitting model statement</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -224,33 +224,32 @@ Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># two-level model with level-1 and level-2 variable with random intercept and random slope</span>
-<span class='va'>fit1</span> <span class='op'>=</span> <span class='fu'>lme_model</span><span class='op'>(</span>
+<span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'>lme_model</span><span class='op'>(</span>
   response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
-  level_1_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
-  level_2_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
+  random_effect_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
+  non_random_effect_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
   id <span class='op'>=</span> <span class='va'>Country</span>,
   data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>,
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Fitting Model with lme: 
 #&gt;  Fixed = JS_Individual ~ Age_Individual + Hofstede_IC_Country + Hofstede_UA_Country + Hofstede_PD_Country + Hofstede_MF_Country + Hofstede_LO_Country + Hofstede_IR_Country 
 #&gt;  Random = ~ 1 + Age_Individual | Country </div><div class='input'><span class='co'># added two-way interaction factor</span>
-<span class='va'>fit2</span> <span class='op'>=</span> <span class='fu'>lme_model</span><span class='op'>(</span>
+<span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'>lme_model</span><span class='op'>(</span>
   response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
-  level_1_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
-  level_2_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
+  random_effect_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
+  non_random_effect_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
   two_way_interaction_factor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Age_Individual"</span>, <span class='st'>"Hofstede_IC_Country"</span><span class='op'>)</span>,
   id <span class='op'>=</span> <span class='va'>Country</span>,
   data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Fitting Model with lme: 
 #&gt;  Fixed = JS_Individual ~ Age_Individual + Hofstede_IC_Country + Hofstede_UA_Country + Hofstede_PD_Country + Hofstede_MF_Country + Hofstede_LO_Country + Hofstede_IR_Country + Age_Individual*Hofstede_IC_Country 
-#&gt;  Random = ~ 1 + Age_Individual | Country </div><div class='input'>
-<span class='co'># \donttest{</span>
+#&gt;  Random = ~ 1 + Age_Individual | Country </div><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># fit3 is equivalent to fit4</span>
-<span class='va'>fit3</span> <span class='op'>=</span> <span class='fu'>lme_model</span><span class='op'>(</span>
+<span class='va'>fit3</span> <span class='op'>&lt;-</span> <span class='fu'>lme_model</span><span class='op'>(</span>
   response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
-  level_1_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Individual"</span><span class='op'>)</span>, <span class='op'>-</span><span class='va'>JS_Individual</span><span class='op'>)</span>, <span class='co'># !look at the difference here</span>
-  level_2_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
+  random_effect_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Individual"</span><span class='op'>)</span>, <span class='op'>-</span><span class='va'>JS_Individual</span><span class='op'>)</span>, <span class='co'># !look at the difference here</span>
+  non_random_effect_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
   id <span class='op'>=</span> <span class='va'>Country</span>,
   data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>
 <span class='op'>)</span>
@@ -260,10 +259,10 @@ Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel
 <span class='co'># Equivalent to the above example.</span>
 <span class='co'># It shows that you don't need to remove response_variable from tidyselect syntax.</span>
 <span class='co'># \donttest{</span>
-<span class='va'>fit4</span> <span class='op'>=</span> <span class='fu'>lme_model</span><span class='op'>(</span>
+<span class='va'>fit4</span> <span class='op'>&lt;-</span> <span class='fu'>lme_model</span><span class='op'>(</span>
   response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
-  level_1_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Individual"</span><span class='op'>)</span>, <span class='co'># !look at the difference here</span>
-  level_2_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
+  random_effect_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Individual"</span><span class='op'>)</span>, <span class='co'># !look at the difference here</span>
+  non_random_effect_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
   id <span class='op'>=</span> <span class='va'>Country</span>,
   data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>
 <span class='op'>)</span>

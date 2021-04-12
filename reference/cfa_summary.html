@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Confirmatory Factor Analysis — cfa_summary" />
 <meta property="og:description" content=" 
-The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Users can fit single and multiple factors CFA (read details), and it also supports multilevel CFA (specifying the group). Users can pass the items (see below for example) or an explicit lavaan model for more versatile usage." />
+The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Users can fit single and multiple factors CFA (read details), and it also supports multilevel CFA (specifying the group). Users can pass fit the model by passing the items using dplyr::select syntax or an explicit lavaan model for more versatile usage." />
 
 
 
@@ -132,7 +132,7 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#stable'><img src='figures/lifecycle-stable.svg' alt='[Stable]' /></a> <br />
-The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Users can fit single and multiple factors CFA (read details), and it also supports multilevel CFA (specifying the group). Users can pass the items (see below for example) or an explicit lavaan model for more versatile usage.</p>
+The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Users can fit single and multiple factors CFA (read details), and it also supports multilevel CFA (specifying the group). Users can pass fit the model by passing the items using dplyr::select syntax or an explicit lavaan model for more versatile usage.</p>
     </div>
 
     <pre class="usage"><span class='fu'>cfa_summary</span><span class='op'>(</span>
@@ -157,7 +157,7 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
     </tr>
     <tr>
       <th>...</th>
-      <td><p>CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for example</p></td>
+      <td><p>CFA items using dplyr::select syntax. Multi-factor CFA items should be separated by comma (as different argument). See below for examples</p></td>
     </tr>
     <tr>
       <th>model</th>
@@ -205,7 +205,7 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT</span>
 <span class='co'># Fitting a single factor CFA model</span>
-<span class='va'>fit</span> <span class='op'>=</span> <span class='fu'>cfa_summary</span><span class='op'>(</span>
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>cfa_summary</span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,
   <span class='va'>x1</span><span class='op'>:</span><span class='va'>x3</span>,
   jmv_result <span class='op'>=</span> <span class='cn'>TRUE</span>
@@ -254,7 +254,7 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
 #&gt;  ──────────────────────────────────────────────────────────── 
 #&gt; </div><div class='input'>
 <span class='co'># Fitting a multilevel single factor CFA model</span>
-<span class='va'>fit</span> <span class='op'>=</span> <span class='fu'>cfa_summary</span><span class='op'>(</span>
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>cfa_summary</span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,
   <span class='va'>x1</span><span class='op'>:</span><span class='va'>x3</span>,
   group <span class='op'>=</span> <span class='st'>"sex"</span>
@@ -263,7 +263,7 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
 #&gt;   DV1 =~ x1 + x2 + x3
 #&gt;  </div><div class='input'>
 <span class='co'># Fitting a multiple factor CFA model</span>
-<span class='va'>fit</span> <span class='op'>=</span> <span class='fu'>cfa_summary</span><span class='op'>(</span>
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>cfa_summary</span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,
   <span class='va'>x1</span><span class='op'>:</span><span class='va'>x3</span>,
   <span class='va'>x4</span><span class='op'>:</span><span class='va'>x6</span>,
@@ -277,10 +277,10 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
 <span class='co'># Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)</span>
 <span class='co'># Note in the below function how I added `model = ` in front of the lavaan model.</span>
 <span class='co'># Similarly, the same rule apply for all arguments (e.g., `ordered = F` instead of `F`)</span>
-<span class='va'>fit</span> <span class='op'>=</span> <span class='fu'>cfa_summary</span><span class='op'>(</span>
- model <span class='op'>=</span> <span class='st'>"visual  =~ x1 + x2 + x3;textual =~ x4 + x5 + x6;"</span>,
- data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,
- jmv_result <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>cfa_summary</span><span class='op'>(</span>
+  model <span class='op'>=</span> <span class='st'>"visual  =~ x1 + x2 + x3;textual =~ x4 + x5 + x6;"</span>,
+  data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,
+  jmv_result <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Computing CFA using:
 #&gt;  visual  =~ x1 + x2 + x3;textual =~ x4 + x5 + x6;
@@ -328,8 +328,7 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
 #&gt;  ─────────────────────────────────────────────────────────────────── 
 #&gt;    0.9749691    0.9530670    0.08242913    0.04626573    0.1208571   
 #&gt;  ─────────────────────────────────────────────────────────────────── 
-#&gt; </div><div class='input'>
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+#&gt; </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># This will fail because I did not add `model = ` in front of the lavaan model.</span>
 <span class='co'># Therefore,you must add the tag in front of all arguments</span>
 <span class='co'># For example, `return_result = 'model'` instaed of `model`</span>
