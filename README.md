@@ -17,9 +17,9 @@ devtools::install_github('jasonmoy28/psycModel')
 ## Key Features
 <span style="color:#009900">✓</span> Easy to use for R beginners who don't want to find dedicated packages for each analysis  
 <span style="color:#009900">✓</span> Support [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models   
-<span style="color:#009900">✓</span> Support interaction plots, model assumption inspection, model comparisons
-<span style="color:#009900">✓</span> Easy-to-use confirmatory factor analysis (do not need to learn lavaan syntax) and measurement invariance  
-<span style="color:#009900">✓</span> Publication-ready descriptive statistics & correlation table 
+<span style="color:#009900">✓</span> Support interaction plots, model assumption inspection, model comparisons  
+<span style="color:#009900">✓</span> Easy-to-use confirmatory factor analysis and measurement invariance (do not need to learn lavaan syntax)  
+<span style="color:#009900">✓</span> Publication-ready descriptive statistics & correlation table
 
 ## Credit
 **Authors:** [Jason Moy](https://jasonmoy.us)
