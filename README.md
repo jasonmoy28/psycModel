@@ -21,8 +21,8 @@ devtools::install_github('jasonmoy28/psycModel')
 <span style="color:#009900">✓</span> Support model assumption inspection and model performance & comparisons
 
 ## Supported Models
-<span style="color:#009900">✓</span> Regression models: Hierarchical linear modeling 
-<span style="color:#009900">✓</span> Measurement models: Exploratory & confirmatory factor analysis, measurement invariance  
+<span style="color:#009900">✓</span> Regression models: Hierarchical linear modeling  
+<span style="color:#009900">✓</span> Measurement models: Exploratory & confirmatory factor analysis, measurement invariance   
 <span style="color:#009900">✓</span> Other models: Descriptive statistics & correlation table  
 
 ## Credit
