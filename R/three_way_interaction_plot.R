@@ -31,6 +31,7 @@
 #' )
 #'
 #' three_way_interaction_plot(fit)
+#' three_way_interaction_plot(fit,plot_color = T) # plots with color 
 three_way_interaction_plot <- function(model,
                                        cateogrical_var = NULL,
                                        graph_label_name = NULL,

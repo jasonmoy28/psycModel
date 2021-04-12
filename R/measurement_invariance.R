@@ -44,7 +44,7 @@
 #'            speed   =~ x7 + x8 + x9",
 #'   data = lavaan::HolzingerSwineford1939,
 #'   group = "school",
-#'   invariance_level = 'scalar'
+#'   invariance_level = 'metric'
 #' )
 #' \dontrun{
 #' # This will fail because I did not add `model = ` in front of the lavaan model.
