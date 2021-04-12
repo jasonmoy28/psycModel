@@ -6,7 +6,7 @@
 #' @param data data frame
 #' @param cols vector or tidyselect syntax or helpers. column(s) that need to be recoded.
 #' @param digit number of digits
-#' @param sig_test adjusted or raw. Default is raw. See ?psych::corr.test to learn more.
+#' @param sig_test Default is raw. Options are 'adjusted' or 'raw'. Adjusted use holm adjustment method. See ?stats::p.adjust to learn why. 
 #' @param ... additional argument.
 #'
 #' @export
@@ -16,8 +16,9 @@
 #' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 #'
 #' @examples
-#' cor_test(iris, 1:4)
 #' cor_test(iris, where(is.numeric))
+#' cor_test(iris, where(is.numeric),sig_test = 'adjusted') # use adjusted correlation 
+#' 
 utils::globalVariables("where")
 
 cor_test <- function(data, cols, sig_test = "raw", digit = 3, ...) {

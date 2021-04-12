@@ -18,9 +18,14 @@
 #' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 #'
 #' @examples
-#' descriptive_table(iris, cols = tidyr::everything()) # all columns
-#'
 #' descriptive_table(iris, cols = where(is.numeric)) # all numeric columns
+#' 
+#' descriptive_table(iris, 
+#'                   cols = where(is.numeric),
+#'                   # get missing count, non-missing count, and mean & sd & correlation table
+#'                   descriptive_indicator = c('missing','non_missing','mean','sd','cor')) 
+#' 
+#' 
 descriptive_table <- function(data,
                               cols,
                               cor_sig_test = "raw",
