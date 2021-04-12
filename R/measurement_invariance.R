@@ -27,7 +27,7 @@
 #'
 #' @examples
 #' # REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT
-#' # Fitting a multiple-factor measurement invariance model by passing items
+#' # Fitting a multiple-factor measurement invariance model by passing items. 
 #' measurement_invariance(
 #'   x1:x3,
 #'   x4:x6,
@@ -37,12 +37,14 @@
 #' )
 #' 
 #' # Fitting measurement invariance model by passing explicit lavaan model
+#' # I am also going to only test for metric invariance instead of the default scalar invariance 
 #' measurement_invariance(
 #'   model = "visual  =~ x1 + x2 + x3;
 #'            textual =~ x4 + x5 + x6;
 #'            speed   =~ x7 + x8 + x9",
 #'   data = lavaan::HolzingerSwineford1939,
-#'   group = "school"
+#'   group = "school",
+#'   invariance_level = 'scalar'
 #' )
 #' \dontrun{
 #' # This will fail because I did not add `model = ` in front of the lavaan model.

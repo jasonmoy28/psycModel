@@ -19,7 +19,6 @@
 #' cor_test(iris, where(is.numeric))
 #' cor_test(iris, where(is.numeric),sig_test = 'adjusted') # use adjusted correlation 
 #' 
-utils::globalVariables("where")
 
 cor_test <- function(data, cols, sig_test = "raw", digit = 3, ...) {
   cols <- enquo(cols)
