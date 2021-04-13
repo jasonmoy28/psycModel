@@ -1,7 +1,7 @@
 #' Linear Mixed Effect Model
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the `nlme::lme` (Pinheiro, 2006)  or the `lmerTest::lmer` (Kuznetsova, 2017) function. The model support all dplyr::select syntax (see `?dplyr::select` or `vignette('mixed_effect_model)` for detailed description). It will also automatically remove the response variable and id from other variables (see details below for an example). It currently only support two-level model. More complicated model structure is supported by passing the `model` argument.
+#' Fit a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the `nlme::lme` (Pinheiro, 2006)  or the `lmerTest::lmer` (Kuznetsova, 2017) function. Linear mixed effect model is used to explore the effect of continuous / categorical variables in predicting a normally distributed continuous variable. The model support all dplyr::select syntax (see `?dplyr::select` or `vignette('mixed_effect_model)` for detailed description). It will also automatically remove the response variable and id from other variables (see details below for an example). It currently only support two-level model. More complicated model structure is supported by passing the `model` argument.
 #'
 #'
 #' @param data data frame
@@ -19,59 +19,39 @@
 #' @param quite default to `F`. If set to `T`, it will not print the fitting model statement
 #' @param ... Internal use only. It doesn't work in other cases
 #'
-#' @return An object of class `lme` of `lmerModLmerTest` representing the linear mixed-effects model fit.
+#' @details
+#' Here is a little tip. If you are using generic selecting syntax (e.g., contains() or start_with()), you don't need to remove the response variable and the id from the factors. It will be automatically remove. For example, if you have x1:x9 as your factors. You want to regress x2:x8 on x1. Your probably pass something like response_variable = x1, random_effect_factors = c(contains('x'),-x1) to the function. However, you don't need to do that, you can just pass random_effect_factors = c(contains('x')) to the function since it will automatically remove the response variable from selection.
+#'
+#' @return An object representing the linear mixed-effects model fit (it maybe an object from `lme` or `lmer` depending of the package you use)
 #'
 #' @export
-#'
-#' @references
-#'
-#' Kuznetsova, A., Brockhoff, P. B., & Christensen, R. H. (2017). lmerTest package: tests in linear mixed effects models. Journal of statistical software, 82(13), 1-26.
-#'
-#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
-#'
-#' Pinheiro, J., Bates, D., DebRoy, S., Sarkar, D., & Team, R. C. (2006). nlme: Linear and nonlinear mixed effects models. R package version, 3(4), 109.
-#'
 #'
 #' @examples
 #' # two-level model with level-1 and level-2 variable with random intercept and random slope
 #' fit1 <- lme_model(
-#'   response_variable = JS_Individual,
-#'   random_effect_factors = Age_Individual,
-#'   non_random_effect_factors = contains("Country"),
-#'   id = Country,
-#'   data = EWCS_2015_shorten,
+#'   data = popular,
+#'   response_variable = popular,
+#'   random_effect_factors = c(extrav, sex),
+#'   non_random_effect_factors = texp,
+#'   id = class
 #' )
+#'
+#'
 #' # added two-way interaction factor
 #' fit2 <- lme_model(
-#'   response_variable = JS_Individual,
-#'   random_effect_factors = Age_Individual,
-#'   non_random_effect_factors = contains("Country"),
-#'   two_way_interaction_factor = c("Age_Individual", "Hofstede_IC_Country"),
-#'   id = Country,
-#'   data = EWCS_2015_shorten
+#'   data = popular,
+#'   response_variable = popular,
+#'   random_effect_factors = c(extrav, sex),
+#'   non_random_effect_factors = texp,
+#'   two_way_interaction_factor = c(extrav, texp),
+#'   id = class
 #' )
-#' \donttest{
-#' # fit3 is equivalent to fit4
-#' fit3 <- lme_model(
-#'   response_variable = JS_Individual,
-#'   random_effect_factors = c(contains("Individual"), -JS_Individual), # !look at the difference here
-#'   non_random_effect_factors = contains("Country"),
-#'   id = Country,
-#'   data = EWCS_2015_shorten
-#' )
-#' }
-#' # Equivalent to the above example.
-#' # It shows that you don't need to remove response_variable from tidyselect syntax.
-#' \donttest{
-#' fit4 <- lme_model(
-#'   response_variable = JS_Individual,
-#'   random_effect_factors = contains("Individual"), # !look at the difference here
-#'   non_random_effect_factors = contains("Country"),
-#'   id = Country,
-#'   data = EWCS_2015_shorten
-#' )
-#' }
 #'
+#' # pass a explicit lme model (I don't why you want to do that, but you can)
+#' lme_fit <- lme_model(
+#'   model = "popular ~ extrav*texp + (1 + extrav | class)",
+#'   data = popular
+#' )
 lme_model <- function(data,
                       model = NULL,
                       response_variable,
@@ -81,9 +61,9 @@ lme_model <- function(data,
                       three_way_interaction_factor = NULL,
                       id,
                       estimation_method = "REML",
-                      opt_control = "optim",
-                      na.action = stats::na.exclude,
-                      use_package = "nlme",
+                      opt_control = "bobyqa",
+                      na.action = stats::na.omit,
+                      use_package = "lmerTest",
                       quite = F,
                       ...) {
   ###################################### Set up #############################################
@@ -98,7 +78,7 @@ lme_model <- function(data,
     }
     if (method == "id_check") {
       if (length(object) != 1) {
-        stop("Response variable must be length of 1")
+        stop("ID must be length of 1")
       }
     }
     if (method == "three_way_interaction_factor_check") {
@@ -120,9 +100,9 @@ lme_model <- function(data,
 
   # opt_control check for lme4 and lmerTest to change default optimizer from optim to bobyqa
   opt_control_check <- function(opt_control) {
-    if (opt_control == "optim") {
-      warning("The default optimizer is changed from optim to bobyqa for lme4 or lmerTest.")
-      opt_control <- "bobyqa"
+    if (opt_control == "bobyqa") {
+      warning("The default optimizer is changed from bobyqa to optim for nlme package")
+      opt_control <- "optim"
       return(opt_control)
     }
   }
@@ -136,7 +116,7 @@ lme_model <- function(data,
       warning("A model is specified explicitly. Switching to lmerTest for estimation.")
       use_package <- "lmerTest"
     }
-    opt_control <- opt_control_check(opt_control)
+
     lmerCtr <- lme4::lmerControl(optimizer = opt_control)
     if (use_package == "lmerTest") {
       model <- do.call(getfun("lmerTest::lmer"), list(
@@ -159,7 +139,6 @@ lme_model <- function(data,
   ###################################### Build model for models without explicit model #############################################
   ## parse tidyselect syntax
   if (all(ellipsis != "model_summary_with_plot")) {
-    # remove response variable and id from random_effect_factors
     response_variable <- data %>%
       dplyr::select(!!enquo(response_variable)) %>%
       names()
@@ -179,7 +158,6 @@ lme_model <- function(data,
       dplyr::select(!!enquo(id)) %>%
       names()
   } else {
-    # remove response variable and id from random_effect_factors
     response_variable <- data %>%
       dplyr::select(!!response_variable) %>%
       names()
@@ -246,6 +224,9 @@ lme_model <- function(data,
 
   ###################################### Use nlme as the Package for Modeling #############################################
   if (use_package == "nlme") {
+    # change the default optimzer to optim for nlme
+    opt_control <- opt_control_check(opt_control)
+
     # Create the formula for fixed factor
     fixed_factors_formula <- stats::as.formula(paste(paste(response_variable, "~"), paste(fixed_factors, collapse = " + ")))
     # Created the formula for random factors
@@ -272,8 +253,6 @@ lme_model <- function(data,
 
     ###################################### Use lme4 or lmerTest as the Package for Modeling #############################################
   } else if (use_package == "lmerTest" | use_package == "lme4") {
-    # change the default optimzer to bobyqa for lmerTest
-    opt_control <- opt_control_check(opt_control)
     # Create the formula for fixed factor
     lmer_fixed_factors_formula <- paste(paste(response_variable, "~"), paste(fixed_factors, collapse = " + "))
     # Created the formula for random factors

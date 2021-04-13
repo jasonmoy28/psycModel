@@ -20,20 +20,22 @@ Compare the fit indices models (see below for model support)
 }
 \examples{
 # lme model
+
 fit1 <- lme_model(
-  response_variable = JS_Individual,
-  random_effect_factors = Age_Individual,
-  non_random_effect_factors = Hofstede_IC_Country,
-  id = Country,
-  data = EWCS_2015_shorten,
+  data = popular,
+  response_variable = popular,
+  random_effect_factors = c(extrav, sex),
+  non_random_effect_factors = texp,
+  id = class
 )
 
 fit2 <- lme_model(
-  response_variable = JS_Individual,
-  random_effect_factors = Age_Individual,
-  non_random_effect_factors = c(Hofstede_IC_Country, Hofstede_UA_Country),
-  id = Country,
-  data = EWCS_2015_shorten,
+  data = popular,
+  response_variable = popular,
+  random_effect_factors = c(extrav, sex),
+  non_random_effect_factors = texp,
+  two_way_interaction_factor = c(extrav, texp),
+  id = class
 )
 
 compare_fit(list(fit1, fit2))

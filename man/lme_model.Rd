@@ -14,9 +14,9 @@ lme_model(
   three_way_interaction_factor = NULL,
   id,
   estimation_method = "REML",
-  opt_control = "optim",
-  na.action = stats::na.exclude,
-  use_package = "nlme",
+  opt_control = "bobyqa",
+  na.action = stats::na.omit,
+  use_package = "lmerTest",
   quite = F,
   ...
 )
@@ -51,57 +51,39 @@ lme_model(
 \item{...}{Internal use only. It doesn't work in other cases}
 }
 \value{
-An object of class \code{lme} of \code{lmerModLmerTest} representing the linear mixed-effects model fit.
+An object representing the linear mixed-effects model fit (it maybe an object from \code{lme} or \code{lmer} depending of the package you use)
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the \code{nlme::lme} (Pinheiro, 2006)  or the \code{lmerTest::lmer} (Kuznetsova, 2017) function. The model support all dplyr::select syntax (see \code{?dplyr::select} or \verb{vignette('mixed_effect_model)} for detailed description). It will also automatically remove the response variable and id from other variables (see details below for an example). It currently only support two-level model. More complicated model structure is supported by passing the \code{model} argument.
+Fit a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the \code{nlme::lme} (Pinheiro, 2006)  or the \code{lmerTest::lmer} (Kuznetsova, 2017) function. Linear mixed effect model is used to explore the effect of continuous / categorical variables in predicting a normally distributed continuous variable. The model support all dplyr::select syntax (see \code{?dplyr::select} or \verb{vignette('mixed_effect_model)} for detailed description). It will also automatically remove the response variable and id from other variables (see details below for an example). It currently only support two-level model. More complicated model structure is supported by passing the \code{model} argument.
+}
+\details{
+Here is a little tip. If you are using generic selecting syntax (e.g., contains() or start_with()), you don't need to remove the response variable and the id from the factors. It will be automatically remove. For example, if you have x1:x9 as your factors. You want to regress x2:x8 on x1. Your probably pass something like response_variable = x1, random_effect_factors = c(contains('x'),-x1) to the function. However, you don't need to do that, you can just pass random_effect_factors = c(contains('x')) to the function since it will automatically remove the response variable from selection.
 }
 \examples{
 # two-level model with level-1 and level-2 variable with random intercept and random slope
 fit1 <- lme_model(
-  response_variable = JS_Individual,
-  random_effect_factors = Age_Individual,
-  non_random_effect_factors = contains("Country"),
-  id = Country,
-  data = EWCS_2015_shorten,
+  data = popular,
+  response_variable = popular,
+  random_effect_factors = c(extrav, sex),
+  non_random_effect_factors = texp,
+  id = class
 )
+
+
 # added two-way interaction factor
 fit2 <- lme_model(
-  response_variable = JS_Individual,
-  random_effect_factors = Age_Individual,
-  non_random_effect_factors = contains("Country"),
-  two_way_interaction_factor = c("Age_Individual", "Hofstede_IC_Country"),
-  id = Country,
-  data = EWCS_2015_shorten
+  data = popular,
+  response_variable = popular,
+  random_effect_factors = c(extrav, sex),
+  non_random_effect_factors = texp,
+  two_way_interaction_factor = c(extrav, texp),
+  id = class
 )
-\donttest{
-# fit3 is equivalent to fit4
-fit3 <- lme_model(
-  response_variable = JS_Individual,
-  random_effect_factors = c(contains("Individual"), -JS_Individual), # !look at the difference here
-  non_random_effect_factors = contains("Country"),
-  id = Country,
-  data = EWCS_2015_shorten
+
+# pass a explicit lme model (I don't why you want to do that, but you can)
+lme_fit <- lme_model(
+  model = "popular ~ extrav*texp + (1 + extrav | class)",
+  data = popular
 )
-}
-# Equivalent to the above example.
-# It shows that you don't need to remove response_variable from tidyselect syntax.
-\donttest{
-fit4 <- lme_model(
-  response_variable = JS_Individual,
-  random_effect_factors = contains("Individual"), # !look at the difference here
-  non_random_effect_factors = contains("Country"),
-  id = Country,
-  data = EWCS_2015_shorten
-)
-}
-
-}
-\references{
-Kuznetsova, A., Brockhoff, P. B., & Christensen, R. H. (2017). lmerTest package: tests in linear mixed effects models. Journal of statistical software, 82(13), 1-26.
-
-Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
-
-Pinheiro, J., Bates, D., DebRoy, S., Sarkar, D., & Team, R. C. (2006). nlme: Linear and nonlinear mixed effects models. R package version, 3(4), 109.
 }
