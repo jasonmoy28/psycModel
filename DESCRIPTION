@@ -16,7 +16,9 @@ URL: https://jasonmoy28.github.io/psycModel
 Depends: 
     R (>= 2.10)
 Imports: 
+    crayon,
     dplyr,
+    glue,
     ggplot2,
     gridExtra,
     interactions,
@@ -44,9 +46,6 @@ Suggests:
     roxygen2,
     testthat (>= 3.0.0),
     tidyselect
-VignetteBuilder: 
-    knitr
-Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

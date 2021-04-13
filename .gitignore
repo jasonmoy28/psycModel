@@ -3,6 +3,7 @@
 .RData
 .Ruserdata
 update_list.md
+version_checklist.md
 inst/doc
 docs
 /doc/
