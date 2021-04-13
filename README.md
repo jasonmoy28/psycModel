@@ -15,8 +15,9 @@
 devtools::install_github('jasonmoy28/psycModel')
 ```
 ## Key Features
-<span style="color:#009900">✓</span> Easy to use for R beginners who don't want to find dedicated packages for each analysis  
+<span style="color:#009900">✓</span> Easy to use for R beginners who don't want to find dedicated packages for each analysis
 <span style="color:#009900">✓</span> Support [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models   
+<span style="color:#009900">✓</span> Rich-text formatted output instead of plain text output 
 <span style="color:#009900">✓</span> Support plotting based on the model. For example, interaction plot for regression, scree plot for exploratory factor analysis  
 <span style="color:#009900">✓</span> Support model assumption inspection and model performance & comparisons
 
@@ -30,17 +31,9 @@ devtools::install_github('jasonmoy28/psycModel')
 
 **Citation:** Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 
-
-**BibTex Entry:**
-  @Manual {,  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title = {{psycModel}Intergrated Toolkit for Pyschological Analysis and Modeling in R},  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;author = {Jason Moy},  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;year = {2021},  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url = {https://github.com/jasonmoy28/psycModel},  
-  }
-
 ## Acknoledgement
-This package was built by standing on the shoulders of giants with special thanks to developers of `jmv`,`lavaan`, `lme4`, `lmerTest`, `nlme`, `performance`, `psych`, all `tidyverse` packages. We would have to pay a lot of money for very expensive software if they have not developed these amazing packages for statistical analysis in R. Additionally, I want to thank the developers for `devtools` and `usethis`. It would have been much much harder (maybe even impossible for me) to write an R package without the help of these two packages. I hope my package can help someone as they had helped me. 
+This package was built by standing on the shoulders of giants with special thanks to developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/web/packages/nlme/nlme.pdf), [`performance`](https://easystats.github.io/performance/), [`psych`](https://personality-project.org/r/psych/), [`jmv`](https://github.com/jamovi/jmv), and all [`tidyverse`](https://tidyverse.tidyverse.org/) packages. Additionally, I want to thank the developer of [`bruceR`](https://github.com/psychbruce/bruceR). Although [`bruceR`](https://github.com/psychbruce/bruceR) is not imported, I used `bruceR::Print` and `bruceR::print_table` for these amazing rich-text formatted output. Additionally, I want to thank the developers for `devtools` and `usethis`,`styler`. It would have been much much harder (maybe even impossible for me) to write an R package without the help of these two packages. I hope my package can help someone as they had helped me. 
+
 
 ## Updates
 ### Prospective Features: 
