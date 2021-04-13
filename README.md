@@ -15,7 +15,7 @@
 devtools::install_github('jasonmoy28/psycModel')
 ```
 ## Key Features
-<span style="color:#009900">✓</span> Easy to use for R beginners who don't want to find dedicated packages for each analysis
+<span style="color:#009900">✓</span> Easy to use for R beginners who don't want to find dedicated packages for each analysis. Check out this [quick-introduction](https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html) example now.  
 <span style="color:#009900">✓</span> Support [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models   
 <span style="color:#009900">✓</span> Rich-text formatted output instead of plain text output   
 <span style="color:#009900">✓</span> Support plotting based on the model. For example, interaction plot for regression, scree plot for exploratory factor analysis  
