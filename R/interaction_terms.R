@@ -1,9 +1,10 @@
 #' Interaction term for Mixed Effect Model (do not call directly)
-#'
-#' Essential for HLM.Model::HLM_Model
+#' Create Interaction terms (internal-use only)
 #'
 #' @param interaction_terms vector. names of the interaction terms
 #' @return vector. The vector is essential for the lme formula used in function `HLM.Model::HLM_Model`
+#'
+#' @keywords internal
 #' @export
 #'
 two_way_interaction_terms <- function(interaction_terms) {

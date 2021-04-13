@@ -1,12 +1,16 @@
 #' Data Check (do not call directly)
 #'
 #' @param data data frame
+#' @keywords internal
+#'
 #' @export
 #'
 
 data_check <- function(data) {
   datatype <- as.vector(sapply(data, class))
-  if (all(datatype == "numeric" | datatype == "factor" | datatype == "integer")) {
+  if (any(class(data) == "NULL")) {
+    return(data)
+  } else if (all(datatype == "numeric" | datatype == "factor" | datatype == "integer")) {
     non_numeric_columns <- data %>%
       dplyr::select(where(~ !is.numeric(.))) %>%
       names()

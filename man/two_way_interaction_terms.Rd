@@ -2,7 +2,8 @@
 % Please edit documentation in R/interaction_terms.R
 \name{two_way_interaction_terms}
 \alias{two_way_interaction_terms}
-\title{Interaction term for Mixed Effect Model (do not call directly)}
+\title{Interaction term for Mixed Effect Model (do not call directly)
+Create Interaction terms (internal-use only)}
 \usage{
 two_way_interaction_terms(interaction_terms)
 }
@@ -13,5 +14,7 @@ two_way_interaction_terms(interaction_terms)
 vector. The vector is essential for the lme formula used in function \code{HLM.Model::HLM_Model}
 }
 \description{
-Essential for HLM.Model::HLM_Model
+Interaction term for Mixed Effect Model (do not call directly)
+Create Interaction terms (internal-use only)
 }
+\keyword{internal}

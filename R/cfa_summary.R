@@ -12,14 +12,12 @@
 #' @param return_result default is model. Options are 'model' (lavaan model), 'short_summary' (fit index summary only), 'long_summary' (lavaan full summary).
 #' @param quite default as F. If set to true, it will not print the running model statement.
 #' @param group_partial Items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').
-#' @param jmv_result default is F. Print a good-lookng summary use jmv::cfa. It currently only support one-level CFA with latent factors and latent variable. It does not support complex lavaan structure at the momenet. I will work on supporting residual covariance. `r lifecycle::badge("experimental")` \cr
+#' @param jmv_result default is F. Print a good-looking summary use jmv::cfa. It currently only support one-level CFA with latent factors and latent variable. It does not support complex lavaan structure at the momenet. I will work on supporting residual covariance. `r lifecycle::badge("experimental")` \cr
 #'
 #' @details
 #' All argument must be explicitly specified. If not, all arguments will be treated as CFA items.
 #'
 #' @references
-#' Bao, H.-W.-S. (2021). bruceR: Broadly useful convenient and efficient R functions. R package version 0.6.0. https://CRAN.R-project.org/package=bruceR
-#'
 #' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 #'
 #' Rosseel Y (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1–36. https://www.jstatsoft.org/v48/i02/.

@@ -51,19 +51,6 @@ An object of class "glmerMod" representing the linear mixed-effects model fit.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
 Generalized linear mixed effect model. The function uses the \code{lme4::glmer}(Bates et al., 2014) function. This function is still in very early development stage.
 }
-\examples{
-x <- rnorm(200)
-y <- rpois(200, exp(1 + x))
-group <- rep(1:10, 20)
-test_df <- as.data.frame(cbind(x, y, group))
-fit <- glme_model(
-  data = test_df,
-  response_variable = "y",
-  random_effect_factors = "x",
-  family = poisson(link = "log"),
-  id = "group"
-)
-}
 \references{
 Bates, D., Mächler, M., Bolker, B., & Walker, S. (2014). Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software, 67(1), 1–48. doi: 10.18637/jss.v067.i01.
 

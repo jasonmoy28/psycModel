@@ -22,20 +22,8 @@
 #' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 #'
 #' @return An object of class "glmerMod" representing the linear mixed-effects model fit.
-#' @export
 #'
-#' @examples
-#' x <- rnorm(200)
-#' y <- rpois(200, exp(1 + x))
-#' group <- rep(1:10, 20)
-#' test_df <- as.data.frame(cbind(x, y, group))
-#' fit <- glme_model(
-#'   data = test_df,
-#'   response_variable = "y",
-#'   random_effect_factors = "x",
-#'   family = poisson(link = "log"),
-#'   id = "group"
-#' )
+#'
 glme_model <- function(data,
                        response_variable,
                        random_effect_factors,

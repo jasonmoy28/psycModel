@@ -44,7 +44,6 @@ As a thumb of rule, you want factor loadings to be above 0.5.
 }
 \examples{
 efa_summary(lavaan::HolzingerSwineford1939, starts_with("x"), scree_plot = TRUE)
-
 }
 \references{
 The Jamovi Project. (2021). jmv: The 'jamovi' Analyses. R package version 1.2.23. Retrieved from https://github.com/jamovi/jmv.
