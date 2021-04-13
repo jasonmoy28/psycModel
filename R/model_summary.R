@@ -209,7 +209,7 @@ model_summary <- function(model,
     if (singular_check == T) {
       singular_output <- performance::check_singularity(model)
       if (singular_output == T) {
-        Print("<<red Warning: Singularity is detected>>")
+        Print("<<red Warning: Singularity is detected. See ?lme4::isSingular()>>")
       } else {
         Print("<<green OK: No singularity is detected>>")
       }
@@ -243,8 +243,8 @@ model_summary <- function(model,
     collinearity_df <- performance::check_collinearity(model)
     if (all(collinearity_df$VIF < 5)) {
       Print("<<green OK: No multicolinearity detected (VIF < 5)>>")
-    } else if (any(collinearity_df$VIF >= 5 & collinearity_df$VIF < 10)) {
-      Print("<<yellow Cautious: Moderated multicolinearity detected  (5 < VIF < 10). Please inspect the following table to identify factors.>>  ")
+    } else if (any(collinearity_df$VIF >= 5) & all(collinearity_df$VIF < 10)) {
+      Print("<<yellow Cautious: Moderate multicolinearity detected  (5 < VIF < 10). Please inspect the following table to identify factors.>>  ")
       Print("<<underline Multicollinearity Table >>")
       print_table(collinearity_df)
     } else if (any(collinearity_df$VIF > 10)) {
