@@ -36,7 +36,8 @@ Imports:
     stringr,
     tibble,
     tidyr,
-    utils
+    utils,
+    cowplot
 Suggests:
     covr,
     ggrepel,
