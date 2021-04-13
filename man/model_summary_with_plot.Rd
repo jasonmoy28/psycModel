@@ -14,20 +14,19 @@ model_summary_with_plot(
   three_way_interaction_factor = NULL,
   cateogrical_var = NULL,
   id = NULL,
-  family = NULL,
+  streamlined_output = F,
   graph_label_name = NULL,
   estimation_method = "REML",
-  opt_control = "optim",
-  na.action = stats::na.exclude,
-  model_performance = c("R2_fixed_effect", "R2_full_model"),
+  opt_control = "bobyqa",
+  na.action = stats::na.omit,
   return_result = F,
-  print_result = c("short_summary", "plot"),
+  print_result = c("model_summary", "plot"),
   y_lim = NULL,
   plot_color = F,
-  digit = c(3, 3, 3),
-  use_package = "nlme",
+  round = 3,
+  use_package = "lmerTest",
   simple_slope = F,
-  check_assumption = F,
+  assumption_plot = F,
   quite = F
 )
 }
@@ -50,7 +49,7 @@ model_summary_with_plot(
 
 \item{id}{the nesting variable (e.g. group, time). Length of 1. Support \code{dplyr::select} syntax.}
 
-\item{family}{a GLM family. It will passed to the family argument in glmer. See \code{?glmer} for possible options. Early stage feature. Have not tested nor fully supported. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr}
+\item{streamlined_output}{Only print model estimate and model performance. Default is \code{FALSE}}
 
 \item{graph_label_name}{optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)}
 
@@ -58,62 +57,44 @@ model_summary_with_plot(
 
 \item{opt_control}{default is \code{optim} for \code{lme} and \code{bobyqa} for lmerTest}
 
-\item{na.action}{default is \code{stats::na.exclude}. Required to be \code{stats::na.omit} if check_assumption if \code{T}.}
+\item{na.action}{default is \code{stats::na.exclude}. Required to be \code{stats::na.omit} if assumption_plot if \code{T}. It should produce similar result, but you should check using \code{na.exclude} to confirm.}
 
-\item{model_performance}{Default is \code{R2_full_model} and \code{R2_fixed_effect}. Options are \code{R2_full_model} for conditional R2 and \code{R2_fixed_effect} for marginal R2 (Nakagawa, 2013). \code{icc} for intraclass correlation coefficient. The function uses the performance package for R2 and ICC (Lüdecke et al., 2020).}
+\item{return_result}{If set to \code{TRUE} (default is \code{FALSE}), it will return the \code{model}, \code{model_summary}, and \code{plot} (if the interaction term is included)}
 
-\item{return_result}{default is \code{F}. If set to \code{T}, it will return the \code{model}, \code{model_summary}, and \code{plot} (if the interaction term is included)}
-
-\item{print_result}{Default is \code{short_summary} and \code{plot}. Options are \code{model},\code{plot},\code{short_summary},\code{long_summary}.\code{model} return the model object. \code{plot} return the interaction plot.\code{short_summary} return a short model summary. \code{long_summary} return the summary.}
+\item{print_result}{Default is \code{model_summary} and \code{plot}. Options are \code{model_summary} or \code{plot}.}
 
 \item{y_lim}{the plot's upper and lower limit for the y-axis. Length of 2. Example: \code{c(lower_limit, upper_limit)}}
 
-\item{plot_color}{default if \code{F}. Set to \code{T} if you want to plot in color}
+\item{plot_color}{If it is set to \code{TRUE} (default is \code{FALSE}), the interaction plot will plot with color.}
 
-\item{digit}{number of digit. Specify as a vector with \code{c(estimate_digit, p_value_digit, model_performance_digit)}}
+\item{round}{number of digit.}
 
 \item{use_package}{Default is \code{nlme}. Only available for linear mixed effect model. Options are \code{nlme} or \code{lmerTest},\code{lme4}(\verb{'lme4} return similiar result as \code{lmerTest} except the return model)}
 
-\item{simple_slope}{default is \code{F}. If \code{T}, it will compute the slope differing with ± 1 SD of the IVs using interaction:sim_slopes function (Long, 2019). See \code{vignette('regression_model')} for more info}
+\item{simple_slope}{Compute the slope differing with ± 1 SD of the IVs. In the background, it calls interaction:sim_slopes()}
 
-\item{check_assumption}{default is \code{F}. If \code{T}, it will generate an panel of plots that check major assumptions. It uses the performance::check_model (Lüdecke, 2020). see ?performance::check_model to learn model}
+\item{assumption_plot}{Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()}
 
-\item{quite}{default to \code{F}. If set to \code{T}, it will not print the fitting model statement}
+\item{quite}{If it is set to \code{TRUE} (default is \code{FALSE}), it will not print the fitting model statement}
 }
 \value{
-return a list of all requested items in the order of model, short_summary, long_summary, plot
+return a list of all requested items in the order of model, model_summary, plot
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019). If you requested , it will uses the bruceR::HLM_summary (Bao, 2021)
+It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019).
 }
 \examples{
-
-fit1 <- model_summary_with_plot(
-  response_variable = JS_Individual,
-  random_effect_factors = Age_Individual,
-  non_random_effect_factors = Hofstede_IC_Country,
-  two_way_interaction_factor = c(Age_Individual, Hofstede_IC_Country),
-  id = Country,
-  graph_label_name = c("Job Satisfaction", "Age", "Hofstede_IC_Country"),
-  plot_color = TRUE, # plot with color
-  data = EWCS_2015_shorten,
-  check_assumption = TRUE,
+fit <- model_summary_with_plot(
+  data = popular,
+  response_variable = popular,
+  random_effect_factors = c(extrav, sex),
+  non_random_effect_factors = texp,
+  three_way_interaction_factor = c(extrav, sex, texp),
+  graph_label_name = c("popular", "extraversion", "sex", "teacher experience"),
+  id = class,
   simple_slope = TRUE,
+  assumption_plot = TRUE,
+  plot_color = TRUE
 )
-}
-\references{
-Bates, D., Mächler, M., Bolker, B., & Walker, S. (2014). Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software, 67(1), 1–48. doi: 10.18637/jss.v067.i01.
-
-Kuznetsova, A., Brockhoff, P. B., & Christensen, R. H. (2017). lmerTest package: tests in linear mixed effects models. Journal of statistical software, 82(13), 1-26.
-
-Long J. A. (2019). interactions: Comprehensive, User-Friendly Toolkit for Probing Interactions. R package version 1.1.0, https://cran.r-project.org/package=interactions.
-
-Lüdecke, D., Makowski, D., Waggoner, P., Patil I (2020). performance: Assessment of Regression Models Performance. CRAN. doi: 10.5281/zenodo.3952174, R package, https://easystats.github.io/performance/.
-
-Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
-
-Nakagawa, S., & Schielzeth, H. (2013). A general and simple method for obtaining R2 from generalized linear mixed-effects models. Methods in Ecology and Evolution, 4(2), 133–142. https://doi.org/10.1111/j.2041-210x.2012.00261.x
-
-Pinheiro, J., Bates, D., DebRoy, S., Sarkar, D., & Team, R. C. (2006). nlme: Linear and nonlinear mixed effects models. R package version, 3(4), 109.
 }

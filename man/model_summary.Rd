@@ -6,47 +6,50 @@
 \usage{
 model_summary(
   model,
-  model_performance = c("R2_fixed_effect", "R2_full_model"),
-  estimate_round = 3,
-  p_value_round = 3,
-  performance_round = 3,
-  model_fit = "none"
+  streamlined_output = F,
+  round = 3,
+  assumption_plot = F,
+  return_result = F
 )
 }
 \arguments{
 \item{model}{an object from nlme::lme, lmerTest::lmer, or lme4::glmer}
 
-\item{model_performance}{Default is \code{R2_full_model} and \code{R2_fixed_effect}. Options are \code{R2_full_model} for conditional R2 and \code{R2_fixed_effect} for marginal R2 (Nakagawa, 2013). \code{icc} for intraclass correlation coefficient. The function uses the performance package for R2 and ICC (Lüdecke et al., 2020).}
+\item{streamlined_output}{Only print model estimate and model performance. Default is \code{FALSE}}
 
-\item{estimate_round}{numeric. number of digit to round to for the slope estimate}
+\item{round}{number of digit to round the values.}
 
-\item{p_value_round}{numeric. number of digit to round to for the p-value}
+\item{assumption_plot}{Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()}
 
-\item{performance_round}{numeric. number of digit to round to for the performance statistics (e.g., R2)}
-
-\item{model_fit}{if you know your model produce same result as one of the object specify in the model argument, then you can try pass it to the function. Do it at your own risk.}
+\item{return_result}{return the model estimates data frame. Default is \code{FALSE}}
 }
 \value{
-a data frame with estimate, degree of freedom, p_value, and whether the p-value is significant
+If return_result is \code{TRUE}, it will return a data frame with estimate, df, p_value, and the p-value significance.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 The function will extract the relevant coefficients from the linear mixed effect models (see supported model below).
 }
 \examples{
-fit <- lme_model(
-  response_variable = "Reaction",
-  random_effect_factors = "Days",
-  id = "Subject",
-  data = lme4::sleepstudy
+# I am going to show the more generic usage of this function
+# You can also use this package's built in function to fit the models
+# I recommend using the model_summary_with_plot to get everything
+
+# lme example
+lme_fit <- lme4::lmer("popular ~ extrav + sex + texp  + (1 | class)",
+  data = popular
 )
 
-model_summary(fit)
+model_summary(lme_fit, assumption_plot = TRUE)
+
+# lm example
+
+lm_fit <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width,
+  data = iris
+)
+
+model_summary(lm_fit, assumption_plot = TRUE)
 }
 \references{
-Lüdecke, D., Makowski, D., Waggoner, P., Patil I (2020). performance: Assessment of Regression Models Performance. CRAN. doi: 10.5281/zenodo.3952174, R package, https://easystats.github.io/performance/.
-
-Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
-
 Nakagawa, S., & Schielzeth, H. (2013). A general and simple method for obtaining R2 from generalized linear mixed-effects models. Methods in Ecology and Evolution, 4(2), 133–142. https://doi.org/10.1111/j.2041-210x.2012.00261.x
 }
