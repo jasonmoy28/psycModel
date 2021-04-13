@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Linear Mixed Effect Model — lme_model" />
 <meta property="og:description" content=" 
-Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the nlme::lme (Pinheiro, 2006)  or the lmerTest::lmer (Kuznetsova, 2017) function. The model support all dplyr::select syntax (see ?dplyr::select or vignette('mixed_effect_model) for detailed description). It will also automatically remove the response variable and id from other variables (see details below for an example). It currently only support two-level model. More complicated model structure is supported by passing the model argument." />
+Fit a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the nlme::lme (Pinheiro, 2006)  or the lmerTest::lmer (Kuznetsova, 2017) function. Linear mixed effect model is used to explore the effect of continuous / categorical variables in predicting a normally distributed continuous variable. The model support all dplyr::select syntax (see ?dplyr::select or vignette('mixed_effect_model) for detailed description). It will also automatically remove the response variable and id from other variables (see details below for an example). It currently only support two-level model. More complicated model structure is supported by passing the model argument." />
 
 
 
@@ -88,18 +88,6 @@ Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/regression_model.html">psycModel: Fitting Regression Model</a>
-    </li>
-  </ul>
-</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -132,7 +120,7 @@ Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#stable'><img src='figures/lifecycle-stable.svg' alt='[Stable]' /></a> <br />
-Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the <code><a href='https://rdrr.io/pkg/nlme/man/lme.html'>nlme::lme</a></code> (Pinheiro, 2006)  or the <code><a href='https://rdrr.io/pkg/lmerTest/man/lmer.html'>lmerTest::lmer</a></code> (Kuznetsova, 2017) function. The model support all dplyr::select syntax (see <code><a href='https://dplyr.tidyverse.org/reference/select.html'>?dplyr::select</a></code> or <code>vignette('mixed_effect_model)</code> for detailed description). It will also automatically remove the response variable and id from other variables (see details below for an example). It currently only support two-level model. More complicated model structure is supported by passing the <code>model</code> argument.</p>
+Fit a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the <code><a href='https://rdrr.io/pkg/nlme/man/lme.html'>nlme::lme</a></code> (Pinheiro, 2006)  or the <code><a href='https://rdrr.io/pkg/lmerTest/man/lmer.html'>lmerTest::lmer</a></code> (Kuznetsova, 2017) function. Linear mixed effect model is used to explore the effect of continuous / categorical variables in predicting a normally distributed continuous variable. The model support all dplyr::select syntax (see <code><a href='https://dplyr.tidyverse.org/reference/select.html'>?dplyr::select</a></code> or <code>vignette('mixed_effect_model)</code> for detailed description). It will also automatically remove the response variable and id from other variables (see details below for an example). It currently only support two-level model. More complicated model structure is supported by passing the <code>model</code> argument.</p>
     </div>
 
     <pre class="usage"><span class='fu'>lme_model</span><span class='op'>(</span>
@@ -145,9 +133,9 @@ Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel
   three_way_interaction_factor <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>id</span>,
   estimation_method <span class='op'>=</span> <span class='st'>"REML"</span>,
-  opt_control <span class='op'>=</span> <span class='st'>"optim"</span>,
-  na.action <span class='op'>=</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/r/stats/na.fail.html'>na.exclude</a></span>,
-  use_package <span class='op'>=</span> <span class='st'>"nlme"</span>,
+  opt_control <span class='op'>=</span> <span class='st'>"bobyqa"</span>,
+  na.action <span class='op'>=</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>,
+  use_package <span class='op'>=</span> <span class='st'>"lmerTest"</span>,
   quite <span class='op'>=</span> <span class='cn'>F</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -215,62 +203,40 @@ Compute a linear mixed effect model (i.e., hierarchical linear model, multilevel
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code>lme</code> of <code>lmerModLmerTest</code> representing the linear mixed-effects model fit.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+    <p>An object representing the linear mixed-effects model fit (it maybe an object from <code>lme</code> or <code>lmer</code> depending of the package you use)</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Kuznetsova, A., Brockhoff, P. B., &amp; Christensen, R. H. (2017). lmerTest package: tests in linear mixed effects models. Journal of statistical software, 82(13), 1-26.</p>
-<p>Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel</p>
-<p>Pinheiro, J., Bates, D., DebRoy, S., Sarkar, D., &amp; Team, R. C. (2006). nlme: Linear and nonlinear mixed effects models. R package version, 3(4), 109.</p>
+    <p>Here is a little tip. If you are using generic selecting syntax (e.g., contains() or start_with()), you don't need to remove the response variable and the id from the factors. It will be automatically remove. For example, if you have x1:x9 as your factors. You want to regress x2:x8 on x1. Your probably pass something like response_variable = x1, random_effect_factors = c(contains('x'),-x1) to the function. However, you don't need to do that, you can just pass random_effect_factors = c(contains('x')) to the function since it will automatically remove the response variable from selection.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># two-level model with level-1 and level-2 variable with random intercept and random slope</span>
 <span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'>lme_model</span><span class='op'>(</span>
-  response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
-  random_effect_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
-  non_random_effect_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
-  id <span class='op'>=</span> <span class='va'>Country</span>,
-  data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>,
+  data <span class='op'>=</span> <span class='va'>popular</span>,
+  response_variable <span class='op'>=</span> <span class='va'>popular</span>,
+  random_effect_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>sex</span><span class='op'>)</span>,
+  non_random_effect_factors <span class='op'>=</span> <span class='va'>texp</span>,
+  id <span class='op'>=</span> <span class='va'>class</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; Fitting Model with lme: 
-#&gt;  Fixed = JS_Individual ~ Age_Individual + Hofstede_IC_Country + Hofstede_UA_Country + Hofstede_PD_Country + Hofstede_MF_Country + Hofstede_LO_Country + Hofstede_IR_Country 
-#&gt;  Random = ~ 1 + Age_Individual | Country </div><div class='input'><span class='co'># added two-way interaction factor</span>
-<span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'>lme_model</span><span class='op'>(</span>
-  response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
-  random_effect_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
-  non_random_effect_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
-  two_way_interaction_factor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Age_Individual"</span>, <span class='st'>"Hofstede_IC_Country"</span><span class='op'>)</span>,
-  id <span class='op'>=</span> <span class='va'>Country</span>,
-  data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; Fitting Model with lme: 
-#&gt;  Fixed = JS_Individual ~ Age_Individual + Hofstede_IC_Country + Hofstede_UA_Country + Hofstede_PD_Country + Hofstede_MF_Country + Hofstede_LO_Country + Hofstede_IR_Country + Age_Individual*Hofstede_IC_Country 
-#&gt;  Random = ~ 1 + Age_Individual | Country </div><div class='input'><span class='co'># \donttest{</span>
-<span class='co'># fit3 is equivalent to fit4</span>
-<span class='va'>fit3</span> <span class='op'>&lt;-</span> <span class='fu'>lme_model</span><span class='op'>(</span>
-  response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
-  random_effect_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Individual"</span><span class='op'>)</span>, <span class='op'>-</span><span class='va'>JS_Individual</span><span class='op'>)</span>, <span class='co'># !look at the difference here</span>
-  non_random_effect_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
-  id <span class='op'>=</span> <span class='va'>Country</span>,
-  data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; Fitting Model with lme: 
-#&gt;  Fixed = JS_Individual ~ Gender_Individual + Age_Individual + Education_Individual + SWB_Individual + Hofstede_IC_Country + Hofstede_UA_Country + Hofstede_PD_Country + Hofstede_MF_Country + Hofstede_LO_Country + Hofstede_IR_Country 
-#&gt;  Random = ~ 1 + Gender_Individual + Age_Individual + Education_Individual + SWB_Individual | Country </div><div class='input'><span class='co'># }</span>
-<span class='co'># Equivalent to the above example.</span>
-<span class='co'># It shows that you don't need to remove response_variable from tidyselect syntax.</span>
-<span class='co'># \donttest{</span>
-<span class='va'>fit4</span> <span class='op'>&lt;-</span> <span class='fu'>lme_model</span><span class='op'>(</span>
-  response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
-  random_effect_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Individual"</span><span class='op'>)</span>, <span class='co'># !look at the difference here</span>
-  non_random_effect_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
-  id <span class='op'>=</span> <span class='va'>Country</span>,
-  data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; Fitting Model with lme: 
-#&gt;  Fixed = JS_Individual ~ Gender_Individual + Age_Individual + Education_Individual + SWB_Individual + Hofstede_IC_Country + Hofstede_UA_Country + Hofstede_PD_Country + Hofstede_MF_Country + Hofstede_LO_Country + Hofstede_IR_Country 
-#&gt;  Random = ~ 1 + Gender_Individual + Age_Individual + Education_Individual + SWB_Individual | Country </div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; Fitting Model with lmer:
+#&gt;  Formula = popular ~ extrav + sex + texp + (1 + extrav + sex | class)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'>
 
-</div></pre>
+<span class='co'># added two-way interaction factor</span>
+<span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'>lme_model</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='va'>popular</span>,
+  response_variable <span class='op'>=</span> <span class='va'>popular</span>,
+  random_effect_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>sex</span><span class='op'>)</span>,
+  non_random_effect_factors <span class='op'>=</span> <span class='va'>texp</span>,
+  two_way_interaction_factor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>texp</span><span class='op'>)</span>,
+  id <span class='op'>=</span> <span class='va'>class</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; Fitting Model with lmer:
+#&gt;  Formula = popular ~ extrav + sex + texp + extrav*texp + (1 + extrav + sex | class)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'>
+<span class='co'># pass a explicit lme model (I don't why you want to do that, but you can)</span>
+<span class='va'>lme_fit</span> <span class='op'>&lt;-</span> <span class='fu'>lme_model</span><span class='op'>(</span>
+  model <span class='op'>=</span> <span class='st'>"popular ~ extrav*texp + (1 + extrav | class)"</span>,
+  data <span class='op'>=</span> <span class='va'>popular</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Two-way Interaction Plot — two_way_interaction_plot" />
 <meta property="og:description" content=" 
-The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below" />
+The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below. I recommend using concurrently with lm_model or lme_model. Although I strive to work with outside model, I have yet to test all use-cases thus I cannot guarantee it works nor give useful debug messages." />
 
 
 
@@ -88,18 +88,6 @@ The function creates a two-way interaction plot. It will creates a plot with ± 
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/regression_model.html">psycModel: Fitting Regression Model</a>
-    </li>
-  </ul>
-</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -132,11 +120,12 @@ The function creates a two-way interaction plot. It will creates a plot with ± 
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a> <br />
-The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below</p>
+The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below. I recommend using concurrently with <code>lm_model</code> or <code>lme_model</code>. Although I strive to work with outside model, I have yet to test all use-cases thus I cannot guarantee it works nor give useful debug messages.</p>
     </div>
 
     <pre class="usage"><span class='fu'>two_way_interaction_plot</span><span class='op'>(</span>
   <span class='va'>model</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
   graph_label_name <span class='op'>=</span> <span class='cn'>NULL</span>,
   cateogrical_var <span class='op'>=</span> <span class='cn'>NULL</span>,
   y_lim <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -148,7 +137,11 @@ The function creates a two-way interaction plot. It will creates a plot with ± 
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>object from nlme, lme4, or lmerTest (linear mixed effect model)</p></td>
+      <td><p>object from <code>lm</code>, <code>nlme</code>, <code>lme4</code>, or <code>lmerTest</code></p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>data frame. If the function is unable to extract data frame from the object, then you may need to pass it directly</p></td>
     </tr>
     <tr>
       <th>graph_label_name</th>
@@ -176,36 +169,32 @@ The function creates a two-way interaction plot. It will creates a plot with ± 
     <p>Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># run the fit model first</span>
-<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lme_model.html'>lme_model</a></span><span class='op'>(</span>
-  response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
-  random_effect_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
-  non_random_effect_factors <span class='op'>=</span> <span class='fu'>contains</span><span class='op'>(</span><span class='st'>"Country"</span><span class='op'>)</span>,
-  two_way_interaction_factor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Age_Individual"</span>, <span class='st'>"Hofstede_IC_Country"</span><span class='op'>)</span>,
-  id <span class='op'>=</span> <span class='st'>"Country"</span>,
-  data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>
+    <pre class="examples"><div class='input'><span class='co'># If you pass the model directly, it can't extract the data-frame from fit object</span>
+<span class='co'># Therefore, for now, you must pass the data frame to the function.</span>
+<span class='co'># You don't need pass the data if you use `lm_model` or `lme_model`.</span>
+
+<span class='co'># lme example</span>
+<span class='va'>lme_fit</span> <span class='op'>&lt;-</span> <span class='fu'>lme4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='st'>"popular ~ extrav*texp + (1 + extrav | class)"</span>,
+  data <span class='op'>=</span> <span class='va'>popular</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; Fitting Model with lme: 
-#&gt;  Fixed = JS_Individual ~ Age_Individual + Hofstede_IC_Country + Hofstede_UA_Country + Hofstede_PD_Country + Hofstede_MF_Country + Hofstede_LO_Country + Hofstede_IR_Country + Age_Individual*Hofstede_IC_Country 
-#&gt;  Random = ~ 1 + Age_Individual | Country </div><div class='input'>
-<span class='fu'>two_way_interaction_plot</span><span class='op'>(</span>
-  model <span class='op'>=</span> <span class='va'>fit</span>,
-  <span class='co'># this will change the plot name</span>
-  graph_label_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-    <span class='st'>"Job Satisfaction"</span>,
-    <span class='st'>"Age"</span>,
-    <span class='st'>"Individualism/Collectivism"</span>
-  <span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'>
+<span class='fu'>two_way_interaction_plot</span><span class='op'>(</span><span class='va'>lme_fit</span>,
+  graph_label_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"popular"</span>, <span class='st'>"extraversion"</span>, <span class='st'>"teacher experience"</span><span class='op'>)</span>,
+  data <span class='op'>=</span> <span class='va'>popular</span>
 <span class='op'>)</span>
 </div><div class='img'><img src='two_way_interaction_plot-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Below is an equivalent way of changing graph_label_name by using the switch function</span>
-<span class='co'># You should store this in a separate script, and load this function using source().</span>
-<span class='co'># It is primarily use if you are running many models</span>
-<span class='va'>graph_label_name</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>var_name</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>lm_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Width</span> <span class='op'>*</span> <span class='va'>Petal.Width</span>,
+  data <span class='op'>=</span> <span class='va'>iris</span>
+<span class='op'>)</span>
+
+<span class='fu'>two_way_interaction_plot</span><span class='op'>(</span><span class='va'>lm_fit</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: The following columns are coerced into numeric: Species</span></div><div class='img'><img src='two_way_interaction_plot-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># For more advanced users</span>
+<span class='va'>label_name</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>var_name</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>var_name_processed</span> <span class='op'>&lt;-</span> <span class='kw'><a href='https://rdrr.io/r/base/switch.html'>switch</a></span><span class='op'>(</span><span class='va'>var_name</span>,
-    <span class='st'>"JS_Individual"</span> <span class='op'>=</span> <span class='st'>"Job Satisfaction"</span>,
-    <span class='st'>"Age_Individual"</span> <span class='op'>=</span> <span class='st'>"Age"</span>,
-    <span class='st'>"Hofstede_IC_Country"</span> <span class='op'>=</span> <span class='st'>"Individualism/Collectivism"</span>
+    <span class='st'>"extrav"</span> <span class='op'>=</span> <span class='st'>"Extroversion"</span>,
+    <span class='st'>"texp"</span> <span class='op'>=</span> <span class='st'>"Teacher Experience"</span>,
+    <span class='st'>"popular"</span> <span class='op'>=</span> <span class='st'>"popular"</span>
   <span class='op'>)</span>
   <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span><span class='op'>(</span><span class='va'>var_name_processed</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
     <span class='va'>var_name_processed</span> <span class='op'>&lt;-</span> <span class='va'>var_name</span>
@@ -213,13 +202,8 @@ The function creates a two-way interaction plot. It will creates a plot with ± 
   <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>var_name_processed</span><span class='op'>)</span>
 <span class='op'>}</span>
 
-<span class='fu'>two_way_interaction_plot</span><span class='op'>(</span>
-  model <span class='op'>=</span> <span class='va'>fit</span>,
-  <span class='co'># this will change the plot name</span>
-  graph_label_name <span class='op'>=</span> <span class='va'>graph_label_name</span>,
-  plot_color <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span>
-</div><div class='img'><img src='two_way_interaction_plot-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>two_way_interaction_plot</span><span class='op'>(</span><span class='va'>lme_fit</span>, data <span class='op'>=</span> <span class='va'>popular</span>, graph_label_name <span class='op'>=</span> <span class='va'>label_name</span><span class='op'>)</span>
+</div><div class='img'><img src='two_way_interaction_plot-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

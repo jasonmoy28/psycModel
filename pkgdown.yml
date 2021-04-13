@@ -1,9 +1,8 @@
 pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
-articles:
-  regression_model: regression_model.html
-last_built: 2021-04-12T11:57Z
+articles: {}
+last_built: 2021-04-13T12:12Z
 urls:
   reference: https://jasonmoy28.github.io/psycModel/reference
   article: https://jasonmoy28.github.io/psycModel/articles

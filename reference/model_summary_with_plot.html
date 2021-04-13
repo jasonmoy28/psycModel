@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Integrated Function for Mixed Effect Model — model_summary_with_plot" />
 <meta property="og:description" content=" 
-It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019). If you requested , it will uses the bruceR::HLM_summary (Bao, 2021)" />
+It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019)." />
 
 
 
@@ -88,18 +88,6 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/regression_model.html">psycModel: Fitting Regression Model</a>
-    </li>
-  </ul>
-</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -132,7 +120,7 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#stable'><img src='figures/lifecycle-stable.svg' alt='[Stable]' /></a> <br />
-It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019). If you requested , it will uses the bruceR::HLM_summary (Bao, 2021)</p>
+It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019).</p>
     </div>
 
     <pre class="usage"><span class='fu'>model_summary_with_plot</span><span class='op'>(</span>
@@ -145,20 +133,19 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
   three_way_interaction_factor <span class='op'>=</span> <span class='cn'>NULL</span>,
   cateogrical_var <span class='op'>=</span> <span class='cn'>NULL</span>,
   id <span class='op'>=</span> <span class='cn'>NULL</span>,
-  family <span class='op'>=</span> <span class='cn'>NULL</span>,
+  streamlined_output <span class='op'>=</span> <span class='cn'>F</span>,
   graph_label_name <span class='op'>=</span> <span class='cn'>NULL</span>,
   estimation_method <span class='op'>=</span> <span class='st'>"REML"</span>,
-  opt_control <span class='op'>=</span> <span class='st'>"optim"</span>,
-  na.action <span class='op'>=</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/r/stats/na.fail.html'>na.exclude</a></span>,
-  model_performance <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"R2_fixed_effect"</span>, <span class='st'>"R2_full_model"</span><span class='op'>)</span>,
+  opt_control <span class='op'>=</span> <span class='st'>"bobyqa"</span>,
+  na.action <span class='op'>=</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>,
   return_result <span class='op'>=</span> <span class='cn'>F</span>,
-  print_result <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"short_summary"</span>, <span class='st'>"plot"</span><span class='op'>)</span>,
+  print_result <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"model_summary"</span>, <span class='st'>"plot"</span><span class='op'>)</span>,
   y_lim <span class='op'>=</span> <span class='cn'>NULL</span>,
   plot_color <span class='op'>=</span> <span class='cn'>F</span>,
-  digit <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>3</span><span class='op'>)</span>,
-  use_package <span class='op'>=</span> <span class='st'>"nlme"</span>,
+  round <span class='op'>=</span> <span class='fl'>3</span>,
+  use_package <span class='op'>=</span> <span class='st'>"lmerTest"</span>,
   simple_slope <span class='op'>=</span> <span class='cn'>F</span>,
-  check_assumption <span class='op'>=</span> <span class='cn'>F</span>,
+  assumption_plot <span class='op'>=</span> <span class='cn'>F</span>,
   quite <span class='op'>=</span> <span class='cn'>F</span>
 <span class='op'>)</span></pre>
 
@@ -202,8 +189,8 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
       <td><p>the nesting variable (e.g. group, time). Length of 1. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
     </tr>
     <tr>
-      <th>family</th>
-      <td><p>a GLM family. It will passed to the family argument in glmer. See <code>?glmer</code> for possible options. Early stage feature. Have not tested nor fully supported. <a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a> <br /></p></td>
+      <th>streamlined_output</th>
+      <td><p>Only print model estimate and model performance. Default is <code>FALSE</code></p></td>
     </tr>
     <tr>
       <th>graph_label_name</th>
@@ -219,19 +206,15 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
     </tr>
     <tr>
       <th>na.action</th>
-      <td><p>default is <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.exclude</a></code>. Required to be <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.omit</a></code> if check_assumption if <code>T</code>.</p></td>
-    </tr>
-    <tr>
-      <th>model_performance</th>
-      <td><p>Default is <code>R2_full_model</code> and <code>R2_fixed_effect</code>. Options are <code>R2_full_model</code> for conditional R2 and <code>R2_fixed_effect</code> for marginal R2 (Nakagawa, 2013). <code>icc</code> for intraclass correlation coefficient. The function uses the performance package for R2 and ICC (Lüdecke et al., 2020).</p></td>
+      <td><p>default is <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.exclude</a></code>. Required to be <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.omit</a></code> if assumption_plot if <code>T</code>. It should produce similar result, but you should check using <code>na.exclude</code> to confirm.</p></td>
     </tr>
     <tr>
       <th>return_result</th>
-      <td><p>default is <code>F</code>. If set to <code>T</code>, it will return the <code>model</code>, <code>model_summary</code>, and <code>plot</code> (if the interaction term is included)</p></td>
+      <td><p>If set to <code>TRUE</code> (default is <code>FALSE</code>), it will return the <code>model</code>, <code>model_summary</code>, and <code>plot</code> (if the interaction term is included)</p></td>
     </tr>
     <tr>
       <th>print_result</th>
-      <td><p>Default is <code>short_summary</code> and <code>plot</code>. Options are <code>model</code>,<code>plot</code>,<code>short_summary</code>,<code>long_summary</code>.<code>model</code> return the model object. <code>plot</code> return the interaction plot.<code>short_summary</code> return a short model summary. <code>long_summary</code> return the summary.</p></td>
+      <td><p>Default is <code>model_summary</code> and <code>plot</code>. Options are <code>model_summary</code> or <code>plot</code>.</p></td>
     </tr>
     <tr>
       <th>y_lim</th>
@@ -239,11 +222,11 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
     </tr>
     <tr>
       <th>plot_color</th>
-      <td><p>default if <code>F</code>. Set to <code>T</code> if you want to plot in color</p></td>
+      <td><p>If it is set to <code>TRUE</code> (default is <code>FALSE</code>), the interaction plot will plot with color.</p></td>
     </tr>
     <tr>
-      <th>digit</th>
-      <td><p>number of digit. Specify as a vector with <code><a href='https://rdrr.io/r/base/c.html'>c(estimate_digit, p_value_digit, model_performance_digit)</a></code></p></td>
+      <th>round</th>
+      <td><p>number of digit.</p></td>
     </tr>
     <tr>
       <th>use_package</th>
@@ -251,78 +234,149 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
     </tr>
     <tr>
       <th>simple_slope</th>
-      <td><p>default is <code>F</code>. If <code>T</code>, it will compute the slope differing with ± 1 SD of the IVs using interaction:sim_slopes function (Long, 2019). See <code><a href='../articles/regression_model.html'>vignette('regression_model')</a></code> for more info</p></td>
+      <td><p>Compute the slope differing with ± 1 SD of the IVs. In the background, it calls interaction:sim_slopes()</p></td>
     </tr>
     <tr>
-      <th>check_assumption</th>
-      <td><p>default is <code>F</code>. If <code>T</code>, it will generate an panel of plots that check major assumptions. It uses the performance::check_model (Lüdecke, 2020). see ?performance::check_model to learn model</p></td>
+      <th>assumption_plot</th>
+      <td><p>Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()</p></td>
     </tr>
     <tr>
       <th>quite</th>
-      <td><p>default to <code>F</code>. If set to <code>T</code>, it will not print the fitting model statement</p></td>
+      <td><p>If it is set to <code>TRUE</code> (default is <code>FALSE</code>), it will not print the fitting model statement</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>return a list of all requested items in the order of model, short_summary, long_summary, plot</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Bates, D., Mächler, M., Bolker, B., &amp; Walker, S. (2014). Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software, 67(1), 1–48. doi: 10.18637/jss.v067.i01.</p>
-<p>Kuznetsova, A., Brockhoff, P. B., &amp; Christensen, R. H. (2017). lmerTest package: tests in linear mixed effects models. Journal of statistical software, 82(13), 1-26.</p>
-<p>Long J. A. (2019). interactions: Comprehensive, User-Friendly Toolkit for Probing Interactions. R package version 1.1.0, https://cran.r-project.org/package=interactions.</p>
-<p>Lüdecke, D., Makowski, D., Waggoner, P., Patil I (2020). performance: Assessment of Regression Models Performance. CRAN. doi: 10.5281/zenodo.3952174, R package, https://easystats.github.io/performance/.</p>
-<p>Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel</p>
-<p>Nakagawa, S., &amp; Schielzeth, H. (2013). A general and simple method for obtaining R2 from generalized linear mixed-effects models. Methods in Ecology and Evolution, 4(2), 133–142. https://doi.org/10.1111/j.2041-210x.2012.00261.x</p>
-<p>Pinheiro, J., Bates, D., DebRoy, S., Sarkar, D., &amp; Team, R. C. (2006). nlme: Linear and nonlinear mixed effects models. R package version, 3(4), 109.</p>
+    <p>return a list of all requested items in the order of model, model_summary, plot</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'>model_summary_with_plot</span><span class='op'>(</span>
-  response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
-  random_effect_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
-  non_random_effect_factors <span class='op'>=</span> <span class='va'>Hofstede_IC_Country</span>,
-  two_way_interaction_factor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>Age_Individual</span>, <span class='va'>Hofstede_IC_Country</span><span class='op'>)</span>,
-  id <span class='op'>=</span> <span class='va'>Country</span>,
-  graph_label_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Job Satisfaction"</span>, <span class='st'>"Age"</span>, <span class='st'>"Hofstede_IC_Country"</span><span class='op'>)</span>,
-  plot_color <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='co'># plot with color</span>
-  data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>,
-  check_assumption <span class='op'>=</span> <span class='cn'>TRUE</span>,
+    <pre class="examples"><div class='input'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>model_summary_with_plot</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='va'>popular</span>,
+  response_variable <span class='op'>=</span> <span class='va'>popular</span>,
+  random_effect_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>sex</span><span class='op'>)</span>,
+  non_random_effect_factors <span class='op'>=</span> <span class='va'>texp</span>,
+  three_way_interaction_factor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>sex</span>, <span class='va'>texp</span><span class='op'>)</span>,
+  graph_label_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"popular"</span>, <span class='st'>"extraversion"</span>, <span class='st'>"sex"</span>, <span class='st'>"teacher experience"</span><span class='op'>)</span>,
+  id <span class='op'>=</span> <span class='va'>class</span>,
   simple_slope <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  assumption_plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  plot_color <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Switched use_package to lmerTest since you requested simple_slope</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Switched to na.action to na.omit and use_package to lme4 since you request check_assumption.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: The default optimizer is changed from optim to bobyqa for lme4 or lmerTest.</span></div><div class='output co'>#&gt; Fitting Model with lmer:
-#&gt;  Formula = JS_Individual ~ Age_Individual + Hofstede_IC_Country + Age_Individual*Hofstede_IC_Country + (1 + Age_Individual | Country)
-#&gt;                             variable estimate     DF p_value significant
-#&gt; 1                        (Intercept)    0.112  9.351   0.312            
-#&gt; 2                     Age_Individual   -0.002 12.135   0.395            
-#&gt; 3                Hofstede_IC_Country    0.003  8.794   0.550            
-#&gt; 4 Age_Individual:Hofstede_IC_Country    0.000 10.931   0.628            
-#&gt; 5                      R2_full_model    0.058                           
-#&gt; 6                    R2_fixed_effect    0.002                           </div><div class='img'><img src='model_summary_with_plot-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span style='font-weight: bold;text-decoration: underline;'>JOHNSON-NEYMAN INTERVAL</span><span> 
+</div><div class='output co'>#&gt; Fitting Model with lmer:
+#&gt;  Formula = popular ~ extrav + sex + texp + extrav*sex*texp + (1 + extrav + sex | class)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span style='text-decoration: underline;'>Model Summary</span><span> 
+#&gt; Model Type = Linear Mixed Effect Model (fitted using lme4 or lmerTest) 
+#&gt; Outcome = popular 
+#&gt; Predictors = extrav, sex, texp, extrav:sex, extrav:texp, sex:texp, extrav:sex:texp
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Model Estimates</span><span>
+#&gt; ─────────────────────────────────────────────────
+#&gt;           variable estimate       DF p_value sig.
+#&gt; ─────────────────────────────────────────────────
+#&gt; 1  (Intercept)       -0.958  175.413   0.004  ** 
+#&gt; 2  extrav             0.757  166.105   0.000  ***
+#&gt; 3  sex                0.714 1131.801   0.059     
+#&gt; 4  texp               0.217  179.278   0.000  ***
+#&gt; 5  extrav:sex         0.094 1039.623   0.142     
+#&gt; 6  extrav:texp       -0.023  192.350   0.000  ***
+#&gt; 7  sex:texp           0.020  975.198   0.389     
+#&gt; 8  extrav:sex:texp   -0.004  915.602   0.407     
+#&gt; ─────────────────────────────────────────────────
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Model Performance</span><span>
+#&gt; </span><span style='color: #BB0000;'>Random effect variances not available. Returned R2 does not account for random effects.
+#&gt; </span><span>───────────────────────────────────────────────────────────
+#&gt;         AIC      BIC R2_conditional R2_marginal  RMSE Sigma
+#&gt; ───────────────────────────────────────────────────────────
+#&gt; 1  4827.902 4911.915                      0.656 0.720 0.742
+#&gt; ───────────────────────────────────────────────────────────
+#&gt; </span><span style='color: #00BB00;'>OK: Model is converged</span><span>
+#&gt; </span><span style='color: #BB0000;'>Warning: Singularity is detected</span><span>
+#&gt; </span><span style='color: #BB0000;'>Warning: Autocorrelated residuals detected (p &lt; .001).</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK: residuals appear as normally distributed (p = 0.487).
+#&gt; OK: No outliers detected.
+#&gt; OK: Error variance appears to be homoscedastic (p = 0.752).
+#&gt; </span><span></div><div class='output co'>#&gt; <span class='warning'>Warning: Model has interaction terms. VIFs might be inflated. You may check multicollinearity among predictors of a model without interaction terms.</span></div><div class='output co'>#&gt; </span><span style='color: #BBBB00;'>Cautious: Moderated multicolinearity detected  (5 &lt; VIF &lt; 10). Please inspect the following table to identify factors.</span><span>  
+#&gt; </span><span style='text-decoration: underline;'>Multicollinearity Table </span><span>
+#&gt; ────────────────────────────────────
+#&gt;               Term     VIF SE_factor
+#&gt; ────────────────────────────────────
+#&gt; 1  extrav            9.167     3.028
+#&gt; 2  sex             107.181    10.353
+#&gt; 3  texp              6.325     2.515
+#&gt; 4  extrav:sex       93.909     9.691
+#&gt; 5  extrav:texp      14.154     3.762
+#&gt; 6  sex:texp        107.690    10.377
+#&gt; 7  extrav:sex:texp  95.252     9.760
+#&gt; ────────────────────────────────────</div><div class='img'><img src='model_summary_with_plot-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='model_summary_with_plot-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; ██████████████████ While texp (2nd moderator) =  7.71 (- 1 SD) █████████████████ 
 #&gt; 
-#&gt; The Johnson-Neyman interval could not be found. Is the p value for your
-#&gt; interaction term below the specified alpha?
-#&gt; </div><div class='output co'>#&gt; </span><span style='font-weight: bold;text-decoration: underline;'>SIMPLE SLOPES ANALYSIS</span><span> 
+#&gt; </span><span style='font-weight: bold;text-decoration: underline;'>JOHNSON-NEYMAN INTERVAL</span><span> 
 #&gt; 
-#&gt; </span><span style='font-style: italic;'>Slope of Age_Individual when Hofstede_IC_Country = -16.08 (- 1 SD): 
+#&gt; When sex is </span><span style=''>INSIDE</span><span> the interval [-3.76, 67.17], the slope of
+#&gt; extrav is p &lt; .05.
 #&gt; 
-#&gt; </span><span>   Est.   S.E.   t val.      p
-#&gt; ------- ------ -------- ------
-#&gt;   -0.00   0.00    -0.32   0.75
+#&gt; </span><span style='font-style: italic;'>Note: The range of observed values of sex is </span><span>[0.00, 1.00]
 #&gt; 
-#&gt; </span><span style='font-style: italic;'>Slope of Age_Individual when Hofstede_IC_Country =   2.62 (Mean): 
+#&gt; </span><span style='font-weight: bold;text-decoration: underline;'>SIMPLE SLOPES ANALYSIS</span><span> 
 #&gt; 
-#&gt; </span><span>   Est.   S.E.   t val.      p
-#&gt; ------- ------ -------- ------
-#&gt;   -0.00   0.00    -0.97   0.35
+#&gt; </span><span style='font-style: italic;'>Slope of extrav when sex = 0.00 (0): 
 #&gt; 
-#&gt; </span><span style='font-style: italic;'>Slope of Age_Individual when Hofstede_IC_Country =  21.32 (+ 1 SD): 
+#&gt; </span><span>  Est.   S.E.   t val.      p
+#&gt; ------ ------ -------- ------
+#&gt;   0.58   0.03    18.60   0.00
 #&gt; 
-#&gt; </span><span>   Est.   S.E.   t val.      p
-#&gt; ------- ------ -------- ------
-#&gt;   -0.00   0.00    -1.07   0.31
-#&gt; </div><div class='output co'>#&gt; <span class='message'>Overrided interaction plot. Set simple_slope to FALSE to see interaction plot. Or, knit a Rmd file to see all plots.</span></div><div class='img'><img src='model_summary_with_plot-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </span><span style='color: #00BB00;'>OK: No outliers detected.
-#&gt; </span><span></div><div class='output co'>#&gt; <span class='message'>Overrided simple slope plot. Set check_assumption to FALSE to see simple slope plot. Or, knit a Rmd file to see all plots.</span></div><div class='output co'>#&gt; <span class='message'>Overrided interaction plot. Set check_assumption to FALSE to see interaction plot. Or, knit a Rmd file to see all plots</span></div><div class='img'><img src='model_summary_with_plot-3.png' alt='' width='700' height='433' /></div></span></pre>
+#&gt; </span><span style='font-style: italic;'>Slope of extrav when sex = 1.00 (1): 
+#&gt; 
+#&gt; </span><span>  Est.   S.E.   t val.      p
+#&gt; ------ ------ -------- ------
+#&gt;   0.65   0.03    20.66   0.00
+#&gt; 
+#&gt; ███████████████████ While texp (2nd moderator) = 14.26 (Mean) ██████████████████ 
+#&gt; 
+#&gt; </span><span style='font-weight: bold;text-decoration: underline;'>JOHNSON-NEYMAN INTERVAL</span><span> 
+#&gt; 
+#&gt; When sex is </span><span style=''>INSIDE</span><span> the interval [-3.72, 25.52], the slope of
+#&gt; extrav is p &lt; .05.
+#&gt; 
+#&gt; </span><span style='font-style: italic;'>Note: The range of observed values of sex is </span><span>[0.00, 1.00]
+#&gt; 
+#&gt; </span><span style='font-weight: bold;text-decoration: underline;'>SIMPLE SLOPES ANALYSIS</span><span> 
+#&gt; 
+#&gt; </span><span style='font-style: italic;'>Slope of extrav when sex = 0.00 (0): 
+#&gt; 
+#&gt; </span><span>  Est.   S.E.   t val.      p
+#&gt; ------ ------ -------- ------
+#&gt;   0.43   0.02    17.56   0.00
+#&gt; 
+#&gt; </span><span style='font-style: italic;'>Slope of extrav when sex = 1.00 (1): 
+#&gt; 
+#&gt; </span><span>  Est.   S.E.   t val.      p
+#&gt; ------ ------ -------- ------
+#&gt;   0.47   0.02    20.43   0.00
+#&gt; 
+#&gt; ██████████████████ While texp (2nd moderator) = 20.81 (+ 1 SD) █████████████████ 
+#&gt; 
+#&gt; </span><span style='font-weight: bold;text-decoration: underline;'>JOHNSON-NEYMAN INTERVAL</span><span> 
+#&gt; 
+#&gt; When sex is </span><span style=''>INSIDE</span><span> the interval [-2.02, 4.82], the slope of extrav
+#&gt; is p &lt; .05.
+#&gt; 
+#&gt; </span><span style='font-style: italic;'>Note: The range of observed values of sex is </span><span>[0.00, 1.00]
+#&gt; 
+#&gt; </span><span style='font-weight: bold;text-decoration: underline;'>SIMPLE SLOPES ANALYSIS</span><span> 
+#&gt; 
+#&gt; </span><span style='font-style: italic;'>Slope of extrav when sex = 0.00 (0): 
+#&gt; 
+#&gt; </span><span>  Est.   S.E.   t val.      p
+#&gt; ------ ------ -------- ------
+#&gt;   0.28   0.04     7.70   0.00
+#&gt; 
+#&gt; </span><span style='font-style: italic;'>Slope of extrav when sex = 1.00 (1): 
+#&gt; 
+#&gt; </span><span>  Est.   S.E.   t val.      p
+#&gt; ------ ------ -------- ------
+#&gt;   0.30   0.03     9.56   0.00
+#&gt; </div><div class='img'><img src='model_summary_with_plot-3.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

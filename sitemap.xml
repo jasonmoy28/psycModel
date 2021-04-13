@@ -4,7 +4,7 @@
     <loc>https://jasonmoy28.github.io/psycModel/index.html</loc>
   </url>
   <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/EWCS_2015_shorten.html</loc>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/Print.html</loc>
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/cfa_groupwise.html</loc>
@@ -31,6 +31,9 @@
     <loc>https://jasonmoy28.github.io/psycModel/reference/glme_model.html</loc>
   </url>
   <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/lm_model.html</loc>
+  </url>
+  <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/lme_model.html</loc>
   </url>
   <url>
@@ -46,6 +49,12 @@
     <loc>https://jasonmoy28.github.io/psycModel/reference/pipe.html</loc>
   </url>
   <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/popular.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/print_table.html</loc>
+  </url>
+  <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/three_way_interaction_plot.html</loc>
   </url>
   <url>
@@ -56,8 +65,5 @@
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/two_way_interaction_terms.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/articles/regression_model.html</loc>
   </url>
 </urlset>

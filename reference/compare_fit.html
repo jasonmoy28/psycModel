@@ -88,18 +88,6 @@ Compare the fit indices models (see below for model support)" />
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/regression_model.html">psycModel: Fitting Regression Model</a>
-    </li>
-  </ul>
-</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -156,32 +144,34 @@ Compare the fit indices models (see below for model support)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># lme model</span>
+
 <span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lme_model.html'>lme_model</a></span><span class='op'>(</span>
-  response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
-  random_effect_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
-  non_random_effect_factors <span class='op'>=</span> <span class='va'>Hofstede_IC_Country</span>,
-  id <span class='op'>=</span> <span class='va'>Country</span>,
-  data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>,
+  data <span class='op'>=</span> <span class='va'>popular</span>,
+  response_variable <span class='op'>=</span> <span class='va'>popular</span>,
+  random_effect_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>sex</span><span class='op'>)</span>,
+  non_random_effect_factors <span class='op'>=</span> <span class='va'>texp</span>,
+  id <span class='op'>=</span> <span class='va'>class</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; Fitting Model with lme: 
-#&gt;  Fixed = JS_Individual ~ Age_Individual + Hofstede_IC_Country 
-#&gt;  Random = ~ 1 + Age_Individual | Country </div><div class='input'>
+</div><div class='output co'>#&gt; Fitting Model with lmer:
+#&gt;  Formula = popular ~ extrav + sex + texp + (1 + extrav + sex | class)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'>
 <span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lme_model.html'>lme_model</a></span><span class='op'>(</span>
-  response_variable <span class='op'>=</span> <span class='va'>JS_Individual</span>,
-  random_effect_factors <span class='op'>=</span> <span class='va'>Age_Individual</span>,
-  non_random_effect_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>Hofstede_IC_Country</span>, <span class='va'>Hofstede_UA_Country</span><span class='op'>)</span>,
-  id <span class='op'>=</span> <span class='va'>Country</span>,
-  data <span class='op'>=</span> <span class='va'>EWCS_2015_shorten</span>,
+  data <span class='op'>=</span> <span class='va'>popular</span>,
+  response_variable <span class='op'>=</span> <span class='va'>popular</span>,
+  random_effect_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>sex</span><span class='op'>)</span>,
+  non_random_effect_factors <span class='op'>=</span> <span class='va'>texp</span>,
+  two_way_interaction_factor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>texp</span><span class='op'>)</span>,
+  id <span class='op'>=</span> <span class='va'>class</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; Fitting Model with lme: 
-#&gt;  Fixed = JS_Individual ~ Age_Individual + Hofstede_IC_Country + Hofstede_UA_Country 
-#&gt;  Random = ~ 1 + Age_Individual | Country </div><div class='input'>
+</div><div class='output co'>#&gt; Fitting Model with lmer:
+#&gt;  Formula = popular ~ extrav + sex + texp + extrav*texp + (1 + extrav + sex | class)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'>
 <span class='fu'>compare_fit</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>fit1</span>, <span class='va'>fit2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>R2_full_model is formally known as R2 conditional, R2_fixed_effect is formally known as R2 marginal</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span><span>
-#&gt;   AIC      BIC      R2_full_model R2_fixed_effect ICC   RMSE  Sigma
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 1790.366 1823.433 0.057         0.002           0.055 0.675 0.682
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 1792.506 1830.287 0.056         0.032           0.025 0.676 0.681</div><div class='input'>
+</div><div class='output co'>#&gt; <span style='color: #BB0000;'>Random effect variances not available. Returned R2 does not account for random effects.
+#&gt; Random effect variances not available. Returned R2 does not account for random effects.
+#&gt; </span><span></div><div class='output co'>#&gt; <span class='message'>R2_full_model is formally known as R2 conditional, R2_fixed_effect is formally known as R2 marginal</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 6</span><span>
+#&gt;   AIC      BIC      R2_full_model R2_fixed_effect RMSE  Sigma
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 4855.255 4916.865 NA            0.625           0.714 0.743
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 4802.336 4869.547 NA            0.653           0.722 0.743</div><div class='input'>
 <span class='co'># see ?measurement_invariance for measurement invariance example</span>
 </div></span></pre>
   </div>
