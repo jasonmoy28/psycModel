@@ -6,6 +6,7 @@
 \usage{
 two_way_interaction_plot(
   model,
+  data = NULL,
   graph_label_name = NULL,
   cateogrical_var = NULL,
   y_lim = NULL,
@@ -13,7 +14,9 @@ two_way_interaction_plot(
 )
 }
 \arguments{
-\item{model}{object from nlme, lme4, or lmerTest (linear mixed effect model)}
+\item{model}{object from \code{lm}, \code{nlme}, \code{lme4}, or \code{lmerTest}}
+
+\item{data}{data frame. If the function is unable to extract data frame from the object, then you may need to pass it directly}
 
 \item{graph_label_name}{vector of length 3 or function. Vector should be passed in the form of \code{c(response_var, predict_var1, predict_var2)}. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)}
 
@@ -28,37 +31,35 @@ ggplot object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
-The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below
+The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below. I recommend using concurrently with \code{lm_model} or \code{lme_model}. Although I strive to work with outside model, I have yet to test all use-cases thus I cannot guarantee it works nor give useful debug messages.
 }
 \examples{
-# run the fit model first
-fit <- lme_model(
-  response_variable = JS_Individual,
-  random_effect_factors = Age_Individual,
-  non_random_effect_factors = contains("Country"),
-  two_way_interaction_factor = c("Age_Individual", "Hofstede_IC_Country"),
-  id = "Country",
-  data = EWCS_2015_shorten
+# If you pass the model directly, it can't extract the data-frame from fit object
+# Therefore, for now, you must pass the data frame to the function.
+# You don't need pass the data if you use `lm_model` or `lme_model`.
+
+# lme example
+lme_fit <- lme4::lmer("popular ~ extrav*texp + (1 + extrav | class)",
+  data = popular
 )
 
-two_way_interaction_plot(
-  model = fit,
-  # this will change the plot name
-  graph_label_name = c(
-    "Job Satisfaction",
-    "Age",
-    "Individualism/Collectivism"
-  )
+two_way_interaction_plot(lme_fit,
+  graph_label_name = c("popular", "extraversion", "teacher experience"),
+  data = popular
 )
 
-# Below is an equivalent way of changing graph_label_name by using the switch function
-# You should store this in a separate script, and load this function using source().
-# It is primarily use if you are running many models
-graph_label_name <- function(var_name) {
+lm_fit <- lm(Sepal.Length ~ Sepal.Width * Petal.Width,
+  data = iris
+)
+
+two_way_interaction_plot(lm_fit, data = iris)
+
+# For more advanced users
+label_name <- function(var_name) {
   var_name_processed <- switch(var_name,
-    "JS_Individual" = "Job Satisfaction",
-    "Age_Individual" = "Age",
-    "Hofstede_IC_Country" = "Individualism/Collectivism"
+    "extrav" = "Extroversion",
+    "texp" = "Teacher Experience",
+    "popular" = "popular"
   )
   if (is.null(var_name_processed)) {
     var_name_processed <- var_name
@@ -66,12 +67,7 @@ graph_label_name <- function(var_name) {
   return(var_name_processed)
 }
 
-two_way_interaction_plot(
-  model = fit,
-  # this will change the plot name
-  graph_label_name = graph_label_name,
-  plot_color = TRUE
-)
+two_way_interaction_plot(lme_fit, data = popular, graph_label_name = label_name)
 }
 \references{
 Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel

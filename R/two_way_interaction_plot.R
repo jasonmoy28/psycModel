@@ -1,9 +1,11 @@
 #' Two-way Interaction Plot
 #'
 #' `r lifecycle::badge("experimental")` \cr
-#' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below
+#' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below. I recommend using concurrently with `lm_model` or `lme_model`. Although I strive to work with outside model, I have yet to test all use-cases thus I cannot guarantee it works nor give useful debug messages.
 #'
-#' @param model object from nlme, lme4, or lmerTest (linear mixed effect model)
+#'
+#' @param model object from `lm`, `nlme`, `lme4`, or `lmerTest`
+#' @param data data frame. If the function is unable to extract data frame from the object, then you may need to pass it directly
 #' @param graph_label_name vector of length 3 or function. Vector should be passed in the form of `c(response_var, predict_var1, predict_var2)`. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)
 #' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
 #' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
@@ -11,37 +13,36 @@
 #'
 #' @references
 #' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
-#' @return ggplot object.
+#' @return a object of class `ggplot`
 #' @export
 #'
-#' @examples # run the fit model first
-#' fit <- lme_model(
-#'   response_variable = JS_Individual,
-#'   random_effect_factors = Age_Individual,
-#'   non_random_effect_factors = contains("Country"),
-#'   two_way_interaction_factor = c("Age_Individual", "Hofstede_IC_Country"),
-#'   id = "Country",
-#'   data = EWCS_2015_shorten
+#' @examples
+#' # If you pass the model directly, it can't extract the data-frame from fit object
+#' # Therefore, for now, you must pass the data frame to the function.
+#' # You don't need pass the data if you use `lm_model` or `lme_model`.
+#'
+#' # lme example
+#' lme_fit <- lme4::lmer("popular ~ extrav*texp + (1 + extrav | class)",
+#'   data = popular
 #' )
 #'
-#' two_way_interaction_plot(
-#'   model = fit,
-#'   # this will change the plot name
-#'   graph_label_name = c(
-#'     "Job Satisfaction",
-#'     "Age",
-#'     "Individualism/Collectivism"
-#'   )
+#' two_way_interaction_plot(lme_fit,
+#'   graph_label_name = c("popular", "extraversion", "teacher experience"),
+#'   data = popular
 #' )
 #'
-#' # Below is an equivalent way of changing graph_label_name by using the switch function
-#' # You should store this in a separate script, and load this function using source().
-#' # It is primarily use if you are running many models
-#' graph_label_name <- function(var_name) {
+#' lm_fit <- lm(Sepal.Length ~ Sepal.Width * Petal.Width,
+#'   data = iris
+#' )
+#'
+#' two_way_interaction_plot(lm_fit, data = iris)
+#'
+#' # For more advanced users
+#' label_name <- function(var_name) {
 #'   var_name_processed <- switch(var_name,
-#'     "JS_Individual" = "Job Satisfaction",
-#'     "Age_Individual" = "Age",
-#'     "Hofstede_IC_Country" = "Individualism/Collectivism"
+#'     "extrav" = "Extroversion",
+#'     "texp" = "Teacher Experience",
+#'     "popular" = "popular"
 #'   )
 #'   if (is.null(var_name_processed)) {
 #'     var_name_processed <- var_name
@@ -49,13 +50,9 @@
 #'   return(var_name_processed)
 #' }
 #'
-#' two_way_interaction_plot(
-#'   model = fit,
-#'   # this will change the plot name
-#'   graph_label_name = graph_label_name,
-#'   plot_color = TRUE
-#' )
+#' two_way_interaction_plot(lme_fit, data = popular, graph_label_name = label_name)
 two_way_interaction_plot <- function(model,
+                                     data = NULL,
                                      graph_label_name = NULL,
                                      cateogrical_var = NULL,
                                      y_lim = NULL,
@@ -70,27 +67,55 @@ two_way_interaction_plot <- function(model,
     return(interaction_term)
   }
 
+  model_data <- NULL
   # get attributes based on mdeol
   if (class(model) == "lme") {
     formula_attribute <- model$terms
-    data <- model$data
+    model_data <- model$data
+    predict_var <- attributes(formula_attribute)$term.labels
+    response_var <- as.character(attributes(formula_attribute)$variables)[2]
+    interaction_term <- predict_var[stringr::str_detect(predict_var, ":")]
+    interaction_term <- interaction_plot_check(interaction_term)
   } else if (any(class(model) %in% c("lmerMod", "lmerModLmerTest"))) {
     formula_attribute <- stats::terms(model@call$formula)
-    data <- model@call$data
-  } else {
-    stop("It only support linear mixed effect model object from nlme, lme4, and lmerTest")
+    model_data <- model@call$data
+    predict_var <- attributes(formula_attribute)$term.labels
+    response_var <- as.character(attributes(formula_attribute)$variables)[2]
+    interaction_term <- predict_var[stringr::str_detect(predict_var, ":")]
+    interaction_term <- interaction_plot_check(interaction_term)
+  } else if (class(model) == "lm") {
+    tryCatch(model_data <- eval(stats::getCall(model)$data, environment(stats::formula(model))), error = function(cond) {
+      stop("Please fit your lm model using the data argument")
+    })
+    predict_var <- as.character(attributes(model$terms)$term.labels)
+    response_var <- predict_var[2]
+    interaction_term <- predict_var[stringr::str_detect(predict_var, ":")]
+    interaction_term <- interaction_plot_check(interaction_term)
+  }
+  else {
+    stop("It only support from lm, nlme, lme4, and lmerTest")
   }
 
   # get variable from model
-  predict_var <- attributes(formula_attribute)$term.labels
-  response_var <- as.character(attributes(formula_attribute)$variables)[2]
-  interaction_term <- predict_var[stringr::str_detect(predict_var, ":")]
-  interaction_term <- interaction_plot_check(interaction_term)
-
+  if (length(interaction_term) == 0) {
+    stop("No two-way interaction term is found in the model")
+  }
   predict_var1 <- gsub(pattern = ":.+", "", x = interaction_term)
   predict_var2 <- gsub(pattern = ".+:", "", x = interaction_term)
 
 
+  if (any(class(model_data) == "data.frame")) {
+    data <- model_data
+  } else {
+    if (is.null(data)) {
+      stop("You need to pass the data directly")
+    }
+    if (!any(class(data) == "data.frame")) {
+      stop("Data must be dataframe like object")
+    }
+  }
+
+  data <- data_check(data)
   mean_df <- dplyr::summarise_all(data, mean, na.rm = T)
   upper_df <- dplyr::summarise_all(data, .funs = function(.) {
     mean(., na.rm = T) + 1 * stats::sd(., na.rm = T)
@@ -135,6 +160,11 @@ two_way_interaction_plot <- function(model,
     upper_lower_predicted_value <- stats::predict(model, newdata = upper_lower_df, allow.new.levels = T)
     lower_upper_predicted_value <- stats::predict(model, newdata = lower_upper_df, allow.new.levels = T)
     lower_lower_predicted_value <- stats::predict(model, newdata = lower_lower_df, allow.new.levels = T)
+  } else if (class(model) == "lm") {
+    upper_upper_predicted_value <- stats::predict(model, newdata = upper_upper_df)
+    upper_lower_predicted_value <- stats::predict(model, newdata = upper_lower_df)
+    lower_upper_predicted_value <- stats::predict(model, newdata = lower_upper_df)
+    lower_lower_predicted_value <- stats::predict(model, newdata = lower_lower_df)
   }
 
   final_df <- data.frame(
