@@ -127,8 +127,8 @@ model_summary_with_plot <- function(data,
 
 
   if (simple_slope == T) {
-      if (length(two_way_interaction_factor) != 0) {
-        if (requireNamespace("interactions", quietly = TRUE)) {
+    if (length(two_way_interaction_factor) != 0) {
+      if (requireNamespace("interactions", quietly = TRUE)) {
         simple_slope_model <- interactions::sim_slopes(
           data = data,
           model = model,
@@ -136,20 +136,20 @@ model_summary_with_plot <- function(data,
           modx = !!two_way_interaction_factor[2],
           jnplot = T,
         )
-        } else {
-          stop("please install.packages('interactions') to use simple_slope")
-        }        
-        }
+      } else {
+        stop("please install.packages('interactions') to use simple_slope")
+      }
+    }
     if (length(three_way_interaction_factor) != 0) {
-      if(all(unlist(lapply(c('cowplot','interactions'), requireNamespace)))){
-      simple_slope_model <- interactions::sim_slopes(
-        data = data,
-        model = model,
-        pred = !!three_way_interaction_factor[1],
-        modx = !!three_way_interaction_factor[2],
-        mod2 = !!three_way_interaction_factor[3],
-        jnplot = T
-      )
+      if (all(unlist(lapply(c("cowplot", "interactions"), requireNamespace)))) {
+        simple_slope_model <- interactions::sim_slopes(
+          data = data,
+          model = model,
+          pred = !!three_way_interaction_factor[1],
+          modx = !!three_way_interaction_factor[2],
+          mod2 = !!three_way_interaction_factor[3],
+          jnplot = T
+        )
       } else {
         stop("please install.packages(c('cowplot','interactions')) use simple_slope with three-way interaction")
       }

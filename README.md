@@ -15,16 +15,15 @@
 devtools::install_github('jasonmoy28/psycModel')
 ```
 ## Key Features
-<span style="color:#009900">✓</span> Easy to use for R beginners who don't want to find dedicated packages for each analysis. Check out this [quick-introduction](https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html) example now.  
-<span style="color:#009900">✓</span> Support [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models   
-<span style="color:#009900">✓</span> Rich-text formatted output instead of plain text output   
-<span style="color:#009900">✓</span> Support plotting based on the model. For example, interaction plot for regression, scree plot for exploratory factor analysis  
-<span style="color:#009900">✓</span> Support model assumption inspection and model performance & comparisons
+<span style="color:#009900">✓</span> Easy to use for R beginners who don't want to find dedicated packages for each analysis. 
+<span style="color:#009900">✓</span>  Tired of manually writing all variables? You can use [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models   
+<span style="color:#009900">✓</span> Rich-text formatted output. Check out the  [exmaple](https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html) here now.  
+<span style="color:#009900">✓</span> Fitting models, plotting, checking model performance and checking model assumption violations all in one place. 
 
 ## Supported Models
-<span style="color:#009900">✓</span> Regression models: Hierarchical linear modeling  
+<span style="color:#009900">✓</span> Regression models: Linear regression (i.e., ANOVA, ANCOVA) Hierarchical linear modeling  
 <span style="color:#009900">✓</span> Measurement models: Exploratory & confirmatory factor analysis, measurement invariance   
-<span style="color:#009900">✓</span> Other models: Descriptive statistics & correlation table  
+<span style="color:#009900">✓</span> Other: Descriptive statistics & correlation table  
 
 ## Credit
 **Authors:** [Jason Moy](https://jasonmoy.us)
@@ -36,12 +35,13 @@ This package was built by standing on the shoulders of giants with special thank
 
 
 ## Updates
-### Prospective Features: 
+### Upcoming Features: 
 1. Support mediation, moderated mediation analysis
 2. Support latent class and profile analysis (possible latent transition analysis)
-3. Support linear / generalized linear regression
-4. Support reliability analysis
-5. Support outlier detection
+3. Support generalized linear regression
+4. Support polynomial regression 
+5. Support reliability analysis
+
 
 ### version 0.2.0 (released on 4/11/2021)
 **New Feature:**

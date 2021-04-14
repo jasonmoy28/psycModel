@@ -16,8 +16,8 @@
 #' @return If return_result is `TRUE`, it will return a data frame with estimate, df, p_value, and the p-value significance.
 #'
 #' @export
-#' @details 
-#' If you working with `lm`, fixed factor estimate is just the model estimate. It 
+#' @details
+#' If you working with `lm`, fixed factor estimate is just the model estimate. It
 #' @examples
 #' # I am going to show the more generic usage of this function
 #' # You can also use this package's built in function to fit the models
@@ -61,7 +61,6 @@ model_summary <- function(model,
     heteroscedasticity_check <- TRUE
     collinearity_check <- TRUE
     singular_check <- TRUE
-    homogenity_check <- TRUE
 
     summary <- as.data.frame(summary(model)[20])
     model_summary_df <- summary %>%
@@ -99,7 +98,6 @@ model_summary <- function(model,
     heteroscedasticity_check <- TRUE
     collinearity_check <- TRUE
     singular_check <- TRUE
-    homogenity_check <- TRUE
 
 
     if (class(model) == "lmerMod") {
@@ -158,8 +156,6 @@ model_summary <- function(model,
     heteroscedasticity_check <- TRUE
     collinearity_check <- TRUE
     singular_check <- FALSE
-    homogenity_check <- TRUE
-
 
     summary <- as.data.frame(summary(model)$coefficients)
     model_summary_df <- summary %>%
@@ -190,8 +186,7 @@ model_summary <- function(model,
       Print("\n \n \n")
       Print("<<underline Model Performance>>")
       print_table(performance::performance(model))
-    
-      } else { # full model output
+    } else { # full model output
       # Print header
       header <- "<<underline Model Summary>> \n Model Type = {model_type} \n Outcome = {DV} \n Predictors = {IV}"
       Print(header)
@@ -207,7 +202,7 @@ model_summary <- function(model,
 
       # Check assumption
       Print("\n \n \n")
-      Print('<<underline Model Assumption Check>>')
+      Print("<<underline Model Assumption Check>>")
       Print("\n")
       if (convergence_check == TRUE) {
         convergence_output <- performance::check_convergence(model)
@@ -218,7 +213,7 @@ model_summary <- function(model,
           Print("<<red Warning: Model is not converged with gradient of {gradient}>>")
         }
       }
-      
+
       if (singular_check == TRUE) {
         singular_output <- performance::check_singularity(model)
         if (singular_output == TRUE) {
@@ -227,7 +222,7 @@ model_summary <- function(model,
           Print("<<green OK: No singularity is detected>>")
         }
       }
-      
+
       if (autocorrelation_check == TRUE) {
         tryCatch(
           {
@@ -239,8 +234,8 @@ model_summary <- function(model,
           }
         )
       }
-      
-      if (normality_check == TRUE) { #first check_normality, if failed, fallback to check_distribution, if failed, print failed message
+
+      if (normality_check == TRUE) { # first check_normality, if failed, fallback to check_distribution, if failed, print failed message
         tryCatch(suppressMessages(performance::check_normality(model)),
           error = function(cond) {
             tryCatch(
@@ -286,11 +281,7 @@ model_summary <- function(model,
       try(performance::check_heteroscedasticity(model))
     }
 
-    if (homogenity_check == TRUE) { # if failed, it will not print any message since it is common to fail (require categorical factor)
-      try(performance::check_homogeneity(model))
-    }
-    
-    if (collinearity_check == TRUE) { 
+    if (collinearity_check == TRUE) {
       collinearity_df <- performance::check_collinearity(model)
       if (all(collinearity_df$VIF < 5)) {
         Print("<<green OK: No multicolinearity detected (VIF < 5)>>")
@@ -305,17 +296,17 @@ model_summary <- function(model,
       }
     }
   } # quite stop here
-  
-  
+
+
   # Check assumption plot
   if (assumption_plot == TRUE) {
-    if(all(unlist(lapply(c('gridExtra','qqplotr','see'), requireNamespace)))){
+    if (all(unlist(lapply(c("gridExtra", "qqplotr", "see"), requireNamespace)))) {
       suppressMessages(print(performance::check_model(model)))
     } else {
       stop("please install.packages(c('gridExtra','qqplotr','see')) to use assumption_plot")
     }
   }
-  
+
   if (return_result == TRUE) {
     return(model_summary_df)
   }

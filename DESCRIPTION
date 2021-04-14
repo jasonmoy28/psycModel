@@ -35,7 +35,7 @@ Imports:
     tidyr,
     utils
 Suggests:
-    see, 
+    see,
     gridExtra,
     qqplotr,
     interactions,
@@ -46,7 +46,8 @@ Suggests:
     rmarkdown,
     roxygen2,
     testthat (>= 3.0.0),
-    tidyselect
+    tidyselect,
+    pagedown
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
