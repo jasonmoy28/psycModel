@@ -1,7 +1,7 @@
 #' Exploratory Factor Analysis
 #'
-#' `r lifecycle::badge("stable")` \cr
-#' The function fits a exploratory factor analysis model using the jmv::efa (The Jamovi Project, 2021) function. Users can fit the model by passing items using dplyr::select syntax
+#' `r lifecycle::badge("experimental")` \cr
+#' The function fits a exploratory factor analysis model using the jmv::efa (The Jamovi Project, 2021) function. Users can fit the model by passing items using dplyr::select syntax. In the future, I may re-write this to be consisent with the layout of this package.
 #'
 #' @param data data frame
 #' @param cols columns. dplyr::select syntax.

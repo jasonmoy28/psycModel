@@ -214,7 +214,7 @@ measurement_invariance <- function(data,
   } else if (abs(RMSEA) > 0.01 & abs(RMSEA) < 0.015) {
     Print("<<yellow Cautious. Acceptable measurement metric-invariance based on 0.015 > |delta RMSEA| > 0.01>>")
   } else if (abs(RMSEA) >= 0.015 &  abs(RMSEA) < 0.030) {
-    Print("<<red Warning. Unacceptable measurement metric-invariance based on |delta RMSEA| > 0.015. Potentially acceptable with large number of group. In this case, the recommend cut-off is |delta RMSEA| < 0.30  (metric-invariance only). See ?measurement_invariance detail section.>>")
+    Print("<<red Warning. Unacceptable measurement metric-invariance based on |delta RMSEA| > 0.015. Potentially acceptable with large number of group. In this case, the recommend cut-off is |delta RMSEA| < 0.30  (metric-invariance only). See ?measurement_invariance detail section.w>>")
   } else if (abs(RMSEA) >= 0.030) {
     Print("<<red Warning. Unacceptable measurement metric-invariance based on |delta RMSEA| > 0.015>>")
   }

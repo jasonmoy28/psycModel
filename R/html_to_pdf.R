@@ -1,5 +1,6 @@
 #' Convert HTML to PDF
 #'
+#' `r lifecycle::badge("stable")` \cr
 #' This is a helper function for knitting Rmd. Due to technological limitation, the output cannot knit to PDF in Rmd directly. It uses the pagedown::chrome_print() in the backend.
 #'  You must first knit to HTML, then you can use this function to covert them to PDF if you wish. I am sorry. I can't find any way to implement it.
 #'  If you know how to implement it, please submit an issue on github to let me know.
