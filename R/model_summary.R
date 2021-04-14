@@ -8,6 +8,7 @@
 #' @param streamlined_output Only print model estimate and model performance. Default is `FALSE`
 #' @param return_result return the model estimates data frame. Default is `FALSE`
 #' @param assumption_plot Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()
+#' @param quite suppress printing result. Default is `F`
 #'
 #' @references
 #' Nakagawa, S., & Schielzeth, H. (2013). A general and simple method for obtaining R2 from generalized linear mixed-effects models. Methods in Ecology and Evolution, 4(2), 133–142. https://doi.org/10.1111/j.2041-210x.2012.00261.x
@@ -15,7 +16,8 @@
 #' @return If return_result is `TRUE`, it will return a data frame with estimate, df, p_value, and the p-value significance.
 #'
 #' @export
-#'
+#' @details 
+#' If you working with `lm`, fixed factor estimate is just the model estimate. It 
 #' @examples
 #' # I am going to show the more generic usage of this function
 #' # You can also use this package's built in function to fit the models
@@ -36,10 +38,11 @@
 #'
 #' model_summary(lm_fit, assumption_plot = TRUE)
 model_summary <- function(model,
-                          streamlined_output = F,
+                          streamlined_output = FALSE,
                           round = 3,
-                          assumption_plot = F,
-                          return_result = F) {
+                          assumption_plot = FALSE,
+                          return_result = FALSE,
+                          quite = FALSE) {
 
   ################################################ Linear Mixed Effect Model ################################################
   ## lme package
@@ -51,13 +54,14 @@ model_summary <- function(model,
     IV <- paste0(IV, collapse = ", ")
 
     # Assumptions check
-    convergence_check <- F
-    normality_check <- F
-    outlier_check <- F
-    autocorrelation_check <- F
-    heteroscedasticity_check <- T
-    collinearity_check <- T
-    singular_check <- T
+    convergence_check <- FALSE
+    normality_check <- FALSE
+    outlier_check <- FALSE
+    autocorrelation_check <- FALSE
+    heteroscedasticity_check <- TRUE
+    collinearity_check <- TRUE
+    singular_check <- TRUE
+    homogenity_check <- TRUE
 
     summary <- as.data.frame(summary(model)[20])
     model_summary_df <- summary %>%
@@ -88,13 +92,15 @@ model_summary <- function(model,
     IV <- paste0(IV, collapse = ", ")
 
     # Assumptions check
-    convergence_check <- T
-    normality_check <- T
-    outlier_check <- T
-    autocorrelation_check <- T
-    heteroscedasticity_check <- T
-    collinearity_check <- T
-    singular_check <- T
+    convergence_check <- TRUE
+    normality_check <- TRUE
+    outlier_check <- TRUE
+    autocorrelation_check <- TRUE
+    heteroscedasticity_check <- TRUE
+    collinearity_check <- TRUE
+    singular_check <- TRUE
+    homogenity_check <- TRUE
+
 
     if (class(model) == "lmerMod") {
       model <- lmerTest::as_lmerModLmerTest(model = model)
@@ -145,13 +151,14 @@ model_summary <- function(model,
     IV <- paste0(IV, collapse = ", ")
 
     # Assumptions check
-    convergence_check <- F
-    normality_check <- T
-    outlier_check <- T
-    autocorrelation_check <- T
-    heteroscedasticity_check <- T
-    collinearity_check <- T
-    singular_check <- F
+    convergence_check <- FALSE
+    normality_check <- TRUE
+    outlier_check <- TRUE
+    autocorrelation_check <- TRUE
+    heteroscedasticity_check <- TRUE
+    collinearity_check <- TRUE
+    singular_check <- FALSE
+    homogenity_check <- TRUE
 
 
     summary <- as.data.frame(summary(model)$coefficients)
@@ -175,90 +182,141 @@ model_summary <- function(model,
   }
 
   ################################################  Output Table  ################################################
-  if (streamlined_output == T) {
-    Print("<<underline Model Estimates>>")
-    # Print model estimates table and model performance table
-    print_table(model_summary_df)
-    Print("\n \n \n")
-    Print("<<underline Model Performance>>")
-    print_table(performance::performance(model))
-  } else {
-    # Print header
-    header <- "<<underline Model Summary>> \n Model Type = {model_type} \n Outcome = {DV} \n Predictors = {IV}"
-    Print(header)
-    Print("\n \n \n")
-    # Print model estaimtes table
-    Print("<<underline Model Estimates>>")
-    print_table(model_summary_df)
-    Print("\n \n \n")
-    # Print model performance table
-    Print("<<underline Model Performance>>")
-    print_table(performance::performance(model))
+  if (quite == FALSE) { # check whether quite the entire output table
+    if (streamlined_output == TRUE) { # streamline model output
+      Print("<<underline Model Estimates>>")
+      # Print model estimates table and model performance table
+      print_table(model_summary_df)
+      Print("\n \n \n")
+      Print("<<underline Model Performance>>")
+      print_table(performance::performance(model))
+    
+      } else { # full model output
+      # Print header
+      header <- "<<underline Model Summary>> \n Model Type = {model_type} \n Outcome = {DV} \n Predictors = {IV}"
+      Print(header)
+      Print("\n \n \n")
+      # Print model estimates table
+      Print("<<underline Model Estimates>>")
+      print_table(model_summary_df)
+      Print("\n \n \n")
+      # Print model performance table
+      Print("<<underline Model Performance>>")
+      print_table(performance::performance(model))
 
 
-    # Check assumption
-    if (convergence_check == T) {
-      convergence_output <- performance::check_convergence(model)
-      if (convergence_output[[1]] == T) {
-        Print("<<green OK: Model is converged>>")
-      } else {
-        gradient <- attributes(convergence_output)$gradient
-        Print("<<red Warning: Model is not converged with gradient of {gradient}>>")
-      }
-    }
-    if (singular_check == T) {
-      singular_output <- performance::check_singularity(model)
-      if (singular_output == T) {
-        Print("<<red Warning: Singularity is detected. See ?lme4::isSingular()>>")
-      } else {
-        Print("<<green OK: No singularity is detected>>")
-      }
-    }
-    if (autocorrelation_check == T) {
-      tryCatch(
-        {
-          performance::check_autocorrelation(model)
-          Print("\n")
-        },
-        error = function(cond) {
-          warning("Unable to check autocorrelation. Perhaps change na.action to na.omit")
+      # Check assumption
+      Print("\n \n \n")
+      Print('<<underline Model Assumption Check>>')
+      Print("\n")
+      if (convergence_check == TRUE) {
+        convergence_output <- performance::check_convergence(model)
+        if (convergence_output[[1]] == TRUE) {
+          Print("<<green OK: Model is converged>>")
+        } else {
+          gradient <- attributes(convergence_output)$gradient
+          Print("<<red Warning: Model is not converged with gradient of {gradient}>>")
         }
-      )
+      }
+      
+      if (singular_check == TRUE) {
+        singular_output <- performance::check_singularity(model)
+        if (singular_output == TRUE) {
+          Print("<<red Warning: Singularity is detected. See ?lme4::isSingular()>>")
+        } else {
+          Print("<<green OK: No singularity is detected>>")
+        }
+      }
+      
+      if (autocorrelation_check == TRUE) {
+        tryCatch(
+          {
+            performance::check_autocorrelation(model)
+            Print("\n")
+          },
+          error = function(cond) {
+            warning("Unable to check autocorrelation. Perhaps change na.action to na.omit")
+          }
+        )
+      }
+      
+      if (normality_check == TRUE) { #first check_normality, if failed, fallback to check_distribution, if failed, print failed message
+        tryCatch(suppressMessages(performance::check_normality(model)),
+          error = function(cond) {
+            tryCatch(
+              {
+                # fall back to check_distribution
+                dist_prob <- performance::check_distribution(model)
+                norm_dist_pos <- which(dist_prob$Distribution == "normal")
+                residual_norm_prob <- round(dist_prob$p_Residuals[norm_dist_pos] * 100, 0)
+                response_norm_prob <- round(dist_prob$p_Response[norm_dist_pos] * 100, 0)
+                norm_prob <- c(residual_norm_prob, response_norm_prob)
+                if (all(norm_prob >= 80)) {
+                  residual_norm_prob <- paste(norm_prob[1], "%", sep = "")
+                  response_norm_prob <- paste(norm_prob[2], "%", sep = "")
+                  Print("<<green OK. No non-normality is detected. Normal distribution proability: residual ({residual_norm_prob}) and response ({response_norm_prob}). check_normality() failed use fallback>>")
+                } else if (any(norm_prob < 80) & all(norm_prob > 50)) {
+                  residual_norm_prob <- paste(norm_prob[1], "%", sep = "")
+                  response_norm_prob <- paste(norm_prob[2], "%", sep = "")
+                  Print("<<yellow Cautious: Moderate non-normality is detected. Normal distribution proability: residual ({residual_norm_prob}) and  response ({response_norm_prob}). check_normality() failed use fallback>>")
+                } else if (any(norm_prob <= 50)) {
+                  residual_norm_prob <- paste(norm_prob[1], "%", sep = "")
+                  response_norm_prob <- paste(norm_prob[2], "%", sep = "")
+                  Print("<<red Warning: Severe non-normality is detected. Normal distribution proability: residual ({residual_norm_prob}) and  response ({response_norm_prob}). check_normality() failed use fallback>>")
+                }
+              },
+              error = function(cond) {
+                Print("<<blue Unable to check normality. All fallback failed.>>")
+              }
+            )
+          }
+        )
+      }
     }
-    if (normality_check == T) {
-      performance::check_normality(model)
-    }
-    if (outlier_check == T) {
+
+    if (outlier_check == TRUE) {
       tryCatch(print(performance::check_outliers(model)),
         error = function(cond) {
-          warning("Unable to check autocorrelation. Perhaps change na.action to na.omit")
+          Print("<<blue Unable to check autocorrelation. Try changing na.action to na.omit.>>")
         }
       )
     }
-    if (heteroscedasticity_check == T) {
-      performance::check_heteroscedasticity(model)
-    }
-  }
-  if (collinearity_check == T) {
-    collinearity_df <- performance::check_collinearity(model)
-    if (all(collinearity_df$VIF < 5)) {
-      Print("<<green OK: No multicolinearity detected (VIF < 5)>>")
-    } else if (any(collinearity_df$VIF >= 5) & all(collinearity_df$VIF < 10)) {
-      Print("<<yellow Cautious: Moderate multicolinearity detected  (5 < VIF < 10). Please inspect the following table to identify factors.>>  ")
-      Print("<<underline Multicollinearity Table >>")
-      print_table(collinearity_df)
-    } else if (any(collinearity_df$VIF > 10)) {
-      Print("<<red Warning: Severe multicolinearity detected (VIF > 10). Please inspect the following table to identify factors.>>")
-      Print("<<underline Multicollinearity Table >>")
-      print_table(collinearity_df)
-    }
-  }
 
+    if (heteroscedasticity_check == TRUE) {
+      try(performance::check_heteroscedasticity(model))
+    }
+
+    if (homogenity_check == TRUE) { # if failed, it will not print any message since it is common to fail (require categorical factor)
+      try(performance::check_homogeneity(model))
+    }
+    
+    if (collinearity_check == TRUE) { 
+      collinearity_df <- performance::check_collinearity(model)
+      if (all(collinearity_df$VIF < 5)) {
+        Print("<<green OK: No multicolinearity detected (VIF < 5)>>")
+      } else if (any(collinearity_df$VIF >= 5) & all(collinearity_df$VIF < 10)) {
+        Print("<<yellow Cautious: Moderate multicolinearity detected  (5 < VIF < 10). Please inspect the following table to identify factors.>>  ")
+        Print("<<underline Multicollinearity Table >>")
+        print_table(collinearity_df)
+      } else if (any(collinearity_df$VIF > 10)) {
+        Print("<<red Warning: Severe multicolinearity detected (VIF > 10). Please inspect the following table to identify high correlation factors.>>")
+        Print("<<underline Multicollinearity Table >>")
+        print_table(collinearity_df)
+      }
+    }
+  } # quite stop here
+  
+  
   # Check assumption plot
-  if (assumption_plot == T) {
-    suppressMessages(print(performance::check_model(model)))
+  if (assumption_plot == TRUE) {
+    if(all(unlist(lapply(c('gridExtra','qqplotr','see'), requireNamespace)))){
+      suppressMessages(print(performance::check_model(model)))
+    } else {
+      stop("please install.packages(c('gridExtra','qqplotr','see')) to use assumption_plot")
+    }
   }
-  if (return_result == T) {
+  
+  if (return_result == TRUE) {
     return(model_summary_df)
   }
 }
