@@ -41,7 +41,9 @@
 
 <meta property="og:title" content="Confirmatory Factor Analysis — cfa_summary" />
 <meta property="og:description" content=" 
-The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Users can fit single and multiple factors CFA (read details), and it also supports multilevel CFA (specifying the group). Users can pass fit the model by passing the items using dplyr::select syntax or an explicit lavaan model for more versatile usage." />
+The function fits a CFA model using the lavaan::cfa function. Users can fit single and multiple factors CFA, and it also supports multilevel CFA (specifying the group).
+Users can pass fit the model by passing the items using dplyr::select syntax or an explicit lavaan model for more versatile usage.
+All arguments (except the CFA items) must be explicitly named (like model = your-model; see example for inappropriate behavior)." />
 
 
 
@@ -132,7 +134,9 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#stable'><img src='figures/lifecycle-stable.svg' alt='[Stable]' /></a> <br />
-The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Users can fit single and multiple factors CFA (read details), and it also supports multilevel CFA (specifying the group). Users can pass fit the model by passing the items using dplyr::select syntax or an explicit lavaan model for more versatile usage.</p>
+The function fits a CFA model using the lavaan::cfa function. Users can fit single and multiple factors CFA, and it also supports multilevel CFA (specifying the group).
+Users can pass fit the model by passing the items using dplyr::select syntax or an explicit lavaan model for more versatile usage.
+All arguments (except the CFA items) must be explicitly named (like model = your-model; see example for inappropriate behavior).</p>
     </div>
 
     <pre class="usage"><span class='fu'>cfa_summary</span><span class='op'>(</span>
@@ -140,10 +144,11 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
   <span class='va'>...</span>,
   model <span class='op'>=</span> <span class='cn'>NULL</span>,
   group <span class='op'>=</span> <span class='cn'>NULL</span>,
-  summary_item <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"cfi"</span>, <span class='st'>"rmsea"</span>, <span class='st'>"tli"</span>, <span class='st'>"srmr"</span><span class='op'>)</span>,
   ordered <span class='op'>=</span> <span class='cn'>F</span>,
-  return_result <span class='op'>=</span> <span class='st'>"model"</span>,
-  jmv_result <span class='op'>=</span> <span class='cn'>F</span>,
+  return_result <span class='op'>=</span> <span class='cn'>F</span>,
+  digits <span class='op'>=</span> <span class='fl'>3</span>,
+  model_covariance <span class='op'>=</span> <span class='cn'>T</span>,
+  model_variance <span class='op'>=</span> <span class='cn'>T</span>,
   quite <span class='op'>=</span> <span class='cn'>F</span>,
   group_partial <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
@@ -168,24 +173,28 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
       <td><p>optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country)</p></td>
     </tr>
     <tr>
-      <th>summary_item</th>
-      <td><p>vector of fit indices. Default is CFI, RMSEA, TLI, and SRMR.</p></td>
-    </tr>
-    <tr>
       <th>ordered</th>
-      <td><p>logical. default is F. If it is set to T, lavaan will treat it as a ordinal variable and use DWLS instead of ML</p></td>
+      <td><p>Default is <code>FALSE</code>. If it is set to <code>TRUE</code>, lavaan will treat it as a ordinal variable and use DWLS instead of ML</p></td>
     </tr>
     <tr>
       <th>return_result</th>
-      <td><p>default is model. Options are 'model' (lavaan model), 'short_summary' (fit index summary only), 'long_summary' (lavaan full summary).</p></td>
+      <td><p>Default is <code>FALSE</code>. If it is <code>TRUE</code>, it will return the lavaan model</p></td>
     </tr>
     <tr>
-      <th>jmv_result</th>
-      <td><p>default is F. Print a good-looking summary use jmv::cfa. It currently only support one-level CFA with latent factors and latent variable. It does not support complex lavaan structure at the momenet. I will work on supporting residual covariance. <a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a> <br /></p></td>
+      <th>digits</th>
+      <td><p>number of digits to round to</p></td>
+    </tr>
+    <tr>
+      <th>model_covariance</th>
+      <td><p>print model covariance?</p></td>
+    </tr>
+    <tr>
+      <th>model_variance</th>
+      <td><p>print model variance?</p></td>
     </tr>
     <tr>
       <th>quite</th>
-      <td><p>default as F. If set to true, it will not print the running model statement.</p></td>
+      <td><p>suppress all printing. Default is <code>FALSE</code></p></td>
     </tr>
     <tr>
       <th>group_partial</th>
@@ -195,63 +204,65 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>All argument must be explicitly specified. If not, all arguments will be treated as CFA items.</p>
+    <p>First, just like researchers have argued against p value of 0.05 is not a good cut-of, researchers have also argue against that fit indicies (more importantly, the cut-off criteria) are not completely representative of the goodness of fit.
+Nonetheless, you are required to report them if you are publishing an article anyway. I will summarize the general recommended cut-off criteria for CFA model below.
+Researchers consider models with CFI (Bentler, 1990) that is &gt; 0.95 to be excellent fit (Hu &amp; Bentler, 1999), and &gt; 0.9 to be acceptable fit. Researchers considered a model is excellent fit if CFI &gt; 0.95 (Hu &amp; Bentler, 1999), RMSEA &lt; 0.06 (Hu &amp; Bentler, 1999), TLI &gt; 0.95, SRMR &lt; 0.08.
+The model is considered an acceptable fit if CFI &gt; 0.9 and RMSEA &lt; 0.08. I need some time to find all the relevant references, but this should be the general consensus.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel</p>
-<p>Rosseel Y (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1–36. https://www.jstatsoft.org/v48/i02/.</p>
+    <p>Hu, L., &amp; Bentler, P. M. (1999). Cutoff criteria for fit indexes in covariance structure analysis: Conventional criteria versus new alternatives. Structural Equation Modeling, 6, 1–55. https://doi.org/10.1080/10705519909540118</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT</span>
 <span class='co'># Fitting a single factor CFA model</span>
 <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>cfa_summary</span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,
-  <span class='va'>x1</span><span class='op'>:</span><span class='va'>x3</span>,
-  jmv_result <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='va'>x1</span><span class='op'>:</span><span class='va'>x3</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Computing CFA using:
 #&gt;   DV1 =~ x1 + x2 + x3
 #&gt;  
-#&gt;  CONFIRMATORY FACTOR ANALYSIS
+#&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; Model Type = Confirmatory Factor Analysis
+#&gt; Model Formula = 
+#&gt; . DV1 =~ x1 + x2 + x3
 #&gt; 
-#&gt;  Factor Loadings                                                                                 
-#&gt;  ─────────────────────────────────────────────────────────────────────────────────────────────── 
-#&gt;    Factor    Indicator    Estimate     SE            Z           p             Stand. Estimate   
-#&gt;  ─────────────────────────────────────────────────────────────────────────────────────────────── 
-#&gt;    DV1       x1           0.7236898    0.08998041    8.042749    &lt; .0000001          0.6209312   
-#&gt;              x2           0.5629087    0.08221199    6.847040    &lt; .0000001          0.4788703   
-#&gt;              x3           0.8013092    0.09289239    8.626210    &lt; .0000001          0.7096890   
-#&gt;  ─────────────────────────────────────────────────────────────────────────────────────────────── 
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Fit Measure</span><span>
+#&gt; ──────────────────────────────────────────────────────────────────
+#&gt;  CHISQ    DF  P   CFI RMSEA  SRMR   TLI      AIC      BIC     BIC2
+#&gt; ──────────────────────────────────────────────────────────────────
+#&gt;  0.000 0.000    1.000 0.000 0.000 1.000 2725.955 2748.197 2729.169
+#&gt; ──────────────────────────────────────────────────────────────────
 #&gt; 
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Factor Loadings</span><span>
+#&gt; ─────────────────────────────────────────────────────────────────────────
+#&gt;  Latent.Factor Observed.Var Std.Est    SE     Z P.Value CI.Lower CI.Upper
+#&gt; ─────────────────────────────────────────────────────────────────────────
+#&gt;            DV1           x1   0.621 0.067 9.223   0.000    0.489    0.753
+#&gt;            DV1           x2   0.479 0.063 7.645   0.000    0.356    0.602
+#&gt;            DV1           x3   0.710 0.071 9.936   0.000    0.570    0.850
+#&gt; ─────────────────────────────────────────────────────────────────────────
 #&gt; 
-#&gt;  FACTOR ESTIMATES
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Model Variance</span><span>
+#&gt; ─────────────────────────────────────────────────────────
+#&gt;  Var.1 Var.2   Est    SE      Z P.Value CI.Lower CI.Upper
+#&gt; ─────────────────────────────────────────────────────────
+#&gt;    x1    x1  0.614 0.084  7.349   0.000    0.451    0.778
+#&gt;    x2    x2  0.771 0.060 12.847   0.000    0.653    0.888
+#&gt;    x3    x3  0.496 0.101  4.896   0.000    0.298    0.695
+#&gt;    DV1   DV1 1.000 0.000                   1.000    1.000
+#&gt; ─────────────────────────────────────────────────────────
 #&gt; 
-#&gt;  Factor Covariances                                                      
-#&gt;  ─────────────────────────────────────────────────────────────────────── 
-#&gt;                  Estimate      SE    Z    p            Stand. Estimate   
-#&gt;  ─────────────────────────────────────────────────────────────────────── 
-#&gt;    DV1    DV1    1.000000 ᵃ                                              
-#&gt;  ─────────────────────────────────────────────────────────────────────── 
-#&gt;    ᵃ fixed parameter
-#&gt; 
-#&gt; 
-#&gt;  MODEL FIT
-#&gt; 
-#&gt;  Test for Exact Fit              
-#&gt;  ─────────────────────────────── 
-#&gt;    χ²          df    p           
-#&gt;  ─────────────────────────────── 
-#&gt;    0.000000     0                
-#&gt;  ─────────────────────────────── 
-#&gt; 
-#&gt; 
-#&gt;  Fit Measures                                                 
-#&gt;  ──────────────────────────────────────────────────────────── 
-#&gt;    CFI         TLI         RMSEA       Lower       Upper      
-#&gt;  ──────────────────────────────────────────────────────────── 
-#&gt;    1.000000    1.000000    0.000000    0.000000    0.000000   
-#&gt;  ──────────────────────────────────────────────────────────── 
-#&gt; </div><div class='input'>
+#&gt;  
+#&gt; Goodness of Fit:
+#&gt; </span><span style='color: #00BB00;'>OK. Excellent CFI fit (CFI &gt; 0.95)</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Excellent RMSEA fit (RMSEA &lt; 0.05)</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Good SRMR fit (SRMR &lt; 0.08)</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Good TLI fit (TLI &gt; 0.95)</span><span>
+#&gt; </span><span style='color: #BBBB00;'>OK. Barely acceptable factor loadings (0.4 &lt; some loadings &lt; 0.7)</span><span></div><div class='input'>
 <span class='co'># Fitting a multilevel single factor CFA model</span>
 <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>cfa_summary</span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,
@@ -260,74 +271,202 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Computing CFA using:
 #&gt;   DV1 =~ x1 + x2 + x3
-#&gt;  </div><div class='input'>
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; Model Type = Confirmatory Factor Analysis
+#&gt; Model Formula = 
+#&gt; . DV1 =~ x1 + x2 + x3
+#&gt; Group = sex
+#&gt; 
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Fit Measure</span><span>
+#&gt; ──────────────────────────────────────────────────────────────────
+#&gt;  CHISQ    DF  P   CFI RMSEA  SRMR   TLI      AIC      BIC     BIC2
+#&gt; ──────────────────────────────────────────────────────────────────
+#&gt;  0.000 0.000    1.000 0.000 0.000 1.000 2723.393 2790.121 2733.035
+#&gt; ──────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Factor Loadings</span><span>
+#&gt; ───────────────────────────────────────────────────────────────────────────────
+#&gt;  Latent.Factor Observed.Var group Std.Est    SE     Z P.Value CI.Lower CI.Upper
+#&gt; ───────────────────────────────────────────────────────────────────────────────
+#&gt;            DV1           x1     1   0.472 0.119 3.952   0.000    0.238    0.706
+#&gt;            DV1           x2     1   0.352 0.104 3.376   0.001    0.148    0.557
+#&gt;            DV1           x3     1   0.919 0.196 4.681   0.000    0.534    1.304
+#&gt;            DV1           x1     2   0.750 0.089 8.437   0.000    0.576    0.924
+#&gt;            DV1           x2     2   0.561 0.082 6.826   0.000    0.400    0.722
+#&gt;            DV1           x3     2   0.586 0.083 7.076   0.000    0.423    0.748
+#&gt; ───────────────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Model Variance</span><span>
+#&gt; ───────────────────────────────────────────────────────────────
+#&gt;  Var.1 Var.2 group   Est    SE      Z P.Value CI.Lower CI.Upper
+#&gt; ───────────────────────────────────────────────────────────────
+#&gt;    x1    x1      1 0.777 0.113  6.895   0.000    0.556    0.998
+#&gt;    x2    x2      1 0.876 0.074 11.903   0.000    0.732    1.020
+#&gt;    x3    x3      1 0.155 0.361  0.429   0.668   -0.553    0.863
+#&gt;    DV1   DV1     1 1.000 0.000                   1.000    1.000
+#&gt;    x1    x1      2 0.438 0.133  3.282   0.001    0.176    0.699
+#&gt;    x2    x2      2 0.685 0.092  7.421   0.000    0.504    0.866
+#&gt;    x3    x3      2 0.657 0.097  6.778   0.000    0.467    0.847
+#&gt;    DV1   DV1     2 1.000 0.000                   1.000    1.000
+#&gt; ───────────────────────────────────────────────────────────────
+#&gt; 
+#&gt;  
+#&gt; Goodness of Fit:
+#&gt; </span><span style='color: #00BB00;'>OK. Excellent CFI fit (CFI &gt; 0.95)</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Excellent RMSEA fit (RMSEA &lt; 0.05)</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Good SRMR fit (SRMR &lt; 0.08)</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Good TLI fit (TLI &gt; 0.95)</span><span>
+#&gt; </span><span style='color: #BB0000;'>Warning. Some poor factor loadings (some loadings &lt; 0.4)</span><span></div><div class='input'>
 <span class='co'># Fitting a multiple factor CFA model</span>
 <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>cfa_summary</span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,
   <span class='va'>x1</span><span class='op'>:</span><span class='va'>x3</span>,
   <span class='va'>x4</span><span class='op'>:</span><span class='va'>x6</span>,
-  <span class='va'>x7</span><span class='op'>:</span><span class='va'>x9</span>,
+  <span class='va'>x7</span><span class='op'>:</span><span class='va'>x9</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Computing CFA using:
 #&gt;   DV1 =~ x1 + x2 + x3
 #&gt;   DV2 =~ x4 + x5 + x6
 #&gt;   DV3 =~ x7 + x8 + x9
-#&gt;  </div><div class='input'>
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; Model Type = Confirmatory Factor Analysis
+#&gt; Model Formula = 
+#&gt; . DV1 =~ x1 + x2 + x3
+#&gt;   DV2 =~ x4 + x5 + x6
+#&gt;   DV3 =~ x7 + x8 + x9
+#&gt; 
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Fit Measure</span><span>
+#&gt; ───────────────────────────────────────────────────────────────────────
+#&gt;   CHISQ     DF     P   CFI RMSEA  SRMR   TLI      AIC      BIC     BIC2
+#&gt; ───────────────────────────────────────────────────────────────────────
+#&gt;  85.306 24.000 0.000 0.931 0.092 0.065 0.896 7517.490 7595.339 7528.739
+#&gt; ───────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Factor Loadings</span><span>
+#&gt; ──────────────────────────────────────────────────────────────────────────
+#&gt;  Latent.Factor Observed.Var Std.Est    SE      Z P.Value CI.Lower CI.Upper
+#&gt; ──────────────────────────────────────────────────────────────────────────
+#&gt;            DV1           x1   0.772 0.055 14.041   0.000    0.664    0.880
+#&gt;            DV1           x2   0.424 0.060  7.105   0.000    0.307    0.540
+#&gt;            DV1           x3   0.581 0.055 10.539   0.000    0.473    0.689
+#&gt;            DV2           x4   0.852 0.023 37.776   0.000    0.807    0.896
+#&gt;            DV2           x5   0.855 0.022 38.273   0.000    0.811    0.899
+#&gt;            DV2           x6   0.838 0.023 35.881   0.000    0.792    0.884
+#&gt;            DV3           x7   0.570 0.053 10.714   0.000    0.465    0.674
+#&gt;            DV3           x8   0.723 0.051 14.309   0.000    0.624    0.822
+#&gt;            DV3           x9   0.665 0.051 13.015   0.000    0.565    0.765
+#&gt; ──────────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Model Covariances</span><span>
+#&gt; ────────────────────────────────────────────────────────
+#&gt;  Var.1 Var.2   Est    SE     Z P.Value CI.Lower CI.Upper
+#&gt; ────────────────────────────────────────────────────────
+#&gt;    DV1   DV2 0.459 0.064 7.189   0.000    0.334    0.584
+#&gt;    DV1   DV3 0.471 0.073 6.461   0.000    0.328    0.613
+#&gt;    DV2   DV3 0.283 0.069 4.117   0.000    0.148    0.418
+#&gt; ────────────────────────────────────────────────────────
+#&gt; 
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Model Variance</span><span>
+#&gt; ─────────────────────────────────────────────────────────
+#&gt;  Var.1 Var.2   Est    SE      Z P.Value CI.Lower CI.Upper
+#&gt; ─────────────────────────────────────────────────────────
+#&gt;    x1    x1  0.404 0.085  4.763   0.000    0.238    0.571
+#&gt;    x2    x2  0.821 0.051 16.246   0.000    0.722    0.920
+#&gt;    x3    x3  0.662 0.064 10.334   0.000    0.537    0.788
+#&gt;    x4    x4  0.275 0.038  7.157   0.000    0.200    0.350
+#&gt;    x5    x5  0.269 0.038  7.037   0.000    0.194    0.344
+#&gt;    x6    x6  0.298 0.039  7.606   0.000    0.221    0.374
+#&gt;    x7    x7  0.676 0.061 11.160   0.000    0.557    0.794
+#&gt;    x8    x8  0.477 0.073  6.531   0.000    0.334    0.620
+#&gt;    x9    x9  0.558 0.068  8.208   0.000    0.425    0.691
+#&gt;    DV1   DV1 1.000 0.000                   1.000    1.000
+#&gt;    DV2   DV2 1.000 0.000                   1.000    1.000
+#&gt;    DV3   DV3 1.000 0.000                   1.000    1.000
+#&gt; ─────────────────────────────────────────────────────────
+#&gt; 
+#&gt;  
+#&gt; Goodness of Fit:
+#&gt; </span><span style='color: #BBBB00;'>Warning. Poor Chi-Square fit (p &lt; 0.05). It is common to get p &lt; 0.05. Check other fit measure.</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Acceptable CFI fit (CFI &gt; 0.90)</span><span>
+#&gt; </span><span style='color: #BB0000;'>Warning. Poor RMSEA fit (RMSEA &gt; 0.08)</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Good SRMR fit (SRMR &lt; 0.08)</span><span>
+#&gt; </span><span style='color: #BB0000;'>Warning. Poor TLI fit (TLI &lt; 0.95)</span><span>
+#&gt; </span><span style='color: #BBBB00;'>OK. Barely acceptable factor loadings (0.4 &lt; some loadings &lt; 0.7)</span><span></div><div class='input'>
 <span class='co'># Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)</span>
 <span class='co'># Note in the below function how I added `model = ` in front of the lavaan model.</span>
 <span class='co'># Similarly, the same rule apply for all arguments (e.g., `ordered = F` instead of `F`)</span>
 <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>cfa_summary</span><span class='op'>(</span>
   model <span class='op'>=</span> <span class='st'>"visual  =~ x1 + x2 + x3;textual =~ x4 + x5 + x6;"</span>,
-  data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,
-  jmv_result <span class='op'>=</span> <span class='cn'>TRUE</span>
+  data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Computing CFA using:
 #&gt;  visual  =~ x1 + x2 + x3;textual =~ x4 + x5 + x6;
-#&gt;  CONFIRMATORY FACTOR ANALYSIS
+#&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; Model Type = Confirmatory Factor Analysis
+#&gt; Model Formula = 
+#&gt; .visual  =~ x1 + x2 + x3;textual =~ x4 + x5 + x6;
 #&gt; 
-#&gt;  Factor Loadings                                                                                   
-#&gt;  ───────────────────────────────────────────────────────────────────────────────────────────────── 
-#&gt;    Factor     Indicator    Estimate     SE            Z            p             Stand. Estimate   
-#&gt;  ───────────────────────────────────────────────────────────────────────────────────────────────── 
-#&gt;    visual     x1           0.9066191    0.09275204     9.774654    &lt; .0000001          0.7778857   
-#&gt;               x2           0.5067589    0.08648902     5.859228    &lt; .0000001          0.4311034   
-#&gt;               x3           0.6418333    0.08131033     7.893625    &lt; .0000001          0.5684472   
-#&gt;    textual    x4           0.9905773    0.05670103    17.470183    &lt; .0000001          0.8523434   
-#&gt;               x5           1.1005015    0.06262075    17.574071    &lt; .0000001          0.8542099   
-#&gt;               x6           0.9166619    0.05377935    17.044867    &lt; .0000001          0.8380666   
-#&gt;  ───────────────────────────────────────────────────────────────────────────────────────────────── 
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Fit Measure</span><span>
+#&gt; ──────────────────────────────────────────────────────────────────────
+#&gt;   CHISQ    DF     P   CFI RMSEA  SRMR   TLI      AIC      BIC     BIC2
+#&gt; ──────────────────────────────────────────────────────────────────────
+#&gt;  24.361 8.000 0.002 0.975 0.082 0.047 0.953 5066.503 5114.696 5073.467
+#&gt; ──────────────────────────────────────────────────────────────────────
 #&gt; 
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Factor Loadings</span><span>
+#&gt; ──────────────────────────────────────────────────────────────────────────
+#&gt;  Latent.Factor Observed.Var Std.Est    SE      Z P.Value CI.Lower CI.Upper
+#&gt; ──────────────────────────────────────────────────────────────────────────
+#&gt;        visual            x1   0.778 0.062 12.583   0.000    0.657    0.899
+#&gt;        visual            x2   0.431 0.061  7.093   0.000    0.312    0.550
+#&gt;        visual            x3   0.568 0.059  9.662   0.000    0.453    0.684
+#&gt;        textual           x4   0.852 0.023 37.827   0.000    0.808    0.897
+#&gt;        textual           x5   0.854 0.022 38.092   0.000    0.810    0.898
+#&gt;        textual           x6   0.838 0.023 35.845   0.000    0.792    0.884
+#&gt; ──────────────────────────────────────────────────────────────────────────
 #&gt; 
-#&gt;  FACTOR ESTIMATES
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Model Covariances</span><span>
+#&gt; ───────────────────────────────────────────────────────────
+#&gt;   Var.1   Var.2   Est    SE     Z P.Value CI.Lower CI.Upper
+#&gt; ───────────────────────────────────────────────────────────
+#&gt;  visual textual 0.461 0.064 7.195   0.000    0.335    0.586
+#&gt; ───────────────────────────────────────────────────────────
 #&gt; 
-#&gt;  Factor Covariances                                                                               
-#&gt;  ──────────────────────────────────────────────────────────────────────────────────────────────── 
-#&gt;                          Estimate       SE            Z           p             Stand. Estimate   
-#&gt;  ──────────────────────────────────────────────────────────────────────────────────────────────── 
-#&gt;    visual     visual     1.0000000 ᵃ                                                              
-#&gt;               textual    0.4606289      0.06300850    7.310583    &lt; .0000001          0.4606289   
-#&gt;    textual    textual    1.0000000 ᵃ                                                              
-#&gt;  ──────────────────────────────────────────────────────────────────────────────────────────────── 
-#&gt;    ᵃ fixed parameter
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Model Variance</span><span>
+#&gt; ─────────────────────────────────────────────────────────────
+#&gt;    Var.1   Var.2   Est    SE      Z P.Value CI.Lower CI.Upper
+#&gt; ─────────────────────────────────────────────────────────────
+#&gt;  x1      x1      0.395 0.096  4.106   0.000    0.206    0.583
+#&gt;  x2      x2      0.814 0.052 15.536   0.000    0.711    0.917
+#&gt;  x3      x3      0.677 0.067 10.119   0.000    0.546    0.808
+#&gt;  x4      x4      0.274 0.038  7.121   0.000    0.198    0.349
+#&gt;  x5      x5      0.270 0.038  7.056   0.000    0.195    0.345
+#&gt;  x6      x6      0.298 0.039  7.595   0.000    0.221    0.374
+#&gt;  visual  visual  1.000 0.000                   1.000    1.000
+#&gt;  textual textual 1.000 0.000                   1.000    1.000
+#&gt; ─────────────────────────────────────────────────────────────
 #&gt; 
-#&gt; 
-#&gt;  MODEL FIT
-#&gt; 
-#&gt;  Test for Exact Fit              
-#&gt;  ─────────────────────────────── 
-#&gt;    χ²          df    p           
-#&gt;  ─────────────────────────────── 
-#&gt;    24.36130     8    0.0019929   
-#&gt;  ─────────────────────────────── 
-#&gt; 
-#&gt; 
-#&gt;  Fit Measures                                                        
-#&gt;  ─────────────────────────────────────────────────────────────────── 
-#&gt;    CFI          TLI          RMSEA         Lower         Upper       
-#&gt;  ─────────────────────────────────────────────────────────────────── 
-#&gt;    0.9749691    0.9530670    0.08242913    0.04626573    0.1208571   
-#&gt;  ─────────────────────────────────────────────────────────────────── 
-#&gt; </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+#&gt;  
+#&gt; Goodness of Fit:
+#&gt; </span><span style='color: #BBBB00;'>Warning. Poor Chi-Square fit (p &lt; 0.05). It is common to get p &lt; 0.05. Check other fit measure.</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Excellent CFI fit (CFI &gt; 0.95)</span><span>
+#&gt; </span><span style='color: #BB0000;'>Warning. Poor RMSEA fit (RMSEA &gt; 0.08)</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Good SRMR fit (SRMR &lt; 0.08)</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Good TLI fit (TLI &gt; 0.95)</span><span>
+#&gt; </span><span style='color: #BBBB00;'>OK. Barely acceptable factor loadings (0.4 &lt; some loadings &lt; 0.7)</span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># This will fail because I did not add `model = ` in front of the lavaan model.</span>
 <span class='co'># Therefore,you must add the tag in front of all arguments</span>
 <span class='co'># For example, `return_result = 'model'` instaed of `model`</span>
@@ -337,7 +476,7 @@ The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Us
   data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>
 <span class='op'>)</span>
 <span class='op'>}</span>
-</div></pre>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

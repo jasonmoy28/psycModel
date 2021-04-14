@@ -41,7 +41,9 @@
 
 <meta property="og:title" content="Measurement Invariance — measurement_invariance" />
 <meta property="og:description" content=" 
-Compute the measurement invariance model (i.e., measurement equivalence model) using multi-group confirmatory factor analysis (MGCFA; Jöreskog, 1971). This function uses the lavaan::cfa (Rosseel, 2012). Users can run the configural-metric or the configural-metric-scalar comparisons (see below for detail instruction)." />
+Compute the measurement invariance model (i.e., measurement equivalence model) using multi-group confirmatory factor analysis (MGCFA; Jöreskog, 1971). This function uses the lavaan::cfa() in the backend.
+Users can run the configural-metric or the configural-metric-scalar comparisons (see below for detail instruction).
+All arguments (except the CFA items) must be explicitly named (like model = your-model; see example for inappropriate behavior)." />
 
 
 
@@ -132,7 +134,9 @@ Compute the measurement invariance model (i.e., measurement equivalence model) u
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#stable'><img src='figures/lifecycle-stable.svg' alt='[Stable]' /></a> <br />
-Compute the measurement invariance model (i.e., measurement equivalence model) using multi-group confirmatory factor analysis (MGCFA; Jöreskog, 1971). This function uses the lavaan::cfa (Rosseel, 2012). Users can run the configural-metric or the configural-metric-scalar comparisons (see below for detail instruction).</p>
+Compute the measurement invariance model (i.e., measurement equivalence model) using multi-group confirmatory factor analysis (MGCFA; Jöreskog, 1971). This function uses the lavaan::cfa() in the backend.
+Users can run the configural-metric or the configural-metric-scalar comparisons (see below for detail instruction).
+All arguments (except the CFA items) must be explicitly named (like model = your-model; see example for inappropriate behavior).</p>
     </div>
 
     <pre class="usage"><span class='fu'>measurement_invariance</span><span class='op'>(</span>
@@ -142,8 +146,10 @@ Compute the measurement invariance model (i.e., measurement equivalence model) u
   <span class='va'>group</span>,
   ordered <span class='op'>=</span> <span class='cn'>F</span>,
   group_partial <span class='op'>=</span> <span class='cn'>NULL</span>,
+  return_result <span class='op'>=</span> <span class='cn'>F</span>,
   invariance_level <span class='op'>=</span> <span class='st'>"scalar"</span>,
-  digits <span class='op'>=</span> <span class='fl'>3</span>
+  digits <span class='op'>=</span> <span class='fl'>3</span>,
+  quite <span class='op'>=</span> <span class='cn'>F</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -171,7 +177,11 @@ Compute the measurement invariance model (i.e., measurement equivalence model) u
     </tr>
     <tr>
       <th>group_partial</th>
-      <td><p>items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').</p></td>
+      <td><p>items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2'). See details for recommended practice.</p></td>
+    </tr>
+    <tr>
+      <th>return_result</th>
+      <td><p>Default is <code>FALSE</code>. If it is <code>TRUE</code>, it will return a data frame of the fit measure summary</p></td>
     </tr>
     <tr>
       <th>invariance_level</th>
@@ -181,19 +191,29 @@ Compute the measurement invariance model (i.e., measurement equivalence model) u
       <th>digits</th>
       <td><p>number of digit to round</p></td>
     </tr>
+    <tr>
+      <th>quite</th>
+      <td><p>suppress all printing except the model summary. Default is <code>FALSE</code>.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>return the compareFit object</p>
+    <p>return the a data frame of the fit measure summary</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>All argument must be explicitly specified. If not, all arguments will be treated as CFA items.</p>
+    <p>Chen (2007) suggested that ΔCFI &lt;= |-0.010| supplemented by RMSEA &lt;= 0.015 indicate non-invariance when sample sizes were equal across groups and larger than 300 in each group (Chen, 2007).
+And, Chen (2007) suggested that ΔCFI &lt;= |-0.005| and ΔRMSEA &lt;= 0.010 for unequal sample size with each group smaller than 300. For SRMR, Chen (2007) recommend ΔSRMR &lt; 0.030 for metric-invariance and ΔSRMR &lt; 0.015 for scalar-invariance.
+For large group size, Rutowski &amp; Svetina (2014) recommended a more liberal cut-off for metric non-invariance for CFI (ΔCFI &lt;= |-0.020|) and RMSEA (RMSEA &lt;= 0.030). However, this more liberal cut-off DOES NOT apply to testing scalar non-invariance.
+If measurement-invariance is not achived, some researchers suggesting partial invariance is acceptable (by releasing the contraints on some factors). For example, Steenkamp and Baumgartner (1998) suggested that ideally more than half of items on a factor should be invariant. However,
+it is important to note that no empirical studies were cited to support the partial invariance guideline (Putnick &amp; Bornstein, 2016).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Jöreskog, K. G. (1971). Simultaneous factor analysis in several populations. Psychometrika, 36(4), 409-426.</p>
-<p>Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel</p>
-<p>Rosseel Y (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1–36. https://www.jstatsoft.org/v48/i02/.</p>
+    <p>Chen, F. F. (2007). Sensitivity of Goodness of Fit Indexes to Lack of Measurement Invariance. Structural Equation Modeling: A Multidisciplinary Journal, 14(3), 464–504. https://doi.org/10.1080/10705510701301834</p>
+<p>Jöreskog, K. G. (1971). Simultaneous factor analysis in several populations. Psychometrika, 36(4), 409-426.</p>
+<p>Putnick, D. L., &amp; Bornstein, M. H. (2016). Measurement Invariance Conventions and Reporting: The State of the Art and Future Directions for Psychological Research. Developmental Review : DR, 41, 71–90. https://doi.org/10.1016/j.dr.2016.06.004</p>
+<p>Rutkowski, L., &amp; Svetina, D. (2014). Assessing the Hypothesis of Measurement Invariance in the Context of Large-Scale International Surveys. Educational and Psychological Measurement, 74(1), 31–57. https://doi.org/10.1177/0013164413498257</p>
+<p>Steenkamp, J.-B. E. M., &amp; Baumgartner, H. (n.d.). Assessing Measurement Invariance in Cross-National Consumer Research. JOURNAL OF CONSUMER RESEARCH, 13.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT</span>
@@ -211,20 +231,35 @@ Compute the measurement invariance model (i.e., measurement equivalence model) u
 #&gt;   DV3 =~ x7 + x8 + x9
 #&gt;  [1] "Computing for configural model"
 #&gt; [1] "Computing for metric model"
-#&gt; [1] "Computing for scalar model"</div><div class='output co'>#&gt;                   chisq     df pvalue    cfi  rmsea  srmr    tli      aic
-#&gt; configural      115.851 48.000  0.000  0.923  0.097 0.068  0.885 7484.395
-#&gt; metric          124.044 54.000  0.000  0.921  0.093 0.072  0.895 7480.587
-#&gt; scalar          164.103 60.000  0.000  0.882  0.107 0.082  0.859 7508.647
-#&gt; .                                                                        
-#&gt; metric - config   8.192  6.000  0.000 -0.002 -0.004 0.004  0.009   -3.808
-#&gt; scalar - metric  40.059  6.000  0.000 -0.038  0.015 0.011 -0.036   28.059
-#&gt;                      bic     bic2
-#&gt; configural      7706.822 7516.536
-#&gt; metric          7680.771 7509.514
-#&gt; scalar          7686.588 7534.359
-#&gt; .                                
-#&gt; metric - config  -26.050   -7.022
-#&gt; scalar - metric    5.817   24.845</div><div class='input'>
+#&gt; [1] "Computing for scalar model"
+#&gt;  
+#&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; Model Type = Measurement Invariance
+#&gt; Comparsion Type = Configural-Metric-Scalar Comparsion
+#&gt; Group = school
+#&gt; Model Formula = 
+#&gt; . DV1 =~ x1 + x2 + x3
+#&gt;   DV2 =~ x4 + x5 + x6
+#&gt;   DV3 =~ x7 + x8 + x9
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Fit Measure Summary</span><span>
+#&gt; ───────────────────────────────────────────────────────────────────────────────────────────
+#&gt;                    CHISQ     DF     P    CFI  RMSEA  SRMR    TLI      AIC      BIC     BIC2
+#&gt; ───────────────────────────────────────────────────────────────────────────────────────────
+#&gt; configural       115.851 48.000 0.000 0.923  0.097  0.068 0.885  7484.395 7706.822 7516.536
+#&gt; metric           124.044 54.000 0.000 0.921  0.093  0.072 0.895  7480.587 7680.771 7509.514
+#&gt; scalar           164.103 60.000 0.000 0.882  0.107  0.082 0.859  7508.647 7686.588 7534.359
+#&gt; .                                                                                          
+#&gt; metric - config   8.192  6.000  0.000 -0.002 -0.004 0.004  0.009 -3.808   -26.050  -7.022  
+#&gt; scalar - metric  40.059  6.000  0.000 -0.038  0.015 0.011 -0.036 28.059     5.817  24.845  
+#&gt; ───────────────────────────────────────────────────────────────────────────────────────────
+#&gt; Goodness of Fit:
+#&gt; </span><span style='color: #00BB00;'>OK. Excellent measurement metric-invariance based on |delta CFI| &lt; 0.005</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Excellent measurement metric-invariance based on |delta RMSEA| &lt; 0.01</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Good measurement metric-invariance based on delta SRMR &lt; 0.03</span><span>
+#&gt; </span><span style='color: #BB0000;'>Warning. Unacceptable measurement scalar-invariance based on |delta CFI| &gt; 0.01</span><span>
+#&gt; </span><span style='color: #BB0000;'>Warning. Unacceptable measurement scalar-invariance based on |delta RMSEA| &gt; 0.015.</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Good measurement scalar-invariance based on delta SRMR &lt; 0.015</span><span></div><div class='input'>
 <span class='co'># Fitting measurement invariance model by passing explicit lavaan model</span>
 <span class='co'># I am also going to only test for metric invariance instead of the default scalar invariance</span>
 <span class='fu'>measurement_invariance</span><span class='op'>(</span>
@@ -239,16 +274,30 @@ Compute the measurement invariance model (i.e., measurement equivalence model) u
 #&gt;  visual  =~ x1 + x2 + x3;
 #&gt;            textual =~ x4 + x5 + x6;
 #&gt;            speed   =~ x7 + x8 + x9[1] "Computing for configural model"
-#&gt; [1] "Computing for metric model"</div><div class='output co'>#&gt;                   chisq     df pvalue    cfi  rmsea  srmr   tli      aic
-#&gt; configural      115.851 48.000  0.000  0.923  0.097 0.068 0.885 7484.395
-#&gt; metric          124.044 54.000  0.000  0.921  0.093 0.072 0.895 7480.587
-#&gt; .                                                                       
-#&gt; metric - config   8.192  6.000  0.000 -0.002 -0.004 0.004 0.009   -3.808
-#&gt;                      bic     bic2
-#&gt; configural      7706.822 7516.536
-#&gt; metric          7680.771 7509.514
-#&gt; .                                
-#&gt; metric - config  -26.050   -7.022</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+#&gt; [1] "Computing for metric model"
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; Model Type = Measurement Invariance
+#&gt; Comparsion Type = Configural-Metric Comparsion
+#&gt; Group = school
+#&gt; Model Formula = 
+#&gt; .visual  =~ x1 + x2 + x3;
+#&gt;            textual =~ x4 + x5 + x6;
+#&gt;            speed   =~ x7 + x8 + x9
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Fit Measure Summary</span><span>
+#&gt; ──────────────────────────────────────────────────────────────────────────────────────────
+#&gt;                    CHISQ     DF     P    CFI  RMSEA  SRMR   TLI      AIC      BIC     BIC2
+#&gt; ──────────────────────────────────────────────────────────────────────────────────────────
+#&gt; configural       115.851 48.000 0.000 0.923  0.097  0.068 0.885 7484.395 7706.822 7516.536
+#&gt; metric           124.044 54.000 0.000 0.921  0.093  0.072 0.895 7480.587 7680.771 7509.514
+#&gt; .                                                                                         
+#&gt; metric - config  8.192   6.000  0.000 -0.002 -0.004 0.004 0.009 -3.808   -26.050  -7.022  
+#&gt; ──────────────────────────────────────────────────────────────────────────────────────────
+#&gt; Goodness of Fit:
+#&gt; </span><span style='color: #00BB00;'>OK. Excellent measurement metric-invariance based on |delta CFI| &lt; 0.005</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Excellent measurement metric-invariance based on |delta RMSEA| &lt; 0.01</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Good measurement metric-invariance based on delta SRMR &lt; 0.03</span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># This will fail because I did not add `model = ` in front of the lavaan model.</span>
 <span class='co'># Therefore,you must add the tag in front of all arguments</span>
 <span class='co'># For example, `return_result = 'model'` instaed of `model`</span>
@@ -260,7 +309,7 @@ Compute the measurement invariance model (i.e., measurement equivalence model) u
 <span class='op'>)</span>
 <span class='op'>}</span>
 
-</div></pre>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
