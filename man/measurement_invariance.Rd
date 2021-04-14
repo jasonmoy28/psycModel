@@ -11,8 +11,10 @@ measurement_invariance(
   group,
   ordered = F,
   group_partial = NULL,
+  return_result = F,
   invariance_level = "scalar",
-  digits = 3
+  digits = 3,
+  quite = F
 )
 }
 \arguments{
@@ -26,21 +28,31 @@ measurement_invariance(
 
 \item{ordered}{logical. default is F. If it is set to T, lavaan will treat it as a ordinal variable and use DWLS instead of ML}
 
-\item{group_partial}{items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').}
+\item{group_partial}{items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2'). See details for recommended practice.}
+
+\item{return_result}{Default is \code{FALSE}. If it is \code{TRUE}, it will return a data frame of the fit measure summary}
 
 \item{invariance_level}{"metric" or "scalar". Default is 'metric'. Set as 'metric' for configural-metric comparison, and set as 'scalar' for configural-metric-scalar comparison.}
 
 \item{digits}{number of digit to round}
+
+\item{quite}{suppress all printing except the model summary. Default is \code{FALSE}.}
 }
 \value{
-return the compareFit object
+return the a data frame of the fit measure summary
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-Compute the measurement invariance model (i.e., measurement equivalence model) using multi-group confirmatory factor analysis (MGCFA; Jöreskog, 1971). This function uses the lavaan::cfa (Rosseel, 2012). Users can run the configural-metric or the configural-metric-scalar comparisons (see below for detail instruction).
+Compute the measurement invariance model (i.e., measurement equivalence model) using multi-group confirmatory factor analysis (MGCFA; Jöreskog, 1971). This function uses the lavaan::cfa() in the backend.
+Users can run the configural-metric or the configural-metric-scalar comparisons (see below for detail instruction).
+All arguments (except the CFA items) must be explicitly named (like model = your-model; see example for inappropriate behavior).
 }
 \details{
-All argument must be explicitly specified. If not, all arguments will be treated as CFA items.
+Chen (2007) suggested that ΔCFI <= |-0.010| supplemented by RMSEA <= 0.015 indicate non-invariance when sample sizes were equal across groups and larger than 300 in each group (Chen, 2007).
+And, Chen (2007) suggested that ΔCFI <= |-0.005| and ΔRMSEA <= 0.010 for unequal sample size with each group smaller than 300. For SRMR, Chen (2007) recommend ΔSRMR < 0.030 for metric-invariance and ΔSRMR < 0.015 for scalar-invariance.
+For large group size, Rutowski & Svetina (2014) recommended a more liberal cut-off for metric non-invariance for CFI (ΔCFI <= |-0.020|) and RMSEA (RMSEA <= 0.030). However, this more liberal cut-off DOES NOT apply to testing scalar non-invariance.
+If measurement-invariance is not achived, some researchers suggesting partial invariance is acceptable (by releasing the contraints on some factors). For example, Steenkamp and Baumgartner (1998) suggested that ideally more than half of items on a factor should be invariant. However,
+it is important to note that no empirical studies were cited to support the partial invariance guideline (Putnick & Bornstein, 2016).
 }
 \examples{
 # REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT
@@ -77,9 +89,13 @@ measurement_invariance(
 
 }
 \references{
+Chen, F. F. (2007). Sensitivity of Goodness of Fit Indexes to Lack of Measurement Invariance. Structural Equation Modeling: A Multidisciplinary Journal, 14(3), 464–504. https://doi.org/10.1080/10705510701301834
+
 Jöreskog, K. G. (1971). Simultaneous factor analysis in several populations. Psychometrika, 36(4), 409-426.
 
-Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
+Putnick, D. L., & Bornstein, M. H. (2016). Measurement Invariance Conventions and Reporting: The State of the Art and Future Directions for Psychological Research. Developmental Review : DR, 41, 71–90. https://doi.org/10.1016/j.dr.2016.06.004
 
-Rosseel Y (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1–36. https://www.jstatsoft.org/v48/i02/.
+Rutkowski, L., & Svetina, D. (2014). Assessing the Hypothesis of Measurement Invariance in the Context of Large-Scale International Surveys. Educational and Psychological Measurement, 74(1), 31–57. https://doi.org/10.1177/0013164413498257
+
+Steenkamp, J.-B. E. M., & Baumgartner, H. (n.d.). Assessing Measurement Invariance in Cross-National Consumer Research. JOURNAL OF CONSUMER RESEARCH, 13.
 }

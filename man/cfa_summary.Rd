@@ -9,10 +9,11 @@ cfa_summary(
   ...,
   model = NULL,
   group = NULL,
-  summary_item = c("cfi", "rmsea", "tli", "srmr"),
   ordered = F,
-  return_result = "model",
-  jmv_result = F,
+  return_result = F,
+  digits = 3,
+  model_covariance = T,
+  model_variance = T,
   quite = F,
   group_partial = NULL
 )
@@ -26,32 +27,38 @@ cfa_summary(
 
 \item{group}{optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country)}
 
-\item{summary_item}{vector of fit indices. Default is CFI, RMSEA, TLI, and SRMR.}
+\item{ordered}{Default is \code{FALSE}. If it is set to \code{TRUE}, lavaan will treat it as a ordinal variable and use DWLS instead of ML}
 
-\item{ordered}{logical. default is F. If it is set to T, lavaan will treat it as a ordinal variable and use DWLS instead of ML}
+\item{return_result}{Default is \code{FALSE}. If it is \code{TRUE}, it will return the lavaan model}
 
-\item{return_result}{default is model. Options are 'model' (lavaan model), 'short_summary' (fit index summary only), 'long_summary' (lavaan full summary).}
+\item{digits}{number of digits to round to}
 
-\item{jmv_result}{default is F. Print a good-looking summary use jmv::cfa. It currently only support one-level CFA with latent factors and latent variable. It does not support complex lavaan structure at the momenet. I will work on supporting residual covariance. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr}
+\item{model_covariance}{print model covariance?}
 
-\item{quite}{default as F. If set to true, it will not print the running model statement.}
+\item{model_variance}{print model variance?}
+
+\item{quite}{suppress all printing. Default is \code{FALSE}}
 
 \item{group_partial}{Items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-The function fits a CFA model using the lavaan::cfa (Rosseel, 2012) function. Users can fit single and multiple factors CFA (read details), and it also supports multilevel CFA (specifying the group). Users can pass fit the model by passing the items using dplyr::select syntax or an explicit lavaan model for more versatile usage.
+The function fits a CFA model using the lavaan::cfa function. Users can fit single and multiple factors CFA, and it also supports multilevel CFA (specifying the group).
+Users can pass fit the model by passing the items using dplyr::select syntax or an explicit lavaan model for more versatile usage.
+All arguments (except the CFA items) must be explicitly named (like model = your-model; see example for inappropriate behavior).
 }
 \details{
-All argument must be explicitly specified. If not, all arguments will be treated as CFA items.
+First, just like researchers have argued against p value of 0.05 is not a good cut-of, researchers have also argue against that fit indicies (more importantly, the cut-off criteria) are not completely representative of the goodness of fit.
+Nonetheless, you are required to report them if you are publishing an article anyway. I will summarize the general recommended cut-off criteria for CFA model below.
+Researchers consider models with CFI (Bentler, 1990) that is > 0.95 to be excellent fit (Hu & Bentler, 1999), and > 0.9 to be acceptable fit. Researchers considered a model is excellent fit if CFI > 0.95 (Hu & Bentler, 1999), RMSEA < 0.06 (Hu & Bentler, 1999), TLI > 0.95, SRMR < 0.08.
+The model is considered an acceptable fit if CFI > 0.9 and RMSEA < 0.08. I need some time to find all the relevant references, but this should be the general consensus.
 }
 \examples{
 # REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT
 # Fitting a single factor CFA model
 fit <- cfa_summary(
   data = lavaan::HolzingerSwineford1939,
-  x1:x3,
-  jmv_result = TRUE
+  x1:x3
 )
 
 # Fitting a multilevel single factor CFA model
@@ -66,7 +73,7 @@ fit <- cfa_summary(
   data = lavaan::HolzingerSwineford1939,
   x1:x3,
   x4:x6,
-  x7:x9,
+  x7:x9
 )
 
 # Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)
@@ -74,8 +81,7 @@ fit <- cfa_summary(
 # Similarly, the same rule apply for all arguments (e.g., `ordered = F` instead of `F`)
 fit <- cfa_summary(
   model = "visual  =~ x1 + x2 + x3;textual =~ x4 + x5 + x6;",
-  data = lavaan::HolzingerSwineford1939,
-  jmv_result = TRUE
+  data = lavaan::HolzingerSwineford1939
 )
 \dontrun{
 # This will fail because I did not add `model = ` in front of the lavaan model.
@@ -89,7 +95,5 @@ cfa_summary("visual  =~ x1 + x2 + x3
 }
 }
 \references{
-Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
-
-Rosseel Y (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1–36. https://www.jstatsoft.org/v48/i02/.
+Hu, L., & Bentler, P. M. (1999). Cutoff criteria for fit indexes in covariance structure analysis: Conventional criteria versus new alternatives. Structural Equation Modeling, 6, 1–55. https://doi.org/10.1080/10705519909540118
 }
