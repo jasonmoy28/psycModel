@@ -6,10 +6,11 @@
 \usage{
 model_summary(
   model,
-  streamlined_output = F,
+  streamlined_output = FALSE,
   round = 3,
-  assumption_plot = F,
-  return_result = F
+  assumption_plot = FALSE,
+  return_result = FALSE,
+  quite = FALSE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ model_summary(
 \item{assumption_plot}{Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()}
 
 \item{return_result}{return the model estimates data frame. Default is \code{FALSE}}
+
+\item{quite}{suppress printing result. Default is \code{F}}
 }
 \value{
 If return_result is \code{TRUE}, it will return a data frame with estimate, df, p_value, and the p-value significance.
@@ -29,6 +32,9 @@ If return_result is \code{TRUE}, it will return a data frame with estimate, df, 
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 The function will extract the relevant coefficients from the linear mixed effect models (see supported model below).
+}
+\details{
+If you working with \code{lm}, fixed factor estimate is just the model estimate. It
 }
 \examples{
 # I am going to show the more generic usage of this function
