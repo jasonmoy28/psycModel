@@ -12,18 +12,18 @@
 
 ## Installation
 ```R
-devtools::install_github('jasonmoy28/psycModel')
+devtools::install_github('jasonmoy28/psycModel') #install.packages('devtools') if devtools is not installed
 ```
 ## Key Features
-<span style="color:#009900">✓</span> Easy to use for R beginners who don't want to find dedicated packages for each analysis. 
-<span style="color:#009900">✓</span>  Tired of manually writing all variables? You can use [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models   
-<span style="color:#009900">✓</span> Rich-text formatted output. Check out the  [exmaple](https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html) here now.  
-<span style="color:#009900">✓</span> Fitting models, plotting, checking model performance and checking model assumption violations all in one place. 
+<span style="color:#009900">✓</span> Easy to use for R beginners who don't want to find dedicated packages for each analysis. <br/>
+<span style="color:#009900">✓</span>  Tired of manually writing all variables in a model? You can use [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models <br/>
+<span style="color:#009900">✓</span> Rich-text formatted output. Check out the  [exmaple](https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html) here now. <br/>
+<span style="color:#009900">✓</span> Fitting models, plotting, checking model performance and model assumption violations all in one place. <br/>
 
 ## Supported Models
-<span style="color:#009900">✓</span> Regression models: Linear regression (i.e., ANOVA, ANCOVA) Hierarchical linear modeling  
-<span style="color:#009900">✓</span> Measurement models: Exploratory & confirmatory factor analysis, measurement invariance   
-<span style="color:#009900">✓</span> Other: Descriptive statistics & correlation table  
+<span style="color:#009900">✓</span> Regression models: Linear regression (i.e., support ANOVA, ANCOVA) Hierarchical linear modeling (i.e., linear mixed effect model). <br/>
+<span style="color:#009900">✓</span> Measurement models: Exploratory & confirmatory factor analysis, measurement invariance. <br/>
+<span style="color:#009900">✓</span> Other: Descriptive statistics & correlation table. <br/>
 
 ## Credit
 **Authors:** [Jason Moy](https://jasonmoy.us)
@@ -31,23 +31,24 @@ devtools::install_github('jasonmoy28/psycModel')
 **Citation:** Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 
 ## Acknoledgement
-This package was built by standing on the shoulders of giants with special thanks to developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [`psych`](https://personality-project.org/r/psych/), [`jmv`](https://github.com/jamovi/jmv), and all [`tidyverse`](https://tidyverse.tidyverse.org/) packages. Additionally, I want to thank the developer of [`bruceR`](https://github.com/psychbruce/bruceR). Although [`bruceR`](https://github.com/psychbruce/bruceR) is not imported, I used `bruceR::Print` and `bruceR::print_table` for these amazing rich-text formatted output. Additionally, I want to thank the developers for [`devtools`](https://github.com/r-lib/devtools) and [`usethis`](https://usethis.r-lib.org/),[`styler`](https://github.com/r-lib/styler). It would have been much much harder (maybe even impossible for me) to write an R package without the help of these two packages. I hope my package can help someone as they had helped me. 
+This package was built by standing on the shoulders of giants with special thanks to researchers and developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [`psych`](https://personality-project.org/r/psych/), [`jmv`](https://github.com/jamovi/jmv), and all [`tidyverse`](https://tidyverse.tidyverse.org/) packages. Additionally, I want to thank the developer of [`bruceR`](https://github.com/psychbruce/bruceR). Although [`bruceR`](https://github.com/psychbruce/bruceR) is not imported, I used `bruceR::Print` and `bruceR::print_table` for these amazing rich-text formatted output. I hope my package can help someone as they had helped me. 
 
 
 ## Updates
 ### Upcoming Features: 
 1. Support mediation, moderated mediation analysis
 2. Support latent class and profile analysis (possible latent transition analysis)
-3. Support generalized linear regression
-4. Support polynomial regression 
-5. Support reliability analysis
+3. Support path diagram in all model using SEM
+4. Support generalized linear regression
+5. Support polynomial regression 
+6. Support reliability analysis
 
 
 ### version 0.2.0 (released on 4/11/2021)
 **New Feature:**
 * `lme_model`, `model_summary_with_plot` support tidyselect syntax 
 * `cfa_summary` support multi-factor CFA with tidyselect syntax 
-* Added `check_assumption` to inspect assumptions for mixed effect models in `model_summary_with_plot`
+* Added `assumption_plot` to visually inspect assumptions for mixed effect models in `model_summary_with_plot`
 * `two_way_interaction_plot`, `three_way_interaction_plot` only require the model object to produce the plot.
 * `lme_model`, `model_summary_with_plot` support using `lme4` package. 
 * `model_summary_with_plot` `lme_model` support passing explicit model
@@ -56,9 +57,9 @@ This package was built by standing on the shoulders of giants with special thank
 **Bugs fixed:**
 * the current version build pass CMD check 
 * `measurement_invariance` stop using `semTools::compareFit`. Added a self-created `compare_fit` function for the package
-* remove papaja::apa_theme() dependency.
-* use .data from rlang for mutate function
-* remove bruceR import.
+* remove `papaja::apa_theme()` dependency.
+* use `.data` from `rlang` for `mutate` function
+* remove `bruceR` from import.
 * `model_summary_with_plot` always return list and changed to logical (set to T to return result_list)
 * `model_summary_with_plot` return a named list object
 
