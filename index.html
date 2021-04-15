@@ -98,17 +98,17 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'jasonmoy28/psycModel'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'jasonmoy28/psycModel'</span><span class="op">)</span> <span class="co">#install.packages('devtools') if devtools is not installed</span></code></pre></div>
 </div>
 <div id="key-features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#key-features" class="anchor"></a>Key Features</h2>
-<p><span style="color:#009900">✓</span> Easy to use for R beginners who don’t want to find dedicated packages for each analysis. <span style="color:#009900">✓</span> Tired of manually writing all variables? You can use <a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a> syntax for all models<br><span style="color:#009900">✓</span> Rich-text formatted output. Check out the <a href="https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html">exmaple</a> here now.<br><span style="color:#009900">✓</span> Fitting models, plotting, checking model performance and checking model assumption violations all in one place.</p>
+<p><span style="color:#009900">✓</span> Easy to use for R beginners who don’t want to find dedicated packages for each analysis. <br><span style="color:#009900">✓</span> Tired of manually writing all variables in a model? You can use <a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a> syntax for all models <br><span style="color:#009900">✓</span> Rich-text formatted output. Check out the <a href="https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html">exmaple</a> here now. <br><span style="color:#009900">✓</span> Fitting models, plotting, checking model performance and model assumption violations all in one place. <br></p>
 </div>
 <div id="supported-models" class="section level2">
 <h2 class="hasAnchor">
 <a href="#supported-models" class="anchor"></a>Supported Models</h2>
-<p><span style="color:#009900">✓</span> Regression models: Linear regression (i.e., ANOVA, ANCOVA) Hierarchical linear modeling<br><span style="color:#009900">✓</span> Measurement models: Exploratory &amp; confirmatory factor analysis, measurement invariance<br><span style="color:#009900">✓</span> Other: Descriptive statistics &amp; correlation table</p>
+<p><span style="color:#009900">✓</span> Regression models: Linear regression (i.e., support ANOVA, ANCOVA) Hierarchical linear modeling (i.e., linear mixed effect model). <br><span style="color:#009900">✓</span> Measurement models: Exploratory &amp; confirmatory factor analysis, measurement invariance. <br><span style="color:#009900">✓</span> Other: Descriptive statistics &amp; correlation table. <br></p>
 </div>
 <div id="credit" class="section level2">
 <h2 class="hasAnchor">
@@ -119,7 +119,7 @@
 <div id="acknoledgement" class="section level2">
 <h2 class="hasAnchor">
 <a href="#acknoledgement" class="anchor"></a>Acknoledgement</h2>
-<p>This package was built by standing on the shoulders of giants with special thanks to developers of <a href="https://lavaan.ugent.be/"><code>lavaan</code></a>, <a href="https://github.com/lme4/lme4"><code>lme4</code></a>, <a href="https://github.com/runehaubo/lmerTestR"><code>lmerTest</code></a>, <a href="https://cran.r-project.org/package=nlme"><code>nlme</code></a>, <a href="https://easystats.github.io/performance/"><code>performance</code></a>, <a href="https://personality-project.org/r/psych/"><code>psych</code></a>, <a href="https://github.com/jamovi/jmv"><code>jmv</code></a>, and all <a href="https://tidyverse.tidyverse.org/"><code>tidyverse</code></a> packages. Additionally, I want to thank the developer of <a href="https://github.com/psychbruce/bruceR"><code>bruceR</code></a>. Although <a href="https://github.com/psychbruce/bruceR"><code>bruceR</code></a> is not imported, I used <code><a href="https://rdrr.io/pkg/bruceR/man/Print.html">bruceR::Print</a></code> and <code><a href="https://rdrr.io/pkg/bruceR/man/print_table.html">bruceR::print_table</a></code> for these amazing rich-text formatted output. Additionally, I want to thank the developers for <a href="https://github.com/r-lib/devtools"><code>devtools</code></a> and <a href="https://usethis.r-lib.org/"><code>usethis</code></a>,<a href="https://github.com/r-lib/styler"><code>styler</code></a>. It would have been much much harder (maybe even impossible for me) to write an R package without the help of these two packages. I hope my package can help someone as they had helped me.</p>
+<p>This package was built by standing on the shoulders of giants with special thanks to researchers and developers of <a href="https://lavaan.ugent.be/"><code>lavaan</code></a>, <a href="https://github.com/lme4/lme4"><code>lme4</code></a>, <a href="https://github.com/runehaubo/lmerTestR"><code>lmerTest</code></a>, <a href="https://cran.r-project.org/package=nlme"><code>nlme</code></a>, <a href="https://easystats.github.io/performance/"><code>performance</code></a>, <a href="https://personality-project.org/r/psych/"><code>psych</code></a>, <a href="https://github.com/jamovi/jmv"><code>jmv</code></a>, and all <a href="https://tidyverse.tidyverse.org/"><code>tidyverse</code></a> packages. Additionally, I want to thank the developer of <a href="https://github.com/psychbruce/bruceR"><code>bruceR</code></a>. Although <a href="https://github.com/psychbruce/bruceR"><code>bruceR</code></a> is not imported, I used <code><a href="https://rdrr.io/pkg/bruceR/man/Print.html">bruceR::Print</a></code> and <code><a href="https://rdrr.io/pkg/bruceR/man/print_table.html">bruceR::print_table</a></code> for these amazing rich-text formatted output. I hope my package can help someone as they had helped me.</p>
 </div>
 <div id="updates" class="section level2">
 <h2 class="hasAnchor">
@@ -130,6 +130,7 @@
 <ol>
 <li>Support mediation, moderated mediation analysis</li>
 <li>Support latent class and profile analysis (possible latent transition analysis)</li>
+<li>Support path diagram in all model using SEM</li>
 <li>Support generalized linear regression</li>
 <li>Support polynomial regression</li>
 <li>Support reliability analysis</li>
@@ -144,7 +145,7 @@
 <code>lme_model</code>, <code>model_summary_with_plot</code> support tidyselect syntax</li>
 <li>
 <code>cfa_summary</code> support multi-factor CFA with tidyselect syntax</li>
-<li>Added <code>check_assumption</code> to inspect assumptions for mixed effect models in <code>model_summary_with_plot</code>
+<li>Added <code>assumption_plot</code> to visually inspect assumptions for mixed effect models in <code>model_summary_with_plot</code>
 </li>
 <li>
 <code>two_way_interaction_plot</code>, <code>three_way_interaction_plot</code> only require the model object to produce the plot.</li>
@@ -160,9 +161,9 @@
 <li>the current version build pass CMD check</li>
 <li>
 <code>measurement_invariance</code> stop using <code>semTools::compareFit</code>. Added a self-created <code>compare_fit</code> function for the package</li>
-<li>remove papaja::apa_theme() dependency.</li>
-<li>use .data from rlang for mutate function</li>
-<li>remove bruceR import.</li>
+<li>remove <code>papaja::apa_theme()</code> dependency.</li>
+<li>use <code>.data</code> from <code>rlang</code> for <code>mutate</code> function</li>
+<li>remove <code>bruceR</code> from import.</li>
 <li>
 <code>model_summary_with_plot</code> always return list and changed to logical (set to T to return result_list)</li>
 <li>
