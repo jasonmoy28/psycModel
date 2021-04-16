@@ -21,7 +21,7 @@
 #' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
 #' @param plot_color If it is set to `TRUE` (default is `FALSE`), the interaction plot will plot with color.
 #' @param use_package Default is `nlme`. Only available for linear mixed effect model. Options are `nlme` or `lmerTest`,`lme4`(`'lme4` return similar result as `lmerTest` except the return model)
-#' @param quite If it is set to `TRUE` (default is `FALSE`), it will not print the fitting model statement
+#' @param quite suppress printing output
 #' @param round number of digit.
 #' @param simple_slope Compute the slope differing with ± 1 SD of the IVs. In the background, it calls interaction:sim_slopes()
 #' @param assumption_plot Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()
@@ -48,13 +48,14 @@
 #'   random_effect_factors = c(extrav, sex),
 #'   non_random_effect_factors = texp,
 #'   three_way_interaction_factor = c(extrav, sex, texp), # three-way interaction
-#'   graph_label_name = c("popular", "extraversion", "sex", "teacher experience"), 
+#'   graph_label_name = c("popular", "extraversion", "sex", "teacher experience"),
 #'   id = class,
-#'   simple_slope = TRUE, #you can request simple slope
+#'   simple_slope = TRUE, # you can request simple slope
 #'   assumption_plot = TRUE, # see can also request assumption plot
 #'   plot_color = TRUE # you can also request the plot in color
-#' )}
-#' 
+#' )
+#' }
+#'
 model_summary_with_plot <- function(data,
                                     model = NULL,
                                     response_variable = NULL,

@@ -14,7 +14,7 @@
 #' @param estimation_method character. `ML` or `REML` default to `REML`.
 #' @param na.action default to `stats::na.exclude`.
 #' @param opt_control character. default to `bobyqa`
-#' @param quite default to F. If set to `T`, it will not print the fitting model statement
+#' @param quite suppress printing output
 #'
 #' @references
 #' Bates, D., Mächler, M., Bolker, B., & Walker, S. (2014). Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software, 67(1), 1–48. doi: 10.18637/jss.v067.i01.

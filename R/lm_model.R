@@ -6,7 +6,7 @@
 #' @param data data frame
 #' @param response_variable response variable. Support `dplyr::select` syntax.
 #' @param predictor_var predictor variable. Support `dplyr::select` syntax. It will automatically remove the response variable from predictor variable, so you can use `contains()` or `start_with()` safely.
-#' @param quite default to `F`. If set to `T`, it will not print the fitting model statement
+#' @param quite suppress printing output
 #' @param two_way_interaction_factor two-way interaction factors. You need to pass 2+ factor. Support `dplyr::select` syntax.
 #' @param three_way_interaction_factor three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support `dplyr::select` syntax.
 #'

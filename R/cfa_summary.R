@@ -13,7 +13,7 @@
 #' @param group_partial Items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').
 #' @param digits number of digits to round to
 #' @param return_result Default is `FALSE`. If it is `TRUE`, it will return the lavaan model
-#' @param quite suppress all printing. Default is `FALSE`
+#' @param quite suppress printing output
 #' @param model_covariance print model covariance?
 #' @param model_variance print model variance?
 #'
@@ -132,10 +132,10 @@ cfa_summary <- function(data,
       fit_measure = lavaan::fitmeasures(cfa_model)[fit_indices]
     ) %>%
       tidyr::pivot_wider(names_from = .data$variable, values_from = .data$fit_measure) %>%
-      dplyr::rename(p = .data$pvalue) %>% 
-      dplyr::mutate(dplyr::across(tidyselect::everything(), ~format_round(., digits = digits))) %>% 
-      dplyr::rename('$chi$^2' = .data$chisq)
-    
+      dplyr::rename(p = .data$pvalue) %>%
+      dplyr::mutate(dplyr::across(tidyselect::everything(), ~ format_round(., digits = digits))) %>%
+      dplyr::rename("$chi$^2" = .data$chisq)
+
     colnames(fit_measure_df) <- stringr::str_to_upper(colnames(fit_measure_df))
 
     standardized_df <- lavaan::standardizedsolution(cfa_model, output = "data.frame")
@@ -149,9 +149,9 @@ cfa_summary <- function(data,
       dplyr::rename(Z = "z") %>%
       dplyr::rename(P.Value = "pvalue") %>%
       dplyr::rename(CI.Lower = "ci.lower") %>%
-      dplyr::rename(CI.Upper = "ci.upper") %>% 
+      dplyr::rename(CI.Upper = "ci.upper") %>%
       dplyr::mutate(dplyr::across(where(is.numeric), ~ format_round(x = ., digits = 3)))
-    
+
     covariance_df <- standardized_df %>%
       dplyr::filter(.data$op == "~~") %>%
       dplyr::filter(!.data$lhs == .data$rhs) %>%
@@ -163,7 +163,7 @@ cfa_summary <- function(data,
       dplyr::rename(Z = "z") %>%
       dplyr::rename(P.Value = "pvalue") %>%
       dplyr::rename(CI.Lower = "ci.lower") %>%
-      dplyr::rename(CI.Upper = "ci.upper") %>% 
+      dplyr::rename(CI.Upper = "ci.upper") %>%
       dplyr::mutate(dplyr::across(where(is.numeric), ~ format_round(x = ., digits = 3)))
 
     variance_df <- standardized_df %>%
@@ -177,7 +177,7 @@ cfa_summary <- function(data,
       dplyr::rename(Z = "z") %>%
       dplyr::rename(P.Value = "pvalue") %>%
       dplyr::rename(CI.Lower = "ci.lower") %>%
-      dplyr::rename(CI.Upper = "ci.upper") %>% 
+      dplyr::rename(CI.Upper = "ci.upper") %>%
       dplyr::mutate(dplyr::across(where(is.numeric), ~ format_round(x = ., digits = 3)))
 
     ################################################## Model Output ###################################################################
@@ -208,7 +208,7 @@ cfa_summary <- function(data,
       super_print("underline|Model Variance")
       print_table(variance_df)
     }
-########################################## Goodness of Fit ###################################################
+    ########################################## Goodness of Fit ###################################################
     if (ordered == F) {
       cat("\n \n")
       super_print("Goodness of Fit:")

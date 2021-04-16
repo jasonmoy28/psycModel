@@ -46,7 +46,7 @@ lme_model(
 
 \item{use_package}{Default is \code{nlme}. Only available for linear mixed effect model. Options are \code{nlme} or \code{lmerTest},\code{lme4}(\verb{'lme4} return similar result as \code{lmerTest} except the return model)}
 
-\item{quite}{default to \code{F}. If set to \code{T}, it will not print the fitting model statement}
+\item{quite}{suppress printing output}
 
 \item{...}{Internal use only. It doesn't work in other cases}
 }

@@ -24,7 +24,7 @@ lm_model(
 
 \item{three_way_interaction_factor}{three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support \code{dplyr::select} syntax.}
 
-\item{quite}{default to \code{F}. If set to \code{T}, it will not print the fitting model statement}
+\item{quite}{suppress printing output}
 }
 \value{
 an object class of \code{lm} representing the linear regression fit

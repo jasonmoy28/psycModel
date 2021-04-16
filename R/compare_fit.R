@@ -2,7 +2,7 @@
 #'
 #' `r lifecycle::badge("experimental")` \cr
 #' Compare the fit indices models (see below for model support)
-#' 
+#'
 #' @param ... model. If it is a lavaan object, it will try to perform measurement invariance. Other model type will passed to performance::compare_performance
 #' @param digits number of digit to round
 #'
@@ -12,21 +12,17 @@
 #' @examples
 #' # lme model
 #'
-#' fit1 <- lme_model(
+#' fit1 <- lm_model(
 #'   data = popular,
 #'   response_variable = popular,
-#'   random_effect_factors = extrav,
-#'   non_random_effect_factors = texp,
-#'   id = class
+#'   predictor_var = c(sex, extrav)
 #' )
 #'
-#' fit2 <- lme_model(
+#' fit2 <- lm_model(
 #'   data = popular,
 #'   response_variable = popular,
-#'   random_effect_factors = extrav,
-#'   non_random_effect_factors = texp,
-#'   two_way_interaction_factor = c(extrav, texp),
-#'   id = class
+#'   predictor_var = c(sex, extrav),
+#'   two_way_interaction_factor = c(sex, extrav)
 #' )
 #'
 #' compare_fit(fit1, fit2)
@@ -36,8 +32,8 @@ compare_fit <- function(...,
                         digits = 3) {
 
   # lavaan models
-  if (class(list(...)[[1]]) == 'lavaan') {
-    models = list(...)
+  if (class(list(...)[[1]]) == "lavaan") {
+    models <- list(...)
     blank_df <- tibble::tibble(chisq = "", df = "", pvalue = "", cfi = "", rmsea = "", srmr = "", tli = "", aic = "", bic = "", bic2 = "", rowname = ".") %>% tibble::column_to_rownames()
     return_df <- tibble::tibble(chisq = NULL, df = NULL, pvalue = NULL, cfi = NULL, rmsea = NULL, srmr = NULL, tli = NULL, aic = NULL, bic = NULL, bic2 = NULL)
     fit_indices_df <- tibble::tibble(chisq = NULL, df = NULL, pvalue = NULL, cfi = NULL, rmsea = NULL, srmr = NULL, tli = NULL, aic = NULL, bic = NULL, bic2 = NULL)
@@ -72,17 +68,17 @@ compare_fit <- function(...,
       dplyr::mutate(dplyr::across(tidyselect::everything(), ~ format(round(., digits = digits), nsmall = digits)))
 
     return_df <-
-      rbind(fit_indices_df, blank_df, compare_fit_df) %>% 
-      dplyr::rename('$chi$^2' = 'chisq')
+      rbind(fit_indices_df, blank_df, compare_fit_df) %>%
+      dplyr::rename("$chi$^2" = "chisq")
     return(return_df)
 
     ## lme & glme models
   } else {
-    super_print('underline|Model Summary')
-    super_print('Model Type = Model Comparison')
-    cat('\n')
-    output_table = performance::compare_performance(...)
-    output_table = output_table %>% dplyr::select(-1)
+    super_print("underline|Model Summary")
+    super_print("Model Type = Model Comparison")
+    cat("\n")
+    output_table <- performance::compare_performance(...)
+    output_table <- output_table %>% dplyr::select(-1)
     print_table(output_table)
-  } 
+  }
 }

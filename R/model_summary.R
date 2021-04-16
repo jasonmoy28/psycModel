@@ -8,7 +8,7 @@
 #' @param streamlined_output Only super_print model estimate and model performance. Default is `FALSE`
 #' @param return_result return the model estimates data frame. Default is `FALSE`
 #' @param assumption_plot Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()
-#' @param quite suppress super_printing result. Default is `F`
+#' @param quite suppress printing output
 #'
 #' @references
 #' Nakagawa, S., & Schielzeth, H. (2013). A general and simple method for obtaining R2 from generalized linear mixed-effects models. Methods in Ecology and Evolution, 4(2), 133–142. https://doi.org/10.1111/j.2041-210x.2012.00261.x
@@ -185,15 +185,15 @@ model_summary <- function(model,
       print_table(model_summary_df)
       super_print("\n \n \n")
       super_print("underline|Model Performance")
-      model_performance_df = performance::performance(model)
-      colnames(model_performance_df) = stringr::str_replace_all(pattern = 'R2',replacement = 'R^2',string = colnames(model_performance_df))
-      colnames(model_performance_df) = stringr::str_replace_all(pattern = 'Sigma',replacement = '$sigma$',string = colnames(model_performance_df))
+      model_performance_df <- performance::performance(model)
+      colnames(model_performance_df) <- stringr::str_replace_all(pattern = "R2", replacement = "R^2", string = colnames(model_performance_df))
+      colnames(model_performance_df) <- stringr::str_replace_all(pattern = "Sigma", replacement = "$sigma$", string = colnames(model_performance_df))
       print_table(model_performance_df)
     } else { # full model output
-      super_print('underline|Model Summary')
-      super_print('Model Type = {model_type}')
-      super_print('Outcome = {DV}')
-      super_print('Predictors = {IV}')
+      super_print("underline|Model Summary")
+      super_print("Model Type = {model_type}")
+      super_print("Outcome = {DV}")
+      super_print("Predictors = {IV}")
       super_print("\n \n \n")
       # super_print model estimates table
       super_print("underline|Model Estimates")
@@ -201,11 +201,11 @@ model_summary <- function(model,
       super_print("\n \n \n")
       # super_print model performance table
       super_print("underline|Model Performance")
-      model_performance_df = performance::performance(model)
-      colnames(model_performance_df) = stringr::str_replace_all(pattern = 'R2',replacement = 'R^2',string = colnames(model_performance_df))
-      colnames(model_performance_df) = stringr::str_replace_all(pattern = 'Sigma',replacement = '$sigma$',string = colnames(model_performance_df))
+      model_performance_df <- performance::performance(model)
+      colnames(model_performance_df) <- stringr::str_replace_all(pattern = "R2", replacement = "R^2", string = colnames(model_performance_df))
+      colnames(model_performance_df) <- stringr::str_replace_all(pattern = "Sigma", replacement = "$sigma$", string = colnames(model_performance_df))
       print_table(model_performance_df)
-      
+
       # Check assumption
       super_print("\n \n \n")
       super_print("underline|Model Assumption Check")
@@ -312,7 +312,7 @@ model_summary <- function(model,
       stop("please install.packages(c('gridExtra','qqplotr','see')) to use assumption_plot")
     }
   }
-  cat('\n')
+  cat("\n")
   if (return_result == TRUE) {
     return(model_summary_df)
   }

@@ -21,21 +21,17 @@ Compare the fit indices models (see below for model support)
 \examples{
 # lme model
 
-fit1 <- lme_model(
+fit1 <- lm_model(
   data = popular,
   response_variable = popular,
-  random_effect_factors = extrav,
-  non_random_effect_factors = texp,
-  id = class
+  predictor_var = c(sex, extrav)
 )
 
-fit2 <- lme_model(
+fit2 <- lm_model(
   data = popular,
   response_variable = popular,
-  random_effect_factors = extrav,
-  non_random_effect_factors = texp,
-  two_way_interaction_factor = c(extrav, texp),
-  id = class
+  predictor_var = c(sex, extrav),
+  two_way_interaction_factor = c(sex, extrav)
 )
 
 compare_fit(fit1, fit2)

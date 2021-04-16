@@ -37,7 +37,7 @@ cfa_summary(
 
 \item{model_variance}{print model variance?}
 
-\item{quite}{suppress all printing. Default is \code{FALSE}}
+\item{quite}{suppress printing output}
 
 \item{group_partial}{Items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').}
 }

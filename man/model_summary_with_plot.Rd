@@ -75,7 +75,7 @@ model_summary_with_plot(
 
 \item{assumption_plot}{Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()}
 
-\item{quite}{If it is set to \code{TRUE} (default is \code{FALSE}), it will not print the fitting model statement}
+\item{quite}{suppress printing output}
 }
 \value{
 return a list of all requested items in the order of model, model_summary, plot
@@ -101,11 +101,12 @@ fit <- model_summary_with_plot(
   random_effect_factors = c(extrav, sex),
   non_random_effect_factors = texp,
   three_way_interaction_factor = c(extrav, sex, texp), # three-way interaction
-  graph_label_name = c("popular", "extraversion", "sex", "teacher experience"), 
+  graph_label_name = c("popular", "extraversion", "sex", "teacher experience"),
   id = class,
-  simple_slope = TRUE, #you can request simple slope
+  simple_slope = TRUE, # you can request simple slope
   assumption_plot = TRUE, # see can also request assumption plot
   plot_color = TRUE # you can also request the plot in color
-)}
+)
+}
 
 }

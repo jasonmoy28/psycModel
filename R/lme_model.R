@@ -16,7 +16,7 @@
 #' @param na.action default is `stats::na.exclude`. Required to be `stats::na.omit` if check_assumption if `T`.
 #' @param opt_control default is `optim` for `lme` and `bobyqa` for lmerTest
 #' @param use_package Default is `nlme`. Only available for linear mixed effect model. Options are `nlme` or `lmerTest`,`lme4`(`'lme4` return similar result as `lmerTest` except the return model)
-#' @param quite default to `F`. If set to `T`, it will not print the fitting model statement
+#' @param quite suppress printing output
 #' @param ... Internal use only. It doesn't work in other cases
 #'
 #' @details

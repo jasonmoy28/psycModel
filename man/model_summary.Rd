@@ -24,7 +24,7 @@ model_summary(
 
 \item{return_result}{return the model estimates data frame. Default is \code{FALSE}}
 
-\item{quite}{suppress super_printing result. Default is \code{F}}
+\item{quite}{suppress printing output}
 }
 \value{
 If return_result is \code{TRUE}, it will return a data frame with estimate, df, p_value, and the p-value significance.
