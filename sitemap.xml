@@ -4,9 +4,6 @@
     <loc>https://jasonmoy28.github.io/psycModel/index.html</loc>
   </url>
   <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/Print.html</loc>
-  </url>
-  <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/cfa_groupwise.html</loc>
   </url>
   <url>
@@ -56,6 +53,12 @@
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/print_table.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/super_print.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/text_convert.html</loc>
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/three_way_interaction_plot.html</loc>

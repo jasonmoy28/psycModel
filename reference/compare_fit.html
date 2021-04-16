@@ -135,14 +135,14 @@ Compare the fit indices models (see below for model support)" />
 Compare the fit indices models (see below for model support)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>compare_fit</span><span class='op'>(</span><span class='va'>models</span>, digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>compare_fit</span><span class='op'>(</span><span class='va'>...</span>, digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>models</th>
-      <td><p>list of object from <code>lavaan</code> (for measurement invariance only at the moment) or lme, lmer models.</p></td>
+      <th>...</th>
+      <td><p>model. If it is a lavaan object, it will try to perform measurement invariance. Other model type will passed to performance::compare_performance</p></td>
     </tr>
     <tr>
       <th>digits</th>
@@ -160,30 +160,33 @@ Compare the fit indices models (see below for model support)</p>
 <span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lme_model.html'>lme_model</a></span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='va'>popular</span>,
   response_variable <span class='op'>=</span> <span class='va'>popular</span>,
-  random_effect_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>sex</span><span class='op'>)</span>,
+  random_effect_factors <span class='op'>=</span> <span class='va'>extrav</span>,
   non_random_effect_factors <span class='op'>=</span> <span class='va'>texp</span>,
   id <span class='op'>=</span> <span class='va'>class</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Fitting Model with lmer:
-#&gt;  Formula = popular ~ extrav + sex + texp + (1 + extrav + sex | class)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'>
+#&gt;  Formula = popular ~ extrav + texp + (1 + extrav | class)</div><div class='input'>
 <span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lme_model.html'>lme_model</a></span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='va'>popular</span>,
   response_variable <span class='op'>=</span> <span class='va'>popular</span>,
-  random_effect_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>sex</span><span class='op'>)</span>,
+  random_effect_factors <span class='op'>=</span> <span class='va'>extrav</span>,
   non_random_effect_factors <span class='op'>=</span> <span class='va'>texp</span>,
   two_way_interaction_factor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>texp</span><span class='op'>)</span>,
   id <span class='op'>=</span> <span class='va'>class</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Fitting Model with lmer:
-#&gt;  Formula = popular ~ extrav + sex + texp + extrav*texp + (1 + extrav + sex | class)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'>
-<span class='fu'>compare_fit</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>fit1</span>, <span class='va'>fit2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #BB0000;'>Random effect variances not available. Returned R2 does not account for random effects.
-#&gt; Random effect variances not available. Returned R2 does not account for random effects.
-#&gt; </span><span></div><div class='output co'>#&gt; <span class='message'>R2_full_model is formally known as R2 conditional, R2_fixed_effect is formally known as R2 marginal</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 6</span><span>
-#&gt;   AIC      BIC      R2_full_model R2_fixed_effect RMSE  Sigma
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 4855.255 4916.865 NA            0.625           0.714 0.743
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 4802.336 4869.547 NA            0.653           0.722 0.743</div><div class='input'>
+#&gt;  Formula = popular ~ extrav + texp + extrav*texp + (1 + extrav | class)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'>
+<span class='fu'>compare_fit</span><span class='op'>(</span><span class='va'>fit1</span>, <span class='va'>fit2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; Model Type = Model Comparison
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>Random effect variances not available. Returned R2 does not account for random effects.
+#&gt; </span><span>───────────────────────────────────────────────────────────────────────────────────────
+#&gt;             Model       AIC       BIC  R2_conditional  R2_marginal   RMSE  Sigma    ICC
+#&gt; ───────────────────────────────────────────────────────────────────────────────────────
+#&gt;   lmerModLmerTest  5763.302  5802.509           0.516        0.271  0.911  0.944  0.337
+#&gt;   lmerModLmerTest  5710.769  5755.576              NA        0.415  0.921  0.943     NA
+#&gt; ───────────────────────────────────────────────────────────────────────────────────────</div><div class='input'>
 <span class='co'># see ?measurement_invariance for measurement invariance example</span>
 </div></span></pre>
   </div>

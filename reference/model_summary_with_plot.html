@@ -242,7 +242,7 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
     </tr>
     <tr>
       <th>use_package</th>
-      <td><p>Default is <code>nlme</code>. Only available for linear mixed effect model. Options are <code>nlme</code> or <code>lmerTest</code>,<code>lme4</code>(<code>'lme4</code> return similiar result as <code>lmerTest</code> except the return model)</p></td>
+      <td><p>Default is <code>nlme</code>. Only available for linear mixed effect model. Options are <code>nlme</code> or <code>lmerTest</code>,<code>lme4</code>(<code>'lme4</code> return similar result as <code>lmerTest</code> except the return model)</p></td>
     </tr>
     <tr>
       <th>simple_slope</th>
@@ -266,132 +266,68 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
     <pre class="examples"><div class='input'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>model_summary_with_plot</span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='va'>popular</span>,
   response_variable <span class='op'>=</span> <span class='va'>popular</span>,
-  random_effect_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>sex</span><span class='op'>)</span>,
+  random_effect_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span><span class='op'>)</span>,
   non_random_effect_factors <span class='op'>=</span> <span class='va'>texp</span>,
-  three_way_interaction_factor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>sex</span>, <span class='va'>texp</span><span class='op'>)</span>,
-  graph_label_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"popular"</span>, <span class='st'>"extraversion"</span>, <span class='st'>"sex"</span>, <span class='st'>"teacher experience"</span><span class='op'>)</span>,
-  id <span class='op'>=</span> <span class='va'>class</span>,
-  simple_slope <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  assumption_plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  plot_color <span class='op'>=</span> <span class='cn'>TRUE</span>
+  two_way_interaction_factor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>texp</span><span class='op'>)</span>,
+  graph_label_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"popular"</span>, <span class='st'>"extraversion"</span>, <span class='st'>"teacher experience"</span><span class='op'>)</span>,
+  id <span class='op'>=</span> <span class='va'>class</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Fitting Model with lmer:
-#&gt;  Formula = popular ~ extrav + sex + texp + extrav*sex*texp + (1 + extrav + sex | class)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: cowplot</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: interactions</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span style='text-decoration: underline;'>Model Summary</span><span> 
-#&gt; Model Type = Linear Mixed Effect Model (fitted using lme4 or lmerTest) 
-#&gt; Outcome = popular 
-#&gt; Predictors = extrav, sex, texp, extrav:sex, extrav:texp, sex:texp, extrav:sex:texp
+#&gt;  Formula = popular ~ extrav + texp + extrav*texp + (1 + extrav | class)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; Model Type = Linear Mixed Effect Model (fitted using lme4 or lmerTest)
+#&gt; Outcome = popular
+#&gt; Predictors = extrav, texp, extrav:texp
+#&gt;  
 #&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Model Estimates</span><span>
-#&gt; ─────────────────────────────────────────────────
-#&gt;           variable estimate       DF p_value sig.
-#&gt; ─────────────────────────────────────────────────
-#&gt; 1  (Intercept)       -0.958  175.413   0.004  ** 
-#&gt; 2  extrav             0.757  166.105   0.000  ***
-#&gt; 3  sex                0.714 1131.801   0.059     
-#&gt; 4  texp               0.217  179.278   0.000  ***
-#&gt; 5  extrav:sex         0.094 1039.623   0.142     
-#&gt; 6  extrav:texp       -0.023  192.350   0.000  ***
-#&gt; 7  sex:texp           0.020  975.198   0.389     
-#&gt; 8  extrav:sex:texp   -0.004  915.602   0.407     
-#&gt; ─────────────────────────────────────────────────
+#&gt; ────────────────────────────────────────────────
+#&gt;      variable  estimate        DF  p_value  sig.
+#&gt; ────────────────────────────────────────────────
+#&gt;   (Intercept)    -1.211   186.038    0.000   ***
+#&gt;        extrav     0.891  1759.074    0.000   ***
+#&gt;          texp     0.252   165.988    0.000   ***
+#&gt;   extrav:texp    -0.027  1724.937    0.000   ***
+#&gt; ──────────────────────────────────────────────── 
 #&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Model Performance</span><span>
 #&gt; </span><span style='color: #BB0000;'>Random effect variances not available. Returned R2 does not account for random effects.
-#&gt; </span><span>───────────────────────────────────────────────────────────
-#&gt;         AIC      BIC R2_conditional R2_marginal  RMSE Sigma
-#&gt; ───────────────────────────────────────────────────────────
-#&gt; 1  4827.902 4911.915                      0.656 0.720 0.742
-#&gt; ───────────────────────────────────────────────────────────
+#&gt; </span><span>───────────────────────────────────────────────────────────────
+#&gt;        AIC       BIC  R²_conditional  R²_marginal   RMSE      σ
+#&gt; ───────────────────────────────────────────────────────────────
+#&gt;   5710.769  5755.576              NA        0.415  0.921  0.943
+#&gt; ─────────────────────────────────────────────────────────────── 
 #&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Model Assumption Check</span><span>
 #&gt; 
 #&gt; </span><span style='color: #00BB00;'>OK: Model is converged</span><span>
 #&gt; </span><span style='color: #BB0000;'>Warning: Singularity is detected. See ?lme4::isSingular()</span><span>
 #&gt; </span><span style='color: #BB0000;'>Warning: Autocorrelated residuals detected (p &lt; .001).</span><span>
-#&gt; </span><span style='color: #00BB00;'>OK: residuals appear as normally distributed (p = 0.487).
-#&gt; OK: No outliers detected.
-#&gt; OK: Error variance appears to be homoscedastic (p = 0.752).
-#&gt; </span><span></div><div class='output co'>#&gt; <span class='warning'>Warning: Model has interaction terms. VIFs might be inflated. You may check multicollinearity among predictors of a model without interaction terms.</span></div><div class='output co'>#&gt; </span><span style='color: #BB0000;'>Warning: Severe multicolinearity detected (VIF &gt; 10). Please inspect the following table to identify high correlation factors.</span><span>
+#&gt; </span><span style='color: #BB0000;'>Warning: Non-normality of residuals detected (p = 0.003).
+#&gt; </span><span style='color: #0000BB;'>Unable to check autocorrelation. Try changing na.action to na.omit.</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK: Error variance appears to be homoscedastic (p = 0.846).
+#&gt; </span><span style='color: #BBBB00;'>Cautious: Moderate multicolinearity detected  (5 &lt; VIF &lt; 10). Please inspect the following table to identify factors.  </span><span>
 #&gt; </span><span style='text-decoration: underline;'>Multicollinearity Table </span><span>
-#&gt; ────────────────────────────────────
-#&gt;               Term     VIF SE_factor
-#&gt; ────────────────────────────────────
-#&gt; 1  extrav            9.167     3.028
-#&gt; 2  sex             107.181    10.353
-#&gt; 3  texp              6.325     2.515
-#&gt; 4  extrav:sex       93.909     9.691
-#&gt; 5  extrav:texp      14.154     3.762
-#&gt; 6  sex:texp        107.690    10.377
-#&gt; 7  extrav:sex:texp  95.252     9.760
-#&gt; ────────────────────────────────────</div><div class='img'><img src='model_summary_with_plot-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='model_summary_with_plot-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; ██████████████████ While texp (2nd moderator) =  7.71 (- 1 SD) █████████████████ 
-#&gt; 
-#&gt; </span><span style='font-weight: bold;text-decoration: underline;'>JOHNSON-NEYMAN INTERVAL</span><span> 
-#&gt; 
-#&gt; When sex is </span><span style=''>INSIDE</span><span> the interval [-3.76, 67.17], the slope of
-#&gt; extrav is p &lt; .05.
-#&gt; 
-#&gt; </span><span style='font-style: italic;'>Note: The range of observed values of sex is </span><span>[0.00, 1.00]
-#&gt; 
-#&gt; </span><span style='font-weight: bold;text-decoration: underline;'>SIMPLE SLOPES ANALYSIS</span><span> 
-#&gt; 
-#&gt; </span><span style='font-style: italic;'>Slope of extrav when sex = 0.00 (0): 
-#&gt; 
-#&gt; </span><span>  Est.   S.E.   t val.      p
-#&gt; ------ ------ -------- ------
-#&gt;   0.58   0.03    18.60   0.00
-#&gt; 
-#&gt; </span><span style='font-style: italic;'>Slope of extrav when sex = 1.00 (1): 
-#&gt; 
-#&gt; </span><span>  Est.   S.E.   t val.      p
-#&gt; ------ ------ -------- ------
-#&gt;   0.65   0.03    20.66   0.00
-#&gt; 
-#&gt; ███████████████████ While texp (2nd moderator) = 14.26 (Mean) ██████████████████ 
-#&gt; 
-#&gt; </span><span style='font-weight: bold;text-decoration: underline;'>JOHNSON-NEYMAN INTERVAL</span><span> 
-#&gt; 
-#&gt; When sex is </span><span style=''>INSIDE</span><span> the interval [-3.72, 25.52], the slope of
-#&gt; extrav is p &lt; .05.
-#&gt; 
-#&gt; </span><span style='font-style: italic;'>Note: The range of observed values of sex is </span><span>[0.00, 1.00]
-#&gt; 
-#&gt; </span><span style='font-weight: bold;text-decoration: underline;'>SIMPLE SLOPES ANALYSIS</span><span> 
-#&gt; 
-#&gt; </span><span style='font-style: italic;'>Slope of extrav when sex = 0.00 (0): 
-#&gt; 
-#&gt; </span><span>  Est.   S.E.   t val.      p
-#&gt; ------ ------ -------- ------
-#&gt;   0.43   0.02    17.56   0.00
-#&gt; 
-#&gt; </span><span style='font-style: italic;'>Slope of extrav when sex = 1.00 (1): 
-#&gt; 
-#&gt; </span><span>  Est.   S.E.   t val.      p
-#&gt; ------ ------ -------- ------
-#&gt;   0.47   0.02    20.43   0.00
-#&gt; 
-#&gt; ██████████████████ While texp (2nd moderator) = 20.81 (+ 1 SD) █████████████████ 
-#&gt; 
-#&gt; </span><span style='font-weight: bold;text-decoration: underline;'>JOHNSON-NEYMAN INTERVAL</span><span> 
-#&gt; 
-#&gt; When sex is </span><span style=''>INSIDE</span><span> the interval [-2.02, 4.82], the slope of extrav
-#&gt; is p &lt; .05.
-#&gt; 
-#&gt; </span><span style='font-style: italic;'>Note: The range of observed values of sex is </span><span>[0.00, 1.00]
-#&gt; 
-#&gt; </span><span style='font-weight: bold;text-decoration: underline;'>SIMPLE SLOPES ANALYSIS</span><span> 
-#&gt; 
-#&gt; </span><span style='font-style: italic;'>Slope of extrav when sex = 0.00 (0): 
-#&gt; 
-#&gt; </span><span>  Est.   S.E.   t val.      p
-#&gt; ------ ------ -------- ------
-#&gt;   0.28   0.04     7.70   0.00
-#&gt; 
-#&gt; </span><span style='font-style: italic;'>Slope of extrav when sex = 1.00 (1): 
-#&gt; 
-#&gt; </span><span>  Est.   S.E.   t val.      p
-#&gt; ------ ------ -------- ------
-#&gt;   0.30   0.03     9.56   0.00
-#&gt; </div><div class='img'><img src='model_summary_with_plot-3.png' alt='' width='700' height='433' /></div></span></pre>
+#&gt; ───────────────────────────────
+#&gt;          Term    VIF  SE_factor
+#&gt; ───────────────────────────────
+#&gt;        extrav  5.281      2.298
+#&gt;          texp  3.900      1.975
+#&gt;   extrav:texp  7.082      2.661
+#&gt; ───────────────────────────────</div><div class='img'><img src='model_summary_with_plot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>model_summary_with_plot</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='va'>popular</span>,
+  response_variable <span class='op'>=</span> <span class='va'>popular</span>,
+  random_effect_factors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>sex</span><span class='op'>)</span>,
+  non_random_effect_factors <span class='op'>=</span> <span class='va'>texp</span>,
+  three_way_interaction_factor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>sex</span>, <span class='va'>texp</span><span class='op'>)</span>, <span class='co'># three-way interaction</span>
+  graph_label_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"popular"</span>, <span class='st'>"extraversion"</span>, <span class='st'>"sex"</span>, <span class='st'>"teacher experience"</span><span class='op'>)</span>, 
+  id <span class='op'>=</span> <span class='va'>class</span>,
+  simple_slope <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='co'>#you can request simple slope</span>
+  assumption_plot <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='co'># see can also request assumption plot</span>
+  plot_color <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='co'># you can also request the plot in color</span>
+<span class='op'>)</span><span class='op'>}</span>
+
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

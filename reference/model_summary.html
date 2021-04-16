@@ -153,7 +153,7 @@ The function will extract the relevant coefficients from the linear mixed effect
     </tr>
     <tr>
       <th>streamlined_output</th>
-      <td><p>Only print model estimate and model performance. Default is <code>FALSE</code></p></td>
+      <td><p>Only super_print model estimate and model performance. Default is <code>FALSE</code></p></td>
     </tr>
     <tr>
       <th>round</th>
@@ -169,7 +169,7 @@ The function will extract the relevant coefficients from the linear mixed effect
     </tr>
     <tr>
       <th>quite</th>
-      <td><p>suppress printing result. Default is <code>F</code></p></td>
+      <td><p>suppress super_printing result. Default is <code>F</code></p></td>
     </tr>
     </table>
 
@@ -189,42 +189,43 @@ The function will extract the relevant coefficients from the linear mixed effect
 <span class='co'># I recommend using the model_summary_with_plot to get everything</span>
 
 <span class='co'># lme example</span>
-<span class='va'>lme_fit</span> <span class='op'>&lt;-</span> <span class='fu'>lme4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='st'>"popular ~ extrav + sex + texp  + (1 | class)"</span>,
+<span class='va'>lme_fit</span> <span class='op'>&lt;-</span> <span class='fu'>lme4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='st'>"popular ~ extrav + texp  + (1 | class)"</span>,
   data <span class='op'>=</span> <span class='va'>popular</span>
 <span class='op'>)</span>
 
-<span class='fu'>model_summary</span><span class='op'>(</span><span class='va'>lme_fit</span>, assumption_plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Degree of freedom and p-value is extracted from lmerTest</span></div><div class='output co'>#&gt; <span style='text-decoration: underline;'>Model Summary</span><span> 
-#&gt; Model Type = Linear Mixed Effect Model (fitted using lme4 or lmerTest) 
-#&gt; Outcome = popular 
-#&gt; Predictors = extrav, sex, texp, 1 | class
+<span class='fu'>model_summary</span><span class='op'>(</span><span class='va'>lme_fit</span><span class='op'>)</span> <span class='co'># you can request assumption_plot for visual inspection</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Degree of freedom and p-value is extracted from lmerTest</span></div><div class='output co'>#&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; Model Type = Linear Mixed Effect Model (fitted using lme4 or lmerTest)
+#&gt; Outcome = popular
+#&gt;  class
+#&gt;  
 #&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Model Estimates</span><span>
-#&gt; ─────────────────────────────────────────────
-#&gt;       variable estimate       DF p_value sig.
-#&gt; ─────────────────────────────────────────────
-#&gt; 1  (Intercept)    0.810  226.431   0.000  ***
-#&gt; 2  extrav         0.454 1954.889   0.000  ***
-#&gt; 3  sex            1.254 1948.303   0.000  ***
-#&gt; 4  texp           0.088  101.627   0.000  ***
-#&gt; ─────────────────────────────────────────────
+#&gt; ────────────────────────────────────────────────
+#&gt;      variable  estimate        DF  p_value  sig.
+#&gt; ────────────────────────────────────────────────
+#&gt;   (Intercept)     1.035   238.069    0.000   ***
+#&gt;        extrav     0.504  1961.702    0.000   ***
+#&gt;          texp     0.099   101.830    0.000   ***
+#&gt; ──────────────────────────────────────────────── 
 #&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Model Performance</span><span>
-#&gt; ─────────────────────────────────────────────────────────────────
-#&gt;         AIC      BIC R2_conditional R2_marginal   ICC  RMSE Sigma
-#&gt; ─────────────────────────────────────────────────────────────────
-#&gt; 1  4897.025 4930.630          0.672       0.508 0.333 0.751 0.769
-#&gt; ─────────────────────────────────────────────────────────────────
+#&gt; ──────────────────────────────────────────────────────────────────────
+#&gt;        AIC       BIC  R²_conditional  R²_marginal    ICC   RMSE      σ
+#&gt; ──────────────────────────────────────────────────────────────────────
+#&gt;   5786.188  5814.193           0.500        0.272  0.314  0.942  0.965
+#&gt; ────────────────────────────────────────────────────────────────────── 
 #&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Model Assumption Check</span><span>
 #&gt; 
 #&gt; </span><span style='color: #00BB00;'>OK: Model is converged</span><span>
 #&gt; </span><span style='color: #00BB00;'>OK: No singularity is detected</span><span>
 #&gt; </span><span style='color: #BB0000;'>Warning: Autocorrelated residuals detected (p &lt; .001).</span><span>
-#&gt; </span><span style='color: #00BB00;'>OK: residuals appear as normally distributed (p = 0.602).
-#&gt; OK: No outliers detected.
-#&gt; OK: Error variance appears to be homoscedastic (p = 0.746).
-#&gt; OK: No multicolinearity detected (VIF &lt; 5)</span><span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: gridExtra</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: qqplotr</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: see</span></div><div class='img'><img src='model_summary-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; </span><span style='color: #BB0000;'>Warning: Non-normality of residuals detected (p = 0.001).
+#&gt; </span><span style='color: #0000BB;'>Unable to check autocorrelation. Try changing na.action to na.omit.</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK: Error variance appears to be homoscedastic (p = 0.924).
+#&gt; OK: No multicolinearity detected (VIF &lt; 5)</span><span>
+#&gt; </div><div class='input'>
 <span class='co'># lm example</span>
 
 <span class='va'>lm_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Width</span> <span class='op'>+</span> <span class='va'>Petal.Length</span> <span class='op'>+</span> <span class='va'>Petal.Width</span>,
@@ -232,43 +233,44 @@ The function will extract the relevant coefficients from the linear mixed effect
 <span class='op'>)</span>
 
 <span class='fu'>model_summary</span><span class='op'>(</span><span class='va'>lm_fit</span>, assumption_plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span> 
-#&gt; Model Type = Linear regression 
-#&gt; Outcome = Sepal.Length 
+</div><div class='output co'>#&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; Model Type = Linear regression
+#&gt; Outcome = Sepal.Length
 #&gt; Predictors = Sepal.Width, Petal.Length, Petal.Width
 #&gt;  
+#&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Model Estimates</span><span>
-#&gt; ─────────────────────────────────────────────
-#&gt;        variable estimate t_value p_value sig.
-#&gt; ─────────────────────────────────────────────
-#&gt; 1  (Intercept)     1.856   7.401   0.000  ***
-#&gt; 2  Sepal.Width     0.651   9.765   0.000  ***
-#&gt; 3  Petal.Length    0.709  12.502   0.000  ***
-#&gt; 4  Petal.Width    -0.556  -4.363   0.000  ***
-#&gt; ─────────────────────────────────────────────
+#&gt; ────────────────────────────────────────────────
+#&gt;       variable  estimate  t_value  p_value  sig.
+#&gt; ────────────────────────────────────────────────
+#&gt;    (Intercept)     1.856    7.401    0.000   ***
+#&gt;    Sepal.Width     0.651    9.765    0.000   ***
+#&gt;   Petal.Length     0.709   12.502    0.000   ***
+#&gt;    Petal.Width    -0.556   -4.363    0.000   ***
+#&gt; ──────────────────────────────────────────────── 
 #&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Model Performance</span><span>
-#&gt; ──────────────────────────────────────────────
-#&gt;       AIC    BIC    R2 R2_adjusted  RMSE Sigma
-#&gt; ──────────────────────────────────────────────
-#&gt; 1  84.643 99.696 0.859       0.856 0.310 0.315
-#&gt; ──────────────────────────────────────────────
+#&gt; ──────────────────────────────────────────────────
+#&gt;      AIC     BIC     R²  R²_adjusted   RMSE      σ
+#&gt; ──────────────────────────────────────────────────
+#&gt;   84.643  99.696  0.859        0.856  0.310  0.315
+#&gt; ────────────────────────────────────────────────── 
 #&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Model Assumption Check</span><span>
 #&gt; 
-#&gt; </span><span style='color: #00BB00;'>OK: Residuals appear to be independent and not autocorrelated (p = 0.790).</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK: Residuals appear to be independent and not autocorrelated (p = 0.786).</span><span>
 #&gt; </span><span style='color: #00BB00;'>OK: residuals appear as normally distributed (p = 0.943).
-#&gt; OK: No outliers detected.
+#&gt; </span><span style='color: #0000BB;'>Unable to check autocorrelation. Try changing na.action to na.omit.</span><span>
 #&gt; </span><span style='color: #BB0000;'>Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.035).
 #&gt; Warning: Severe multicolinearity detected (VIF &gt; 10). Please inspect the following table to identify high correlation factors.</span><span>
 #&gt; </span><span style='text-decoration: underline;'>Multicollinearity Table </span><span>
-#&gt; ────────────────────────────────
-#&gt;            Term    VIF SE_factor
-#&gt; ────────────────────────────────
-#&gt; 1  Sepal.Width   1.271     1.127
-#&gt; 2  Petal.Length 15.098     3.886
-#&gt; 3  Petal.Width  14.234     3.773
-#&gt; ────────────────────────────────</div><div class='img'><img src='model_summary-2.png' alt='' width='700' height='433' /></div></span></pre>
+#&gt; ─────────────────────────────────
+#&gt;           Term     VIF  SE_factor
+#&gt; ─────────────────────────────────
+#&gt;    Sepal.Width   1.271      1.127
+#&gt;   Petal.Length  15.098      3.886
+#&gt;    Petal.Width  14.234      3.773
+#&gt; ─────────────────────────────────</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: gridExtra</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: qqplotr</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: see</span></div><div class='img'><img src='model_summary-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

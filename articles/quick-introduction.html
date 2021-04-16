@@ -123,7 +123,7 @@ $ sex     &lt;dbl&gt; 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0
    id <span class="op">=</span> <span class="va">class</span>
  <span class="op">)</span></code></pre></div>
 <p>Whooo, finally, let’s see the output</p>
-<p><img src="../man/figures/mode_summary_plot.png" style="width:100.0%" alt="asummption-plot"><em>Note that this is not generated dynamically, but rather insert as a static image for better viewing experience</em></p>
+<p><img src="../man/figures/mode_summary_plot.png" style="width:100.0%" alt="mode-summary-plot"><em>Note that this is not generated dynamically, but rather insert as a static image for better viewing experience</em></p>
 <p>The first section tells your the model type. In this case, it is the linear mixed effect model (fitted using lmerTest). The predictors are extrav (extraversion), sex, texp (teacher experience), and all interaction terms. The second section give you fixed effect estimate. The third section give you model performance like AIC, BIC, <span class="math inline">\(R^2\)</span>. The forth section gives you assumption checks. As you can see, the model convergence is ok, but the model has a boundary fit (i.e., singular). It also gives you a multi-collinearity table if multi-colinearity is detected. As you can see from the warning, multi-colinearity may not be accurate since we included a interaction term. So, you can try removing the interaction term and re-fit the model. Last, since you included an interaction, it will print a two-way interaction plot which can be print in color if you set <code>plot_color = T</code> <img src="../man/figures/interaction_plot.png" style="width:100.0%" alt="interaction-plot"><em>Note that this is not generated dynamically, but rather insert as a static image for better viewing experience</em></p>
 <p>However, as we all know, there are a lot of problems with p-value. Although I think <code>performance</code> (the package that I used to check model assumption violation) have done a great job to determine whether model assumptions are violated. It is usually recommended to visually inspect the plots to determine whether there’s true violation. It is easy to do that by using adding <code>assumption_plot = T</code> to the function. The generated plot is shown below</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -136,7 +136,7 @@ $ sex     &lt;dbl&gt; 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0
    id <span class="op">=</span> <span class="va">class</span>,
    assumption_plot <span class="op">=</span> <span class="cn">T</span>
  <span class="op">)</span></code></pre></div>
-<p><img src="../man/figures/assumption_plot.png" style="width:100.0%" alt="asummption-plot"><em>Note that this is not generated dynamically, but rather insert as a static image for better viewing experience</em></p>
+<p><img src="../man/figures/assumption_plot.png" style="width:100.0%" alt="assumption-plot"><em>Note that this is not generated dynamically, but rather insert as a static image for better viewing experience</em></p>
 </div>
   </div>
 

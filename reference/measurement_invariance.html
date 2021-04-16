@@ -205,7 +205,7 @@ All arguments (except the CFA items) must be explicitly named (like model = your
     <p>Chen (2007) suggested that ΔCFI &lt;= |-0.010| supplemented by RMSEA &lt;= 0.015 indicate non-invariance when sample sizes were equal across groups and larger than 300 in each group (Chen, 2007).
 And, Chen (2007) suggested that ΔCFI &lt;= |-0.005| and ΔRMSEA &lt;= 0.010 for unequal sample size with each group smaller than 300. For SRMR, Chen (2007) recommend ΔSRMR &lt; 0.030 for metric-invariance and ΔSRMR &lt; 0.015 for scalar-invariance.
 For large group size, Rutowski &amp; Svetina (2014) recommended a more liberal cut-off for metric non-invariance for CFI (ΔCFI &lt;= |-0.020|) and RMSEA (RMSEA &lt;= 0.030). However, this more liberal cut-off DOES NOT apply to testing scalar non-invariance.
-If measurement-invariance is not achived, some researchers suggesting partial invariance is acceptable (by releasing the contraints on some factors). For example, Steenkamp and Baumgartner (1998) suggested that ideally more than half of items on a factor should be invariant. However,
+If measurement-invariance is not achieved, some researchers suggesting partial invariance is acceptable (by releasing the constraints on some factors). For example, Steenkamp and Baumgartner (1998) suggested that ideally more than half of items on a factor should be invariant. However,
 it is important to note that no empirical studies were cited to support the partial invariance guideline (Putnick &amp; Bornstein, 2016).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -233,6 +233,7 @@ it is important to note that no empirical studies were cited to support the part
 #&gt; [1] "Computing for metric model"
 #&gt; [1] "Computing for scalar model"
 #&gt;  
+#&gt;  
 #&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
 #&gt; Model Type = Measurement Invariance
 #&gt; Comparsion Type = Configural-Metric-Scalar Comparsion
@@ -242,24 +243,26 @@ it is important to note that no empirical studies were cited to support the part
 #&gt;   DV2 =~ x4 + x5 + x6
 #&gt;   DV3 =~ x7 + x8 + x9
 #&gt;  
+#&gt;  
+#&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Fit Measure Summary</span><span>
-#&gt; ───────────────────────────────────────────────────────────────────────────────────────────
-#&gt;                    CHISQ     DF     P    CFI  RMSEA  SRMR    TLI      AIC      BIC     BIC2
-#&gt; ───────────────────────────────────────────────────────────────────────────────────────────
-#&gt; configural       115.851 48.000 0.000 0.923  0.097  0.068 0.885  7484.395 7706.822 7516.536
-#&gt; metric           124.044 54.000 0.000 0.921  0.093  0.072 0.895  7480.587 7680.771 7509.514
-#&gt; scalar           164.103 60.000 0.000 0.882  0.107  0.082 0.859  7508.647 7686.588 7534.359
-#&gt; .                                                                                          
-#&gt; metric - config   8.192  6.000  0.000 -0.002 -0.004 0.004  0.009 -3.808   -26.050  -7.022  
-#&gt; scalar - metric  40.059  6.000  0.000 -0.038  0.015 0.011 -0.036 28.059     5.817  24.845  
-#&gt; ───────────────────────────────────────────────────────────────────────────────────────────
+#&gt; ─────────────────────────────────────────────────────────────────────────────────────
+#&gt;        Χ²      DF      P     CFI   RMSEA   SRMR     TLI       AIC       BIC      BIC2
+#&gt; ─────────────────────────────────────────────────────────────────────────────────────
+#&gt;   115.851  48.000  0.000   0.923   0.097  0.068   0.885  7484.395  7706.822  7516.536
+#&gt;   124.044  54.000  0.000   0.921   0.093  0.072   0.895  7480.587  7680.771  7509.514
+#&gt;   164.103  60.000  0.000   0.882   0.107  0.082   0.859  7508.647  7686.588  7534.359
+#&gt;                                                                                      
+#&gt;     8.192   6.000  0.000  -0.002  -0.004  0.004   0.009    -3.808   -26.050    -7.022
+#&gt;    40.059   6.000  0.000  -0.038   0.015  0.011  -0.036    28.059     5.817    24.845
+#&gt; ─────────────────────────────────────────────────────────────────────────────────────
 #&gt; Goodness of Fit:
-#&gt; </span><span style='color: #00BB00;'>OK. Excellent measurement metric-invariance based on |delta CFI| &lt; 0.005</span><span>
-#&gt; </span><span style='color: #00BB00;'>OK. Excellent measurement metric-invariance based on |delta RMSEA| &lt; 0.01</span><span>
-#&gt; </span><span style='color: #00BB00;'>OK. Good measurement metric-invariance based on delta SRMR &lt; 0.03</span><span>
-#&gt; </span><span style='color: #BB0000;'>Warning. Unacceptable measurement scalar-invariance based on |delta CFI| &gt; 0.01</span><span>
-#&gt; </span><span style='color: #BB0000;'>Warning. Unacceptable measurement scalar-invariance based on |delta RMSEA| &gt; 0.015.</span><span>
-#&gt; </span><span style='color: #00BB00;'>OK. Good measurement scalar-invariance based on delta SRMR &lt; 0.015</span><span></div><div class='input'>
+#&gt; </span><span style='color: #00BB00;'> OK. Excellent measurement metric-invariance based on |ΔCFI| &lt; 0.005</span><span>
+#&gt; </span><span style='color: #00BB00;'> OK. Excellent measurement metric-invariance based on |ΔRMSEA| &lt; 0.01</span><span>
+#&gt; </span><span style='color: #00BB00;'> OK. Good measurement metric-invariance based on ΔSRMR &lt; 0.03</span><span>
+#&gt; </span><span style='color: #BB0000;'> Warning. Unacceptable measurement scalar-invariance based on |ΔCFI| &gt; 0.01</span><span>
+#&gt; </span><span style='color: #BB0000;'> Warning. Unacceptable measurement scalar-invariance based on |ΔRMSEA| &gt; 0.015.</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK. Good measurement scalar-invariance based on ΔSRMR &lt; 0.015</span><span></div><div class='input'>
 <span class='co'># Fitting measurement invariance model by passing explicit lavaan model</span>
 <span class='co'># I am also going to only test for metric invariance instead of the default scalar invariance</span>
 <span class='fu'>measurement_invariance</span><span class='op'>(</span>
@@ -276,6 +279,7 @@ it is important to note that no empirical studies were cited to support the part
 #&gt;            speed   =~ x7 + x8 + x9[1] "Computing for configural model"
 #&gt; [1] "Computing for metric model"
 #&gt;  
+#&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
 #&gt; Model Type = Measurement Invariance
 #&gt; Comparsion Type = Configural-Metric Comparsion
@@ -285,19 +289,20 @@ it is important to note that no empirical studies were cited to support the part
 #&gt;            textual =~ x4 + x5 + x6;
 #&gt;            speed   =~ x7 + x8 + x9
 #&gt;  
+#&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Fit Measure Summary</span><span>
-#&gt; ──────────────────────────────────────────────────────────────────────────────────────────
-#&gt;                    CHISQ     DF     P    CFI  RMSEA  SRMR   TLI      AIC      BIC     BIC2
-#&gt; ──────────────────────────────────────────────────────────────────────────────────────────
-#&gt; configural       115.851 48.000 0.000 0.923  0.097  0.068 0.885 7484.395 7706.822 7516.536
-#&gt; metric           124.044 54.000 0.000 0.921  0.093  0.072 0.895 7480.587 7680.771 7509.514
-#&gt; .                                                                                         
-#&gt; metric - config  8.192   6.000  0.000 -0.002 -0.004 0.004 0.009 -3.808   -26.050  -7.022  
-#&gt; ──────────────────────────────────────────────────────────────────────────────────────────
+#&gt; ────────────────────────────────────────────────────────────────────────────────────
+#&gt;        Χ²      DF      P     CFI   RMSEA   SRMR    TLI       AIC       BIC      BIC2
+#&gt; ────────────────────────────────────────────────────────────────────────────────────
+#&gt;   115.851  48.000  0.000   0.923   0.097  0.068  0.885  7484.395  7706.822  7516.536
+#&gt;   124.044  54.000  0.000   0.921   0.093  0.072  0.895  7480.587  7680.771  7509.514
+#&gt;                                                                                     
+#&gt;     8.192   6.000  0.000  -0.002  -0.004  0.004  0.009    -3.808   -26.050    -7.022
+#&gt; ────────────────────────────────────────────────────────────────────────────────────
 #&gt; Goodness of Fit:
-#&gt; </span><span style='color: #00BB00;'>OK. Excellent measurement metric-invariance based on |delta CFI| &lt; 0.005</span><span>
-#&gt; </span><span style='color: #00BB00;'>OK. Excellent measurement metric-invariance based on |delta RMSEA| &lt; 0.01</span><span>
-#&gt; </span><span style='color: #00BB00;'>OK. Good measurement metric-invariance based on delta SRMR &lt; 0.03</span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+#&gt; </span><span style='color: #00BB00;'> OK. Excellent measurement metric-invariance based on |ΔCFI| &lt; 0.005</span><span>
+#&gt; </span><span style='color: #00BB00;'> OK. Excellent measurement metric-invariance based on |ΔRMSEA| &lt; 0.01</span><span>
+#&gt; </span><span style='color: #00BB00;'> OK. Good measurement metric-invariance based on ΔSRMR &lt; 0.03</span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># This will fail because I did not add `model = ` in front of the lavaan model.</span>
 <span class='co'># Therefore,you must add the tag in front of all arguments</span>
 <span class='co'># For example, `return_result = 'model'` instaed of `model`</span>

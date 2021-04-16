@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>print_table (internal use only) — print_table • psycModel</title>
+<title>text_convert for super_print (internal use only) — text_convert • psycModel</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="print_table (internal use only) — print_table" />
-<meta property="og:description" content="Rich-text fitted table printing in console" />
+<meta property="og:title" content="text_convert for super_print (internal use only) — text_convert" />
+<meta property="og:description" content="Command options are bold, italic, underline, red, green, yellow, blue, silver.
+Greek letter options are alpha, beta, gamma, delta, epsilon, eta, theta, lamda, pi, rho, sigma, chi, omega. If capital letter greek letter, use all capital letter command (e.g., ALPHA)" />
 
 
 
@@ -124,33 +125,34 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>print_table (internal use only)</h1>
+    <h1>text_convert for super_print (internal use only)</h1>
     
-    <div class="hidden name"><code>print_table.Rd</code></div>
+    <div class="hidden name"><code>text_convert.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Rich-text fitted table printing in console</p>
+    <p>Command options are bold, italic, underline, red, green, yellow, blue, silver.
+Greek letter options are alpha, beta, gamma, delta, epsilon, eta, theta, lamda, pi, rho, sigma, chi, omega. If capital letter greek letter, use all capital letter command (e.g., ALPHA)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>print_table</span><span class='op'>(</span><span class='va'>data_frame</span>, digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>text_convert</span><span class='op'>(</span><span class='va'>text</span>, <span class='va'>type</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data_frame</th>
-      <td><p>data frame object</p></td>
+      <th>text</th>
+      <td><p>character. inputted text</p></td>
     </tr>
     <tr>
-      <th>digits</th>
-      <td><p>number of digits to round to</p></td>
+      <th>type</th>
+      <td><p>either "greek" (convert greek character) or "command" (convert color text and font style command). Command options are bold, italic, underline, red, green, yellow, blue, silver.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>none</p>
+    <p>converted unicode-based character for greek letter, color, font style</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
