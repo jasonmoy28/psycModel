@@ -31,7 +31,7 @@ devtools::install_github('jasonmoy28/psycModel') #install.packages('devtools') i
 **Citation:** Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 
 ## Acknowledgement
-This package was built by standing on the shoulders of giants with special thanks to researchers and developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [`psych`](https://personality-project.org/r/psych/), [`jmv`](https://github.com/jamovi/jmv), and all [`tidyverse`](https://tidyverse.tidyverse.org/) packages. Additionally, I want to thank the developer of [`bruceR`](https://github.com/psychbruce/bruceR). Although [`bruceR`](https://github.com/psychbruce/bruceR) is not imported, I used `bruceR::Print` and `bruceR::print_table` for these amazing rich-text formatted output. I hope my package can help someone as they had helped me. 
+This package was built by standing on the shoulders of giants with special thanks to researchers and developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [`psych`](https://personality-project.org/r/psych/), [`jmv`](https://github.com/jamovi/jmv), and all [`tidyverse`](https://tidyverse.tidyverse.org/) packages. I hope my package can help someone as they had helped me. 
 
 
 ## Updates
@@ -59,7 +59,7 @@ This package was built by standing on the shoulders of giants with special thank
 * Re-write `bruceR::Print` and `bruceR::print_table`. <br/>
 
 **Bugs fixed** <br/>
-* Critical bug fix for `model_summary_with_plot`. You can no request `simple_slope` and `check_assumption` correctly. <br/>
+* Critical bug fix for `model_summary_with_plot`. You can no request `simple_slope` and `assumption_plot` correctly. <br/>
 * Critical bug fix that `cor_test` is not exported <br/>
 * remove some packages from import and switch to `requireNamespace()` <br/>
 * added fallback for normality check <br/>
