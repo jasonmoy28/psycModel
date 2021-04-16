@@ -157,36 +157,31 @@ Compare the fit indices models (see below for model support)</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># lme model</span>
 
-<span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lme_model.html'>lme_model</a></span><span class='op'>(</span>
+<span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lm_model.html'>lm_model</a></span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='va'>popular</span>,
   response_variable <span class='op'>=</span> <span class='va'>popular</span>,
-  random_effect_factors <span class='op'>=</span> <span class='va'>extrav</span>,
-  non_random_effect_factors <span class='op'>=</span> <span class='va'>texp</span>,
-  id <span class='op'>=</span> <span class='va'>class</span>
+  predictor_var <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>sex</span>, <span class='va'>extrav</span><span class='op'>)</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; Fitting Model with lmer:
-#&gt;  Formula = popular ~ extrav + texp + (1 + extrav | class)</div><div class='input'>
-<span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lme_model.html'>lme_model</a></span><span class='op'>(</span>
+</div><div class='output co'>#&gt; Fitting Model with lm:
+#&gt;  Formula = popular ~ sex + extrav</div><div class='input'>
+<span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lm_model.html'>lm_model</a></span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='va'>popular</span>,
   response_variable <span class='op'>=</span> <span class='va'>popular</span>,
-  random_effect_factors <span class='op'>=</span> <span class='va'>extrav</span>,
-  non_random_effect_factors <span class='op'>=</span> <span class='va'>texp</span>,
-  two_way_interaction_factor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>extrav</span>, <span class='va'>texp</span><span class='op'>)</span>,
-  id <span class='op'>=</span> <span class='va'>class</span>
+  predictor_var <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>sex</span>, <span class='va'>extrav</span><span class='op'>)</span>,
+  two_way_interaction_factor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>sex</span>, <span class='va'>extrav</span><span class='op'>)</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; Fitting Model with lmer:
-#&gt;  Formula = popular ~ extrav + texp + extrav*texp + (1 + extrav | class)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'>
+</div><div class='output co'>#&gt; Fitting Model with lm:
+#&gt;  Formula = popular ~ sex + extrav + sex*extrav</div><div class='input'>
 <span class='fu'>compare_fit</span><span class='op'>(</span><span class='va'>fit1</span>, <span class='va'>fit2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
 #&gt; Model Type = Model Comparison
 #&gt; 
-#&gt; </span><span style='color: #BB0000;'>Random effect variances not available. Returned R2 does not account for random effects.
-#&gt; </span><span>───────────────────────────────────────────────────────────────────────────────────────
-#&gt;             Model       AIC       BIC  R2_conditional  R2_marginal   RMSE  Sigma    ICC
-#&gt; ───────────────────────────────────────────────────────────────────────────────────────
-#&gt;   lmerModLmerTest  5763.302  5802.509           0.516        0.271  0.911  0.944  0.337
-#&gt;   lmerModLmerTest  5710.769  5755.576              NA        0.415  0.921  0.943     NA
-#&gt; ───────────────────────────────────────────────────────────────────────────────────────</div><div class='input'>
+#&gt; ─────────────────────────────────────────────────────────────
+#&gt;   Model       AIC       BIC     R2  R2_adjusted   RMSE  Sigma
+#&gt; ─────────────────────────────────────────────────────────────
+#&gt;      lm  5977.415  5999.819  0.394        0.393  1.076  1.077
+#&gt;      lm  5979.369  6007.374  0.394        0.393  1.076  1.077
+#&gt; ─────────────────────────────────────────────────────────────</div><div class='input'>
 <span class='co'># see ?measurement_invariance for measurement invariance example</span>
 </div></span></pre>
   </div>
