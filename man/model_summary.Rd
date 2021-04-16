@@ -16,7 +16,7 @@ model_summary(
 \arguments{
 \item{model}{an object from nlme::lme, lmerTest::lmer, or lme4::glmer}
 
-\item{streamlined_output}{Only print model estimate and model performance. Default is \code{FALSE}}
+\item{streamlined_output}{Only super_print model estimate and model performance. Default is \code{FALSE}}
 
 \item{round}{number of digit to round the values.}
 
@@ -24,7 +24,7 @@ model_summary(
 
 \item{return_result}{return the model estimates data frame. Default is \code{FALSE}}
 
-\item{quite}{suppress printing result. Default is \code{F}}
+\item{quite}{suppress super_printing result. Default is \code{F}}
 }
 \value{
 If return_result is \code{TRUE}, it will return a data frame with estimate, df, p_value, and the p-value significance.
@@ -42,11 +42,11 @@ If you working with \code{lm}, fixed factor estimate is just the model estimate.
 # I recommend using the model_summary_with_plot to get everything
 
 # lme example
-lme_fit <- lme4::lmer("popular ~ extrav + sex + texp  + (1 | class)",
+lme_fit <- lme4::lmer("popular ~ extrav + texp  + (1 | class)",
   data = popular
 )
 
-model_summary(lme_fit, assumption_plot = TRUE)
+model_summary(lme_fit) # you can request assumption_plot for visual inspection
 
 # lm example
 

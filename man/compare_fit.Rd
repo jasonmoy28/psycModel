@@ -4,10 +4,10 @@
 \alias{compare_fit}
 \title{Comparison of Model Fit}
 \usage{
-compare_fit(models, digits = 3)
+compare_fit(..., digits = 3)
 }
 \arguments{
-\item{models}{list of object from \code{lavaan} (for measurement invariance only at the moment) or lme, lmer models.}
+\item{...}{model. If it is a lavaan object, it will try to perform measurement invariance. Other model type will passed to performance::compare_performance}
 
 \item{digits}{number of digit to round}
 }
@@ -24,7 +24,7 @@ Compare the fit indices models (see below for model support)
 fit1 <- lme_model(
   data = popular,
   response_variable = popular,
-  random_effect_factors = c(extrav, sex),
+  random_effect_factors = extrav,
   non_random_effect_factors = texp,
   id = class
 )
@@ -32,13 +32,13 @@ fit1 <- lme_model(
 fit2 <- lme_model(
   data = popular,
   response_variable = popular,
-  random_effect_factors = c(extrav, sex),
+  random_effect_factors = extrav,
   non_random_effect_factors = texp,
   two_way_interaction_factor = c(extrav, texp),
   id = class
 )
 
-compare_fit(list(fit1, fit2))
+compare_fit(fit1, fit2)
 
 # see ?measurement_invariance for measurement invariance example
 }

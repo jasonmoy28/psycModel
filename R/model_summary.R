@@ -5,10 +5,10 @@
 #'
 #' @param model an object from nlme::lme, lmerTest::lmer, or lme4::glmer
 #' @param round number of digit to round the values.
-#' @param streamlined_output Only print model estimate and model performance. Default is `FALSE`
+#' @param streamlined_output Only super_print model estimate and model performance. Default is `FALSE`
 #' @param return_result return the model estimates data frame. Default is `FALSE`
 #' @param assumption_plot Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()
-#' @param quite suppress printing result. Default is `F`
+#' @param quite suppress super_printing result. Default is `F`
 #'
 #' @references
 #' Nakagawa, S., & Schielzeth, H. (2013). A general and simple method for obtaining R2 from generalized linear mixed-effects models. Methods in Ecology and Evolution, 4(2), 133–142. https://doi.org/10.1111/j.2041-210x.2012.00261.x
@@ -24,11 +24,11 @@
 #' # I recommend using the model_summary_with_plot to get everything
 #'
 #' # lme example
-#' lme_fit <- lme4::lmer("popular ~ extrav + sex + texp  + (1 | class)",
+#' lme_fit <- lme4::lmer("popular ~ extrav + texp  + (1 | class)",
 #'   data = popular
 #' )
 #'
-#' model_summary(lme_fit, assumption_plot = TRUE)
+#' model_summary(lme_fit) # you can request assumption_plot for visual inspection
 #'
 #' # lm example
 #'
@@ -180,46 +180,52 @@ model_summary <- function(model,
   ################################################  Output Table  ################################################
   if (quite == FALSE) { # check whether quite the entire output table
     if (streamlined_output == TRUE) { # streamline model output
-      Print("<<underline Model Estimates>>")
-      # Print model estimates table and model performance table
+      super_print("underline|Model Estimates")
+      # super_print model estimates table and model performance table
       print_table(model_summary_df)
-      Print("\n \n \n")
-      Print("<<underline Model Performance>>")
-      print_table(performance::performance(model))
+      super_print("\n \n \n")
+      super_print("underline|Model Performance")
+      model_performance_df = performance::performance(model)
+      colnames(model_performance_df) = stringr::str_replace_all(pattern = 'R2',replacement = 'R^2',string = colnames(model_performance_df))
+      colnames(model_performance_df) = stringr::str_replace_all(pattern = 'Sigma',replacement = '$sigma$',string = colnames(model_performance_df))
+      print_table(model_performance_df)
     } else { # full model output
-      # Print header
-      header <- "<<underline Model Summary>> \n Model Type = {model_type} \n Outcome = {DV} \n Predictors = {IV}"
-      Print(header)
-      Print("\n \n \n")
-      # Print model estimates table
-      Print("<<underline Model Estimates>>")
+      super_print('underline|Model Summary')
+      super_print('Model Type = {model_type}')
+      super_print('Outcome = {DV}')
+      super_print('Predictors = {IV}')
+      super_print("\n \n \n")
+      # super_print model estimates table
+      super_print("underline|Model Estimates")
       print_table(model_summary_df)
-      Print("\n \n \n")
-      # Print model performance table
-      Print("<<underline Model Performance>>")
-      print_table(performance::performance(model))
-
-
+      super_print("\n \n \n")
+      # super_print model performance table
+      super_print("underline|Model Performance")
+      model_performance_df = performance::performance(model)
+      colnames(model_performance_df) = stringr::str_replace_all(pattern = 'R2',replacement = 'R^2',string = colnames(model_performance_df))
+      colnames(model_performance_df) = stringr::str_replace_all(pattern = 'Sigma',replacement = '$sigma$',string = colnames(model_performance_df))
+      print_table(model_performance_df)
+      
       # Check assumption
-      Print("\n \n \n")
-      Print("<<underline Model Assumption Check>>")
-      Print("\n")
+      super_print("\n \n \n")
+      super_print("underline|Model Assumption Check")
+      super_print("\n")
       if (convergence_check == TRUE) {
         convergence_output <- performance::check_convergence(model)
         if (convergence_output[[1]] == TRUE) {
-          Print("<<green OK: Model is converged>>")
+          super_print("green|OK: Model is converged")
         } else {
           gradient <- attributes(convergence_output)$gradient
-          Print("<<red Warning: Model is not converged with gradient of {gradient}>>")
+          super_print("red|Warning: Model is not converged with gradient of {gradient}")
         }
       }
 
       if (singular_check == TRUE) {
         singular_output <- performance::check_singularity(model)
         if (singular_output == TRUE) {
-          Print("<<red Warning: Singularity is detected. See ?lme4::isSingular()>>")
+          super_print("red|Warning: Singularity is detected. See ?lme4::isSingular()")
         } else {
-          Print("<<green OK: No singularity is detected>>")
+          super_print("green|OK: No singularity is detected")
         }
       }
 
@@ -227,7 +233,7 @@ model_summary <- function(model,
         tryCatch(
           {
             performance::check_autocorrelation(model)
-            Print("\n")
+            super_print("\n")
           },
           error = function(cond) {
             warning("Unable to check autocorrelation. Perhaps change na.action to na.omit")
@@ -235,7 +241,7 @@ model_summary <- function(model,
         )
       }
 
-      if (normality_check == TRUE) { # first check_normality, if failed, fallback to check_distribution, if failed, print failed message
+      if (normality_check == TRUE) { # first check_normality, if failed, fallback to check_distribution, if failed, super_print failed message
         tryCatch(suppressMessages(performance::check_normality(model)),
           error = function(cond) {
             tryCatch(
@@ -249,19 +255,19 @@ model_summary <- function(model,
                 if (all(norm_prob >= 80)) {
                   residual_norm_prob <- paste(norm_prob[1], "%", sep = "")
                   response_norm_prob <- paste(norm_prob[2], "%", sep = "")
-                  Print("<<green OK. No non-normality is detected. Normal distribution proability: residual ({residual_norm_prob}) and response ({response_norm_prob}). check_normality() failed use fallback>>")
+                  super_print("green|OK. No non-normality is detected. Normal distribution proability: residual ({residual_norm_prob}) and response ({response_norm_prob}). check_normality() failed use fallback")
                 } else if (any(norm_prob < 80) & all(norm_prob > 50)) {
                   residual_norm_prob <- paste(norm_prob[1], "%", sep = "")
                   response_norm_prob <- paste(norm_prob[2], "%", sep = "")
-                  Print("<<yellow Cautious: Moderate non-normality is detected. Normal distribution proability: residual ({residual_norm_prob}) and  response ({response_norm_prob}). check_normality() failed use fallback>>")
+                  super_print("yellow|Cautious: Moderate non-normality is detected. Normal distribution proability: residual ({residual_norm_prob}) and  response ({response_norm_prob}). check_normality() failed use fallback")
                 } else if (any(norm_prob <= 50)) {
                   residual_norm_prob <- paste(norm_prob[1], "%", sep = "")
                   response_norm_prob <- paste(norm_prob[2], "%", sep = "")
-                  Print("<<red Warning: Severe non-normality is detected. Normal distribution proability: residual ({residual_norm_prob}) and  response ({response_norm_prob}). check_normality() failed use fallback>>")
+                  super_print("red|Warning: Severe non-normality is detected. Normal distribution proability: residual ({residual_norm_prob}) and  response ({response_norm_prob}). check_normality() failed use fallback")
                 }
               },
               error = function(cond) {
-                Print("<<blue Unable to check normality. All fallback failed.>>")
+                super_print("blue|Unable to check normality. All fallback failed.")
               }
             )
           }
@@ -270,9 +276,9 @@ model_summary <- function(model,
     }
 
     if (outlier_check == TRUE) {
-      tryCatch(print(performance::check_outliers(model)),
+      tryCatch(super_print(performance::check_outliers(model)),
         error = function(cond) {
-          Print("<<blue Unable to check autocorrelation. Try changing na.action to na.omit.>>")
+          super_print("blue|Unable to check autocorrelation. Try changing na.action to na.omit.")
         }
       )
     }
@@ -284,14 +290,14 @@ model_summary <- function(model,
     if (collinearity_check == TRUE) {
       collinearity_df <- performance::check_collinearity(model)
       if (all(collinearity_df$VIF < 5)) {
-        Print("<<green OK: No multicolinearity detected (VIF < 5)>>")
+        super_print("green|OK: No multicolinearity detected (VIF < 5)")
       } else if (any(collinearity_df$VIF >= 5) & all(collinearity_df$VIF < 10)) {
-        Print("<<yellow Cautious: Moderate multicolinearity detected  (5 < VIF < 10). Please inspect the following table to identify factors.>>  ")
-        Print("<<underline Multicollinearity Table >>")
+        super_print("yellow|Cautious: Moderate multicolinearity detected  (5 < VIF < 10). Please inspect the following table to identify factors.  ")
+        super_print("underline|Multicollinearity Table ")
         print_table(collinearity_df)
       } else if (any(collinearity_df$VIF > 10)) {
-        Print("<<red Warning: Severe multicolinearity detected (VIF > 10). Please inspect the following table to identify high correlation factors.>>")
-        Print("<<underline Multicollinearity Table >>")
+        super_print("red|Warning: Severe multicolinearity detected (VIF > 10). Please inspect the following table to identify high correlation factors.")
+        super_print("underline|Multicollinearity Table ")
         print_table(collinearity_df)
       }
     }
@@ -306,7 +312,7 @@ model_summary <- function(model,
       stop("please install.packages(c('gridExtra','qqplotr','see')) to use assumption_plot")
     }
   }
-
+  cat('\n')
   if (return_result == TRUE) {
     return(model_summary_df)
   }

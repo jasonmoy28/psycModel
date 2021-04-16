@@ -69,7 +69,7 @@ model_summary_with_plot(
 
 \item{round}{number of digit.}
 
-\item{use_package}{Default is \code{nlme}. Only available for linear mixed effect model. Options are \code{nlme} or \code{lmerTest},\code{lme4}(\verb{'lme4} return similiar result as \code{lmerTest} except the return model)}
+\item{use_package}{Default is \code{nlme}. Only available for linear mixed effect model. Options are \code{nlme} or \code{lmerTest},\code{lme4}(\verb{'lme4} return similar result as \code{lmerTest} except the return model)}
 
 \item{simple_slope}{Compute the slope differing with ± 1 SD of the IVs. In the background, it calls interaction:sim_slopes()}
 
@@ -88,13 +88,24 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
 fit <- model_summary_with_plot(
   data = popular,
   response_variable = popular,
+  random_effect_factors = c(extrav),
+  non_random_effect_factors = texp,
+  two_way_interaction_factor = c(extrav, texp),
+  graph_label_name = c("popular", "extraversion", "teacher experience"),
+  id = class
+)
+\dontrun{
+fit <- model_summary_with_plot(
+  data = popular,
+  response_variable = popular,
   random_effect_factors = c(extrav, sex),
   non_random_effect_factors = texp,
-  three_way_interaction_factor = c(extrav, sex, texp),
-  graph_label_name = c("popular", "extraversion", "sex", "teacher experience"),
+  three_way_interaction_factor = c(extrav, sex, texp), # three-way interaction
+  graph_label_name = c("popular", "extraversion", "sex", "teacher experience"), 
   id = class,
-  simple_slope = TRUE,
-  assumption_plot = TRUE,
-  plot_color = TRUE
-)
+  simple_slope = TRUE, #you can request simple slope
+  assumption_plot = TRUE, # see can also request assumption plot
+  plot_color = TRUE # you can also request the plot in color
+)}
+
 }

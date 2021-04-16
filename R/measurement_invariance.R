@@ -10,32 +10,32 @@
 #' @param model explicit lavaan model. Either the `model` argument or the `items` argument must be specified.
 #' @param group character. group variable.
 #' @param ordered logical. default is F. If it is set to T, lavaan will treat it as a ordinal variable and use DWLS instead of ML
-#' @param group_partial items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2'). See details for recommended practice. 
+#' @param group_partial items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2'). See details for recommended practice.
 #' @param invariance_level "metric" or "scalar". Default is 'metric'. Set as 'metric' for configural-metric comparison, and set as 'scalar' for configural-metric-scalar comparison.
 #' @param digits number of digit to round
 #' @param return_result Default is `FALSE`. If it is `TRUE`, it will return a data frame of the fit measure summary
 #' @param quite suppress all printing except the model summary. Default is `FALSE`.
 #'
 #' @details
-#' Chen (2007) suggested that ΔCFI <= |-0.010| supplemented by RMSEA <= 0.015 indicate non-invariance when sample sizes were equal across groups and larger than 300 in each group (Chen, 2007). 
-#' And, Chen (2007) suggested that ΔCFI <= |-0.005| and ΔRMSEA <= 0.010 for unequal sample size with each group smaller than 300. For SRMR, Chen (2007) recommend ΔSRMR < 0.030 for metric-invariance and ΔSRMR < 0.015 for scalar-invariance. 
+#' Chen (2007) suggested that ΔCFI <= |-0.010| supplemented by RMSEA <= 0.015 indicate non-invariance when sample sizes were equal across groups and larger than 300 in each group (Chen, 2007).
+#' And, Chen (2007) suggested that ΔCFI <= |-0.005| and ΔRMSEA <= 0.010 for unequal sample size with each group smaller than 300. For SRMR, Chen (2007) recommend ΔSRMR < 0.030 for metric-invariance and ΔSRMR < 0.015 for scalar-invariance.
 #' For large group size, Rutowski & Svetina (2014) recommended a more liberal cut-off for metric non-invariance for CFI (ΔCFI <= |-0.020|) and RMSEA (RMSEA <= 0.030). However, this more liberal cut-off DOES NOT apply to testing scalar non-invariance.
-#' If measurement-invariance is not achived, some researchers suggesting partial invariance is acceptable (by releasing the contraints on some factors). For example, Steenkamp and Baumgartner (1998) suggested that ideally more than half of items on a factor should be invariant. However, 
-#' it is important to note that no empirical studies were cited to support the partial invariance guideline (Putnick & Bornstein, 2016). 
-#' 
-#' 
+#' If measurement-invariance is not achieved, some researchers suggesting partial invariance is acceptable (by releasing the constraints on some factors). For example, Steenkamp and Baumgartner (1998) suggested that ideally more than half of items on a factor should be invariant. However,
+#' it is important to note that no empirical studies were cited to support the partial invariance guideline (Putnick & Bornstein, 2016).
+#'
+#'
 #' @references
 #' Chen, F. F. (2007). Sensitivity of Goodness of Fit Indexes to Lack of Measurement Invariance. Structural Equation Modeling: A Multidisciplinary Journal, 14(3), 464–504. https://doi.org/10.1080/10705510701301834
-#' 
+#'
 #' Jöreskog, K. G. (1971). Simultaneous factor analysis in several populations. Psychometrika, 36(4), 409-426.
 #'
 #' Putnick, D. L., & Bornstein, M. H. (2016). Measurement Invariance Conventions and Reporting: The State of the Art and Future Directions for Psychological Research. Developmental Review : DR, 41, 71–90. https://doi.org/10.1016/j.dr.2016.06.004
-#' 
+#'
 #' Rutkowski, L., & Svetina, D. (2014). Assessing the Hypothesis of Measurement Invariance in the Context of Large-Scale International Surveys. Educational and Psychological Measurement, 74(1), 31–57. https://doi.org/10.1177/0013164413498257
-#' 
+#'
 #' Steenkamp, J.-B. E. M., & Baumgartner, H. (n.d.). Assessing Measurement Invariance in Cross-National Consumer Research. JOURNAL OF CONSUMER RESEARCH, 13.
-#' 
-#' 
+#'
+#'
 #'
 #' @export
 #' @return
@@ -102,7 +102,7 @@ measurement_invariance <- function(data,
     dplyr::select(!!enquo(group)) %>%
     names()
 
-  # Print statement
+  # super_print statement
   if (quite == F) {
     cat("Computing CFA using:\n", model)
   }
@@ -133,7 +133,7 @@ measurement_invariance <- function(data,
       group.partial = group_partial
     )
 
-    fit <- compare_fit(list(config_model, metric_model), digits = digits)
+    fit <- compare_fit(config_model, metric_model, digits = digits)
   } else if (invariance_level == "scalar") {
     if (quite == F) {
       print("Computing for configural model")
@@ -169,7 +169,7 @@ measurement_invariance <- function(data,
       ordered = ordered,
       group.partial = group_partial
     )
-    fit <- compare_fit(list(config_model, metric_model, scalar_model), digits = digits)
+    fit <- compare_fit(config_model, metric_model, scalar_model, digits = digits)
   } else {
     print("Error: Invariance level must be either metric or scalar")
     return()
@@ -180,79 +180,80 @@ measurement_invariance <- function(data,
   } else if (invariance_level == "scalar") {
     invariance_level_print <- "Configural-Metric-Scalar Comparsion"
   }
-  fit = fit %>% dplyr::rename(p = .data$pvalue)
-  
+  fit <- fit %>% dplyr::rename(p = .data$pvalue)
+
   colnames(fit) <- stringr::str_to_upper(colnames(fit))
-  
-  Print("\n \n \n")
-  Print("<<underline Model Summary>>")
-  Print("Model Type = Measurement Invariance")
-  Print("Comparsion Type = {invariance_level_print}")
-  Print("Group = {group}")
-  Print("Model Formula = \n .{model}")
-  Print("\n \n \n")
-  Print("<<underline Fit Measure Summary>>")
+
+  super_print("\n \n \n")
+  super_print("underline|Model Summary")
+  super_print("Model Type = Measurement Invariance")
+  super_print("Comparsion Type = {invariance_level_print}")
+  super_print("Group = {group}")
+  super_print("Model Formula = \n .{model}")
+  super_print("\n \n \n")
+  super_print("underline|Fit Measure Summary")
   print_table(fit)
-  Print("Goodness of Fit:")
-  fit = fit %>% dplyr::mutate(dplyr::across(tidyselect::everything(), as.numeric))
-  CFI <- fit['metric - config',"CFI"]
-  
-  # metric invariance 
+  cat('\n')
+  super_print("Goodness of Fit:")
+  fit <- fit %>% dplyr::mutate(dplyr::across(tidyselect::everything(), as.numeric))
+  CFI <- fit["metric - config", "CFI"]
+
+  # metric invariance
   if (abs(CFI) <= 0.005) {
-    Print("<<green OK. Excellent measurement metric-invariance based on |delta CFI| < 0.005>>")
+    super_print("green| OK. Excellent measurement metric-invariance based on $abs$$DELTA$CFI$abs$ < 0.005")
   } else if (abs(CFI) <= 0.01) {
-    Print("<<green OK. Good measurement metric-invariance based on |delta CFI| < 0.01>>")
+    super_print("green| OK. Good measurement metric-invariance based on $abs$$DELTA$CFI$abs$ < 0.01")
   } else if (abs(CFI) > 0.01 & abs(CFI) < 0.02) {
-    Print("<<red Warning. Unacceptable measurement metric-invariance based on |delta CFI| > 0.01. Potentially acceptable with large number of group. In this case, the recommend cut-off is |delta CFI| <0.02 (metric-invariance only). See ?measurement_invariance detail section.>>")
+    super_print("red| Warning. Unacceptable measurement metric-invariance based on $abs$$DELTA$CFI$abs$ > 0.01. Potentially acceptable with large number of group. In this case, the recommend cut-off is $abs$$DELTA$CFI$abs$ < 0.02 (metric-invariance only). See ?measurement_invariance detail section.")
   } else if (abs(CFI) >= 0.02) {
-    Print("<<red Warning. Unacceptable measurement metric-invariance based on |delta CFI| > 0.01>>")
+    super_print("red| Warning. Unacceptable measurement metric-invariance based on $abs$$DELTA$CFI$abs$ > 0.01")
   }
-  
-  RMSEA <- fit['metric - config',"RMSEA"]
+
+  RMSEA <- fit["metric - config", "RMSEA"]
   if (all(abs(RMSEA) <= 0.01)) {
-    Print("<<green OK. Excellent measurement metric-invariance based on |delta RMSEA| < 0.01>>")
+    super_print("green| OK. Excellent measurement metric-invariance based on $abs$$DELTA$RMSEA$abs$ < 0.01")
   } else if (abs(RMSEA) > 0.01 & abs(RMSEA) < 0.015) {
-    Print("<<yellow Cautious. Acceptable measurement metric-invariance based on 0.015 > |delta RMSEA| > 0.01>>")
-  } else if (abs(RMSEA) >= 0.015 &  abs(RMSEA) < 0.030) {
-    Print("<<red Warning. Unacceptable measurement metric-invariance based on |delta RMSEA| > 0.015. Potentially acceptable with large number of group. In this case, the recommend cut-off is |delta RMSEA| < 0.30  (metric-invariance only). See ?measurement_invariance detail section.w>>")
+    super_print("yellow| Cautious. Acceptable measurement metric-invariance based on 0.015 > $abs$$DELTA$RMSEA$abs$ > 0.01")
+  } else if (abs(RMSEA) >= 0.015 & abs(RMSEA) < 0.030) {
+    super_print("red| Warning. Unacceptable measurement metric-invariance based on $abs$$DELTA$RMSEA$abs$ > 0.015. Potentially acceptable with large number of group. In this case, the recommend cut-off is $abs$$DELTA$RMSEA$abs$ < 0.30  (metric-invariance only). See ?measurement_invariance detail section.w")
   } else if (abs(RMSEA) >= 0.030) {
-    Print("<<red Warning. Unacceptable measurement metric-invariance based on |delta RMSEA| > 0.015>>")
+    super_print("red| Warning. Unacceptable measurement metric-invariance based on $abs$$DELTA$RMSEA$abs$ > 0.015")
   }
-  
-  SRMR <- fit['metric - config',"SRMR"]
+
+  SRMR <- fit["metric - config", "SRMR"]
   if (all(abs(SRMR) <= 0.03)) {
-    Print("<<green OK. Good measurement metric-invariance based on delta SRMR < 0.03>>")
+    super_print("green| OK. Good measurement metric-invariance based on $DELTA$SRMR < 0.03")
   } else if (any(abs(SRMR) > 0.03)) {
-    Print("<<red Warning. Poor measurement metric-invariance based on delta SRMR > 0.03>>")
+    super_print("red| Warning. Poor measurement metric-invariance based on $DELTA$SRMR > 0.03")
   }
-  
-  # scalar invariance 
-  if (invariance_level == 'scalar') {
-    CFI <- fit['scalar - metric',"CFI"]
+
+  # scalar invariance
+  if (invariance_level == "scalar") {
+    CFI <- fit["scalar - metric", "CFI"]
     if (abs(CFI) <= 0.01) {
-      Print("<<green OK. Good measurement scalar-invariance based on |delta CFI| < 0.01>>")
+      super_print("green| OK. Good measurement scalar-invariance based on $abs$$DELTA$CFI$abs$ < 0.01")
     } else if (abs(CFI) > 0.01) {
-      Print("<<red Warning. Unacceptable measurement scalar-invariance based on |delta CFI| > 0.01>>")
-    } 
-    
-    RMSEA <- fit['scalar - metric',"RMSEA"]
-    if (abs(RMSEA) <= 0.01) {
-      Print("<<green OK. Excellent measurement scalar-invariance based on |delta RMSEA| < 0.015>>")
-    } else if (abs(RMSEA) > 0.01 & abs(RMSEA) < 0.015) {
-      Print("<<yellow Cautious. Acceptable measurement scalar-invariance based on 0.015 > |delta RMSEA| > 0.01.>>")
-    } else if (abs(RMSEA) >= 0.015) {
-      Print("<<red Warning. Unacceptable measurement scalar-invariance based on |delta RMSEA| > 0.015.>>")
+      super_print("red| Warning. Unacceptable measurement scalar-invariance based on $abs$$DELTA$CFI$abs$ > 0.01")
     }
-    
-    SRMR <- fit['scalar - metric',"SRMR"]
+
+    RMSEA <- fit["scalar - metric", "RMSEA"]
+    if (abs(RMSEA) <= 0.01) {
+      super_print("green| OK. Excellent measurement scalar-invariance based on $abs$$DELTA$RMSEA$abs$ < 0.015")
+    } else if (abs(RMSEA) > 0.01 & abs(RMSEA) < 0.015) {
+      super_print("yellow| Cautious. Acceptable measurement scalar-invariance based on 0.015 > $abs$$DELTA$RMSEA$abs$ > 0.01.")
+    } else if (abs(RMSEA) >= 0.015) {
+      super_print("red| Warning. Unacceptable measurement scalar-invariance based on $abs$$DELTA$RMSEA$abs$ > 0.015.")
+    }
+
+    SRMR <- fit["scalar - metric", "SRMR"]
     if (abs(SRMR) <= 0.015) {
-      Print("<<green OK. Good measurement scalar-invariance based on delta SRMR < 0.015>>")
+      super_print("green|OK. Good measurement scalar-invariance based on $DELTA$SRMR < 0.015")
     } else if (abs(SRMR) > 0.015) {
-      Print("<<red Warning. Unacceptable measurement scalar-invariance based on delta SRMR > 0.015>>")
+      super_print("red| Warning. Unacceptable measurement scalar-invariance based on $DELTA$SRMR > 0.015")
     }
   }
-  
-  
+
+
   if (return_result == T) {
     return(fit)
   }

@@ -2,8 +2,8 @@
 #'
 #' `r lifecycle::badge("experimental")` \cr
 #' Compare the fit indices models (see below for model support)
-#'
-#' @param models list of object from `lavaan` (for measurement invariance only at the moment) or lme, lmer models.
+#' 
+#' @param ... model. If it is a lavaan object, it will try to perform measurement invariance. Other model type will passed to performance::compare_performance
 #' @param digits number of digit to round
 #'
 #' @return
@@ -15,7 +15,7 @@
 #' fit1 <- lme_model(
 #'   data = popular,
 #'   response_variable = popular,
-#'   random_effect_factors = c(extrav, sex),
+#'   random_effect_factors = extrav,
 #'   non_random_effect_factors = texp,
 #'   id = class
 #' )
@@ -23,23 +23,21 @@
 #' fit2 <- lme_model(
 #'   data = popular,
 #'   response_variable = popular,
-#'   random_effect_factors = c(extrav, sex),
+#'   random_effect_factors = extrav,
 #'   non_random_effect_factors = texp,
 #'   two_way_interaction_factor = c(extrav, texp),
 #'   id = class
 #' )
 #'
-#' compare_fit(list(fit1, fit2))
+#' compare_fit(fit1, fit2)
 #'
 #' # see ?measurement_invariance for measurement invariance example
-compare_fit <- function(models,
+compare_fit <- function(...,
                         digits = 3) {
-  if (class(models) != "list") {
-    stop(paste("models must be list. Considering wrapping the objects in a list"))
-  }
 
   # lavaan models
-  if (all(sapply(models, class) %in% "lavaan")) {
+  if (class(list(...)[[1]]) == 'lavaan') {
+    models = list(...)
     blank_df <- tibble::tibble(chisq = "", df = "", pvalue = "", cfi = "", rmsea = "", srmr = "", tli = "", aic = "", bic = "", bic2 = "", rowname = ".") %>% tibble::column_to_rownames()
     return_df <- tibble::tibble(chisq = NULL, df = NULL, pvalue = NULL, cfi = NULL, rmsea = NULL, srmr = NULL, tli = NULL, aic = NULL, bic = NULL, bic2 = NULL)
     fit_indices_df <- tibble::tibble(chisq = NULL, df = NULL, pvalue = NULL, cfi = NULL, rmsea = NULL, srmr = NULL, tli = NULL, aic = NULL, bic = NULL, bic2 = NULL)
@@ -69,28 +67,22 @@ compare_fit <- function(models,
     }
 
     fit_indices_df <- fit_indices_df %>%
-      dplyr::mutate(dplyr::across(tidyr::everything(), ~ format(round(., digits = digits), nsmall = digits)))
+      dplyr::mutate(dplyr::across(tidyselect::everything(), ~ format(round(., digits = digits), nsmall = digits)))
     compare_fit_df <- compare_fit_df %>%
-      dplyr::mutate(dplyr::across(tidyr::everything(), ~ format(round(., digits = digits), nsmall = digits)))
+      dplyr::mutate(dplyr::across(tidyselect::everything(), ~ format(round(., digits = digits), nsmall = digits)))
 
     return_df <-
-      rbind(fit_indices_df, blank_df, compare_fit_df)
+      rbind(fit_indices_df, blank_df, compare_fit_df) %>% 
+      dplyr::rename('$chi$^2' = 'chisq')
     return(return_df)
 
     ## lme & glme models
-  } else if (all(sapply(models, class) %in% c("lme", "lmerModLmerTest", "glmerMod", "lmerMod"))) {
-    return_df <- tibble::tibble(AIC = NULL, BIC = NULL, R2_conditional = NULL, R2_marginal = NULL, ICC = NULL, RMSE = NULL, Sigma = NULL)
-    for (model in models) {
-      model_performance_df <- tibble::as_tibble(performance::model_performance(model)) %>%
-        dplyr::rename(R2_full_model = .data$R2_conditional) %>%
-        dplyr::rename(R2_fixed_effect = .data$R2_marginal)
-      return_df <- rbind(return_df, model_performance_df)
-    }
-    message("R2_full_model is formally known as R2 conditional, R2_fixed_effect is formally known as R2 marginal")
-    return_df <- return_df %>%
-      dplyr::mutate(dplyr::across(tidyr::everything(), ~ format(round(., digits = digits), nsmall = digits)))
-    return(return_df)
   } else {
-    stop(paste("Object class", class(models[[1]]), "is not supported"))
-  }
+    super_print('underline|Model Summary')
+    super_print('Model Type = Model Comparison')
+    cat('\n')
+    output_table = performance::compare_performance(...)
+    output_table = output_table %>% dplyr::select(-1)
+    print_table(output_table)
+  } 
 }

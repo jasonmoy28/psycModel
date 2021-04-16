@@ -14,9 +14,10 @@
 #' @param digits number of digits to round to
 #' @param return_result Default is `FALSE`. If it is `TRUE`, it will return the lavaan model
 #' @param quite suppress all printing. Default is `FALSE`
-#' @param model_covariance print model covariance? 
+#' @param model_covariance print model covariance?
 #' @param model_variance print model variance?
 #'
+#' @return a `lavaan` object
 #' @details
 #' First, just like researchers have argued against p value of 0.05 is not a good cut-of, researchers have also argue against that fit indicies (more importantly, the cut-off criteria) are not completely representative of the goodness of fit.
 #' Nonetheless, you are required to report them if you are publishing an article anyway. I will summarize the general recommended cut-off criteria for CFA model below.
@@ -42,7 +43,7 @@
 #'   x1:x3,
 #'   group = "sex",
 #'   model_variance = FALSE, # stop printing model_variance and model_covariance
-#'   model_covariance = FALSE 
+#'   model_covariance = FALSE
 #' )
 #'
 #' # Fitting a multiple factor CFA model
@@ -60,7 +61,7 @@
 #' fit <- cfa_summary(
 #'   model = "visual  =~ x1 + x2 + x3;textual =~ x4 + x5 + x6;",
 #'   data = lavaan::HolzingerSwineford1939,
-#'   quite = TRUE #silence all output
+#'   quite = TRUE # silence all output
 #' )
 #' \dontrun{
 #' # This will fail because I did not add `model = ` in front of the lavaan model.
@@ -105,7 +106,7 @@ cfa_summary <- function(data,
     group <- NULL
   }
 
-  # Print statement
+  # super_print statement
   if (quite == F) {
     cat("Computing CFA using:\n", model)
   }
@@ -126,17 +127,21 @@ cfa_summary <- function(data,
       fit_indices <- paste(fit_indices, ".scaled", sep = "")
     }
 
-    fit_measure_df <- data.frame(variable = names(lavaan::fitMeasures(cfa_model)[fit_indices]), 
-                                 fit_measure = lavaan::fitmeasures(cfa_model)[fit_indices]) %>%
+    fit_measure_df <- data.frame(
+      variable = names(lavaan::fitMeasures(cfa_model)[fit_indices]),
+      fit_measure = lavaan::fitmeasures(cfa_model)[fit_indices]
+    ) %>%
       tidyr::pivot_wider(names_from = .data$variable, values_from = .data$fit_measure) %>%
-      dplyr::rename(p = .data$pvalue)
-
+      dplyr::rename(p = .data$pvalue) %>% 
+      dplyr::mutate(dplyr::across(tidyselect::everything(), ~format_round(., digits = digits))) %>% 
+      dplyr::rename('$chi$^2' = .data$chisq)
+    
     colnames(fit_measure_df) <- stringr::str_to_upper(colnames(fit_measure_df))
 
     standardized_df <- lavaan::standardizedsolution(cfa_model, output = "data.frame")
     factors_loadings_df <- standardized_df %>%
       dplyr::filter(.data$op == "=~") %>%
-      dplyr::select(-'op') %>%
+      dplyr::select(-"op") %>%
       dplyr::rename(Latent.Factor = "lhs") %>%
       dplyr::rename(Observed.Var = "rhs") %>%
       dplyr::rename(Std.Est = "est.std") %>%
@@ -144,12 +149,13 @@ cfa_summary <- function(data,
       dplyr::rename(Z = "z") %>%
       dplyr::rename(P.Value = "pvalue") %>%
       dplyr::rename(CI.Lower = "ci.lower") %>%
-      dplyr::rename(CI.Upper = "ci.upper")
-
+      dplyr::rename(CI.Upper = "ci.upper") %>% 
+      dplyr::mutate(dplyr::across(where(is.numeric), ~ format_round(x = ., digits = 3)))
+    
     covariance_df <- standardized_df %>%
       dplyr::filter(.data$op == "~~") %>%
       dplyr::filter(!.data$lhs == .data$rhs) %>%
-      dplyr::select(-'op') %>%
+      dplyr::select(-"op") %>%
       dplyr::rename(Var.1 = "lhs") %>%
       dplyr::rename(Var.2 = "rhs") %>%
       dplyr::rename(Est = "est.std") %>%
@@ -157,12 +163,13 @@ cfa_summary <- function(data,
       dplyr::rename(Z = "z") %>%
       dplyr::rename(P.Value = "pvalue") %>%
       dplyr::rename(CI.Lower = "ci.lower") %>%
-      dplyr::rename(CI.Upper = "ci.upper")
+      dplyr::rename(CI.Upper = "ci.upper") %>% 
+      dplyr::mutate(dplyr::across(where(is.numeric), ~ format_round(x = ., digits = 3)))
 
     variance_df <- standardized_df %>%
       dplyr::filter(.data$op == "~~") %>%
       dplyr::filter(.data$lhs == .data$rhs) %>%
-      dplyr::select(-'op') %>%
+      dplyr::select(-"op") %>%
       dplyr::rename(Var.1 = "lhs") %>%
       dplyr::rename(Var.2 = "rhs") %>%
       dplyr::rename(Est = "est.std") %>%
@@ -170,85 +177,86 @@ cfa_summary <- function(data,
       dplyr::rename(Z = "z") %>%
       dplyr::rename(P.Value = "pvalue") %>%
       dplyr::rename(CI.Lower = "ci.lower") %>%
-      dplyr::rename(CI.Upper = "ci.upper")
+      dplyr::rename(CI.Upper = "ci.upper") %>% 
+      dplyr::mutate(dplyr::across(where(is.numeric), ~ format_round(x = ., digits = 3)))
 
     ################################################## Model Output ###################################################################
-    Print("\n \n")
-    Print("<<underline Model Summary>>")
-    Print("Model Type = Confirmatory Factor Analysis")
-    Print("Model Formula = \n .{model}")
+    cat("\n \n")
+    super_print("underline|Model Summary")
+    super_print("Model Type = Confirmatory Factor Analysis")
+    super_print("Model Formula = \n.{model}")
     if (length(group) != 0) {
-      Print("Group = {group}")
+      super_print("Group = {group}")
     }
 
     cat("\n \n")
-    Print("<<underline Fit Measure>>")
-    print_table(fit_measure_df, nsmalls = digits, row.names = F)
+    super_print("underline|Fit Measure")
+    print_table(fit_measure_df)
 
     cat("\n \n")
-    Print("<<underline Factor Loadings>>")
-    print_table(factors_loadings_df, nsmalls = digits, row.names = F)
+    super_print("underline|Factor Loadings")
+    print_table(factors_loadings_df)
 
     if (length(row.names(covariance_df)) != 0 & model_covariance == T) {
       cat("\n \n")
-      Print("<<underline Model Covariances>>")
-      print_table(covariance_df, nsmalls = digits, row.names = F)
+      super_print("underline|Model Covariances")
+      print_table(covariance_df)
     }
 
     if (length(row.names(variance_df)) != 0 & model_variance == T) {
       cat("\n \n")
-      Print("<<underline Model Variance>>")
-      print_table(variance_df, nsmalls = digits, row.names = F)
+      super_print("underline|Model Variance")
+      print_table(variance_df)
     }
-    cat("\n \n")
-    Print("Goodness of Fit:")
-
+########################################## Goodness of Fit ###################################################
     if (ordered == F) {
+      cat("\n \n")
+      super_print("Goodness of Fit:")
       P <- fit_measure_df["P"]
       if (P >= 0.05 & !is.na(P)) {
-        Print("<<green OK. Excellent Chi-Square fit (p > 0.05)>>")
+        super_print("green| OK. Excellent $chi$^2 fit (p > 0.05)")
       } else if (P < 0.05 & !is.na(P)) {
-        Print("<<yellow Warning. Poor Chi-Square fit (p < 0.05). It is common to get p < 0.05. Check other fit measure.>>")
+        super_print("yellow| Warning. Poor $chi$^2 fit (p < 0.05). It is common to get p < 0.05. Check other fit measure.")
       }
 
       CFI <- fit_measure_df["CFI"]
       if (CFI >= 0.95) {
-        Print("<<green OK. Excellent CFI fit (CFI > 0.95)>>")
+        super_print("green| OK. Excellent CFI fit (CFI > 0.95)")
       } else if (CFI >= 0.9) {
-        Print("<<green OK. Acceptable CFI fit (CFI > 0.90)>>")
+        super_print("green| OK. Acceptable CFI fit (CFI > 0.90)")
       } else if (CFI < 0.9) {
-        Print("<<red Warning. Poor CFI fit (CFI < 0.90)>>")
+        super_print("red| Warning. Poor CFI fit (CFI < 0.90)")
       }
 
       RMSEA <- fit_measure_df["RMSEA"]
       if (RMSEA <= 0.05) {
-        Print("<<green OK. Excellent RMSEA fit (RMSEA < 0.05)>>")
+        super_print("green| OK. Excellent RMSEA fit (RMSEA < 0.05)")
       } else if (RMSEA <= 0.08) {
-        Print("<<green OK. Acceptable RMSEA fit (RMSEA < 0.08)>>")
+        super_print("green| OK. Acceptable RMSEA fit (RMSEA < 0.08)")
       } else if (RMSEA > 0.08) {
-        Print("<<red Warning. Poor RMSEA fit (RMSEA > 0.08)>>")
+        super_print("red| Warning. Poor RMSEA fit (RMSEA > 0.08)")
       }
 
       SRMR <- fit_measure_df["SRMR"]
       if (SRMR <= 0.08) {
-        Print("<<green OK. Good SRMR fit (SRMR < 0.08)>>")
+        super_print("green| OK. Good SRMR fit (SRMR < 0.08)")
       } else if (SRMR > 0.08) {
-        Print("<<red Warning. Poor SRMR fit (SRMR > 0.08)>>")
+        super_print("red| Warning. Poor SRMR fit (SRMR > 0.08)")
       }
 
       TLI <- fit_measure_df["TLI"]
       if (TLI >= 0.95) {
-        Print("<<green OK. Good TLI fit (TLI > 0.95)>>")
+        super_print("green| OK. Good TLI fit (TLI > 0.95)")
       } else if (TLI < 0.95) {
-        Print("<<red Warning. Poor TLI fit (TLI < 0.95)>>")
+        super_print("red| Warning. Poor TLI fit (TLI < 0.95)")
       }
 
       if (all(factors_loadings_df$Std.Est >= 0.7)) {
-        Print("<<green OK. Excellent factor loadings (all loadings > 0.7)>>")
+        super_print("green| OK. Excellent factor loadings (all loadings > 0.7)")
       } else if (any(factors_loadings_df$Std.Est < 0.7) & all(factors_loadings_df$Std.Est >= 0.4)) {
-        Print("<<yellow OK. Barely acceptable factor loadings (0.4 < some loadings < 0.7)>>")
+        super_print("yellow| OK. Barely acceptable factor loadings (0.4 < some loadings < 0.7)")
       } else if (any(factors_loadings_df$Std.Est < 0.4)) {
-        Print("<<red Warning. Some poor factor loadings (some loadings < 0.4)>>")
+        super_print("red| Warning. Some poor factor loadings (some loadings < 0.4)")
       }
     } else {
       print("No recommended cut-off criteria is avaliable for CFA fitted using DWLS. See ?cfa_summary details for more info.")

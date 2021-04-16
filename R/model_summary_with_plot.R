@@ -20,7 +20,7 @@
 #' @param opt_control default is `optim` for `lme` and `bobyqa` for lmerTest
 #' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
 #' @param plot_color If it is set to `TRUE` (default is `FALSE`), the interaction plot will plot with color.
-#' @param use_package Default is `nlme`. Only available for linear mixed effect model. Options are `nlme` or `lmerTest`,`lme4`(`'lme4` return similiar result as `lmerTest` except the return model)
+#' @param use_package Default is `nlme`. Only available for linear mixed effect model. Options are `nlme` or `lmerTest`,`lme4`(`'lme4` return similar result as `lmerTest` except the return model)
 #' @param quite If it is set to `TRUE` (default is `FALSE`), it will not print the fitting model statement
 #' @param round number of digit.
 #' @param simple_slope Compute the slope differing with ± 1 SD of the IVs. In the background, it calls interaction:sim_slopes()
@@ -35,15 +35,26 @@
 #' fit <- model_summary_with_plot(
 #'   data = popular,
 #'   response_variable = popular,
+#'   random_effect_factors = c(extrav),
+#'   non_random_effect_factors = texp,
+#'   two_way_interaction_factor = c(extrav, texp),
+#'   graph_label_name = c("popular", "extraversion", "teacher experience"),
+#'   id = class
+#' )
+#' \dontrun{
+#' fit <- model_summary_with_plot(
+#'   data = popular,
+#'   response_variable = popular,
 #'   random_effect_factors = c(extrav, sex),
 #'   non_random_effect_factors = texp,
-#'   three_way_interaction_factor = c(extrav, sex, texp),
-#'   graph_label_name = c("popular", "extraversion", "sex", "teacher experience"),
+#'   three_way_interaction_factor = c(extrav, sex, texp), # three-way interaction
+#'   graph_label_name = c("popular", "extraversion", "sex", "teacher experience"), 
 #'   id = class,
-#'   simple_slope = TRUE,
-#'   assumption_plot = TRUE,
-#'   plot_color = TRUE
-#' )
+#'   simple_slope = TRUE, #you can request simple slope
+#'   assumption_plot = TRUE, # see can also request assumption plot
+#'   plot_color = TRUE # you can also request the plot in color
+#' )}
+#' 
 model_summary_with_plot <- function(data,
                                     model = NULL,
                                     response_variable = NULL,

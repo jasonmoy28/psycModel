@@ -41,6 +41,9 @@ cfa_summary(
 
 \item{group_partial}{Items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').}
 }
+\value{
+a \code{lavaan} object
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 The function fits a CFA model using the lavaan::cfa function. Users can fit single and multiple factors CFA, and it also supports multilevel CFA (specifying the group).
@@ -67,7 +70,7 @@ fit <- cfa_summary(
   x1:x3,
   group = "sex",
   model_variance = FALSE, # stop printing model_variance and model_covariance
-  model_covariance = FALSE 
+  model_covariance = FALSE
 )
 
 # Fitting a multiple factor CFA model
@@ -85,7 +88,7 @@ fit <- cfa_summary(
 fit <- cfa_summary(
   model = "visual  =~ x1 + x2 + x3;textual =~ x4 + x5 + x6;",
   data = lavaan::HolzingerSwineford1939,
-  quite = TRUE #silence all output
+  quite = TRUE # silence all output
 )
 \dontrun{
 # This will fail because I did not add `model = ` in front of the lavaan model.

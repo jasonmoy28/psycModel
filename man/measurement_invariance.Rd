@@ -51,7 +51,7 @@ All arguments (except the CFA items) must be explicitly named (like model = your
 Chen (2007) suggested that ΔCFI <= |-0.010| supplemented by RMSEA <= 0.015 indicate non-invariance when sample sizes were equal across groups and larger than 300 in each group (Chen, 2007).
 And, Chen (2007) suggested that ΔCFI <= |-0.005| and ΔRMSEA <= 0.010 for unequal sample size with each group smaller than 300. For SRMR, Chen (2007) recommend ΔSRMR < 0.030 for metric-invariance and ΔSRMR < 0.015 for scalar-invariance.
 For large group size, Rutowski & Svetina (2014) recommended a more liberal cut-off for metric non-invariance for CFI (ΔCFI <= |-0.020|) and RMSEA (RMSEA <= 0.030). However, this more liberal cut-off DOES NOT apply to testing scalar non-invariance.
-If measurement-invariance is not achived, some researchers suggesting partial invariance is acceptable (by releasing the contraints on some factors). For example, Steenkamp and Baumgartner (1998) suggested that ideally more than half of items on a factor should be invariant. However,
+If measurement-invariance is not achieved, some researchers suggesting partial invariance is acceptable (by releasing the constraints on some factors). For example, Steenkamp and Baumgartner (1998) suggested that ideally more than half of items on a factor should be invariant. However,
 it is important to note that no empirical studies were cited to support the partial invariance guideline (Putnick & Bornstein, 2016).
 }
 \examples{
