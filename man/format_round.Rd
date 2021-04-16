@@ -4,12 +4,12 @@
 \alias{format_round}
 \title{Format digits (internal use only)}
 \usage{
-format_round(x, nsmall = 3)
+format_round(x, digits = 3)
 }
 \arguments{
 \item{x}{object}
 
-\item{nsmall}{number of digit}
+\item{digits}{number of digit}
 }
 \description{
 Format digits (internal use only)

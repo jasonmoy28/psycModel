@@ -1,11 +1,10 @@
 #' Format digits (internal use only)
 #'
 #' @param x object
-#' @param nsmall number of digit
-#'
-#' @export
+#' @param digits number of digit
 #'
 #'
-format_round <- function(x, nsmall = 3) {
-  format(x, digits = 0, nsmall = nsmall, scientific = F)
+#'
+format_round <- function(x, digits = 3) {
+  format(round(x, digits = digits), nsmall = digits, scientific = F)
 }
