@@ -2,7 +2,6 @@
 #'
 #' @param data data frame
 #' @keywords internal
-#' @export
 #'
 
 data_check <- function(data) {

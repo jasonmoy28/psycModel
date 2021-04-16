@@ -7,7 +7,6 @@
 #' @param type either "greek" (convert greek character) or "command" (convert color text and font style command). Command options are bold, italic, underline, red, green, yellow, blue, silver.
 #'
 #' @return converted unicode-based character for greek letter, color, font style
-#' @export
 #' @keywords internal
 #'
 text_convert <- function(text, type) {

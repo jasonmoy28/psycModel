@@ -6,7 +6,7 @@
 #' @param digits number of digits to round to
 #'
 #' @return none
-#' @export
+#'
 print_table <- function(data_frame, digits = 3) {
   data_frame <- data_frame %>%
     tibble::as_tibble() %>%

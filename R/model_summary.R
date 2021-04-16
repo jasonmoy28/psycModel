@@ -24,7 +24,7 @@
 #' # I recommend using the model_summary_with_plot to get everything
 #'
 #' # lme example
-#' lme_fit <- lme4::lmer("popular ~ extrav + texp  + (1 | class)",
+#' lme_fit <- lme4::lmer("popular ~ texp  + (1 | class)",
 #'   data = popular
 #' )
 #'

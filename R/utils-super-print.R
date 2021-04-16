@@ -10,7 +10,6 @@
 #' @return formatted text (greek letter, color, font style formatted)
 #'
 #' @keywords internal
-#' @export
 #'
 super_print <- function(text, env = parent.frame()) {
   text <- glue::glue(text, .envir = env)
