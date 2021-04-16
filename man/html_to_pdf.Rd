@@ -13,6 +13,9 @@ html_to_pdf(file_path = NULL, dir = NULL, render_exist = F)
 
 \item{render_exist}{overwrite exist PDF. Default is \code{F}}
 }
+\value{
+no return
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 This is a helper function for knitting Rmd. Due to technological limitation, the output cannot knit to PDF in Rmd directly. It uses the pagedown::chrome_print() in the backend.

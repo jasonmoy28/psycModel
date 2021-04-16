@@ -38,7 +38,7 @@ However, it also support more versatile verb like `tidyselect::everything` or `t
 ```
 Whooo, finally, let's see the output  
 
-![asummption-plot](../man/figures/mode_summary_plot.png){width=100%} 
+![mode-summary-plot](../man/figures/mode_summary_plot.png){width=100%} 
 *Note that this is not generated dynamically, but rather insert as a static image for better viewing experience*  
 
 The first section tells your the model type. In this case, it is the linear mixed effect model (fitted using lmerTest). The predictors are extrav (extraversion), sex, texp (teacher experience), and all interaction terms. The second section give you fixed effect estimate. The third section give you model performance like AIC, BIC, $R^2$. The forth section gives you assumption checks. As you can see, the model convergence is ok, but the model has a boundary fit (i.e., singular). It also gives you a multi-collinearity table if multi-colinearity is detected. As you can see from the warning, multi-colinearity may not be accurate since we included a interaction term. So, you can try removing the interaction term and re-fit the model. Last, since you included an interaction, it will print a two-way interaction plot which can be print in color if you set `plot_color = T`
@@ -57,5 +57,5 @@ However, as we all know, there are a lot of problems with p-value. Although I th
    assumption_plot = T
  )
 ```
-![asummption-plot](../man/figures/assumption_plot.png){width=100%} 
+![assumption-plot](../man/figures/assumption_plot.png){width=100%} 
 *Note that this is not generated dynamically, but rather insert as a static image for better viewing experience*

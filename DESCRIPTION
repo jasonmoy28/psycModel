@@ -21,8 +21,8 @@ Imports:
     ggplot2,
     glue,
     jmv,
-    lifecycle,
     lavaan,
+    lifecycle,
     lme4,
     lmerTest,
     magrittr,
@@ -35,19 +35,19 @@ Imports:
     tidyr,
     utils
 Suggests:
-    see,
-    gridExtra,
-    qqplotr,
-    interactions,
     covr,
     cowplot,
     ggrepel,
+    gridExtra,
+    interactions,
     knitr,
+    pagedown,
+    qqplotr,
     rmarkdown,
     roxygen2,
+    see,
     testthat (>= 3.0.0),
-    tidyselect,
-    pagedown
+    tidyselect
 VignetteBuilder: 
     knitr
 Encoding: UTF-8

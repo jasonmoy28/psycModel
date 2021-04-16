@@ -35,9 +35,12 @@ efa_summary(
 
 \item{kmo_test}{show Kaiser-Meyer-Olkin (KMO) measure of sampling adequacy (MSA) results (you want the overall MSA to be higher than 0.7). Default is \code{T}}
 }
+\value{
+return the result from jmv::efa()
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
-The function fits a exploratory factor analysis model using the jmv::efa (The Jamovi Project, 2021) function. Users can fit the model by passing items using dplyr::select syntax. In the future, I may re-write this to be consisent with the layout of this package.
+The function fits a exploratory factor analysis model using the jmv::efa (The Jamovi Project, 2021) function. Users can fit the model by passing items using dplyr::select syntax. In the future, I may re-write this to be consistent with the layout of this package.
 }
 \details{
 As a thumb of rule, you want factor loadings to be above 0.5.

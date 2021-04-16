@@ -44,7 +44,7 @@ lme_model(
 
 \item{na.action}{default is \code{stats::na.exclude}. Required to be \code{stats::na.omit} if check_assumption if \code{T}.}
 
-\item{use_package}{Default is \code{nlme}. Only available for linear mixed effect model. Options are \code{nlme} or \code{lmerTest},\code{lme4}(\verb{'lme4} return similiar result as \code{lmerTest} except the return model)}
+\item{use_package}{Default is \code{nlme}. Only available for linear mixed effect model. Options are \code{nlme} or \code{lmerTest},\code{lme4}(\verb{'lme4} return similar result as \code{lmerTest} except the return model)}
 
 \item{quite}{default to \code{F}. If set to \code{T}, it will not print the fitting model statement}
 

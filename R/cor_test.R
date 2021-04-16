@@ -1,14 +1,14 @@
 #' Correlation table
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' This function uses the psych::corr.test (Revelle, 2021) function to generated the pearson correlation table and their associated significance values.
+#' This function uses the psych::corr.test (Revelle, 2021) function to generated the Pearson correlation table and their associated significance values.
 #'
 #' @param data data frame
 #' @param cols columns. tidyselect syntax or helpers.
 #' @param digit number of digits
 #' @param sig_test Default is raw. Options are 'adjusted' or 'raw'. Adjusted use holm adjustment method. See ?stats::p.adjust to learn why.
 #' @param ... additional argument.
-#'
+#' @return data frame of the correlation table
 #' @export
 #' @references
 #' Revelle, W. (2021). psych: Procedures for Psychological, Psychometric, and Personality Research. Northwestern University, Evanston, Illinois. R package version 2.1.3, https://CRAN.R-project.org/package=psych.
@@ -32,11 +32,11 @@ cor_test <- function(data, cols, sig_test = "raw", digit = 3, ...) {
 
   cor_df <- cor_df_raw %>%
     dplyr::mutate("rowname" = colnames(cor_df_raw)) %>%
-    dplyr::select("rowname", tidyr::everything())
+    dplyr::select("rowname", tidyselect::everything())
 
 
   sig_df <- tidyr::as_tibble(cor_test_df$p) %>%
-    dplyr::mutate(dplyr::across(tidyr::everything(), ~
+    dplyr::mutate(dplyr::across(tidyselect::everything(), ~
     dplyr::case_when(
       . < 0.001 ~ "***",
       . < 0.01 & . >= 0.001 ~ "**",

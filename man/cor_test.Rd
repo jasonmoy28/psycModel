@@ -17,9 +17,12 @@ cor_test(data, cols, sig_test = "raw", digit = 3, ...)
 
 \item{...}{additional argument.}
 }
+\value{
+data frame of the correlation table
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-This function uses the psych::corr.test (Revelle, 2021) function to generated the pearson correlation table and their associated significance values.
+This function uses the psych::corr.test (Revelle, 2021) function to generated the Pearson correlation table and their associated significance values.
 }
 \examples{
 cor_test(iris, where(is.numeric))

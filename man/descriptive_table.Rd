@@ -29,6 +29,9 @@ descriptive_table(
 
 \item{file_path}{file path for export. The function will implicitly pass this argument to the write.csv(file = file_path)}
 }
+\value{
+data frame of the descriptive table
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 This function generates a table of descriptive statistics (mainly using psych::describe; Revelle, 2021) and or a correlation table. User can export this to a csv file (optionally, using the file_path argument). Users can open the csv file with MS Excel then copy and paste the table into MS Word table.

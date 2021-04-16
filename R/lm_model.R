@@ -1,5 +1,5 @@
 #' Linear Regressions / ANOVA / ANCOVA
-#' 
+#'
 #' `r lifecycle::badge("stable")` \cr
 #' Fit a linear regression using `lm`. Linear regression is used to explore the effect of continuous variables / categorical variables in predicting a normally-distributed continuous variables. If you are using a categorical predictor to predict a continuous variable, some may call it a ANOVA / ANCOVA while it is just a special form of linear regression). In this package, I will not build separate function for ANOVA & ANCOVA since they are the same as linear regression
 #'
@@ -18,7 +18,7 @@
 #' fit <- lm_model(
 #'   data = iris,
 #'   response_variable = "Sepal.Length",
-#'   predictor_var = everything(),
+#'   predictor_var = tidyselect::everything(),
 #'   two_way_interaction_factor = c(Sepal.Width, Species)
 #' )
 lm_model <- function(data,

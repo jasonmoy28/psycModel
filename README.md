@@ -1,5 +1,5 @@
 # psycModel
-## Intergrated Toolkit for Pyschological Analysis and Modeling in R
+## Intergrated Toolkit for Psychological Analysis and Modeling in R
 
 <!-- badges: start -->
 [![R package version](https://img.shields.io/github/r-package/v/jasonmoy28/psycModel)](https://github.com/jasonmoy28/psycModel)
@@ -30,7 +30,7 @@ devtools::install_github('jasonmoy28/psycModel') #install.packages('devtools') i
 
 **Citation:** Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 
-## Acknoledgement
+## Acknowledgement
 This package was built by standing on the shoulders of giants with special thanks to researchers and developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [`psych`](https://personality-project.org/r/psych/), [`jmv`](https://github.com/jamovi/jmv), and all [`tidyverse`](https://tidyverse.tidyverse.org/) packages. Additionally, I want to thank the developer of [`bruceR`](https://github.com/psychbruce/bruceR). Although [`bruceR`](https://github.com/psychbruce/bruceR) is not imported, I used `bruceR::Print` and `bruceR::print_table` for these amazing rich-text formatted output. I hope my package can help someone as they had helped me. 
 
 

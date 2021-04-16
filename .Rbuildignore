@@ -3,10 +3,12 @@
 ^LICENSE\.md$
 ^\.github$
 update_list.md
+version_checklist.md
 ^codecov\.yml$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
 ^doc$
 ^Meta$
-version_checklist.md
+^cran-comments\.md$
+^revdep$

@@ -7,12 +7,12 @@
 #'
 #' @param file_path file path to the HTML file (can be relative if you are in a R project)
 #' @param dir file path to the directory of all HTML files (can be relative if you are in a R project)
-#' @param render_exist overwrite exist PDF. Default is `F` 
-#'
+#' @param render_exist overwrite exist PDF. Default is `F`
+#' @return no return
 #' @export
 #'
 html_to_pdf <- function(file_path = NULL,
-                        dir = NULL, 
+                        dir = NULL,
                         render_exist = F) {
   if (requireNamespace("pagedown", quietly = TRUE)) {
     if (!is.null(file_path)) {
