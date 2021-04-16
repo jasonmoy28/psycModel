@@ -4,7 +4,15 @@
 \alias{cor_test}
 \title{Correlation table}
 \usage{
-cor_test(data, cols, sig_test = "raw", digit = 3, ...)
+cor_test(
+  data,
+  cols,
+  sig_test = "raw",
+  digit = 3,
+  quite = F,
+  return_result = F,
+  ...
+)
 }
 \arguments{
 \item{data}{data frame}
@@ -15,21 +23,20 @@ cor_test(data, cols, sig_test = "raw", digit = 3, ...)
 
 \item{digit}{number of digits}
 
-\item{...}{additional argument.}
+\item{quite}{suppress printing output}
+
+\item{return_result}{return the data frame of the descriptive table}
+
+\item{...}{additional argument for internal use}
 }
 \value{
 data frame of the correlation table
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-This function uses the psych::corr.test (Revelle, 2021) function to generated the Pearson correlation table and their associated significance values.
+This function uses the psych::corr.test function to generated the Pearson correlation table and their associated significance values.
 }
 \examples{
 cor_test(iris, where(is.numeric))
 cor_test(iris, where(is.numeric), sig_test = "adjusted") # use adjusted correlation
-}
-\references{
-Revelle, W. (2021). psych: Procedures for Psychological, Psychometric, and Personality Research. Northwestern University, Evanston, Illinois. R package version 2.1.3, https://CRAN.R-project.org/package=psych.
-
-Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 }

@@ -12,9 +12,9 @@
 #' @param kmo_test show Kaiser-Meyer-Olkin (KMO) measure of sampling adequacy (MSA) results (you want the overall MSA to be higher than 0.7). Default is `T`
 #' @param scree_plot show explained variance by number of factor plot. default is `T`.
 #' @param n_factors the number of factors in the model. Default is data-driven estimation of most appropriate number of factors
-#' 
+#'
 #' @return return the result from jmv::efa()
-#' 
+#'
 #' @details
 #' As a thumb of rule, you want factor loadings to be above 0.5.
 #' @references

@@ -1,24 +1,30 @@
 #' Correlation table
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' This function uses the psych::corr.test (Revelle, 2021) function to generated the Pearson correlation table and their associated significance values.
+#' This function uses the psych::corr.test function to generated the Pearson correlation table and their associated significance values.
 #'
 #' @param data data frame
 #' @param cols columns. tidyselect syntax or helpers.
 #' @param digit number of digits
 #' @param sig_test Default is raw. Options are 'adjusted' or 'raw'. Adjusted use holm adjustment method. See ?stats::p.adjust to learn why.
-#' @param ... additional argument.
-#' @return data frame of the correlation table
-#' @export
-#' @references
-#' Revelle, W. (2021). psych: Procedures for Psychological, Psychometric, and Personality Research. Northwestern University, Evanston, Illinois. R package version 2.1.3, https://CRAN.R-project.org/package=psych.
+#' @param quite suppress printing output
+#' @param return_result return the data frame of the descriptive table
+#' @param ... additional argument for internal use
 #'
-#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
+#' @return data frame of the correlation table
+#'
+#' @export
 #'
 #' @examples
 #' cor_test(iris, where(is.numeric))
 #' cor_test(iris, where(is.numeric), sig_test = "adjusted") # use adjusted correlation
-cor_test <- function(data, cols, sig_test = "raw", digit = 3, ...) {
+cor_test <- function(data,
+                     cols,
+                     sig_test = "raw",
+                     digit = 3,
+                     quite = F,
+                     return_result = F,
+                     ...) {
   cols <- enquo(cols)
   data <- data %>% dplyr::select(!!cols)
   data <- data_check(data)
@@ -69,7 +75,18 @@ cor_test <- function(data, cols, sig_test = "raw", digit = 3, ...) {
       return(cor_df)
     }
   }
-  cor_df <- cor_df %>% dplyr::select(-"rowname")
+  cor_df <- cor_df %>% dplyr::rename(Var = .data$rowname)
+
+  if (quite == F) {
+    super_print("underline|Model Summary")
+    super_print("Model Type = Model Comparison")
+    cat("\n")
+    print_table(cor_df)
+  }
+
+  if (return_result == T) {
+    return(cor_df)
+  }
 
   # printing warning message, non-essential block
   coreced_name <- NULL
@@ -80,5 +97,4 @@ cor_test <- function(data, cols, sig_test = "raw", digit = 3, ...) {
     warning_message <- paste(paste(coreced_name, collapse = ", "), "were coreced into numeric")
     warning(warning_message)
   }
-  return(cor_df)
 }

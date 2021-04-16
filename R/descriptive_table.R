@@ -10,14 +10,12 @@
 #' @param descriptive_indicator Default is mean, sd, cor. Options are missing (missing value count), non_missing (non-missing value count), cor (correlation table), n, mean, sd, median, trimmed (trimmed mean), median, mad (median absolute deviation from the median), min, max, range, skew, kurtosis, se (standard error)
 #' @param descriptive_indicator_digit number of digit for the descriptive table
 #' @param file_path file path for export. The function will implicitly pass this argument to the write.csv(file = file_path)
-#' 
-#' @return data frame of the descriptive table
-#' 
-#' @export
-#' @references
-#' Revelle, W. (2021). psych: Procedures for Psychological, Psychometric, and Personality Research. Northwestern University, Evanston, Illinois. R package version 2.1.3, https://CRAN.R-project.org/package=psych.
+#' @param quite suppress printing output
+#' @param return_result return the data frame of the descriptive table
 #'
-#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
+#' @return data frame of the descriptive table
+#'
+#' @export
 #'
 #' @examples
 #' descriptive_table(iris, cols = where(is.numeric)) # all numeric columns
@@ -33,6 +31,8 @@ descriptive_table <- function(data,
                               cor_digit = 3,
                               descriptive_indicator = c("mean", "sd", "cor"),
                               descriptive_indicator_digit = 3,
+                              quite = F,
+                              return_result = F,
                               file_path = NULL) {
   cols <- enquo(cols)
   data <- data %>% dplyr::select(!!cols)
@@ -78,10 +78,18 @@ descriptive_table <- function(data,
     return_df <- return_df %>% dplyr::full_join(cor_table, by = "rowname")
   }
 
-  return_df <- return_df %>% tibble::column_to_rownames()
-
+  return_df <- return_df %>% dplyr::rename(Var = .data$rowname)
+  if (quite == F) {
+    cat("\n")
+    super_print("underline|Model Summary")
+    super_print("Model Type = Descriptive Statistics")
+    print_table(return_df)
+    cat("\n")
+  }
   if (!is.null(file_path)) {
     utils::write.csv(x = return_df, file = file_path)
   }
-  return(return_df)
+  if (return_result == T) {
+    return(return_df)
+  }
 }

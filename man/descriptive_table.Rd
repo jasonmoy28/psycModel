@@ -11,6 +11,8 @@ descriptive_table(
   cor_digit = 3,
   descriptive_indicator = c("mean", "sd", "cor"),
   descriptive_indicator_digit = 3,
+  quite = F,
+  return_result = F,
   file_path = NULL
 )
 }
@@ -26,6 +28,10 @@ descriptive_table(
 \item{descriptive_indicator}{Default is mean, sd, cor. Options are missing (missing value count), non_missing (non-missing value count), cor (correlation table), n, mean, sd, median, trimmed (trimmed mean), median, mad (median absolute deviation from the median), min, max, range, skew, kurtosis, se (standard error)}
 
 \item{descriptive_indicator_digit}{number of digit for the descriptive table}
+
+\item{quite}{suppress printing output}
+
+\item{return_result}{return the data frame of the descriptive table}
 
 \item{file_path}{file path for export. The function will implicitly pass this argument to the write.csv(file = file_path)}
 }
@@ -44,9 +50,4 @@ descriptive_table(iris,
   # get missing count, non-missing count, and mean & sd & correlation table
   descriptive_indicator = c("missing", "non_missing", "mean", "sd", "cor")
 )
-}
-\references{
-Revelle, W. (2021). psych: Procedures for Psychological, Psychometric, and Personality Research. Northwestern University, Evanston, Illinois. R package version 2.1.3, https://CRAN.R-project.org/package=psych.
-
-Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 }
