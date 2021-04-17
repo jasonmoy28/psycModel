@@ -1,74 +1,168 @@
 #' Exploratory Factor Analysis
 #'
 #' `r lifecycle::badge("experimental")` \cr
-#' The function fits a exploratory factor analysis model using the jmv::efa (The Jamovi Project, 2021) function. Users can fit the model by passing items using dplyr::select syntax. In the future, I may re-write this to be consistent with the layout of this package.
+#' The function is used to fit a exploratory factor analysis model. It will first find the optimal number of factors using parameters::n_factors. Once the optimal number of factor is determined, the function will fit the model using 
+#' psych::fa(). Optionally, you can request a post-hoc CFA model that fit the EFA model using CFA which gives you more fit indexes (e.g., CFI, RMSEA, TLI)
 #'
 #' @param data data frame
 #' @param cols columns. dplyr::select syntax.
 #' @param rotation the rotation to use in estimation. Default is oblimin. Options are 'none', 'varimax', 'quartimax', 'promax', 'oblimin', or 'simplimax'
-#' @param fit_measures show model fit measures and test. Default is `T`
-#' @param factor_summary show factor summary showing the explained variance for each factor. Default is `T`
-#' @param bartlett_test show Bartlett's test of sphericity result (you want this to be significant). Default is `T`
-#' @param kmo_test show Kaiser-Meyer-Olkin (KMO) measure of sampling adequacy (MSA) results (you want the overall MSA to be higher than 0.7). Default is `T`
-#' @param scree_plot show explained variance by number of factor plot. default is `T`.
-#' @param n_factors the number of factors in the model. Default is data-driven estimation of most appropriate number of factors
+#' @param n_factor number of factors for EFA. It will bypass the initial optimization algorithm, and fit the EFA model using this specified number of factor
+#' @param efa_plot show explained variance by number of factor plot. default is `T`.
+#' @param digits number of digits
+#' @param optimal_factor_method Show a summary of the number of factors by optimization method (e.g., BIC, VSS complexity, Velicer's MAP)
+#' @param post_hoc_cfa a CFA model based on the extracted factor
+#' @param return_result If set to `TRUE` (default is `FALSE`), it will return a `fa` object from `psych`
 #'
-#' @return return the result from jmv::efa()
+#' @return an `fa` object from `psych`
 #'
-#' @details
-#' As a thumb of rule, you want factor loadings to be above 0.5.
-#' @references
-#' The Jamovi Project. (2021). jmv: The 'jamovi' Analyses. R package version 1.2.23. Retrieved from https://github.com/jamovi/jmv.
 #' @export
 #'
 #' @examples
-#' efa_summary(lavaan::HolzingerSwineford1939, starts_with("x"), scree_plot = TRUE)
+#' efa_summary(lavaan::HolzingerSwineford1939, starts_with("x"), post_hoc_cfa = TRUE)
 efa_summary <- function(data,
                         cols,
-                        rotation = "oblimin",
-                        n_factors = "default",
-                        scree_plot,
-                        fit_measures = T,
-                        factor_summary = T,
-                        bartlett_test = T,
-                        kmo_test = T) {
+                        rotation = 'varimax',
+                        optimal_factor_method = F, 
+                        efa_plot = T,
+                        digits = 3, 
+                        n_factor = NULL, 
+                        post_hoc_cfa = F,
+                        return_result = F) {
+  
   data <- data %>% dplyr::select(!!enquo(cols))
-  if (n_factors == "default") {
-    n_factors <- 1
-    n_factor_method <- "parallel" # if n_factors is inputted
-  } else {
-    n_factor_method <- "fixed" # default behavior
+  ######################################## Optimal Factor ##########################################################
+  if (is.null(n_factor)) {
+    if (requireNamespace('nFactors',quietly = T)) {
+      getmode <- function(v) {
+        uniqv <- unique(v)
+        uniqv[which.max(tabulate(match(v, uniqv)))]
+      }
+      n_factor_df = parameters::n_factors(data, rotation = rotation)
+      n_factor_count = n_factor_df$n_Factors %>% tibble::as_tibble_col() %>%  dplyr::rename('Optimal Factor #' = .data$value)
+      n_factor = getmode(n_factor_df$n_Factors)
+      n_factor_output = n_factor_df$Method %>% tibble::as_tibble_col() %>% dplyr::rename('Method' = .data$value) %>% dplyr::bind_cols(n_factor_count)
+    } else{
+      stop("Please install.packages('nFactors') for finding the optimal number of EFA factors")
+    }
+  } else{
+    n_factor_output = NULL
   }
-
-  efa_model <- jmv::efa(
-    data = data,
-    rotation = rotation,
-    nFactors = n_factors,
-    bartlett = bartlett_test,
-    kmo = kmo_test,
-    modelFit = fit_measures,
-    factorSummary = factor_summary,
-    nFactorMethod = n_factor_method
-  )
-  if (scree_plot == T) {
-    plot <-
-      efa_model$factorStats$factorSummary$asDF %>%
-      tidyr::pivot_longer(cols = c(.data$varProp, .data$varCum), names_to = "Type", values_to = "explained_variance") %>%
-      dplyr::mutate(explained_variance = round(.data$explained_variance, 0)) %>%
-      ggplot2::ggplot(ggplot2::aes(x = .data$comp, y = .data$explained_variance, group = .data$Type)) +
-      ggplot2::geom_point() +
-      ggplot2::geom_line(ggplot2::aes(linetype = .data$Type)) +
+  
+  ######################################## Factor Analysis ##########################################################
+  efa_result = data %>% psych::fa(nfactors = n_factor,rotate = rotation)
+  efa_loadings = as.data.frame.array(efa_result$loadings) %>% 
+    tibble::rownames_to_column('Var') %>% 
+    dplyr::mutate(dplyr::across(where(is.numeric), function(x){dplyr::if_else(x < 0.4,true = '',false = as.character(format_round(x,digits = digits)))}))
+  colnames(efa_loadings) = stringr::str_replace_all(string = colnames(efa_loadings),pattern = 'MR',replacement = 'Factor ')
+  
+  efa_uniquenesses = efa_result$uniquenesses %>% 
+    as.data.frame() %>% 
+    tibble::rownames_to_column('Var') %>% 
+    dplyr::rename(Uniqueness = .data$.)
+  efa_loadings_binded = efa_loadings %>% 
+    dplyr::full_join(efa_uniquenesses,by = 'Var')
+  
+  efa_variance = 
+    as.data.frame(efa_result$Vaccounted) %>% 
+    tibble::rownames_to_column(var = 'Var') 
+  colnames(efa_variance) = stringr::str_replace_all(string = colnames(efa_variance),pattern = 'MR',replacement = 'Factor ')
+  
+  factor_structure_test = parameters::check_factorstructure(data)
+  sphericity_p = factor_structure_test$sphericity$p
+  
+  if (sphericity_p < 0.001) {
+    sphericity_p_output = 'p < 0.001'
+  } else{
+    sphericity_p_format = format_round(sphericity_p, 3)
+    sphericity_p_output = glue::glue('p = {sphericity_p_format}')
+  }
+  sphericity_chi =  format_round(factor_structure_test$sphericity$chisq,3)
+  sphericity_df =  factor_structure_test$sphericity$dof
+  
+  KMO_MSA_var = factor_structure_test$KMO$MSA_variable %>% 
+    as.data.frame() %>% 
+    tibble::rownames_to_column('Var') %>% 
+    dplyr::rename(`KMO Value` = .data$.)
+  
+  KMO_MSA_overall = as.numeric(format_round(factor_structure_test$KMO$MSA,3))
+  
+  KMO_MSA_table = factor_structure_test$KMO$MSA %>% 
+    tibble::as_tibble_col(column_name = 'KMO Value') %>% 
+    tibble::add_column(Var = 'Overall') %>% 
+    dplyr::bind_rows(KMO_MSA_var) %>% 
+    dplyr::select('Var', 'KMO Value')
+  #################################################### Output Model ##############################################
+  
+  cat('\n \n \n')
+  super_print("underline|Model Summary")
+  super_print("Model Type = Exploratory Factor Analysis")
+  super_print("Optimal Factors = {n_factor}")
+  cat('\n')
+  super_print('underline|Factor Loadings')
+  print_table(efa_loadings)
+  cat('\n')
+  cat('\n')
+  super_print('underline|Explained Variance')
+  print_table(efa_variance)
+  cat('\n')
+  cat('\n')
+  
+  if (!is.null(n_factor_output) & optimal_factor_method == T) {
+    super_print('underline|Optimal Factor by Method')
+    print_table(n_factor_output,digits = 0)
+    cat('\n')
+  }
+  
+  super_print('EFA Model Assumption Test:')
+  if (sphericity_p < 0.05) {
+    super_print("green|OK. Bartlett's test of sphericity suggest the data is appropriate for factor analysis. $chi$^2({sphericity_df}) = {sphericity_chi}, {sphericity_p_output}")
+  } else{
+    super_print("red|Warning. Bartlett's test of sphericity suggest the data is not appropriate for factor analysis. $chi$^2({sphericity_df}) = {sphericity_chi}, {sphericity_p_output})")
+  }
+  
+  if (KMO_MSA_overall > 0.7) {
+    super_print("green|OK. KMO measure of sampling adequacy suggests the data is appropriate for factor analysis. KMO = {KMO_MSA_overall}")
+  } else{
+    super_print("red|Warning. KMO measure of sampling adequacy suggests the data is not appropriate for factor analysis. KMO = {KMO_MSA_overall}")
+  }
+  cat('\n')
+  super_print('underline|KMO Measure of Sampling Adequacy')
+  print_table(KMO_MSA_table,digits = 0)
+  cat('\n')
+  
+  if (efa_plot == T) {
+    plot = efa_variance %>% 
+      dplyr::filter(Var %in% c('Proportion Var')) %>% 
+      tidyr::pivot_longer(cols = dplyr::contains('Factor')) %>% 
+      dplyr::mutate(value = as.numeric(format_round(.data$value*100,digits = 0))) %>% 
+      ggplot2::ggplot(ggplot2::aes(x = .data$name, y = .data$value, fill = Var)) + 
+      ggplot2::geom_bar(stat = 'identity',position = 'dodge',width = 0.4) + 
+      ggplot2::labs(y = "Proportion of Explained Variance", x = "Factor #") +
+      ggplot2::ylim(0,100) + 
       ggplot2::theme_minimal() +
+      ggplot2::scale_fill_manual(values=c("#2171b5", "#6baed6")) + 
+      ggplot2::geom_text(ggplot2::aes(label=paste(value,'%',sep = '')), position=ggplot2::position_dodge(width=0.9), vjust=-0.25) + 
       ggplot2::theme(
         panel.grid.major = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_blank(),
-        panel.background = ggplot2::element_blank(), axis.line = ggplot2::element_line(colour = "black")
-      ) +
-      ggplot2::labs(y = "Explained Variance", x = "Factor #") +
-      ggplot2::scale_linetype_discrete(labels = c("Cumulative Exp. Var.", "Single Factor Exp. Var.")) +
-      ggplot2::ylim(0, 100) +
-      ggplot2::geom_text(ggplot2::aes(label = paste(.data$explained_variance, "%", sep = ""), vjust = -1))
+        panel.background = ggplot2::element_blank(), axis.line = ggplot2::element_line(colour = "black"),
+        legend.position = "none"
+      ) 
     print(plot)
   }
-
-  return(efa_model)
+  
+  if (post_hoc_cfa == T) {
+    cfa_model = parameters::efa_to_cfa(efa_result)
+    cfa_model = cfa_model %>% stringr::str_replace_all(pattern = 'MR',replacement = 'Factor.')
+    cat('\n')
+    super_print('underline|Post-hoc CFA Model Summary')
+    cat('\n')
+    cfa_summary(data = data,
+                model = cfa_model,
+                model_variance = F,
+                streamline = T)
+  }
+  if (return_result == T) {
+    return(efa_result)
+  }
 }

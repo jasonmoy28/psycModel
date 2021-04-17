@@ -7,13 +7,13 @@
 efa_summary(
   data,
   cols,
-  rotation = "oblimin",
-  n_factors = "default",
-  scree_plot,
-  fit_measures = T,
-  factor_summary = T,
-  bartlett_test = T,
-  kmo_test = T
+  rotation = "varimax",
+  optimal_factor_method = F,
+  efa_plot = T,
+  digits = 3,
+  n_factor = NULL,
+  post_hoc_cfa = F,
+  return_result = F
 )
 }
 \arguments{
@@ -23,31 +23,26 @@ efa_summary(
 
 \item{rotation}{the rotation to use in estimation. Default is oblimin. Options are 'none', 'varimax', 'quartimax', 'promax', 'oblimin', or 'simplimax'}
 
-\item{n_factors}{the number of factors in the model. Default is data-driven estimation of most appropriate number of factors}
+\item{optimal_factor_method}{Show a summary of the number of factors by optimization method (e.g., BIC, VSS complexity, Velicer's MAP)}
 
-\item{scree_plot}{show explained variance by number of factor plot. default is \code{T}.}
+\item{efa_plot}{show explained variance by number of factor plot. default is \code{T}.}
 
-\item{fit_measures}{show model fit measures and test. Default is \code{T}}
+\item{digits}{number of digits}
 
-\item{factor_summary}{show factor summary showing the explained variance for each factor. Default is \code{T}}
+\item{n_factor}{number of factors for EFA. It will bypass the initial optimization algorithm, and fit the EFA model using this specified number of factor}
 
-\item{bartlett_test}{show Bartlett's test of sphericity result (you want this to be significant). Default is \code{T}}
+\item{post_hoc_cfa}{a CFA model based on the extracted factor}
 
-\item{kmo_test}{show Kaiser-Meyer-Olkin (KMO) measure of sampling adequacy (MSA) results (you want the overall MSA to be higher than 0.7). Default is \code{T}}
+\item{return_result}{If set to \code{TRUE} (default is \code{FALSE}), it will return a \code{fa} object from \code{psych}}
 }
 \value{
-return the result from jmv::efa()
+an \code{fa} object from \code{psych}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
-The function fits a exploratory factor analysis model using the jmv::efa (The Jamovi Project, 2021) function. Users can fit the model by passing items using dplyr::select syntax. In the future, I may re-write this to be consistent with the layout of this package.
-}
-\details{
-As a thumb of rule, you want factor loadings to be above 0.5.
+The function is used to fit a exploratory factor analysis model. It will first find the optimal number of factors using parameters::n_factors. Once the optimal number of factor is determined, the function will fit the model using
+psych::fa(). Optionally, you can request a post-hoc CFA model that fit the EFA model using CFA which gives you more fit indexes (e.g., CFI, RMSEA, TLI)
 }
 \examples{
-efa_summary(lavaan::HolzingerSwineford1939, starts_with("x"), scree_plot = TRUE)
-}
-\references{
-The Jamovi Project. (2021). jmv: The 'jamovi' Analyses. R package version 1.2.23. Retrieved from https://github.com/jamovi/jmv.
+efa_summary(lavaan::HolzingerSwineford1939, starts_with("x"), post_hoc_cfa = TRUE)
 }
