@@ -31,7 +31,7 @@ devtools::install_github('jasonmoy28/psycModel') #install.packages('devtools') i
 **Citation:** Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 
 ## Acknowledgement
-This package was built by standing on the shoulders of giants with special thanks to researchers and developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [parameters](https://easystats.github.io/parameters/), [`psych`](https://personality-project.org/r/psych/), and of couse, all of the [`tidyverse`](https://tidyverse.tidyverse.org/) packages. I hope my package can help someone as they had helped me. 
+This package was built by standing on the shoulders of giants with special thanks to researchers and developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [`parameters`](https://easystats.github.io/parameters/), [`psych`](https://personality-project.org/r/psych/), and of couse, all of the [`tidyverse`](https://tidyverse.tidyverse.org/) packages. I hope my package can help someone as they had helped me. 
 
 
 ## Updates
