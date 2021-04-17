@@ -8,6 +8,8 @@ super_print(text, env = parent.frame())
 }
 \arguments{
 \item{text}{inputted text}
+
+\item{env}{environment.}
 }
 \value{
 formatted text (greek letter, color, font style formatted)
