@@ -16,17 +16,14 @@ URL: https://jasonmoy28.github.io/psycModel
 Depends: 
     R (>= 2.10)
 Imports: 
-    crayon,
     dplyr,
     ggplot2,
     glue,
-    jmv,
     lavaan,
     lifecycle,
-    lme4,
     lmerTest,
     magrittr,
-    nlme,
+    parameters,
     performance,
     psych,
     rlang (>= 0.1.2),
@@ -35,17 +32,21 @@ Imports:
     tidyr,
     utils
 Suggests:
+    nlme,
+    lme4,
     covr,
     cowplot,
     ggrepel,
     gridExtra,
     interactions,
     knitr,
+    nFactors,
     pagedown,
     qqplotr,
     rmarkdown,
     roxygen2,
     see,
+    semPlot,
     testthat (>= 3.0.0),
     tidyselect
 VignetteBuilder: 
