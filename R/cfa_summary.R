@@ -14,8 +14,10 @@
 #' @param digits number of digits to round to
 #' @param return_result Default is `FALSE`. If it is `TRUE`, it will return the lavaan model
 #' @param quite suppress printing output
-#' @param model_covariance print model covariance?
-#' @param model_variance print model variance?
+#' @param model_covariance print model covariance. Default is `TRUE`
+#' @param model_variance print model variance. Default is `TRUE`
+#' @param streamline print streamlined output
+#' @param plot print a path diagram. Default is `TRUE`
 #'
 #' @return a `lavaan` object
 #' @details
@@ -31,12 +33,14 @@
 #' @export
 #' @examples
 #' # REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT
-#' # Fitting a single factor CFA model
+#' # Fitting a multiple factor CFA model
 #' fit <- cfa_summary(
 #'   data = lavaan::HolzingerSwineford1939,
-#'   x1:x3
+#'   x1:x3,
+#'   x4:x6,
+#'   x7:x9,
 #' )
-#'
+#' 
 #' # Fitting a multilevel single factor CFA model
 #' fit <- cfa_summary(
 #'   data = lavaan::HolzingerSwineford1939,
@@ -46,14 +50,6 @@
 #'   model_covariance = FALSE
 #' )
 #'
-#' # Fitting a multiple factor CFA model
-#' fit <- cfa_summary(
-#'   data = lavaan::HolzingerSwineford1939,
-#'   x1:x3,
-#'   x4:x6,
-#'   x7:x9,
-#'   quite = TRUE # silence all output
-#' )
 #'
 #' # Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)
 #' # Note in the below function how I added `model = ` in front of the lavaan model.
@@ -82,7 +78,9 @@ cfa_summary <- function(data,
                         digits = 3,
                         model_covariance = T,
                         model_variance = T,
+                        plot = T, 
                         quite = F,
+                        streamline = F, 
                         group_partial = NULL) {
   if (is.null(model)) { # construct model if explicit model is not passed
     items <- enquos(...)
@@ -106,10 +104,6 @@ cfa_summary <- function(data,
     group <- NULL
   }
 
-  # super_print statement
-  if (quite == F) {
-    cat("Computing CFA using:\n", model)
-  }
 
   cfa_model <- lavaan::cfa(
     model = model,
@@ -139,6 +133,7 @@ cfa_summary <- function(data,
     colnames(fit_measure_df) <- stringr::str_to_upper(colnames(fit_measure_df))
 
     standardized_df <- lavaan::standardizedsolution(cfa_model, output = "data.frame")
+    
     factors_loadings_df <- standardized_df %>%
       dplyr::filter(.data$op == "=~") %>%
       dplyr::select(-"op") %>%
@@ -151,6 +146,21 @@ cfa_summary <- function(data,
       dplyr::rename(CI.Lower = "ci.lower") %>%
       dplyr::rename(CI.Upper = "ci.upper") %>%
       dplyr::mutate(dplyr::across(where(is.numeric), ~ format_round(x = ., digits = 3)))
+    
+    if (is.null(group)) {
+      factor_name_df = data.frame(Latent.Factor = NA)
+      for (factor_name in factors_loadings_df$Latent.Factor) {
+        if (factor_name %in% factor_name_df[,1]) {
+          factor_name = ''
+        }
+        factor_name_loop = data.frame(Latent.Factor = factor_name)
+        factor_name_df = rbind(factor_name_df,factor_name_loop)
+      }
+      factor_name_df = stats::na.omit(factor_name_df)
+      factors_loadings_df = factors_loadings_df %>% 
+        dplyr::mutate(Latent.Factor = factor_name_df$Latent.Factor)
+    }
+    
 
     covariance_df <- standardized_df %>%
       dplyr::filter(.data$op == "~~") %>%
@@ -181,15 +191,15 @@ cfa_summary <- function(data,
       dplyr::mutate(dplyr::across(where(is.numeric), ~ format_round(x = ., digits = 3)))
 
     ################################################## Model Output ###################################################################
-    cat("\n \n")
-    super_print("underline|Model Summary")
-    super_print("Model Type = Confirmatory Factor Analysis")
-    super_print("Model Formula = \n.{model}")
-    if (length(group) != 0) {
-      super_print("Group = {group}")
+    if (streamline == F) {
+      cat("\n \n")
+      super_print("underline|Model Summary")
+      super_print("Model Type = Confirmatory Factor Analysis")
+      super_print("Model Formula = \n.{model}")
+      if (length(group) != 0) {
+        super_print("Group = {group}")
+      }
     }
-
-    cat("\n \n")
     super_print("underline|Fit Measure")
     print_table(fit_measure_df)
 
@@ -246,9 +256,11 @@ cfa_summary <- function(data,
 
       TLI <- fit_measure_df["TLI"]
       if (TLI >= 0.95) {
-        super_print("green| OK. Good TLI fit (TLI > 0.95)")
-      } else if (TLI < 0.95) {
-        super_print("red| Warning. Poor TLI fit (TLI < 0.95)")
+        super_print("green| OK. Excellent TLI fit (TLI > 0.95)")
+      } else if (TLI >= 0.9) {
+        super_print("green| OK. Acceptable TLI fit (TLI > 0.90)")
+      } else if (TLI < 0.9) {
+        super_print("red| Warning. Poor TLI fit (TLI < 0.90)")
       }
 
       if (all(factors_loadings_df$Std.Est >= 0.7)) {
@@ -259,9 +271,23 @@ cfa_summary <- function(data,
         super_print("red| Warning. Some poor factor loadings (some loadings < 0.4)")
       }
     } else {
-      print("No recommended cut-off criteria is avaliable for CFA fitted using DWLS. See ?cfa_summary details for more info.")
+      print("No recommended cut-off criteria is avaliable for CFA fitted using DWLS (non-continuous variable). See ?cfa_summary details.")
     }
   } # quite == F
+  if (plot == T) {
+    if (requireNamespace('semPlot',quietly = T)) {
+    semPlot::semPaths(cfa_model,
+             what = 'std',
+             edge.color = 'black',
+             sizeMan = 5,
+             sizeLat = 8,
+             edge.label.cex = 1,
+             nCharEdges = 5,
+             esize = 1)
+    } else{
+      message("Please install.packages('semPlot') for path diagram")
+    }
+  }
   ## return result
   if (return_result == T) {
     return(cfa_model)

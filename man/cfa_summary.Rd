@@ -14,7 +14,9 @@ cfa_summary(
   digits = 3,
   model_covariance = T,
   model_variance = T,
+  plot = T,
   quite = F,
+  streamline = F,
   group_partial = NULL
 )
 }
@@ -33,11 +35,15 @@ cfa_summary(
 
 \item{digits}{number of digits to round to}
 
-\item{model_covariance}{print model covariance?}
+\item{model_covariance}{print model covariance. Default is \code{TRUE}}
 
-\item{model_variance}{print model variance?}
+\item{model_variance}{print model variance. Default is \code{TRUE}}
+
+\item{plot}{print a path diagram. Default is \code{TRUE}}
 
 \item{quite}{suppress printing output}
+
+\item{streamline}{print streamlined output}
 
 \item{group_partial}{Items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').}
 }
@@ -58,10 +64,12 @@ The model is considered an acceptable fit if CFI > 0.9 and RMSEA < 0.08. I need 
 }
 \examples{
 # REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT
-# Fitting a single factor CFA model
+# Fitting a multiple factor CFA model
 fit <- cfa_summary(
   data = lavaan::HolzingerSwineford1939,
-  x1:x3
+  x1:x3,
+  x4:x6,
+  x7:x9,
 )
 
 # Fitting a multilevel single factor CFA model
@@ -73,14 +81,6 @@ fit <- cfa_summary(
   model_covariance = FALSE
 )
 
-# Fitting a multiple factor CFA model
-fit <- cfa_summary(
-  data = lavaan::HolzingerSwineford1939,
-  x1:x3,
-  x4:x6,
-  x7:x9,
-  quite = TRUE # silence all output
-)
 
 # Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)
 # Note in the below function how I added `model = ` in front of the lavaan model.
