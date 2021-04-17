@@ -28,8 +28,8 @@ reliability_summary = function(data,
   
   cols = data %>% dplyr::select(!!enquo(cols)) %>% names()
   data = data %>% dplyr::select(dplyr::all_of(cols))
-
-    if (is.null(dimensionality)) {
+  ############################################ Unidimensionality Model ################################################################
+  if (is.null(dimensionality)) { #check dimensionality to use 
     getmode <- function(v) {
       uniqv <- unique(v)
       uniqv[which.max(tabulate(match(v, uniqv)))]
@@ -40,11 +40,7 @@ reliability_summary = function(data,
     ifelse(test = n_factor == 1,yes = {dimensionality = 'uni'},no = {dimensionality = 'multi'})
   }
   
-  super_print('underline|Model Summary')
-  super_print('Model Type = Reliability Analysis')
-  super_print("Dimensionality = {paste(dimensionality,'-dimensionality', sep = '')}")
-  cat('\n')
-  
+  ############################################ Unidimensionality Model ################################################################
   if (dimensionality == 'uni') {
     alpha_fit = suppressMessages(data %>% psych::alpha())
     alpha_fit_measure = alpha_fit$total[1:3]
@@ -56,6 +52,10 @@ reliability_summary = function(data,
       dplyr::rename(`G6 (smc)` = .data$`G6(smc)`) 
     names(alpha_fit_measure) = c('Alpha','Alpha.Std','G6 (smc)')
     
+    super_print('underline|Model Summary')
+    super_print('Model Type = Reliability Analysis')
+    super_print("Dimensionality = {paste(dimensionality,'-dimensionality', sep = '')}")
+    cat('\n')
     super_print('underline|Composite Reliability Measures')
     print_table(alpha_fit_measure)
     cat('\n')
@@ -77,6 +77,7 @@ reliability_summary = function(data,
     cat('\n')
     cat('\n')
   } else {
+    ############################################ Multidimensionality Model ################################################################
     alpha_fit = suppressMessages(data %>% psych::alpha())
     if (requireNamespace("GPArotation", quietly = TRUE)) {
       omega_fit = data %>% psych::omega()
@@ -85,18 +86,22 @@ reliability_summary = function(data,
     }
     
     composite_measure = tibble::tibble(Alpha = round(alpha_fit$total['raw_alpha'],digits = digits), 
-                           Alpha.Std = round(alpha_fit$total['std.alpha'],digits = digits), 
-                           G.6 = omega_fit$G6, 
-                           Omega.Hierarchical = omega_fit$omega_h,
-                           Omega.Total = omega_fit$omega.tot)
+                                       Alpha.Std = round(alpha_fit$total['std.alpha'],digits = digits), 
+                                       G.6 = omega_fit$G6, 
+                                       Omega.Hierarchical = omega_fit$omega_h,
+                                       Omega.Total = omega_fit$omega.tot)
     
-     alpha_item_statistics = alpha_fit$alpha.drop %>% 
+    alpha_item_statistics = alpha_fit$alpha.drop %>% 
       dplyr::select('raw_alpha', 'std.alpha', 'G6(smc)') %>% 
       tibble::rownames_to_column('Var') %>% 
-       dplyr::rename(Alpha = .data$raw_alpha) %>% 
-       dplyr::rename(Alpha.Std = .data$std.alpha) %>% 
-       dplyr:: rename(`G6 (smc)` = .data$`G6(smc)`) 
+      dplyr::rename(Alpha = .data$raw_alpha) %>% 
+      dplyr::rename(Alpha.Std = .data$std.alpha) %>% 
+      dplyr:: rename(`G6 (smc)` = .data$`G6(smc)`) 
     
+    super_print('underline|Model Summary')
+    super_print('Model Type = Reliability Analysis')
+    super_print("Dimensionality = {paste(dimensionality,'-dimensionality', sep = '')}")
+    cat('\n')
     super_print('underline|Composite Reliability Measures')
     print_table(composite_measure)
     cat('\n')
@@ -121,5 +126,5 @@ reliability_summary = function(data,
       return(omega_fit)
     }
   }
-
+  
 }

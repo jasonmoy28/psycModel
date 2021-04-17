@@ -28,8 +28,8 @@
 #'   data = popular
 #' )
 #'
-#' model_summary(lme_fit) # you can request assumption_plot for visual inspection
-#'
+#' model_summary(lme_fit) 
+#' 
 #' # lm example
 #'
 #' lm_fit <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width,
@@ -292,7 +292,7 @@ model_summary <- function(model,
       if (all(collinearity_df$VIF < 5)) {
         super_print("green|OK: No multicolinearity detected (VIF < 5)")
       } else if (any(collinearity_df$VIF >= 5) & all(collinearity_df$VIF < 10)) {
-        super_print("yellow|Cautious: Moderate multicolinearity detected  (5 < VIF < 10). Please inspect the following table to identify factors.  ")
+        super_print("yellow|Cautious: Moderate multicolinearity detected  (5 < VIF < 10). Please inspect the following table to identify high correlation factors.")
         super_print("underline|Multicollinearity Table ")
         print_table(collinearity_df)
       } else if (any(collinearity_df$VIF > 10)) {

@@ -14,3 +14,4 @@ format_round(x, digits = 3)
 \description{
 Format digits (internal use only)
 }
+\keyword{internal}

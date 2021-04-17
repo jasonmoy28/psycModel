@@ -22,3 +22,9 @@ This is a helper function for knitting Rmd. Due to technological limitation, the
 You must first knit to HTML, then you can use this function to covert them to PDF if you wish. I am sorry. I can't find any way to implement it.
 If you know how to implement it, please submit an issue on github to let me know.
 }
+\examples{
+\dontrun{
+html_to_pdf(file_path = 'html_name.html') 
+html_to_pdf(dir = 'Users/Desktop/my_html_folder') #all HTML files in the my_html_folder will be converted
+}
+}

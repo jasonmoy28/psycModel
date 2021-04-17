@@ -11,6 +11,11 @@
 #' @return no return
 #' @export
 #'
+#' @examples
+#' \dontrun{
+#' html_to_pdf(file_path = 'html_name.html') 
+#' html_to_pdf(dir = 'Users/Desktop/my_html_folder') #all HTML files in the my_html_folder will be converted
+#' }
 html_to_pdf <- function(file_path = NULL,
                         dir = NULL,
                         render_exist = F) {

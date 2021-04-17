@@ -79,7 +79,7 @@ cor_test <- function(data,
 
   if (quite == F) {
     super_print("underline|Model Summary")
-    super_print("Model Type = Model Comparison")
+    super_print("Model Type = Pearson Correlation")
     cat("\n")
     print_table(cor_df)
   }

@@ -47,21 +47,21 @@
 #'   data = lavaan::HolzingerSwineford1939,
 #'   x1:x3,
 #'   group = "sex",
-#'   model_variance = FALSE, # stop printing model_variance and model_covariance
-#'   model_covariance = FALSE
+#'   model_variance = FALSE, # do not print the model_variance 
+#'   model_covariance = FALSE # do not print the model_covariance
 #' )}
 #'
 #'
 #' # Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)
 #' # Note in the below function how I added `model = ` in front of the lavaan model.
 #' # Similarly, the same rule apply for all arguments (e.g., `ordered = F` instead of `F`)
-#' 
+#' \dontrun{
 #' fit <- cfa_summary(
-#'   model = "visual  =~ x1 + x2 + x3;textual =~ x4 + x5 + x6;",
+#'   model = "visual  =~ x1 + x2 + x3; textual =~ x4 + x5 + x6;",
 #'   data = lavaan::HolzingerSwineford1939,
 #'   quite = TRUE # silence all output
 #' )
-#' 
+#' }
 #' \dontrun{
 #' # This will fail because I did not add `model = ` in front of the lavaan model.
 #' # Therefore,you must add the tag in front of all arguments

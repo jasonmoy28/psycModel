@@ -12,7 +12,7 @@ Description: Integrated many useful functions from a variety of popular R
     packages, including descriptive statistics, measurement model, and
     mixed effect model.
 License: GPL (>= 3)
-URL: https://jasonmoy28.github.io/psycModel
+URL: https://jasonmoy28.github.io/psycModel/
 Depends: 
     R (>= 2.10)
 Imports: 

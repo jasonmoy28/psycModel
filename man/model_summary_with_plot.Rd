@@ -104,7 +104,7 @@ fit <- model_summary_with_plot(
   graph_label_name = c("popular", "extraversion", "sex", "teacher experience"),
   id = class,
   simple_slope = TRUE, # you can request simple slope
-  assumption_plot = TRUE, # see can also request assumption plot
+  assumption_plot = TRUE, # you can also request assumption plot
   plot_color = TRUE # you can also request the plot in color
 )
 }

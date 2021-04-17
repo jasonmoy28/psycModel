@@ -17,3 +17,4 @@ none
 \description{
 Rich-text fitted table printing in console
 }
+\keyword{internal}
