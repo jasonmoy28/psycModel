@@ -305,7 +305,7 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
 #&gt; </span><span style='color: #BB0000;'>Warning: Non-normality of residuals detected (p = 0.003).
 #&gt; </span><span style='color: #0000BB;'>Unable to check autocorrelation. Try changing na.action to na.omit.</span><span>
 #&gt; </span><span style='color: #00BB00;'>OK: Error variance appears to be homoscedastic (p = 0.846).
-#&gt; </span><span style='color: #BBBB00;'>Cautious: Moderate multicolinearity detected  (5 &lt; VIF &lt; 10). Please inspect the following table to identify factors.  </span><span>
+#&gt; </span><span style='color: #BBBB00;'>Cautious: Moderate multicolinearity detected  (5 &lt; VIF &lt; 10). Please inspect the following table to identify high correlation factors.</span><span>
 #&gt; </span><span style='text-decoration: underline;'>Multicollinearity Table </span><span>
 #&gt; ───────────────────────────────
 #&gt;          Term    VIF  SE_factor
@@ -323,7 +323,7 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
   graph_label_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"popular"</span>, <span class='st'>"extraversion"</span>, <span class='st'>"sex"</span>, <span class='st'>"teacher experience"</span><span class='op'>)</span>,
   id <span class='op'>=</span> <span class='va'>class</span>,
   simple_slope <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='co'># you can request simple slope</span>
-  assumption_plot <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='co'># see can also request assumption plot</span>
+  assumption_plot <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='co'># you can also request assumption plot</span>
   plot_color <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='co'># you can also request the plot in color</span>
 <span class='op'>)</span>
 <span class='op'>}</span>
