@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mean, SD, and Correlation table — descriptive_table • psycModel</title>
+<title>Descriptive Statistics Table — descriptive_table • psycModel</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Mean, SD, and Correlation table — descriptive_table" />
+<meta property="og:title" content="Descriptive Statistics Table — descriptive_table" />
 <meta property="og:description" content=" 
 This function generates a table of descriptive statistics (mainly using psych::describe; Revelle, 2021) and or a correlation table. User can export this to a csv file (optionally, using the file_path argument). Users can open the csv file with MS Excel then copy and paste the table into MS Word table." />
 
@@ -125,7 +125,7 @@ This function generates a table of descriptive statistics (mainly using psych::d
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Mean, SD, and Correlation table</h1>
+    <h1>Descriptive Statistics Table</h1>
     
     <div class="hidden name"><code>descriptive_table.Rd</code></div>
     </div>
@@ -142,6 +142,7 @@ This function generates a table of descriptive statistics (mainly using psych::d
   cor_digit <span class='op'>=</span> <span class='fl'>3</span>,
   descriptive_indicator <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mean"</span>, <span class='st'>"sd"</span>, <span class='st'>"cor"</span><span class='op'>)</span>,
   descriptive_indicator_digit <span class='op'>=</span> <span class='fl'>3</span>,
+  streamline <span class='op'>=</span> <span class='cn'>F</span>,
   quite <span class='op'>=</span> <span class='cn'>F</span>,
   return_result <span class='op'>=</span> <span class='cn'>F</span>,
   file_path <span class='op'>=</span> <span class='cn'>NULL</span>
@@ -156,7 +157,7 @@ This function generates a table of descriptive statistics (mainly using psych::d
     </tr>
     <tr>
       <th>cols</th>
-      <td><p>vector or tidyselect syntax or helpers. column(s) need to be included in the table.</p></td>
+      <td><p>column(s) need to be included in the table. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>cor_sig_test</th>
@@ -173,6 +174,10 @@ This function generates a table of descriptive statistics (mainly using psych::d
     <tr>
       <th>descriptive_indicator_digit</th>
       <td><p>number of digit for the descriptive table</p></td>
+    </tr>
+    <tr>
+      <th>streamline</th>
+      <td><p>print streamlined output</p></td>
     </tr>
     <tr>
       <th>quite</th>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Exploratory Factor Analysis — efa_summary • psycModel</title>
+<title>Reliability Analysis — reliability_summary • psycModel</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,10 @@
 
 
 
-<meta property="og:title" content="Exploratory Factor Analysis — efa_summary" />
-<meta property="og:description" content=" 
-The function is used to fit a exploratory factor analysis model. It will first find the optimal number of factors using parameters::n_factors. Once the optimal number of factor is determined, the function will fit the model using
-psych::fa(). Optionally, you can request a post-hoc CFA model that fit the EFA model using CFA which gives you more fit indexes (e.g., CFI, RMSEA, TLI)" />
+<meta property="og:title" content="Reliability Analysis — reliability_summary" />
+<meta property="og:description" content="First, it will determine whether the data is uni-dimensional or multi-dimensional using parameters::n_factors(). If the data is uni-dimensional, then it will print a summary
+consists of alpha, G6, single-factor CFA, and descriptive statistics result. If it is multi-dimensional, it will print a summary consist of alpha, G6, omega result. You can
+bypass this by specifying the dimensionality argument." />
 
 
 
@@ -126,26 +126,23 @@ psych::fa(). Optionally, you can request a post-hoc CFA model that fit the EFA m
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Exploratory Factor Analysis</h1>
+    <h1>Reliability Analysis</h1>
     
-    <div class="hidden name"><code>efa_summary.Rd</code></div>
+    <div class="hidden name"><code>reliability_summary.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a> <br />
-The function is used to fit a exploratory factor analysis model. It will first find the optimal number of factors using parameters::n_factors. Once the optimal number of factor is determined, the function will fit the model using
-psych::fa(). Optionally, you can request a post-hoc CFA model that fit the EFA model using CFA which gives you more fit indexes (e.g., CFI, RMSEA, TLI)</p>
+    <p>First, it will determine whether the data is uni-dimensional or multi-dimensional using parameters::n_factors(). If the data is uni-dimensional, then it will print a summary
+consists of alpha, G6, single-factor CFA, and descriptive statistics result. If it is multi-dimensional, it will print a summary consist of alpha, G6, omega result. You can
+bypass this by specifying the dimensionality argument.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>efa_summary</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>reliability_summary</span><span class='op'>(</span>
   <span class='va'>data</span>,
   <span class='va'>cols</span>,
-  rotation <span class='op'>=</span> <span class='st'>"varimax"</span>,
-  optimal_factor_method <span class='op'>=</span> <span class='cn'>F</span>,
-  efa_plot <span class='op'>=</span> <span class='cn'>T</span>,
+  dimensionality <span class='op'>=</span> <span class='cn'>NULL</span>,
   digits <span class='op'>=</span> <span class='fl'>3</span>,
-  n_factor <span class='op'>=</span> <span class='cn'>NULL</span>,
-  post_hoc_cfa <span class='op'>=</span> <span class='cn'>F</span>,
+  descriptive_table <span class='op'>=</span> <span class='cn'>T</span>,
   return_result <span class='op'>=</span> <span class='cn'>F</span>
 <span class='op'>)</span></pre>
 
@@ -158,45 +155,35 @@ psych::fa(). Optionally, you can request a post-hoc CFA model that fit the EFA m
     </tr>
     <tr>
       <th>cols</th>
-      <td><p>columns. dplyr::select syntax.</p></td>
+      <td><p>items for reliability analysis.  Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
     </tr>
     <tr>
-      <th>rotation</th>
-      <td><p>the rotation to use in estimation. Default is oblimin. Options are 'none', 'varimax', 'quartimax', 'promax', 'oblimin', or 'simplimax'</p></td>
-    </tr>
-    <tr>
-      <th>optimal_factor_method</th>
-      <td><p>Show a summary of the number of factors by optimization method (e.g., BIC, VSS complexity, Velicer's MAP)</p></td>
-    </tr>
-    <tr>
-      <th>efa_plot</th>
-      <td><p>show explained variance by number of factor plot. default is <code>T</code>.</p></td>
+      <th>dimensionality</th>
+      <td><p>Specify the dimensionality. Either <code>uni</code> (uni-dimensionality) or <code>multi</code> (multi-dimensionality). Default is <code>NULL</code> that determines the dimensionality using EFA.</p></td>
     </tr>
     <tr>
       <th>digits</th>
       <td><p>number of digits</p></td>
     </tr>
     <tr>
-      <th>n_factor</th>
-      <td><p>number of factors for EFA. It will bypass the initial optimization algorithm, and fit the EFA model using this specified number of factor</p></td>
-    </tr>
-    <tr>
-      <th>post_hoc_cfa</th>
-      <td><p>a CFA model based on the extracted factor</p></td>
+      <th>descriptive_table</th>
+      <td><p>Get descriptive statistics. Default is <code>TRUE</code></p></td>
     </tr>
     <tr>
       <th>return_result</th>
-      <td><p>If set to <code>TRUE</code> (default is <code>FALSE</code>), it will return a <code>fa</code> object from <code>psych</code></p></td>
+      <td><p>If set to <code>TRUE</code> (default is <code>FALSE</code>), it will return <code><a href='https://rdrr.io/pkg/psych/man/alpha.html'>psych::alpha</a></code> for unidimensional scale, and <code><a href='https://rdrr.io/pkg/psych/man/omega.html'>psych::omega</a></code> for multidimensional scale.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an <code>fa</code> object from <code>psych</code></p>
+    <p><code><a href='https://rdrr.io/pkg/psych/man/alpha.html'>psych::alpha</a></code> for unidimensional scale, and <code><a href='https://rdrr.io/pkg/psych/man/omega.html'>psych::omega</a></code> for multidimensional scale.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>efa_summary</span><span class='op'>(</span><span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>, <span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>"x"</span><span class='op'>)</span>, post_hoc_cfa <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in efa_summary(lavaan::HolzingerSwineford1939, starts_with("x"),     post_hoc_cfa = TRUE): Please install.packages('nFactors') for finding the optimal number of EFA factors</span></div></pre>
+    <pre class="examples"><div class='input'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>reliability_summary</span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,cols <span class='op'>=</span> <span class='va'>x1</span><span class='op'>:</span><span class='va'>x3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in parameters::n_factors(data): Package 'nFactors' required for this function to work. Please install it by running `install.packages('nFactors')`.</span></div><div class='input'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>reliability_summary</span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,cols <span class='op'>=</span> <span class='va'>x1</span><span class='op'>:</span><span class='va'>x9</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in parameters::n_factors(data): Package 'nFactors' required for this function to work. Please install it by running `install.packages('nFactors')`.</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
