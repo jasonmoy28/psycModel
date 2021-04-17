@@ -5,14 +5,14 @@
 [![R package version](https://img.shields.io/github/r-package/v/jasonmoy28/psycModel)](https://github.com/jasonmoy28/psycModel)
 [![R-CMD-check](https://github.com/jasonmoy28/psycModel/workflows/R-CMD-check/badge.svg)](https://github.com/jasonmoy28/psycModel/actions)
 [![Codecov test coverage](https://codecov.io/gh/jasonmoy28/psycModel/branch/master/graph/badge.svg)](https://codecov.io/gh/jasonmoy28/psycModel?branch=master)
-[![Github last commit](https://img.shields.io/github/last-commit/jasonmoy28/psycModel)](https://github.com/jasonmoy28/psycModel)
 [![DOI](https://zenodo.org/badge/355611696.svg)](https://doi.org/10.5281/zenodo.4671947)
 
 <!-- badges: end -->
 
 ## Installation
 ```R
-devtools::install_github('jasonmoy28/psycModel') #install.packages('devtools') if devtools is not installed
+#install.packages('devtools') if devtools is not installed
+devtools::install_github('jasonmoy28/psycModel')
 ```
 ## Key Features
 <span style="color:#009900">✓</span> Easy to use for R beginners who don't want to find dedicated packages for each analysis. <br/>
@@ -31,7 +31,7 @@ devtools::install_github('jasonmoy28/psycModel') #install.packages('devtools') i
 **Citation:** Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 
 ## Contributing:
-This package is still in its early stage. There are a lots of features / models that I plan to implement in the near future (see below for upcoming features) but unable to implement them in this release. If you are interested in help building this package, please feel free to submit a pull request / Github issue. I also tried my best to fix any bugs, but I cannot guarantee that the package can handle all edge cases. If you find any bug, please submit them in the Github issue. Finally, if you like the package, please considering give it a star. It meant a lot to me knowing that people actually find it useful. 
+This package is still in its early stage. There are a lots of features / models that I plan to implement in the near future (see [here](https://github.com/jasonmoy28/psycModel/issues/3)), but it takes a long time for me to implement everything. So, if you are interested in help building this package, please feel free to submit a [pull request](https://github.com/jasonmoy28/psycModel/pulls) / [Github issue](https://github.com/jasonmoy28/psycModel/issues). I also tried my best to fix any bugs, but I cannot guarantee that the package can handle all edge cases. If you find any bug, please submit them in the [Github issue](https://github.com/jasonmoy28/psycModel/issues). Finally, if you like the package, please considering give it a star. It meant a lot to me knowing that people actually find it useful. 
 
 ## Acknowledgement
 This package was built by standing on the shoulders of giants with special thanks to researchers and developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [`parameters`](https://easystats.github.io/parameters/), [`psych`](https://personality-project.org/r/psych/), and of couse, all of the [`tidyverse`](https://tidyverse.tidyverse.org/) packages. I hope my package can help someone as they had helped me. 
