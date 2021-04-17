@@ -4,26 +4,38 @@
 \alias{reliability_summary}
 \title{Reliability Analysis}
 \usage{
-reliability_summary(data, cols, digits = 3, CFA = T, descriptive_table = T)
+reliability_summary(
+  data,
+  cols,
+  dimensionality = NULL,
+  digits = 3,
+  descriptive_table = T,
+  return_result = F
+)
 }
 \arguments{
 \item{data}{data frame}
 
 \item{cols}{items for reliability analysis.  Support \code{dplyr::select} syntax.}
 
+\item{dimensionality}{Specify the dimensionality. Either \code{uni} (uni-dimensionality) or \code{multi} (multi-dimensionality). Default is \code{NULL} that determines the dimensionality using EFA.}
+
 \item{digits}{number of digits}
 
-\item{CFA}{Run confirmatory factor analysis. Default is \code{TRUE}}
-
 \item{descriptive_table}{Get descriptive statistics. Default is \code{TRUE}}
+
+\item{return_result}{If set to \code{TRUE} (default is \code{FALSE}), it will return \code{psych::alpha} for unidimensional scale, and \code{psych::omega} for multidimensional scale.}
+}
+\value{
+\code{psych::alpha} for unidimensional scale, and \code{psych::omega} for multidimensional scale.
 }
 \description{
-For multidimensional scale (default), it will uses the psych::omega function to get the omega total, omega hierarchical, and alpha. For uni-dimensional scale, it will compute the alpha and a single-factor CFA model.
+First, it will determine whether the data is uni-dimensional or multi-dimensional using parameters::n_factors(). If the data is uni-dimensional, then it will print a summary
+consists of alpha, G6, single-factor CFA, and descriptive statistics result. If it is multi-dimensional, it will print a summary consist of alpha, G6, omega result. You can
+bypass this by specifying the dimensionality argument.
 }
 \examples{
-fit <- reliability_summary(
-  data = lavaan::HolzingerSwineford1939,
-  cols = x1:x3
-)
+fit <- reliability_summary(data = lavaan::HolzingerSwineford1939,cols = x1:x3)
+fit <- reliability_summary(data = lavaan::HolzingerSwineford1939,cols = x1:x9)
 
 }
