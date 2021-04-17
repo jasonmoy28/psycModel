@@ -181,9 +181,101 @@ bypass this by specifying the dimensionality argument.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>reliability_summary</span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,cols <span class='op'>=</span> <span class='va'>x1</span><span class='op'>:</span><span class='va'>x3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in parameters::n_factors(data): Package 'nFactors' required for this function to work. Please install it by running `install.packages('nFactors')`.</span></div><div class='input'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>reliability_summary</span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,cols <span class='op'>=</span> <span class='va'>x1</span><span class='op'>:</span><span class='va'>x9</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in parameters::n_factors(data): Package 'nFactors' required for this function to work. Please install it by running `install.packages('nFactors')`.</span></div><div class='input'>
-</div></pre>
+</div><div class='output co'>#&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; Model Type = Reliability Analysis
+#&gt; Dimensionality = uni-dimensionality
+#&gt; 
+#&gt; </span><span style='text-decoration: underline;'>Composite Reliability Measures</span><span>
+#&gt; ────────────────────────────
+#&gt;   Alpha  Alpha.Std  G6 (smc)
+#&gt; ────────────────────────────
+#&gt;   0.626      0.627     0.535
+#&gt; ────────────────────────────
+#&gt; 
+#&gt; </span><span style='text-decoration: underline;'>Item Reliability (item dropped)</span><span>
+#&gt; ─────────────────────────────────
+#&gt;   Var  Alpha  Alpha.Std  G6 (smc)
+#&gt; ─────────────────────────────────
+#&gt;    x1  0.507      0.507     0.340
+#&gt;    x2  0.612      0.612     0.441
+#&gt;    x3  0.458      0.458     0.297
+#&gt; ─────────────────────────────────
+#&gt; 
+#&gt; 
+#&gt; CFA Model:
+#&gt; </span><span style='text-decoration: underline;'>Fit Measure</span><span>
+#&gt; ────────────────────────────────────────────────────────────────────────────
+#&gt;      Χ²     DF   P    CFI  RMSEA   SRMR    TLI       AIC       BIC      BIC2
+#&gt; ────────────────────────────────────────────────────────────────────────────
+#&gt;   0.000  0.000  NA  1.000  0.000  0.000  1.000  2725.955  2748.197  2729.169
+#&gt; ────────────────────────────────────────────────────────────────────────────
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Factor Loadings</span><span>
+#&gt; ─────────────────────────────────────────────────────────────────────────────────
+#&gt;   Latent.Factor  Observed.Var  Std.Est     SE      Z  P.Value  CI.Lower  CI.Upper
+#&gt; ─────────────────────────────────────────────────────────────────────────────────
+#&gt;             DV1            x1    0.621  0.067  9.223    0.000     0.489     0.753
+#&gt;                            x2    0.479  0.063  7.645    0.000     0.356     0.602
+#&gt;                            x3    0.710  0.071  9.936    0.000     0.570     0.850
+#&gt; ─────────────────────────────────────────────────────────────────────────────────
+#&gt;  
+#&gt; Goodness of Fit:
+#&gt; </span><span style='color: #00BB00;'> OK. Excellent χ² fit (p &gt; 0.05)</span><span>
+#&gt; </span><span style='color: #00BB00;'> OK. Excellent CFI fit (CFI &gt; 0.95)</span><span>
+#&gt; </span><span style='color: #00BB00;'> OK. Excellent RMSEA fit (RMSEA &lt; 0.05)</span><span>
+#&gt; </span><span style='color: #00BB00;'> OK. Good SRMR fit (SRMR &lt; 0.08)</span><span>
+#&gt; </span><span style='color: #00BB00;'> OK. Excellent TLI fit (TLI &gt; 0.95)</span><span>
+#&gt; </span><span style='color: #BBBB00;'> OK. Barely acceptable factor loadings (0.4 &lt; some loadings &lt; 0.7)</span><span>
+#&gt; 
+#&gt; 
+#&gt; Descriptive Statistics Table:
+#&gt; ───────────────────────────────────────────
+#&gt;   Var   mean     sd        x1        x2  x3
+#&gt; ───────────────────────────────────────────
+#&gt;    x1  4.936  1.167                        
+#&gt;    x2  6.088  1.177  0.297***              
+#&gt;    x3  2.250  1.131  0.441***  0.340***    
+#&gt; ───────────────────────────────────────────</div><div class='input'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>reliability_summary</span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,cols <span class='op'>=</span> <span class='va'>x1</span><span class='op'>:</span><span class='va'>x9</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; Model Type = Reliability Analysis
+#&gt; Dimensionality = multi-dimensionality
+#&gt; </div><div class='output co'>#&gt; <span class='message'>Loading required namespace: GPArotation</span></div><div class='img'><img src='reliability_summary-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </span><span style='text-decoration: underline;'>Composite Reliability Measures</span><span>
+#&gt; ──────────────────────────────────────────────────────────
+#&gt;   Alpha  Alpha.Std    G.6  Omega.Hierarchical  Omega.Total
+#&gt; ──────────────────────────────────────────────────────────
+#&gt;    0.76       0.76  0.808               0.449        0.851
+#&gt; ──────────────────────────────────────────────────────────
+#&gt; 
+#&gt; </span><span style='text-decoration: underline;'>Item Reliability (item dropped)</span><span>
+#&gt; ─────────────────────────────────
+#&gt;   Var  Alpha  Alpha.Std  G6 (smc)
+#&gt; ─────────────────────────────────
+#&gt;    x1  0.725      0.725     0.780
+#&gt;    x2  0.764      0.763     0.811
+#&gt;    x3  0.749      0.748     0.796
+#&gt;    x4  0.715      0.719     0.761
+#&gt;    x5  0.724      0.726     0.764
+#&gt;    x6  0.714      0.717     0.764
+#&gt;    x7  0.766      0.765     0.800
+#&gt;    x8  0.748      0.747     0.789
+#&gt;    x9  0.731      0.728     0.782
+#&gt; ─────────────────────────────────
+#&gt; 
+#&gt; Descriptive Statistics Table:
+#&gt; ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+#&gt;   Var   mean     sd        x1         x2        x3        x4        x5        x6         x7        x8  x9
+#&gt; ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+#&gt;    x1  4.936  1.167                                                                                      
+#&gt;    x2  6.088  1.177  0.297***                                                                            
+#&gt;    x3  2.250  1.131  0.441***   0.340***                                                                 
+#&gt;    x4  3.061  1.164  0.373***    0.153**   0.159**                                                       
+#&gt;    x5  4.341  1.290  0.293***     0.139*     0.077  0.733***                                             
+#&gt;    x6  2.186  1.096  0.357***   0.193***  0.198***  0.704***  0.720***                                   
+#&gt;    x7  4.186  1.090     0.067     -0.076     0.072   0.174**     0.102    0.121*                         
+#&gt;    x8  5.527  1.013  0.224***      0.092   0.186**     0.107    0.139*   0.150**   0.487***              
+#&gt;    x9  5.374  1.009  0.390***   0.206***  0.329***  0.208***  0.227***  0.214***   0.341***  0.449***    
+#&gt; ─────────────────────────────────────────────────────────────────────────────────────────────────────────</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
