@@ -180,7 +180,8 @@ bypass this by specifying the dimensionality argument.</p>
     <p><code><a href='https://rdrr.io/pkg/psych/man/alpha.html'>psych::alpha</a></code> for unidimensional scale, and <code><a href='https://rdrr.io/pkg/psych/man/omega.html'>psych::omega</a></code> for multidimensional scale.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>reliability_summary</span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,cols <span class='op'>=</span> <span class='va'>x1</span><span class='op'>:</span><span class='va'>x3</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'>
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>reliability_summary</span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,cols <span class='op'>=</span> <span class='va'>x1</span><span class='op'>:</span><span class='va'>x3</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
 #&gt; Model Type = Reliability Analysis
 #&gt; Dimensionality = uni-dimensionality
@@ -239,7 +240,7 @@ bypass this by specifying the dimensionality argument.</p>
 </div><div class='output co'>#&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
 #&gt; Model Type = Reliability Analysis
 #&gt; Dimensionality = multi-dimensionality
-#&gt; </div><div class='output co'>#&gt; <span class='message'>Loading required namespace: GPArotation</span></div><div class='img'><img src='reliability_summary-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </span><span style='text-decoration: underline;'>Composite Reliability Measures</span><span>
+#&gt; </div><div class='img'><img src='reliability_summary-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </span><span style='text-decoration: underline;'>Composite Reliability Measures</span><span>
 #&gt; ──────────────────────────────────────────────────────────
 #&gt;   Alpha  Alpha.Std    G.6  Omega.Hierarchical  Omega.Total
 #&gt; ──────────────────────────────────────────────────────────
