@@ -35,6 +35,7 @@ consists of alpha, G6, single-factor CFA, and descriptive statistics result. If 
 bypass this by specifying the dimensionality argument.
 }
 \examples{
+
 fit <- reliability_summary(data = lavaan::HolzingerSwineford1939,cols = x1:x3)
 fit <- reliability_summary(data = lavaan::HolzingerSwineford1939,cols = x1:x9)
 

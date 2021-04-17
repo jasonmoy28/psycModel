@@ -15,6 +15,7 @@
 #' @export
 #'
 #' @examples
+#' 
 #' fit <- reliability_summary(data = lavaan::HolzingerSwineford1939,cols = x1:x3)
 #' fit <- reliability_summary(data = lavaan::HolzingerSwineford1939,cols = x1:x9)
 #' 
@@ -24,6 +25,7 @@ reliability_summary = function(data,
                                digits = 3,
                                descriptive_table = T,
                                return_result = F){
+  
   cols = data %>% dplyr::select(!!enquo(cols)) %>% names()
   data = data %>% dplyr::select(dplyr::all_of(cols))
 
@@ -76,7 +78,11 @@ reliability_summary = function(data,
     cat('\n')
   } else {
     alpha_fit = suppressMessages(data %>% psych::alpha())
-    omega_fit = data %>% psych::omega()
+    if (requireNamespace("GPArotation", quietly = TRUE)) {
+      omega_fit = data %>% psych::omega()
+    } else{
+      stop("please install.packages(GPArotation) first")
+    }
     
     composite_measure = tibble::tibble(Alpha = round(alpha_fit$total['raw_alpha'],digits = digits), 
                            Alpha.Std = round(alpha_fit$total['std.alpha'],digits = digits), 

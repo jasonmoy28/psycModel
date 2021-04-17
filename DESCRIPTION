@@ -22,7 +22,6 @@ Imports:
     lavaan,
     lifecycle,
     lmerTest,
-    magrittr,
     parameters,
     performance,
     psych,
@@ -48,7 +47,8 @@ Suggests:
     see,
     semPlot,
     testthat (>= 3.0.0),
-    tidyselect
+    tidyselect,
+    GPArotation
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
