@@ -2,7 +2,7 @@
 % Please edit documentation in R/descriptive_table.R
 \name{descriptive_table}
 \alias{descriptive_table}
-\title{Mean, SD, and Correlation table}
+\title{Descriptive Statistics Table}
 \usage{
 descriptive_table(
   data,
@@ -11,6 +11,7 @@ descriptive_table(
   cor_digit = 3,
   descriptive_indicator = c("mean", "sd", "cor"),
   descriptive_indicator_digit = 3,
+  streamline = F,
   quite = F,
   return_result = F,
   file_path = NULL
@@ -19,7 +20,7 @@ descriptive_table(
 \arguments{
 \item{data}{data frame}
 
-\item{cols}{vector or tidyselect syntax or helpers. column(s) need to be included in the table.}
+\item{cols}{column(s) need to be included in the table. Support \code{dplyr::select} syntax.}
 
 \item{cor_sig_test}{adjusted or raw. Default as adjusted. See psych::corr.test to learn more.}
 
@@ -28,6 +29,8 @@ descriptive_table(
 \item{descriptive_indicator}{Default is mean, sd, cor. Options are missing (missing value count), non_missing (non-missing value count), cor (correlation table), n, mean, sd, median, trimmed (trimmed mean), median, mad (median absolute deviation from the median), min, max, range, skew, kurtosis, se (standard error)}
 
 \item{descriptive_indicator_digit}{number of digit for the descriptive table}
+
+\item{streamline}{print streamlined output}
 
 \item{quite}{suppress printing output}
 
