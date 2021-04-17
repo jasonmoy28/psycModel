@@ -28,8 +28,8 @@
 #'   data = popular
 #' )
 #'
-#' model_summary(lme_fit) 
-#' 
+#' model_summary(lme_fit)
+#'
 #' # lm example
 #'
 #' lm_fit <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width,

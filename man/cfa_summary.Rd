@@ -78,9 +78,10 @@ fit <- cfa_summary(
   data = lavaan::HolzingerSwineford1939,
   x1:x3,
   group = "sex",
-  model_variance = FALSE, # do not print the model_variance 
+  model_variance = FALSE, # do not print the model_variance
   model_covariance = FALSE # do not print the model_covariance
-)}
+)
+}
 
 
 # Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)

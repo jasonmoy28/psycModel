@@ -46,7 +46,7 @@ lme_fit <- lme4::lmer("popular ~ texp  + (1 | class)",
   data = popular
 )
 
-model_summary(lme_fit) 
+model_summary(lme_fit)
 
 # lm example
 

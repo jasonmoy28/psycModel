@@ -63,13 +63,13 @@ measurement_invariance(
   x7:x9,
   data = lavaan::HolzingerSwineford1939,
   group = "school",
-  invariance_level = "scalar" # you can change this to metric 
+  invariance_level = "scalar" # you can change this to metric
 )
 
 # Fitting measurement invariance model by passing explicit lavaan model
 # I am also going to only test for metric invariance instead of the default scalar invariance
-
-\dontrun{measurement_invariance(
+\dontrun{
+measurement_invariance(
   model = "visual  =~ x1 + x2 + x3;
            textual =~ x4 + x5 + x6;
            speed   =~ x7 + x8 + x9",

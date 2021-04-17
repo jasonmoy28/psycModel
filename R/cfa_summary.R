@@ -40,16 +40,17 @@
 #'   x4:x6,
 #'   x7:x9,
 #' )
-#' 
+#'
 #' # Fitting a multilevel single factor CFA model
 #' \dontrun{
 #' fit <- cfa_summary(
 #'   data = lavaan::HolzingerSwineford1939,
 #'   x1:x3,
 #'   group = "sex",
-#'   model_variance = FALSE, # do not print the model_variance 
+#'   model_variance = FALSE, # do not print the model_variance
 #'   model_covariance = FALSE # do not print the model_covariance
-#' )}
+#' )
+#' }
 #'
 #'
 #' # Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)
@@ -81,9 +82,9 @@ cfa_summary <- function(data,
                         digits = 3,
                         model_covariance = T,
                         model_variance = T,
-                        plot = T, 
+                        plot = T,
                         quite = F,
-                        streamline = F, 
+                        streamline = F,
                         group_partial = NULL) {
   if (is.null(model)) { # construct model if explicit model is not passed
     items <- enquos(...)
@@ -136,7 +137,7 @@ cfa_summary <- function(data,
     colnames(fit_measure_df) <- stringr::str_to_upper(colnames(fit_measure_df))
 
     standardized_df <- lavaan::standardizedsolution(cfa_model, output = "data.frame")
-    
+
     factors_loadings_df <- standardized_df %>%
       dplyr::filter(.data$op == "=~") %>%
       dplyr::select(-"op") %>%
@@ -149,21 +150,21 @@ cfa_summary <- function(data,
       dplyr::rename(CI.Lower = "ci.lower") %>%
       dplyr::rename(CI.Upper = "ci.upper") %>%
       dplyr::mutate(dplyr::across(where(is.numeric), ~ format_round(x = ., digits = 3)))
-    
+
     if (is.null(group)) {
-      factor_name_df = data.frame(Latent.Factor = NA)
+      factor_name_df <- data.frame(Latent.Factor = NA)
       for (factor_name in factors_loadings_df$Latent.Factor) {
-        if (factor_name %in% factor_name_df[,1]) {
-          factor_name = ''
+        if (factor_name %in% factor_name_df[, 1]) {
+          factor_name <- ""
         }
-        factor_name_loop = data.frame(Latent.Factor = factor_name)
-        factor_name_df = rbind(factor_name_df,factor_name_loop)
+        factor_name_loop <- data.frame(Latent.Factor = factor_name)
+        factor_name_df <- rbind(factor_name_df, factor_name_loop)
       }
-      factor_name_df = stats::na.omit(factor_name_df)
-      factors_loadings_df = factors_loadings_df %>% 
+      factor_name_df <- stats::na.omit(factor_name_df)
+      factors_loadings_df <- factors_loadings_df %>%
         dplyr::mutate(Latent.Factor = factor_name_df$Latent.Factor)
     }
-    
+
 
     covariance_df <- standardized_df %>%
       dplyr::filter(.data$op == "~~") %>%
@@ -278,17 +279,18 @@ cfa_summary <- function(data,
     }
   } # quite == F
   if (plot == T) {
-    if (requireNamespace('semPlot',quietly = T)) {
-    semPlot::semPaths(cfa_model,
-             what = 'std',
-             edge.color = 'black',
-             sizeMan = 5,
-             sizeLat = 8,
-             edge.label.cex = 1,
-             nCharEdges = 5,
-             esize = 1,
-             trans = 1)
-    } else{
+    if (requireNamespace("semPlot", quietly = T)) {
+      semPlot::semPaths(cfa_model,
+        what = "std",
+        edge.color = "black",
+        sizeMan = 5,
+        sizeLat = 8,
+        edge.label.cex = 1,
+        nCharEdges = 5,
+        esize = 1,
+        trans = 1
+      )
+    } else {
       message("Please install.packages('semPlot') for path diagram")
     }
   }

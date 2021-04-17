@@ -6,16 +6,16 @@
 #' If you wish to print normal text, then the inputted text should '|text'
 #'
 #' @param text inputted text
-#' @param env environment. 
+#' @param env environment.
 #'
 #' @return formatted text (greek letter, color, font style formatted)
 #'
 #' @keywords internal
 #'
-super_print <- function(text, 
+super_print <- function(text,
                         env = parent.frame()) {
   text <- glue::glue(text, .envir = env)
-  command_text <- gsub(pattern = "\\|.+", replacement = "", x = text) %>% stringr::str_trim('left')
+  command_text <- gsub(pattern = "\\|.+", replacement = "", x = text) %>% stringr::str_trim("left")
   output_text <- gsub(pattern = ".+\\|", replacement = "", x = text)
   output_text <- text_convert(text = output_text, type = "greek")
 

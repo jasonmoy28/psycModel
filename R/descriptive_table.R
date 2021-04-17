@@ -4,7 +4,7 @@
 #' This function generates a table of descriptive statistics (mainly using psych::describe; Revelle, 2021) and or a correlation table. User can export this to a csv file (optionally, using the file_path argument). Users can open the csv file with MS Excel then copy and paste the table into MS Word table.
 #'
 #' @param data data frame
-#' @param cols  column(s) need to be included in the table. Support `dplyr::select` syntax. 
+#' @param cols  column(s) need to be included in the table. Support `dplyr::select` syntax.
 #' @param cor_sig_test adjusted or raw. Default as adjusted. See psych::corr.test to learn more.
 #' @param cor_digit number of digit for correlation table
 #' @param descriptive_indicator Default is mean, sd, cor. Options are missing (missing value count), non_missing (non-missing value count), cor (correlation table), n, mean, sd, median, trimmed (trimmed mean), median, mad (median absolute deviation from the median), min, max, range, skew, kurtosis, se (standard error)
@@ -32,7 +32,7 @@ descriptive_table <- function(data,
                               cor_digit = 3,
                               descriptive_indicator = c("mean", "sd", "cor"),
                               descriptive_indicator_digit = 3,
-                              streamline = F, 
+                              streamline = F,
                               quite = F,
                               return_result = F,
                               file_path = NULL) {

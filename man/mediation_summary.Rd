@@ -49,9 +49,10 @@ In the future, I will try supporting moderated mediation (through \code{lavaan} 
 There is a promising package called \code{brms} that use bayesian statistics. If you are interested, you can check that one out.
 }
 \examples{
-mediation_summary(data = lmerTest::carrots,
-                  response_variable = Preference,
-                  mediator = Sweetness,
-                  predictor_variable = Crisp)
-
+mediation_summary(
+  data = lmerTest::carrots,
+  response_variable = Preference,
+  mediator = Sweetness,
+  predictor_variable = Crisp
+)
 }
