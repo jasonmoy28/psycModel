@@ -31,7 +31,7 @@ devtools::install_github('jasonmoy28/psycModel') #install.packages('devtools') i
 **Citation:** Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 
 ## Acknowledgement
-This package was built by standing on the shoulders of giants with special thanks to researchers and developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [`psych`](https://personality-project.org/r/psych/), [`jmv`](https://github.com/jamovi/jmv), and all [`tidyverse`](https://tidyverse.tidyverse.org/) packages. I hope my package can help someone as they had helped me. 
+This package was built by standing on the shoulders of giants with special thanks to researchers and developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [parameters](https://easystats.github.io/parameters/), [`psych`](https://personality-project.org/r/psych/), and of couse, all of the [`tidyverse`](https://tidyverse.tidyverse.org/) packages. I hope my package can help someone as they had helped me. 
 
 
 ## Updates
@@ -40,7 +40,10 @@ This package was built by standing on the shoulders of giants with special thank
 2. Support latent class and profile analysis (possible latent transition analysis)
 3. Support path diagram in all model using SEM
 4. Support generalized linear regression
-5. Support polynomial regression 
+5. Support poly
+
+
+mial regression 
 6. Support reliability analysis
 
 ### version 0.2.1 (released on 4/16/2021)
@@ -59,7 +62,7 @@ This package was built by standing on the shoulders of giants with special thank
 * Re-write `bruceR::Print` and `bruceR::print_table`. <br/>
 
 **Bugs fixed** <br/>
-* Critical bug fix for `model_summary_with_plot`. You can no request `simple_slope` and `assumption_plot` correctly. <br/>
+* Critical bug fix for `model_summary_with_plot`. You can request `simple_slope` and `assumption_plot` correctly. <br/>
 * Critical bug fix that `cor_test` is not exported <br/>
 * remove some packages from import and switch to `requireNamespace()` <br/>
 * added fallback for normality check <br/>
