@@ -30,21 +30,21 @@ devtools::install_github('jasonmoy28/psycModel') #install.packages('devtools') i
 
 **Citation:** Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 
+## Contributing:
+This package is still in its early stage. There are a lots of features / models that I plan to implement in the near future (see below for upcoming features) but unable to implement them in this release. If you are interested in help building this package, please feel free to submit a pull request / Github issue. I also tried my best to fix any bugs, but I cannot guarantee that the package can handle all edge cases. If you find any bug, please submit them in the Github issue. Finally, if you like the package, please considering give it a star. It meant a lot to me knowing that people actually find it useful. 
+
 ## Acknowledgement
 This package was built by standing on the shoulders of giants with special thanks to researchers and developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [`parameters`](https://easystats.github.io/parameters/), [`psych`](https://personality-project.org/r/psych/), and of couse, all of the [`tidyverse`](https://tidyverse.tidyverse.org/) packages. I hope my package can help someone as they had helped me. 
 
 
 ## Updates
 ### Upcoming Features: 
-1. Support mediation, moderated mediation analysis
-2. Support latent class and profile analysis (possible latent transition analysis)
-3. Support path diagram in all model using SEM
+1. Support bootstrapping and robust standard error for relevant models 
+2. Support moderated mediation analysis and multilevel mediation analysis (currently support multilevel with level-1 variable only)
+3. Support latent class and profile analysis (possible latent transition analysis)
 4. Support generalized linear regression
-5. Support poly
-
-
-mial regression 
-6. Support reliability analysis
+5. Support polynomial regression
+6. Support outputting table to MS word (don't know how to implement yet)
 
 ### version 0.2.1 (released on 4/16/2021)
 **Major Feature:** <br/>

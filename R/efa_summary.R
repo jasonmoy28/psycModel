@@ -51,17 +51,10 @@ efa_summary <- function(data,
   
   ######################################## Factor Analysis ##########################################################
   efa_result = data %>% psych::fa(nfactors = n_factor,rotate = rotation)
-  efa_loadings = as.data.frame.array(efa_result$loadings) %>% 
-    tibble::rownames_to_column('Var') %>% 
-    dplyr::mutate(dplyr::across(where(is.numeric), function(x){dplyr::if_else(x < 0.4,true = '',false = as.character(format_round(x,digits = digits)))}))
-  colnames(efa_loadings) = stringr::str_replace_all(string = colnames(efa_loadings),pattern = 'MR',replacement = 'Factor ')
+  efa_loadings = parameters::model_parameters(efa_result) %>% 
+    dplyr::mutate(dplyr::across(tidyselect::contains('MR'), function(x){dplyr::if_else(x < 0.4,true = '',false = as.character(format_round(x,digits = digits)))}))
   
-  efa_uniquenesses = efa_result$uniquenesses %>% 
-    as.data.frame() %>% 
-    tibble::rownames_to_column('Var') %>% 
-    dplyr::rename(Uniqueness = .data$.)
-  efa_loadings_binded = efa_loadings %>% 
-    dplyr::full_join(efa_uniquenesses,by = 'Var')
+  colnames(efa_loadings) = stringr::str_replace_all(string = colnames(efa_loadings),pattern = 'MR',replacement = 'Factor ')
   
   efa_variance = 
     as.data.frame(efa_result$Vaccounted) %>% 
@@ -133,16 +126,16 @@ efa_summary <- function(data,
   
   if (efa_plot == T) {
     plot = efa_variance %>% 
-      dplyr::filter(Var %in% c('Proportion Var')) %>% 
+      dplyr::filter(.data$Var %in% c('Proportion Var')) %>% 
       tidyr::pivot_longer(cols = dplyr::contains('Factor')) %>% 
       dplyr::mutate(value = as.numeric(format_round(.data$value*100,digits = 0))) %>% 
-      ggplot2::ggplot(ggplot2::aes(x = .data$name, y = .data$value, fill = Var)) + 
+      ggplot2::ggplot(ggplot2::aes(x = .data$name, y = .data$value, fill = .data$Var)) + 
       ggplot2::geom_bar(stat = 'identity',position = 'dodge',width = 0.4) + 
       ggplot2::labs(y = "Proportion of Explained Variance", x = "Factor #") +
       ggplot2::ylim(0,100) + 
       ggplot2::theme_minimal() +
       ggplot2::scale_fill_manual(values=c("#2171b5", "#6baed6")) + 
-      ggplot2::geom_text(ggplot2::aes(label=paste(value,'%',sep = '')), position=ggplot2::position_dodge(width=0.9), vjust=-0.25) + 
+      ggplot2::geom_text(ggplot2::aes(label=paste(.data$value,'%',sep = '')), position=ggplot2::position_dodge(width=0.9), vjust=-0.25) + 
       ggplot2::theme(
         panel.grid.major = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_blank(),
         panel.background = ggplot2::element_blank(), axis.line = ggplot2::element_line(colour = "black"),

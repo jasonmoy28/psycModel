@@ -9,11 +9,10 @@
 #'
 print_table <- function(data_frame, digits = 3) {
   data_frame <- data_frame %>%
-    tibble::as_tibble() %>%
-    dplyr::mutate(dplyr::across(where(is.numeric), ~ format_round(x = ., digits = digits))) %>%
+    dplyr::mutate(dplyr::across(where(is.numeric), ~ format_round(x = ., digits = digits))) %>% 
     dplyr::mutate(dplyr::across(tidyselect::everything(), ~ as.character(.))) %>%
-    dplyr::mutate(dplyr::across(tidyselect::everything(), ~ tidyr::replace_na(., replace = "NA")))
-
+    dplyr::mutate(dplyr::across(tidyselect::everything(), ~ tidyr::replace_na(., replace = "NA"))) 
+  
   # Calculate the white space need to insert for each cell
   column_name <- sapply(colnames(data_frame), function(x) {
     text_convert(x, type = "greek")

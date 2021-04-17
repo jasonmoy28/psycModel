@@ -7,7 +7,7 @@
 lm_model(
   data,
   response_variable,
-  predictor_var,
+  predictor_variable,
   two_way_interaction_factor = NULL,
   three_way_interaction_factor = NULL,
   quite = FALSE
@@ -18,7 +18,7 @@ lm_model(
 
 \item{response_variable}{response variable. Support \code{dplyr::select} syntax.}
 
-\item{predictor_var}{predictor variable. Support \code{dplyr::select} syntax. It will automatically remove the response variable from predictor variable, so you can use \code{contains()} or \code{start_with()} safely.}
+\item{predictor_variable}{predictor variable. Support \code{dplyr::select} syntax. It will automatically remove the response variable from predictor variable, so you can use \code{contains()} or \code{start_with()} safely.}
 
 \item{two_way_interaction_factor}{two-way interaction factors. You need to pass 2+ factor. Support \code{dplyr::select} syntax.}
 
@@ -37,7 +37,7 @@ Fit a linear regression using \code{lm}. Linear regression is used to explore th
 fit <- lm_model(
   data = iris,
   response_variable = "Sepal.Length",
-  predictor_var = tidyselect::everything(),
+  predictor_variable = tidyselect::everything(),
   two_way_interaction_factor = c(Sepal.Width, Species)
 )
 }
