@@ -1,7 +1,7 @@
 #' Generalized Linear Mixed Effect Model
 #'
 #' `r lifecycle::badge("experimental")` \cr
-#' Generalized linear mixed effect model. The function uses the `lme4::glmer`(Bates et al., 2014) function. This function is still in very early development stage.
+#' Fit a generalized linear mixed effect model using `lme4::glmer`. This function is still in early development stage. 
 #'
 #' @param data data frame
 #' @param response_variable character or vector of length 1
@@ -15,84 +15,167 @@
 #' @param na.action default to `stats::na.exclude`.
 #' @param opt_control character. default to `bobyqa`
 #' @param quite suppress printing output
-#'
-#' @references
-#' Bates, D., Mächler, M., Bolker, B., & Walker, S. (2014). Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software, 67(1), 1–48. doi: 10.18637/jss.v067.i01.
-#'
-#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
+#' @param model  lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates 
 #'
 #' @return An object of class "glmerMod" representing the linear mixed-effects model fit.
-#'
-#'
-# glme_model <- function(data,
-#                        response_variable,
-#                        random_effect_factors,
-#                        non_random_effect_factors = NULL,
-#                        family,
-#                        two_way_interaction_factor = NULL,
-#                        three_way_interaction_factor = NULL,
-#                        id,
-#                        estimation_method = "REML",
-#                        opt_control = "bobyqa",
-#                        na.action = stats::na.exclude,
-#                        quite = F) {
-#   data <- data_check(data) # check data and coerced into numeric
-#
-#   # Fixed factor inlcude both level factor
-#   fixed_factors <- c(random_effect_factors, non_random_effect_factors)
-#
-#   # Random factor only include individual_level factor
-#   random_factors <- random_effect_factors
-#
-#   two_way_interaction_terms <- NULL
-#   three_way_interaction_terms <- NULL
-#   # Check if interaction term exist, if so, add interaction terms to fixed factor
-#   if (!is.null(two_way_interaction_factor)) {
-#     two_way_interaction_terms <- two_way_interaction_terms(two_way_interaction_factor)
-#   }
-#
-#   if (!is.null(three_way_interaction_factor)) {
-#     two_way_interaction_terms <- NULL
-#     three_way_interaction_terms <- paste(three_way_interaction_factor, collapse = "*")
-#   }
-#   fixed_factors <- c(fixed_factors, two_way_interaction_terms, three_way_interaction_terms)
-#
-#   # Create the formula for fixed factor
-#   glmer_fixed_factors_formula <- paste(paste(response_variable, "~"), paste(fixed_factors, collapse = " + "))
-#   # Created the formula for random factors
-#   glmer_random_factors_formula <- paste("1 +", paste(random_factors, collapse = " + "), paste("|", id))
-#   glmerformula <- stats::as.formula(paste(glmer_fixed_factors_formula, " + (", glmer_random_factors_formula, ")", sep = ""))
-#   glmerCtr <- lme4::glmerControl(optimizer = opt_control)
-#
-#   if (quite == F) {
-#     fit_formula <- paste(glmer_fixed_factors_formula, " + (", glmer_random_factors_formula, ")", sep = "")
-#     cat(paste("Fitting Model with glmer: \n Formula = ", fit_formula, "\n Family = ", family[1], "\n", sep = ""))
-#   }
-#   getfun <- function(x) {
-#     if (length(grep("::", x)) > 0) {
-#       parts <- strsplit(x, "::")[[1]]
-#       getExportedValue(parts[1], parts[2])
-#     } else {
-#       x
-#     }
-#   }
-#
-#   if (any(family %in% "negbin")) {
-#     stop("Sorry, we do not support negative binomial distribution yet.")
-#     # library(lme4) # need to figure out why it doesn't work
-#     # model = do.call(getfun("lme4::glmer.nb"), list(formula = glmerformula,
-#     #                                                data = data,
-#     #                                                na.action = na.action,
-#     #                                                control = glmerCtr))
-#   } else {
-#     model <- do.call(getfun("lme4::glmer"), list(
-#       formula = glmerformula,
-#       data = data,
-#       family = family,
-#       na.action = na.action,
-#       control = glmerCtr
-#     ))
-#   }
-#
-#   return(model)
-# }
+#' @export
+#' @examples
+#' fit <- glme_model(
+#'   response_variable = incidence,
+#'   random_effect_factors = period,
+#'   family = 'poisson', # or you can enter as poisson(link = 'log')
+#'   id = herd,
+#'   data = lme4::cbpp
+#' )
+glme_model <- function(data,
+                       model = NULL,
+                       response_variable,
+                       random_effect_factors = NULL,
+                       non_random_effect_factors = NULL,
+                       family,
+                       two_way_interaction_factor = NULL,
+                       three_way_interaction_factor = NULL,
+                       id,
+                       estimation_method = "REML",
+                       opt_control = "bobyqa",
+                       na.action = stats::na.exclude,
+                       quite = F) {
+  ########################################## Set up #############################################
+  data <- data_check(data) # check data and coerced into numeric
+  glme_model_check <- function(object, method) {
+    if (method == "response_variable_check") {
+      if (length(object) != 1) {
+        stop("Response variable must be length of 1")
+      }
+    }
+    if (method == "id_check") {
+      if (length(object) != 1) {
+        stop("ID must be length of 1")
+      }
+    }
+    if (method == "three_way_interaction_factor_check") {
+      if (length(object) != 3) {
+        stop("three_way_interaction_factor must have three factors")
+      }
+    }
+    if (method == "two_interaction_factor_check") {
+      if (length(object) < 2) {
+        stop("two_way_interaction_factor must have three factors")
+      }
+    }
+  }
+  # run a getfun function that is essentially for do.call() later
+  getfun <- function(x) {
+    if (length(grep("::", x)) > 0) {
+      parts <- strsplit(x, "::")[[1]]
+      getExportedValue(parts[1], parts[2])
+    } else {
+      x
+    }
+  }
+
+  ###################################### Modeling with Explict Model #############################################
+  if (!is.null(model)) {
+    
+    glmerformula <- stats::as.formula(model)
+    glmerCtr <- lme4::glmerControl(optimizer = opt_control)
+
+    model <- do.call(getfun("lme4::glmer"), list(
+      formula = glmerformula,
+      data = data,
+      na.action = na.action,
+      control = glmerCtr
+    ))
+
+    return(model)
+  }
+  ###################################### Build model for models without explicit model #############################################
+  ## parse tidyselect syntax
+  response_variable <- data %>%
+    dplyr::select(!!enquo(response_variable)) %>%
+    names()
+  random_effect_factors <- data %>%
+    dplyr::select(!!enquo(random_effect_factors)) %>%
+    names()
+  non_random_effect_factors <- data %>%
+    dplyr::select(!!enquo(non_random_effect_factors)) %>%
+    names()
+  two_way_interaction_factor <- data %>%
+    dplyr::select(!!enquo(two_way_interaction_factor)) %>%
+    names()
+  three_way_interaction_factor <- data %>%
+    dplyr::select(!!enquo(three_way_interaction_factor)) %>%
+    names()
+  id <- data %>%
+    dplyr::select(!!enquo(id)) %>%
+    names()
+
+  ## remove response variable and id from all other variables
+  random_effect_factors <- random_effect_factors[!random_effect_factors %in% c(response_variable, id)]
+  non_random_effect_factors <- non_random_effect_factors[!non_random_effect_factors %in% c(response_variable, id)]
+  two_way_interaction_factor <- two_way_interaction_factor[!two_way_interaction_factor %in% c(response_variable, id)]
+  three_way_interaction_factor <- three_way_interaction_factor[!three_way_interaction_factor %in% c(response_variable, id)]
+
+  # Check variable length & assign NULL to variables that is NULL
+  if (length(non_random_effect_factors) == 0) {
+    non_random_effect_factors <- NULL
+  }
+  if (length(two_way_interaction_factor) == 0) {
+    two_way_interaction_factor <- NULL
+  } else {
+    glme_model_check(two_way_interaction_factor, method = "two_interaction_factor_check")
+  }
+  if (length(three_way_interaction_factor) == 0) {
+    three_way_interaction_factor <- NULL
+  } else {
+    glme_model_check(three_way_interaction_factor, method = "three_way_interaction_factor_check")
+  }
+  glme_model_check(response_variable, method = "response_variable_check")
+  glme_model_check(id, method = "id_check")
+
+
+  # Fixed factor inlcude both level factor
+  fixed_factors <- c(random_effect_factors, non_random_effect_factors)
+
+  # Random factor only include individual_level factor
+  random_factors <- random_effect_factors
+
+  two_way_interaction_terms <- NULL
+  three_way_interaction_terms <- NULL
+  # Check if interaction term exist, if so, add interaction terms to fixed factor
+  if (!is.null(two_way_interaction_factor)) {
+    two_way_interaction_terms <- two_way_interaction_terms(two_way_interaction_factor)
+  }
+
+  if (!is.null(three_way_interaction_factor)) {
+    two_way_interaction_terms <- NULL
+    three_way_interaction_terms <- paste(three_way_interaction_factor, collapse = "*")
+  }
+  fixed_factors <- c(fixed_factors, two_way_interaction_terms, three_way_interaction_terms)
+
+  # Create the formula for fixed factor
+  glmer_fixed_factors_formula <- paste(paste(response_variable, "~"), paste(fixed_factors, collapse = " + "))
+  # Created the formula for random factors
+  glmer_random_factors_formula <- paste("1 +", paste(random_factors, collapse = " + "), paste("|", id))
+  glmerformula <- stats::as.formula(paste(glmer_fixed_factors_formula, " + (", glmer_random_factors_formula, ")", sep = ""))
+  glmerCtr <- lme4::glmerControl(optimizer = opt_control)
+
+  if (quite == F) {
+    fit_formula <- paste(glmer_fixed_factors_formula, " + (", glmer_random_factors_formula, ")", sep = "")
+    cat(paste("Fitting Model with glmer: \n Formula = ", fit_formula, "\n Family = ", family[1], "\n", sep = ""))
+  }
+
+  if (any(family %in% "negbin")) {
+    stop("Sorry, we do not support negative binomial distribution yet.") # do not support negative binomial now
+  } else {
+    model <- do.call(getfun("lme4::glmer"), list(
+      formula = glmerformula,
+      data = data,
+      family = family,
+      na.action = na.action,
+      control = glmerCtr
+    ))
+  }
+
+  return(model)
+}
