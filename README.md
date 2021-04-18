@@ -17,8 +17,8 @@ devtools::install_github('jasonmoy28/psycModel')
 ## Key Features
 <span style="color:#009900">✓</span> An beginner-friendly R package for modeling in psychology or related field (intermediate & advanced R users should also find it useful) <br/>
 <span style="color:#009900">✓</span>  Tired of manually writing all variables in a model? You can use [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models <br/>
-<span style="color:#009900">✓</span> Rich-text formatted output. Check out the  [exmaple](https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html) here now. <br/>
 <span style="color:#009900">✓</span> Fitting models, plotting, checking goodness of fit and model assumption violations all in one place. <br/>
+<span style="color:#009900">✓</span> Beautiful and easy-to-read output. Check out the  [exmaple](https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html) here now. <br/>
 
 ## Supported Models
 Regression models:  <br/>

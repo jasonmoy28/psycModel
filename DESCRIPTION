@@ -8,9 +8,10 @@ Authors@R:
            role = c("aut", "cre"),
            email = "jasonmoy28@gmail.com",
            comment = c(ORCID = "0000-0001-8795-3311"))
-Description: Integrated many useful functions from a variety of popular R
-    packages, including descriptive statistics, measurement model, and
-    mixed effect model.
+Description: An beginner-friendly R package for modeling in psychology or
+    related field. It allow users fitting models, plotting, checking goodness
+    of fit and model assumption violations all in one place. It also produces
+    beautiful and easy-to-read output. 
 License: GPL (>= 3)
 URL: https://jasonmoy28.github.io/psycModel/
 Depends: 
