@@ -11,9 +11,11 @@ integrated_model_summary(
   predictor_variable = NULL,
   two_way_interaction_factor = NULL,
   three_way_interaction_factor = NULL,
+  family = NULL,
   cateogrical_var = NULL,
   graph_label_name = NULL,
-  print_result = c("model_summary", "plot"),
+  model_summary = TRUE,
+  interaction_plot = TRUE,
   y_lim = NULL,
   plot_color = FALSE,
   digits = 3,
@@ -37,11 +39,15 @@ integrated_model_summary(
 
 \item{three_way_interaction_factor}{three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support \code{dplyr::select()} syntax.}
 
+\item{family}{a GLM family. It will passed to the family argument in glm. See \code{?glm} for possible options. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
+
 \item{cateogrical_var}{list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of \code{list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))}}
 
 \item{graph_label_name}{optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)}
 
-\item{print_result}{Default is \code{model_summary} and \code{plot}. Options are \code{model_summary} or \code{plot}.}
+\item{model_summary}{print model summary}
+
+\item{interaction_plot}{generate interaction plot}
 
 \item{y_lim}{the plot's upper and lower limit for the y-axis. Length of 2. Example: \code{c(lower_limit, upper_limit)}}
 
@@ -64,7 +70,8 @@ return a list of all requested items in the order of model, model_summary, plot
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-It will first compute the linear regression. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will calls the interaction::sim_slopes (Long, 2019).
+It will first compute the linear regression. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function.
+If you requested simple slope summary, it will calls the interaction::sim_slopes (Long, 2019).
 }
 \examples{
 fit <- integrated_model_summary(

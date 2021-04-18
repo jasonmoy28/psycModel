@@ -1,7 +1,9 @@
 #' Integrated Function for Mixed Effect Model
 #'
-#' `r lifecycle::badge("experimental")` \cr
-#' It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019).
+#' `r lifecycle::badge("stable")` \cr
+#' It will first compute the mixed effect model. It will use either the nlme::lme or the lmerTest::lmer for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. 
+#' Then, it will print the model summary and assumption_plot if you requested it. If you requested the interaction plot (default is `TRUE`), it will graph the interaction (Currently only support lme model not glme)
+#' If you requested simple slope summary, it will uses the interaction::sim_slopes. 
 #'
 #' @param data data frame
 #' @param model lme4 model syntax. Support more complicated model structure from lme4. It is not well-tested to handle all edge cases. `r lifecycle::badge("experimental")`
@@ -14,7 +16,6 @@
 #' @param graph_label_name optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)
 #' @param estimation_method character. `ML` or `REML` default is `REML`.
 #' @param return_result If it is set to `TRUE` (default is `FALSE`), it will return the `model`, `model_summary`, and `plot` (`plot` if the interaction term is included)
-#' @param print_result  Default is `model_summary` and `plot`. Options are `model_summary` or `plot`.
 #' @param na.action default is `stats::na.exclude`. Required to be `stats::na.omit` if assumption_plot if `TRUE`. It should produce similar result, but you should check using `na.exclude` to confirm.
 #' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
 #' @param opt_control default is `optim` for `lme` and `bobyqa` for lmerTest
@@ -26,6 +27,9 @@
 #' @param simple_slope Compute the slope differing with ± 1 SD of the IVs. In the background, it calls interaction:sim_slopes()
 #' @param assumption_plot Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()
 #' @param streamline print streamlined output.
+#' @param family a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options. `r lifecycle::badge("experimental")`
+#' @param model_summary print model summary
+#' @param interaction_plot generate interaction plot
 #'
 #' @return
 #' return a list of all requested items in the order of model, model_summary, plot
@@ -63,13 +67,15 @@ integrated_multilevel_model_summary <- function(data,
                                                 non_random_effect_factors = NULL,
                                                 two_way_interaction_factor = NULL,
                                                 three_way_interaction_factor = NULL,
+                                                family = NULL, 
                                                 cateogrical_var = NULL,
                                                 id = NULL,
                                                 graph_label_name = NULL,
                                                 estimation_method = "REML",
                                                 opt_control = "bobyqa",
                                                 na.action = stats::na.omit,
-                                                print_result = c("model_summary", "plot"),
+                                                model_summary = TRUE,
+                                                interaction_plot = TRUE,
                                                 y_lim = NULL,
                                                 plot_color = FALSE,
                                                 digits = 3,
@@ -111,21 +117,45 @@ integrated_multilevel_model_summary <- function(data,
     names()
 
   ##################################### Run Model #########################################
-  model <- lme_model(
-    model = model,
-    data = data,
-    response_variable = tidyselect::all_of(response_variable),
-    random_effect_factors = tidyselect::all_of(random_effect_factors),
-    non_random_effect_factors = tidyselect::all_of(non_random_effect_factors),
-    two_way_interaction_factor = tidyselect::all_of(two_way_interaction_factor),
-    three_way_interaction_factor = tidyselect::all_of(three_way_interaction_factor),
-    id = tidyselect::all_of(id),
-    opt_control = opt_control,
-    na.action = na.action,
-    estimation_method = estimation_method,
-    use_package = use_package,
-    quite = quite
-  )
+  if (is.null(family)) {
+    model <- lme_model(
+      model = model,
+      data = data,
+      response_variable = tidyselect::all_of(response_variable),
+      random_effect_factors = tidyselect::all_of(random_effect_factors),
+      non_random_effect_factors = tidyselect::all_of(non_random_effect_factors),
+      two_way_interaction_factor = tidyselect::all_of(two_way_interaction_factor),
+      three_way_interaction_factor = tidyselect::all_of(three_way_interaction_factor),
+      id = tidyselect::all_of(id),
+      opt_control = opt_control,
+      na.action = na.action,
+      estimation_method = estimation_method,
+      use_package = use_package,
+      quite = TRUE
+    )
+  } else{
+    if (simple_slope == TRUE |interaction_plot == TRUE) {
+      simple_slope = FALSE
+      interaction_plot = FALSE
+      warning('interaction_plot & simple_slope is not avaliable for glme model for now')
+    }
+    model <- glme_model(
+      model = model,
+      data = data,
+      response_variable = tidyselect::all_of(response_variable),
+      random_effect_factors = tidyselect::all_of(random_effect_factors),
+      non_random_effect_factors = tidyselect::all_of(non_random_effect_factors),
+      two_way_interaction_factor = tidyselect::all_of(two_way_interaction_factor),
+      three_way_interaction_factor = tidyselect::all_of(three_way_interaction_factor),
+      family = family, 
+      id = tidyselect::all_of(id),
+      opt_control = opt_control,
+      na.action = na.action,
+      estimation_method = estimation_method,
+      quite = TRUE
+    )
+  }
+
 
   ############################### Generate Interaction Plots ###############################
   two_way_interaction_factor <- data %>%
@@ -134,17 +164,17 @@ integrated_multilevel_model_summary <- function(data,
   three_way_interaction_factor <- data %>%
     dplyr::select(!!enquo(three_way_interaction_factor)) %>%
     names()
-  interaction_plot <- NULL
-  if (length(two_way_interaction_factor) != 0 & (any(print_result %in% "plot") | return_result == TRUE)) {
-    interaction_plot <- two_way_interaction_plot(
+  interaction_plot_object <- NULL
+  if (length(two_way_interaction_factor) != 0 & (interaction_plot == TRUE | return_result == TRUE)) {
+    interaction_plot_object <- two_way_interaction_plot(
       model = model,
       cateogrical_var = cateogrical_var,
       graph_label_name = graph_label_name,
       y_lim = y_lim,
       plot_color = plot_color
     )
-  } else if (length(three_way_interaction_factor) != 0 & (any(print_result %in% "plot") | return_result == TRUE)) {
-    interaction_plot <- three_way_interaction_plot(
+  } else if (length(three_way_interaction_factor) != 0 & (interaction_plot == TRUE | return_result == TRUE)) {
+    interaction_plot_object <- three_way_interaction_plot(
       model = model,
       cateogrical_var = cateogrical_var,
       graph_label_name = graph_label_name,
@@ -152,7 +182,8 @@ integrated_multilevel_model_summary <- function(data,
       plot_color = plot_color
     )
   } else {
-    interaction_plot <- NULL
+    interaction_plot_object <- NULL
+    interaction_plot = FALSE
   }
 
 
@@ -166,6 +197,16 @@ integrated_multilevel_model_summary <- function(data,
           modx = !!two_way_interaction_factor[2],
           jnplot = TRUE,
         )
+        simple_slope_output <- 
+          rbind(simple_slope_model$slopes) %>% 
+          dplyr::mutate(dplyr::across(1, function(x){dplyr::case_when(x > mean(x) ~ 'High',
+                                                                      x == mean(x) ~ 'Mean',
+                                                                      x < mean(x) ~ 'Low ')})) %>% 
+          dplyr::rename(ci.lower = "2.5%") %>%
+          dplyr::rename(ci.upper = "97.5%") 
+        
+        colnames(simple_slope_output)[1] <- c(paste(two_way_interaction_factor[2], "Level"))
+        jnp_plot <- simple_slope_model$jnplot
       } else {
         stop("Please install.packages('interactions') to use simple_slope")
       }
@@ -180,6 +221,34 @@ integrated_multilevel_model_summary <- function(data,
           mod2 = !!three_way_interaction_factor[3],
           jnplot = TRUE
         )
+        if (length(simple_slope_model$slopes) == 3) { # if mod 2 is continuous
+          simple_slope_output <- 
+            rbind(simple_slope_model$slopes[[1]], simple_slope_model$slopes[[2]], simple_slope_model$slopes[[3]]) %>% 
+            dplyr::mutate(dplyr::across(1, function(x){dplyr::case_when(x > mean(x) ~ 'High',
+                                                                        x == mean(x) ~ 'Mean',
+                                                                        x < mean(x) ~ 'Low ')})) 
+          simple_slope_output = simple_slope_output %>% 
+            dplyr::mutate(Mod_1_Level = rep(c("Low ", "Mean", "High"), each = nrow(simple_slope_output) / 3)) %>% 
+            dplyr::select('Mod_1_Level', tidyselect::everything())
+          
+        } else if(length(simple_slope_model$slopes) == 2){ # if mod 2 is binary 
+          simple_slope_output = 
+            rbind(simple_slope_model$slopes[[1]], simple_slope_model$slopes[[2]]) %>% 
+            dplyr::mutate(dplyr::across(1, function(x){dplyr::case_when(x > mean(x) ~ 'High',
+                                                                        x == mean(x) ~ 'Mean',
+                                                                        x < mean(x) ~ 'Low ')}))
+          simple_slope_output = simple_slope_output %>% 
+            dplyr::mutate(Mod_1_Level = rep(c("Low ","High"), each = nrow(simple_slope_output) / 2)) %>% 
+            dplyr::select('Mod_1_Level', tidyselect::everything())
+        }
+        
+        simple_slope_output = simple_slope_output %>% 
+          dplyr::rename(ci.lower = "2.5%") %>%
+          dplyr::rename(ci.upper = "97.5%") %>%
+          dplyr::mutate(dplyr::across("Mod_1_Level", ~ replace(., duplicated(.), "")))
+        colnames(simple_slope_output)[c(1, 2)] <- c(paste(three_way_interaction_factor[3], "Level"), paste(three_way_interaction_factor[2], "Level"))
+        
+        jnp_plot <- simple_slope_model$jnplot
       } else {
         stop("Please install.packages(c('cowplot','interactions')) use simple_slope with three-way interaction")
       }
@@ -187,7 +256,7 @@ integrated_multilevel_model_summary <- function(data,
   }
 
   # Print result
-  if (any(print_result %in% "model_summary") | return_result == TRUE) {
+  if (model_summary == TRUE| return_result == TRUE) {
     model_summary_df <- model_summary(
       model = model,
       streamline = streamline,
@@ -197,17 +266,25 @@ integrated_multilevel_model_summary <- function(data,
     )
   }
 
-  if (any(print_result %in% "plot")) {
-    try(print(interaction_plot))
-  }
 
   if (simple_slope == TRUE) {
-    print(simple_slope_model)
+    super_print("underline|Slope Estimates at Each Level of Moderators")
+    print_table(simple_slope_output)
+    print(jnp_plot)
   }
-
+  
+  if (interaction_plot == TRUE) {
+    try(print(interaction_plot_object))
+  }
+  plot_logical = c(interaction_plot,simple_slope,assumption_plot)
+  number_of_plot_requested = length(plot_logical[plot_logical])
+  if (number_of_plot_requested > 1) {
+    warning('You requested > 2 plots. Since 1 plot can be displayed at a time, considering using Rmd for better viewing experience.')
+  }
+  
   # Return Result
   if (return_result == TRUE) {
-    return_list <- list(model = model, summary = model_summary_df, plot = interaction_plot)
+    return_list <- list(model = model, summary = model_summary_df, plot = interaction_plot_object)
     return(return_list)
   }
 }

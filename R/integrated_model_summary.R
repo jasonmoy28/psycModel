@@ -1,7 +1,8 @@
 #' Integrated Function for Linear Regression
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' It will first compute the linear regression. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will calls the interaction::sim_slopes (Long, 2019).
+#' It will first compute the linear regression. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. 
+#' If you requested simple slope summary, it will calls the interaction::sim_slopes (Long, 2019).
 #'
 #' @param data data frame
 #' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select()` syntax.
@@ -9,7 +10,6 @@
 #' @param three_way_interaction_factor three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support `dplyr::select()` syntax.
 #' @param graph_label_name optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)
 #' @param return_result If it is set to `TRUE` (default is `FALSE`), it will return the `model`, `model_summary`, and `plot` (if the interaction term is included)
-#' @param print_result  Default is `model_summary` and `plot`. Options are `model_summary` or `plot`.
 #' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
 #' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
 #' @param plot_color If it is set to `TRUE` (default is `FALSE`), the interaction plot will plot with color.
@@ -20,6 +20,9 @@
 #' @param streamline print streamlined output
 #' @param model explicit model of object `lm`
 #' @param two_way_interaction_factor two-way interaction factors. You need to pass 2+ factor. Support `dplyr::select()` syntax.
+#' @param family a GLM family. It will passed to the family argument in glm. See `?glm` for possible options. `r lifecycle::badge("experimental")`
+#' @param model_summary print model summary
+#' @param interaction_plot generate interaction plot
 #'
 #' @return
 #' return a list of all requested items in the order of model, model_summary, plot
@@ -49,9 +52,11 @@ integrated_model_summary <- function(data,
                                      predictor_variable = NULL,
                                      two_way_interaction_factor = NULL,
                                      three_way_interaction_factor = NULL,
+                                     family = NULL, 
                                      cateogrical_var = NULL,
                                      graph_label_name = NULL,
-                                     print_result = c("model_summary", "plot"),
+                                     model_summary = TRUE, 
+                                     interaction_plot = TRUE,
                                      y_lim = NULL,
                                      plot_color = FALSE,
                                      digits = 3,
@@ -79,14 +84,32 @@ integrated_model_summary <- function(data,
     dplyr::select(!!enquo(three_way_interaction_factor)) %>%
     names()
 
-  model <- lm_model(
-    data = data,
-    response_variable = dplyr::all_of(response_variable),
-    predictor_variable = dplyr::all_of(predictor_variable),
-    two_way_interaction_factor = dplyr::all_of(two_way_interaction_factor),
-    three_way_interaction_factor = dplyr::all_of(three_way_interaction_factor),
-    quite = TRUE
-  )
+  if (is.null(family)) {
+    model <- lm_model(
+      data = data,
+      response_variable = dplyr::all_of(response_variable),
+      predictor_variable = dplyr::all_of(predictor_variable),
+      two_way_interaction_factor = dplyr::all_of(two_way_interaction_factor),
+      three_way_interaction_factor = dplyr::all_of(three_way_interaction_factor),
+      quite = TRUE
+    )
+  } else{
+    if (simple_slope == TRUE |interaction_plot == T) {
+      simple_slope = FALSE
+      interaction_plot = FALSE
+      warning('interaction_plot & simple_slope is not avaliable for glme model for now')
+    }
+    model <- glm_model(
+      data = data,
+      response_variable = tidyselect::all_of(response_variable),
+      predictor_variable = tidyselect::all_of(predictor_variable),
+      two_way_interaction_factor = tidyselect::all_of(two_way_interaction_factor),
+      three_way_interaction_factor = tidyselect::all_of(three_way_interaction_factor),
+      family = family, 
+      quite = TRUE
+    )
+  }
+
 
   ############################### Generate Interaction Plots ###############################
   two_way_interaction_factor <- data %>%
@@ -95,17 +118,17 @@ integrated_model_summary <- function(data,
   three_way_interaction_factor <- data %>%
     dplyr::select(!!enquo(three_way_interaction_factor)) %>%
     names()
-  interaction_plot <- NULL
-  if (length(two_way_interaction_factor) != 0 & (any(print_result %in% "plot") | return_result == TRUE)) {
-    interaction_plot <- two_way_interaction_plot(
+  interaction_plot_object <- NULL
+  if (length(two_way_interaction_factor) != 0 & (interaction_plot == TRUE | return_result == TRUE)) {
+    interaction_plot_object <- two_way_interaction_plot(
       model = model,
       cateogrical_var = cateogrical_var,
       graph_label_name = graph_label_name,
       y_lim = y_lim,
       plot_color = plot_color
     )
-  } else if (length(three_way_interaction_factor) != 0 & (any(print_result %in% "plot") | return_result == TRUE)) {
-    interaction_plot <- three_way_interaction_plot(
+  } else if (length(three_way_interaction_factor) != 0 & (interaction_plot == TRUE | return_result == TRUE)) {
+    interaction_plot_object <- three_way_interaction_plot(
       model = model,
       cateogrical_var = cateogrical_var,
       graph_label_name = graph_label_name,
@@ -113,7 +136,8 @@ integrated_model_summary <- function(data,
       plot_color = plot_color
     )
   } else {
-    interaction_plot <- NULL
+    interaction_plot_object <- NULL
+    interaction_plot = FALSE
   }
 
 
@@ -127,12 +151,14 @@ integrated_model_summary <- function(data,
           modx = !!two_way_interaction_factor[2],
           jnplot = TRUE,
         )
-        simple_slope_output <- simple_slope_model$slopes %>%
-          dplyr::mutate(Mod_1_Level = c("-1 SD", "Mean", "+1 SD")) %>%
-          dplyr::select(-1) %>%
+        simple_slope_output <- 
+          rbind(simple_slope_model$slopes) %>% 
+          dplyr::mutate(dplyr::across(1, function(x){dplyr::case_when(x > mean(x) ~ 'High',
+                                                                      x == mean(x) ~ 'Mean',
+                                                                      x < mean(x) ~ 'Low ')})) %>% 
           dplyr::rename(ci.lower = "2.5%") %>%
-          dplyr::rename(ci.upper = "97.5%") %>%
-          dplyr::select("Mod_1_Level", "Est.", "t val.", "S.E.", "p", "ci.lower", "ci.upper")
+          dplyr::rename(ci.upper = "97.5%") 
+        
         colnames(simple_slope_output)[1] <- c(paste(two_way_interaction_factor[2], "Level"))
         jnp_plot <- simple_slope_model$jnplot
       } else {
@@ -149,16 +175,34 @@ integrated_model_summary <- function(data,
           mod2 = !!three_way_interaction_factor[3],
           jnplot = TRUE
         )
-        simple_slope_output <- rbind(simple_slope_model$slopes[[1]], simple_slope_model$slopes[[2]], simple_slope_model$slopes[[3]]) %>%
-          dplyr::mutate(Mod_2_Level = c(rep("-1 SD", 3), rep("Mean", 3), rep("+1 SD", 3))) %>%
-          dplyr::mutate(Mod_1_Level = rep(c("-1 SD", "Mean", "+1 SD"), 3)) %>%
-          dplyr::select(-1) %>%
+        if (length(simple_slope_model$slopes) == 3) { # if mod 2 is continuous
+          simple_slope_output <- 
+            rbind(simple_slope_model$slopes[[1]], simple_slope_model$slopes[[2]], simple_slope_model$slopes[[3]]) %>% 
+            dplyr::mutate(dplyr::across(1, function(x){dplyr::case_when(x > mean(x) ~ 'High',
+                                                                        x == mean(x) ~ 'Mean',
+                                                                        x < mean(x) ~ 'Low ')})) 
+          simple_slope_output = simple_slope_output %>% 
+            dplyr::mutate(Mod_1_Level = rep(c("Low ", "Mean", "High"), each = nrow(simple_slope_output) / 3)) %>% 
+            dplyr::select('Mod_1_Level', tidyselect::everything())
+          
+        } else if(length(simple_slope_model$slopes) == 2){ # if mod 2 is binary 
+          simple_slope_output = 
+            rbind(simple_slope_model$slopes[[1]], simple_slope_model$slopes[[2]]) %>% 
+            dplyr::mutate(dplyr::across(1, function(x){dplyr::case_when(x > mean(x) ~ 'High',
+                                                                        x == mean(x) ~ 'Mean',
+                                                                        x < mean(x) ~ 'Low ')}))
+          simple_slope_output = simple_slope_output %>% 
+            dplyr::mutate(Mod_1_Level = rep(c("Low ","High"), each = nrow(simple_slope_output) / 2)) %>% 
+            dplyr::select('Mod_1_Level', tidyselect::everything())
+        }
+        
+        simple_slope_output = simple_slope_output %>% 
           dplyr::rename(ci.lower = "2.5%") %>%
           dplyr::rename(ci.upper = "97.5%") %>%
-          dplyr::select("Mod_2_Level", "Mod_1_Level", "Est.", "t val.", "S.E.", "p", "ci.lower", "ci.upper") %>%
-          dplyr::mutate(dplyr::across("Mod_2_Level", ~ replace(., duplicated(.), "")))
-        colnames(simple_slope_output)[c(1, 2)] <- c(paste(three_way_interaction_factor[2], "Level"), paste(three_way_interaction_factor[3], "Level"))
-        jnp_plot <- simple_slope_output$jnplot
+          dplyr::mutate(dplyr::across("Mod_1_Level", ~ replace(., duplicated(.), "")))
+        colnames(simple_slope_output)[c(1, 2)] <- c(paste(three_way_interaction_factor[3], "Level"), paste(three_way_interaction_factor[2], "Level"))
+        
+        jnp_plot <- simple_slope_model$jnplot
       } else {
         stop("Please install.packages(c('cowplot','interactions')) use simple_slope with three-way interaction")
       }
@@ -166,7 +210,7 @@ integrated_model_summary <- function(data,
   }
 
   # Print result
-  if (any(print_result %in% "model_summary") | return_result == TRUE) {
+  if (model_summary == TRUE | return_result == TRUE) {
     model_summary_df <- model_summary(
       model = model,
       streamline = streamline,
@@ -176,8 +220,8 @@ integrated_model_summary <- function(data,
     )
   }
 
-  if (any(print_result %in% "plot")) {
-    try(print(interaction_plot))
+  if (interaction_plot == TRUE) {
+    try(print(interaction_plot_object))
   }
 
   if (simple_slope == TRUE) {
@@ -186,6 +230,12 @@ integrated_model_summary <- function(data,
     print(jnp_plot)
   }
 
+  plot_logical = c(interaction_plot,simple_slope,assumption_plot)
+  number_of_plot_requested = length(plot_logical[plot_logical])
+  if (number_of_plot_requested > 1) {
+    warning('You requested > 2 plots. Since 1 plot can be displayed at a time, considering using Rmd for better viewing experience.')
+  }
+  
   # Return Result
   if (return_result == TRUE) {
     return_list <- list(model = model, summary = model_summary_df, plot = interaction_plot)

@@ -12,13 +12,15 @@ integrated_multilevel_model_summary(
   non_random_effect_factors = NULL,
   two_way_interaction_factor = NULL,
   three_way_interaction_factor = NULL,
+  family = NULL,
   cateogrical_var = NULL,
   id = NULL,
   graph_label_name = NULL,
   estimation_method = "REML",
   opt_control = "bobyqa",
   na.action = stats::na.omit,
-  print_result = c("model_summary", "plot"),
+  model_summary = TRUE,
+  interaction_plot = TRUE,
   y_lim = NULL,
   plot_color = FALSE,
   digits = 3,
@@ -45,6 +47,8 @@ integrated_multilevel_model_summary(
 
 \item{three_way_interaction_factor}{three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support \code{dplyr::select()} syntax.}
 
+\item{family}{a GLM family. It will passed to the family argument in glmer. See \code{?glmer} for possible options. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
+
 \item{cateogrical_var}{list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of \code{list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))}}
 
 \item{id}{the nesting variable (e.g. group, time). Length of 1. Support \code{dplyr::select()} syntax.}
@@ -57,7 +61,9 @@ integrated_multilevel_model_summary(
 
 \item{na.action}{default is \code{stats::na.exclude}. Required to be \code{stats::na.omit} if assumption_plot if \code{TRUE}. It should produce similar result, but you should check using \code{na.exclude} to confirm.}
 
-\item{print_result}{Default is \code{model_summary} and \code{plot}. Options are \code{model_summary} or \code{plot}.}
+\item{model_summary}{print model summary}
+
+\item{interaction_plot}{generate interaction plot}
 
 \item{y_lim}{the plot's upper and lower limit for the y-axis. Length of 2. Example: \code{c(lower_limit, upper_limit)}}
 
@@ -81,8 +87,10 @@ integrated_multilevel_model_summary(
 return a list of all requested items in the order of model, model_summary, plot
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
-It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019).
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
+It will first compute the mixed effect model. It will use either the nlme::lme or the lmerTest::lmer for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model.
+Then, it will print the model summary and assumption_plot if you requested it. If you requested the interaction plot (default is \code{TRUE}), it will graph the interaction (Currently only support lme model not glme)
+If you requested simple slope summary, it will uses the interaction::sim_slopes.
 }
 \examples{
 fit <- integrated_multilevel_model_summary(
