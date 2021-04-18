@@ -9,12 +9,12 @@ measurement_invariance(
   ...,
   model = NULL,
   group,
-  ordered = F,
+  ordered = FALSE,
   group_partial = NULL,
-  return_result = F,
+  return_result = FALSE,
   invariance_level = "scalar",
   digits = 3,
-  quite = F
+  quite = FALSE
 )
 }
 \arguments{
@@ -26,15 +26,15 @@ measurement_invariance(
 
 \item{group}{character. group variable.}
 
-\item{ordered}{logical. default is F. If it is set to T, lavaan will treat it as a ordinal variable and use DWLS instead of ML}
+\item{ordered}{logical. default is \code{FALSE}. If it is set to \code{TRUE}, lavaan will treat it as a ordinal variable and use DWLS instead of ML}
 
 \item{group_partial}{items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2'). See details for recommended practice.}
 
-\item{return_result}{Default is \code{FALSE}. If it is \code{TRUE}, it will return a data frame of the fit measure summary}
+\item{return_result}{If it is set to \code{TRUE}, it will return a data frame of the fit measure summary}
 
 \item{invariance_level}{"metric" or "scalar". Default is 'metric'. Set as 'metric' for configural-metric comparison, and set as 'scalar' for configural-metric-scalar comparison.}
 
-\item{digits}{number of digit to round}
+\item{digits}{number of digits to round to}
 
 \item{quite}{suppress printing output except the model summary.}
 }

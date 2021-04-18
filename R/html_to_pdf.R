@@ -14,7 +14,8 @@
 #' @examples
 #' \dontrun{
 #' html_to_pdf(file_path = "html_name.html")
-#' html_to_pdf(dir = "Users/Desktop/my_html_folder") # all HTML files in the my_html_folder will be converted
+#' # all HTML files in the my_html_folder will be converted
+#' html_to_pdf(dir = "Users/Desktop/my_html_folder")
 #' }
 html_to_pdf <- function(file_path = NULL,
                         dir = NULL,
@@ -47,6 +48,6 @@ html_to_pdf <- function(file_path = NULL,
       stop("Either file_path or dir must be specified")
     }
   } else {
-    stop("please install.packages('pagedown')")
+    stop("Please install.packages('pagedown')")
   }
 }

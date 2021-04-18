@@ -9,7 +9,7 @@
 #' @param graph_label_name vector of length 3 or function. Vector should be passed in the form of `c(response_var, predict_var1, predict_var2)`. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)
 #' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
 #' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
-#' @param plot_color default if `F`. Set to `T` if you want to plot in color
+#' @param plot_color default if `F`. Set to `TRUE` if you want to plot in color
 #'
 #' @references
 #' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
@@ -116,12 +116,12 @@ two_way_interaction_plot <- function(model,
   }
 
   data <- data_check(data)
-  mean_df <- dplyr::summarise_all(data, mean, na.rm = T)
+  mean_df <- dplyr::summarise_all(data, mean, na.rm = TRUE)
   upper_df <- dplyr::summarise_all(data, .funs = function(.) {
-    mean(., na.rm = T) + 1 * stats::sd(., na.rm = T)
+    mean(., na.rm = TRUE) + 1 * stats::sd(., na.rm = TRUE)
   })
   lower_df <- dplyr::summarise_all(data, .funs = function(.) {
-    mean(., na.rm = T) - 1 * stats::sd(., na.rm = T)
+    mean(., na.rm = TRUE) - 1 * stats::sd(., na.rm = TRUE)
   })
 
   # Specify the categorical variable upper and lower bound directly
@@ -156,10 +156,10 @@ two_way_interaction_plot <- function(model,
     lower_upper_predicted_value <- stats::predict(model, newdata = lower_upper_df, level = 0)
     lower_lower_predicted_value <- stats::predict(model, newdata = lower_lower_df, level = 0)
   } else if (class(model) == "lmerModLmerTest" | class(model) == "glmerMod" | class(model) == "lmerMod") {
-    upper_upper_predicted_value <- stats::predict(model, newdata = upper_upper_df, allow.new.levels = T)
-    upper_lower_predicted_value <- stats::predict(model, newdata = upper_lower_df, allow.new.levels = T)
-    lower_upper_predicted_value <- stats::predict(model, newdata = lower_upper_df, allow.new.levels = T)
-    lower_lower_predicted_value <- stats::predict(model, newdata = lower_lower_df, allow.new.levels = T)
+    upper_upper_predicted_value <- stats::predict(model, newdata = upper_upper_df, allow.new.levels = TRUE)
+    upper_lower_predicted_value <- stats::predict(model, newdata = upper_lower_df, allow.new.levels = TRUE)
+    lower_upper_predicted_value <- stats::predict(model, newdata = lower_upper_df, allow.new.levels = TRUE)
+    lower_lower_predicted_value <- stats::predict(model, newdata = lower_lower_df, allow.new.levels = TRUE)
   } else if (class(model) == "lm") {
     upper_upper_predicted_value <- stats::predict(model, newdata = upper_upper_df)
     upper_lower_predicted_value <- stats::predict(model, newdata = upper_lower_df)

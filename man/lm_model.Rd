@@ -16,13 +16,13 @@ lm_model(
 \arguments{
 \item{data}{data frame}
 
-\item{response_variable}{response variable. Support \code{dplyr::select} syntax.}
+\item{response_variable}{response variable. Support \code{dplyr::select()} syntax.}
 
-\item{predictor_variable}{predictor variable. Support \code{dplyr::select} syntax. It will automatically remove the response variable from predictor variable, so you can use \code{contains()} or \code{start_with()} safely.}
+\item{predictor_variable}{predictor variable. Support \code{dplyr::select()} syntax. It will automatically remove the response variable from predictor variable, so you can use \code{contains()} or \code{start_with()} safely.}
 
-\item{two_way_interaction_factor}{two-way interaction factors. You need to pass 2+ factor. Support \code{dplyr::select} syntax.}
+\item{two_way_interaction_factor}{two-way interaction factors. You need to pass 2+ factor. Support \code{dplyr::select()} syntax.}
 
-\item{three_way_interaction_factor}{three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support \code{dplyr::select} syntax.}
+\item{three_way_interaction_factor}{three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support \code{dplyr::select()} syntax.}
 
 \item{quite}{suppress printing output}
 }

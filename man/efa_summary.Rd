@@ -8,12 +8,14 @@ efa_summary(
   data,
   cols,
   rotation = "varimax",
-  optimal_factor_method = F,
-  efa_plot = T,
+  optimal_factor_method = FALSE,
+  efa_plot = TRUE,
   digits = 3,
   n_factor = NULL,
-  post_hoc_cfa = F,
-  return_result = F
+  post_hoc_cfa = FALSE,
+  quite = FALSE,
+  streamline = FALSE,
+  return_result = FALSE
 )
 }
 \arguments{
@@ -25,15 +27,19 @@ efa_summary(
 
 \item{optimal_factor_method}{Show a summary of the number of factors by optimization method (e.g., BIC, VSS complexity, Velicer's MAP)}
 
-\item{efa_plot}{show explained variance by number of factor plot. default is \code{T}.}
+\item{efa_plot}{show explained variance by number of factor plot. default is \code{TRUE}.}
 
-\item{digits}{number of digits}
+\item{digits}{number of digits to round to}
 
 \item{n_factor}{number of factors for EFA. It will bypass the initial optimization algorithm, and fit the EFA model using this specified number of factor}
 
 \item{post_hoc_cfa}{a CFA model based on the extracted factor}
 
-\item{return_result}{If set to \code{TRUE} (default is \code{FALSE}), it will return a \code{fa} object from \code{psych}}
+\item{quite}{suppress printing output}
+
+\item{streamline}{print streamlined output}
+
+\item{return_result}{If it is set to \code{TRUE} (default is \code{FALSE}), it will return a \code{fa} object from \code{psych}}
 }
 \value{
 an \code{fa} object from \code{psych}

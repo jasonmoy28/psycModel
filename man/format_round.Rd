@@ -9,7 +9,7 @@ format_round(x, digits = 3)
 \arguments{
 \item{x}{object}
 
-\item{digits}{number of digit}
+\item{digits}{number of digits to round to}
 }
 \description{
 Format digits (internal use only)

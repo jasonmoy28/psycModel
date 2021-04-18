@@ -5,11 +5,11 @@
 #' bypass this by specifying the dimensionality argument.
 #'
 #' @param data data frame
-#' @param cols items for reliability analysis.  Support `dplyr::select` syntax.
+#' @param cols items for reliability analysis.  Support `dplyr::select()` syntax.
 #' @param descriptive_table Get descriptive statistics. Default is `TRUE`
-#' @param digits number of digits
+#' @param digits number of digits to round to
 #' @param dimensionality Specify the dimensionality. Either `uni` (uni-dimensionality) or `multi` (multi-dimensionality). Default is `NULL` that determines the dimensionality using EFA.
-#' @param return_result If set to `TRUE` (default is `FALSE`), it will return `psych::alpha` for unidimensional scale, and `psych::omega` for multidimensional scale.
+#' @param return_result If it is set to `TRUE` (default is `FALSE`), it will return `psych::alpha` for unidimensional scale, and `psych::omega` for multidimensional scale.
 #'
 #' @return `psych::alpha` for unidimensional scale, and `psych::omega` for multidimensional scale.
 #' @export
@@ -22,8 +22,8 @@ reliability_summary <- function(data,
                                 cols,
                                 dimensionality = NULL,
                                 digits = 3,
-                                descriptive_table = T,
-                                return_result = F) {
+                                descriptive_table = TRUE,
+                                return_result = FALSE) {
   cols <- data %>%
     dplyr::select(!!enquo(cols)) %>%
     names()
@@ -74,11 +74,11 @@ reliability_summary <- function(data,
     cfa_summary(
       data = data,
       cols,
-      model_variance = F,
-      model_covariance = F,
+      model_variance = FALSE,
+      model_covariance = FALSE,
       digits = digits,
-      streamline = T,
-      plot = F
+      streamline = TRUE,
+      plot = FALSE
     )
     cat("\n")
     cat("\n")
@@ -88,7 +88,7 @@ reliability_summary <- function(data,
     if (requireNamespace("GPArotation", quietly = TRUE)) {
       omega_fit <- data %>% psych::omega()
     } else {
-      stop("please install.packages(GPArotation) first")
+      stop("Please install.packages(GPArotation) first")
     }
 
     composite_measure <- tibble::tibble(
@@ -119,17 +119,17 @@ reliability_summary <- function(data,
     cat("\n")
     cat("\n")
   }
-  if (descriptive_table == T) {
+  if (descriptive_table == TRUE) {
     super_print("Descriptive Statistics Table:")
     descriptive_table(
       data = data,
       cols = dplyr::all_of(cols),
       cor_digit = digits,
       descriptive_indicator_digit = digits,
-      streamline = T
+      streamline = TRUE
     )
   }
-  if (return_result == T) {
+  if (return_result == TRUE) {
     if (dimensionality == "uni") {
       return(alpha_fit)
     } else {

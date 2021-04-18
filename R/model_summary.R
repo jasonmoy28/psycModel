@@ -1,12 +1,12 @@
-#' Model Summary for Mixed Effect Model
+#' Model Summary for Regression Models
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' The function will extract the relevant coefficients from the linear mixed effect models (see supported model below).
+#' The function will extract the relevant coefficients from the regression models (see below for supported model).
 #'
-#' @param model an object from nlme::lme, lmerTest::lmer, or lme4::glmer
-#' @param digits number of digit to round the values.
-#' @param streamlined_output Only super_print model estimate and model performance. Default is `FALSE`
-#' @param return_result return the model estimates data frame. Default is `FALSE`
+#' @param model an model object. The following model are tested for accuracy: stats::lm, nlme::lme, lmerTest::lmer, lme4::lmer, lme4::glmer. Other model object may work if it work with parameters::model_parameters()
+#' @param digits number of digits to round to
+#' @param streamline print streamlined output. Only print model estimate and performance.
+#' @param return_result It set to `TRUE`, it return the model estimates data frame.
 #' @param assumption_plot Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()
 #' @param quite suppress printing output
 #'
@@ -38,7 +38,7 @@
 #'
 #' model_summary(lm_fit, assumption_plot = TRUE)
 model_summary <- function(model,
-                          streamlined_output = FALSE,
+                          streamline = FALSE,
                           digits = 3,
                           assumption_plot = FALSE,
                           return_result = FALSE,
@@ -61,16 +61,16 @@ model_summary <- function(model,
     heteroscedasticity_check <- TRUE
     collinearity_check <- TRUE
     singular_check <- TRUE
-    
-    lme_param = parameters::model_parameters(model)
-    model_summary_df = lme_param %>% 
-      as.data.frame() %>% 
-      dplyr::rename(df = .data$df_error) %>% 
-      dplyr::rename(ci.lower = CI_low) %>% 
-      dplyr::rename(ci.upper = CI_high) %>% 
-      dplyr::select(-CI) %>% 
-      dplyr::select('Parameter','Effects', 'Coefficient','t','df','SE', 'p','ci.lower','ci.upper','p',everything())
-    
+
+    lme_param <- parameters::model_parameters(model)
+    model_summary_df <- lme_param %>%
+      as.data.frame() %>%
+      dplyr::rename(df = .data$df_error) %>%
+      dplyr::rename(ci.lower = .data$CI_low) %>%
+      dplyr::rename(ci.upper = .data$CI_high) %>%
+      dplyr::select(-"CI") %>%
+      dplyr::select("Parameter", "Effects", "Coefficient", "t", "df", "SE", "p", "ci.lower", "ci.upper", "p", tidyselect::everything())
+
     ## lmer package
   } else if (class(model) == "lmerModLmerTest" | class(model) == "lmerMod") {
     model_type <- "Linear Mixed Effect Model (fitted using lme4 or lmerTest)"
@@ -88,15 +88,15 @@ model_summary <- function(model,
     heteroscedasticity_check <- TRUE
     collinearity_check <- TRUE
     singular_check <- TRUE
-    
-    lme_param = parameters::model_parameters(model)
-    model_summary_df = lme_param %>% 
-      as.data.frame() %>% 
-      dplyr::rename(df = .data$df_error) %>% 
-      dplyr::rename(ci.lower = CI_low) %>% 
-      dplyr::rename(ci.upper = CI_high) %>% 
-      dplyr::select(-CI) %>% 
-      dplyr::select('Parameter','Effects', 'Coefficient','t','df','SE', 'p','ci.lower','ci.upper','p',everything())
+
+    lme_param <- parameters::model_parameters(model)
+    model_summary_df <- lme_param %>%
+      as.data.frame() %>%
+      dplyr::rename(df = .data$df_error) %>%
+      dplyr::rename(ci.lower = .data$CI_low) %>%
+      dplyr::rename(ci.upper = .data$CI_high) %>%
+      dplyr::select(-"CI") %>%
+      dplyr::select("Parameter", "Effects", "Coefficient", "t", "df", "SE", "p", "ci.lower", "ci.upper", "p", tidyselect::everything())
 
     ################################################ Generalized Linear Mixed Effect Model ################################################
     ## glmer model
@@ -134,43 +134,39 @@ model_summary <- function(model,
     collinearity_check <- TRUE
     singular_check <- FALSE
 
-   lm_param = parameters::parameters(model)
-   model_summary_df = lm_param %>% 
-     as.data.frame() %>% 
-     dplyr::rename(df = .data$df_error) %>% 
-     dplyr::rename(ci.lower = CI_low) %>% 
-     dplyr::rename(ci.upper = CI_high) %>% 
-     dplyr::select(-CI) %>% 
-     dplyr::select('Parameter','Coefficient','t','df','SE', 'p','ci.lower','ci.upper','p',everything())
-
+    lm_param <- parameters::parameters(model)
+    model_summary_df <- lm_param %>%
+      as.data.frame() %>%
+      dplyr::rename(df = .data$df_error) %>%
+      dplyr::rename(ci.lower = .data$CI_low) %>%
+      dplyr::rename(ci.upper = .data$CI_high) %>%
+      dplyr::select(-"CI") %>%
+      dplyr::select("Parameter", "Coefficient", "t", "df", "SE", "p", "ci.lower", "ci.upper", "p", tidyselect::everything())
   }
   else {
-    other_param = parameters::parameters(model)
-    model_summary_df = other_param %>% 
-      as.data.frame() %>% 
-      dplyr::rename(df = .data$df_error) %>% 
-      dplyr::rename(ci.lower = CI_low) %>% 
-      dplyr::rename(ci.upper = CI_high) %>% 
-      dplyr::select(-CI) %>% 
-      dplyr::select('Parameter','Coefficient','t','df','SE', 'p','ci.lower','ci.upper','p',everything())
-    warning('The inputted model is not tested for accuracy. Please proceed with cautious. The model is passed to parameters::parameters() to extract relevant parameters')
-    
+    other_param <- parameters::parameters(model)
+    model_summary_df <- other_param %>%
+      as.data.frame() %>%
+      dplyr::rename(df = .data$df_error) %>%
+      dplyr::rename(ci.lower = .data$CI_low) %>%
+      dplyr::rename(ci.upper = .data$CI_high) %>%
+      dplyr::select(-"CI") %>%
+      dplyr::select("Parameter", "Coefficient", "t", "df", "SE", "p", "ci.lower", "ci.upper", "p", tidyselect::everything())
+    warning("The inputted model is not tested for accuracy. Please proceed with cautious. The model is passed to parameters::parameters() to extract relevant parameters")
   }
-  
+
   model_performance_df <- performance::performance(model)
   colnames(model_performance_df) <- stringr::str_replace_all(pattern = "R2", replacement = "R^2", string = colnames(model_performance_df))
   colnames(model_performance_df) <- stringr::str_replace_all(pattern = "Sigma", replacement = "$sigma$", string = colnames(model_performance_df))
   ################################################  Output Table  ################################################
   if (quite == FALSE) { # check whether quite the entire output table
-    if (streamlined_output == TRUE) { # streamline model output
+    if (streamline == TRUE) { # streamline model output
       super_print("underline|Model Estimates")
       # super_print model estimates table and model performance table
       print_table(model_summary_df)
       super_print("\n \n")
       super_print("underline|Goodness of Fit")
       print_table(model_performance_df)
-      
-      
     } else { # full model output
       super_print("underline|Model Summary")
       super_print("Model Type = {model_type}")
@@ -285,11 +281,12 @@ model_summary <- function(model,
   # Check assumption plot
   if (assumption_plot == TRUE) {
     if (all(unlist(lapply(c("gridExtra", "qqplotr", "see"), requireNamespace)))) {
-      tryCatch(suppressMessages(print(performance::check_model(model))),error = function(cond){
-        warning('assumption_plot does not support this model type')
-        warning(cond)})
+      tryCatch(suppressMessages(print(performance::check_model(model))), error = function(cond) {
+        warning("assumption_plot does not support this model type")
+        warning(cond)
+      })
     } else {
-      stop("please install.packages(c('gridExtra','qqplotr','see')) to use assumption_plot")
+      stop("Please install.packages(c('gridExtra','qqplotr','see')) to use assumption_plot")
     }
   }
   cat("\n")

@@ -1,18 +1,18 @@
 #' Confirmatory Factor Analysis
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' The function fits a CFA model using the lavaan::cfa function. Users can fit single and multiple factors CFA, and it also supports multilevel CFA (specifying the group).
-#' Users can pass fit the model by passing the items using dplyr::select syntax or an explicit lavaan model for more versatile usage.
-#' All arguments (except the CFA items) must be explicitly named (like model = your-model; see example for inappropriate behavior).
+#' The function fits a CFA model using the `lavaan::cfa()`. Users can fit single and multiple factors CFA, and it also supports multilevel CFA (by specifying the group).
+#' Users can fit the model by passing the items using `dplyr::select` syntax or an explicit lavaan model for more versatile usage.
+#' All arguments (except the CFA items) must be explicitly named (e.g., model = your-model; see example for inappropriate behavior).
 #'
 #' @param data data frame
-#' @param ... CFA items using dplyr::select syntax. Multi-factor CFA items should be separated by comma (as different argument). See below for examples
-#' @param model explicit lavaan model. Must be specify with `model = lavaan_model_syntax`.
-#' @param group optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country)
-#' @param ordered Default is `FALSE`. If it is set to `TRUE`, lavaan will treat it as a ordinal variable and use DWLS instead of ML
+#' @param ... CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for examples. Support `dplyr::select` syntax.
+#' @param model explicit lavaan model. Must be specify with `model = lavaan_model_syntax`. `r lifecycle::badge("experimental")`
+#' @param group optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country). Support `dplyr::select` syntax.
+#' @param ordered Default is `FALSE`. If it is set to `TRUE`, lavaan will treat it as a ordinal variable and use `DWLS` instead of `ML`
 #' @param group_partial Items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').
 #' @param digits number of digits to round to
-#' @param return_result Default is `FALSE`. If it is `TRUE`, it will return the lavaan model
+#' @param return_result  If it is set to `TRUE`, it will return the lavaan model
 #' @param quite suppress printing output
 #' @param model_covariance print model covariance. Default is `TRUE`
 #' @param model_variance print model variance. Default is `TRUE`
@@ -55,7 +55,7 @@
 #'
 #' # Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)
 #' # Note in the below function how I added `model = ` in front of the lavaan model.
-#' # Similarly, the same rule apply for all arguments (e.g., `ordered = F` instead of `F`)
+#' # Similarly, the same rule apply for all arguments (e.g., `ordered = FALSE` instead of just `FALSE`)
 #' \dontrun{
 #' fit <- cfa_summary(
 #'   model = "visual  =~ x1 + x2 + x3; textual =~ x4 + x5 + x6;",
@@ -77,15 +77,15 @@ cfa_summary <- function(data,
                         ...,
                         model = NULL,
                         group = NULL,
-                        ordered = F,
-                        return_result = F,
+                        ordered = FALSE,
                         digits = 3,
-                        model_covariance = T,
-                        model_variance = T,
-                        plot = T,
-                        quite = F,
-                        streamline = F,
-                        group_partial = NULL) {
+                        model_covariance = TRUE,
+                        model_variance = TRUE,
+                        plot = TRUE,
+                        group_partial = NULL,
+                        streamline = FALSE,
+                        quite = FALSE,
+                        return_result = FALSE) {
   if (is.null(model)) { # construct model if explicit model is not passed
     items <- enquos(...)
     model <- ""
@@ -118,9 +118,9 @@ cfa_summary <- function(data,
   )
 
   ############################################### Get Output from Lavaan ###################################################################
-  if (quite == F) {
+  if (quite == FALSE) {
     fit_indices <- c("chisq", "df", "pvalue", "cfi", "rmsea", "srmr", "tli", "aic", "bic", "bic2")
-    if (ordered == T) {
+    if (ordered == TRUE) {
       fit_indices <- c("chisq", "df", "pvalue", "cfi", "rmsea", "tli")
       fit_indices <- paste(fit_indices, ".scaled", sep = "")
     }
@@ -146,25 +146,20 @@ cfa_summary <- function(data,
       dplyr::rename(Std.Est = "est.std") %>%
       dplyr::rename(SE = "se") %>%
       dplyr::rename(Z = "z") %>%
-      dplyr::rename(P.Value = "pvalue") %>%
-      dplyr::rename(CI.Lower = "ci.lower") %>%
-      dplyr::rename(CI.Upper = "ci.upper") %>%
+      dplyr::rename(P = "pvalue") %>%
       dplyr::mutate(dplyr::across(where(is.numeric), ~ format_round(x = ., digits = 3)))
 
     if (is.null(group)) {
-      factor_name_df <- data.frame(Latent.Factor = NA)
-      for (factor_name in factors_loadings_df$Latent.Factor) {
-        if (factor_name %in% factor_name_df[, 1]) {
-          factor_name <- ""
-        }
-        factor_name_loop <- data.frame(Latent.Factor = factor_name)
-        factor_name_df <- rbind(factor_name_df, factor_name_loop)
-      }
-      factor_name_df <- stats::na.omit(factor_name_df)
       factors_loadings_df <- factors_loadings_df %>%
-        dplyr::mutate(Latent.Factor = factor_name_df$Latent.Factor)
+        dplyr::mutate(dplyr::across(.data$Latent.Factor, ~ replace(., duplicated(.), "")))
+    } else {
+      factors_loadings_df <- factors_loadings_df %>%
+        dplyr::mutate(group = as.integer(group)) %>%
+        dplyr::group_by(group) %>%
+        dplyr::mutate(dplyr::across(.data$Latent.Factor, ~ replace(., duplicated(.), ""))) %>%
+        dplyr::ungroup() %>%
+        dplyr::mutate(dplyr::across(group, ~ replace(., duplicated(.), "")))
     }
-
 
     covariance_df <- standardized_df %>%
       dplyr::filter(.data$op == "~~") %>%
@@ -175,34 +170,28 @@ cfa_summary <- function(data,
       dplyr::rename(Est = "est.std") %>%
       dplyr::rename(SE = "se") %>%
       dplyr::rename(Z = "z") %>%
-      dplyr::rename(P.Value = "pvalue") %>%
-      dplyr::rename(CI.Lower = "ci.lower") %>%
-      dplyr::rename(CI.Upper = "ci.upper") %>%
-      dplyr::mutate(dplyr::across(where(is.numeric), ~ format_round(x = ., digits = 3)))
+      dplyr::rename(P = "pvalue")
 
     variance_df <- standardized_df %>%
       dplyr::filter(.data$op == "~~") %>%
       dplyr::filter(.data$lhs == .data$rhs) %>%
+      dplyr::select(-"lhs") %>%
       dplyr::select(-"op") %>%
-      dplyr::rename(Var.1 = "lhs") %>%
-      dplyr::rename(Var.2 = "rhs") %>%
+      dplyr::rename(Var = "rhs") %>%
       dplyr::rename(Est = "est.std") %>%
       dplyr::rename(SE = "se") %>%
       dplyr::rename(Z = "z") %>%
-      dplyr::rename(P.Value = "pvalue") %>%
-      dplyr::rename(CI.Lower = "ci.lower") %>%
-      dplyr::rename(CI.Upper = "ci.upper") %>%
-      dplyr::mutate(dplyr::across(where(is.numeric), ~ format_round(x = ., digits = 3)))
+      dplyr::rename(P = "pvalue")
 
     ################################################## Model Output ###################################################################
-    if (streamline == F) {
+    if (streamline == FALSE) {
       cat("\n \n")
       super_print("underline|Model Summary")
       super_print("Model Type = Confirmatory Factor Analysis")
-      super_print("Model Formula = \n.{model}")
       if (length(group) != 0) {
         super_print("Group = {group}")
       }
+      super_print("Model Formula = \n.{model}")
     }
     super_print("underline|Fit Measure")
     print_table(fit_measure_df)
@@ -211,19 +200,21 @@ cfa_summary <- function(data,
     super_print("underline|Factor Loadings")
     print_table(factors_loadings_df)
 
-    if (length(row.names(covariance_df)) != 0 & model_covariance == T) {
-      cat("\n \n")
-      super_print("underline|Model Covariances")
-      print_table(covariance_df)
-    }
+    if (streamline == FALSE) {
+      if (length(row.names(covariance_df)) != 0 & model_covariance == TRUE) {
+        cat("\n \n")
+        super_print("underline|Model Covariances")
+        print_table(covariance_df)
+      }
 
-    if (length(row.names(variance_df)) != 0 & model_variance == T) {
-      cat("\n \n")
-      super_print("underline|Model Variance")
-      print_table(variance_df)
+      if (length(row.names(variance_df)) != 0 & model_variance == TRUE) {
+        cat("\n \n")
+        super_print("underline|Model Variance")
+        print_table(variance_df)
+      }
     }
     ########################################## Goodness of Fit ###################################################
-    if (ordered == F) {
+    if (ordered == FALSE) {
       cat("\n \n")
       super_print("Goodness of Fit:")
       P <- fit_measure_df["P"]
@@ -277,9 +268,9 @@ cfa_summary <- function(data,
     } else {
       print("No recommended cut-off criteria is avaliable for CFA fitted using DWLS (non-continuous variable). See ?cfa_summary details.")
     }
-  } # quite == F
-  if (plot == T) {
-    if (requireNamespace("semPlot", quietly = T)) {
+  } # quite == FALSE
+  if (plot == TRUE) {
+    if (requireNamespace("semPlot", quietly = TRUE)) {
       semPlot::semPaths(cfa_model,
         what = "std",
         edge.color = "black",
@@ -295,7 +286,7 @@ cfa_summary <- function(data,
     }
   }
   ## return result
-  if (return_result == T) {
+  if (return_result == TRUE) {
     return(cfa_model)
   }
 }

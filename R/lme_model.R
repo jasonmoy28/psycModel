@@ -6,18 +6,17 @@
 #'
 #' @param data data frame
 #' @param model  lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates.
-#' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select` syntax.
-#' @param random_effect_factors random effect factors (level-1 variable for HLM people) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support `dplyr::select` syntax.
-#' @param non_random_effect_factors non-random effect factors (level-2 variable for HLM people). Factors only need to estimate fixed effect. Support `dplyr::select` syntax.
-#' @param two_way_interaction_factor two-way interaction factors. You need to pass 2+ factor. Support `dplyr::select` syntax.
-#' @param three_way_interaction_factor three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support `dplyr::select` syntax.
-#' @param id the nesting variable (e.g. group, time). Length of 1. Support `dplyr::select` syntax.
+#' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select()` syntax.
+#' @param random_effect_factors random effect factors (level-1 variable for HLM people) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support `dplyr::select()` syntax.
+#' @param non_random_effect_factors non-random effect factors (level-2 variable for HLM people). Factors only need to estimate fixed effect. Support `dplyr::select()` syntax.
+#' @param two_way_interaction_factor two-way interaction factors. You need to pass 2+ factor. Support `dplyr::select()` syntax.
+#' @param three_way_interaction_factor three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support `dplyr::select()` syntax.
+#' @param id the nesting variable (e.g. group, time). Length of 1. Support `dplyr::select()` syntax.
 #' @param estimation_method character. `ML` or `REML` default to `REML`.
-#' @param na.action default is `stats::na.exclude`. Required to be `stats::na.omit` if check_assumption if `T`.
+#' @param na.action default is `stats::na.exclude`. Required to be `stats::na.omit` if check_assumption if `TRUE`.
 #' @param opt_control default is `optim` for `lme` and `bobyqa` for lmerTest
 #' @param use_package Default is `nlme`. Only available for linear mixed effect model. Options are `nlme` or `lmerTest`,`lme4`(`'lme4` return similar result as `lmerTest` except the return model)
 #' @param quite suppress printing output
-#' @param ... Internal use only. It doesn't work in other cases
 #'
 #' @details
 #' Here is a little tip. If you are using generic selecting syntax (e.g., contains() or start_with()), you don't need to remove the response variable and the id from the factors. It will be automatically remove. For example, if you have x1:x9 as your factors. You want to regress x2:x8 on x1. Your probably pass something like response_variable = x1, random_effect_factors = c(contains('x'),-x1) to the function. However, you don't need to do that, you can just pass random_effect_factors = c(contains('x')) to the function since it will automatically remove the response variable from selection.
@@ -64,12 +63,10 @@ lme_model <- function(data,
                       opt_control = "bobyqa",
                       na.action = stats::na.omit,
                       use_package = "lmerTest",
-                      quite = F,
-                      ...) {
+                      quite = FALSE) {
   ###################################### Set up #############################################
   # check data type and covert all variable to numeric
   data <- data_check(data)
-  ellipsis <- list(...)
   lme_model_check <- function(object, method) {
     if (method == "response_variable_check") {
       if (length(object) != 1) {
@@ -138,45 +135,24 @@ lme_model <- function(data,
 
   ###################################### Build model for models without explicit model #############################################
   ## parse tidyselect syntax
-  if (all(ellipsis != "model_summary_with_plot")) {
-    response_variable <- data %>%
-      dplyr::select(!!enquo(response_variable)) %>%
-      names()
-    random_effect_factors <- data %>%
-      dplyr::select(!!enquo(random_effect_factors)) %>%
-      names()
-    non_random_effect_factors <- data %>%
-      dplyr::select(!!enquo(non_random_effect_factors)) %>%
-      names()
-    two_way_interaction_factor <- data %>%
-      dplyr::select(!!enquo(two_way_interaction_factor)) %>%
-      names()
-    three_way_interaction_factor <- data %>%
-      dplyr::select(!!enquo(three_way_interaction_factor)) %>%
-      names()
-    id <- data %>%
-      dplyr::select(!!enquo(id)) %>%
-      names()
-  } else {
-    response_variable <- data %>%
-      dplyr::select(!!response_variable) %>%
-      names()
-    random_effect_factors <- data %>%
-      dplyr::select(!!random_effect_factors) %>%
-      names()
-    non_random_effect_factors <- data %>%
-      dplyr::select(!!non_random_effect_factors) %>%
-      names()
-    two_way_interaction_factor <- data %>%
-      dplyr::select(!!two_way_interaction_factor) %>%
-      names()
-    three_way_interaction_factor <- data %>%
-      dplyr::select(!!three_way_interaction_factor) %>%
-      names()
-    id <- data %>%
-      dplyr::select(!!id) %>%
-      names()
-  }
+  response_variable <- data %>%
+    dplyr::select(!!enquo(response_variable)) %>%
+    names()
+  random_effect_factors <- data %>%
+    dplyr::select(!!enquo(random_effect_factors)) %>%
+    names()
+  non_random_effect_factors <- data %>%
+    dplyr::select(!!enquo(non_random_effect_factors)) %>%
+    names()
+  two_way_interaction_factor <- data %>%
+    dplyr::select(!!enquo(two_way_interaction_factor)) %>%
+    names()
+  three_way_interaction_factor <- data %>%
+    dplyr::select(!!enquo(three_way_interaction_factor)) %>%
+    names()
+  id <- data %>%
+    dplyr::select(!!enquo(id)) %>%
+    names()
 
 
   ## remove response variable and id from random_effect_factors
@@ -233,7 +209,7 @@ lme_model <- function(data,
     random_factors_formula <- stats::as.formula(paste("~ 1 +", paste(random_factors, collapse = " + "), paste("|", id)))
 
     # print formula
-    if (quite == F) {
+    if (quite == FALSE) {
       fit_fixed_effect_formula <- paste(paste(response_variable, "~"), paste(fixed_factors, collapse = " + "))
       fit_random_effect_formula <- paste("~ 1 +", paste(random_factors, collapse = " + "), paste("|", id))
       fit_formula <- paste("\n Fixed =", fit_fixed_effect_formula, "\n Random =", fit_random_effect_formula)
@@ -261,7 +237,7 @@ lme_model <- function(data,
     lmerCtr <- lme4::lmerControl(optimizer = opt_control)
 
     # Print fitting formula
-    if (quite == F) {
+    if (quite == FALSE) {
       fit_formula <- paste(lmer_fixed_factors_formula, " + (", lmer_random_factors_formula, ")", sep = "")
       cat(paste("Fitting Model with lmer:\n Formula = ", fit_formula, "\n", sep = ""))
     }

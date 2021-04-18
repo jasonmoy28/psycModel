@@ -9,10 +9,11 @@ cor_test(
   cols,
   ...,
   digits = 3,
-  quite = F,
   method = "pearson",
   p_adjust = "holm",
-  return_result = F
+  streamline = FALSE,
+  quite = FALSE,
+  return_result = FALSE
 )
 }
 \arguments{
@@ -20,9 +21,15 @@ cor_test(
 
 \item{cols}{correlation items. Support \code{dplyr::select()} syntax.}
 
-\item{...}{additional arguments passed to correlation::correlation(). See ?correlation::correlation. Note that the return data.frame from correlation::correlation() must contains \code{r} and \code{p} (e.g., passing \code{baysesian = T} will not work)}
+\item{...}{additional arguments passed to correlation::correlation(). See ?correlation::correlation. Note that the return data.frame from correlation::correlation() must contains \code{r} and \code{p} (e.g., passing \code{baysesian = TRUE} will not work)}
 
 \item{digits}{number of digits to round to}
+
+\item{method}{Default is "pearson". Options are "kendall", "spearman","biserial", "polychoric", "tetrachoric", "biweight", "distance", "percentage", "blomqvist", "hoeffding", "gamma", "gaussian","shepherd", or "auto". See ?correlation::correlation for detail}
+
+\item{p_adjust}{Default is "holm". Options are "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "somers" or "none". See ?stats::p.adjust for more detail}
+
+\item{streamline}{print streamlined output.}
 
 \item{quite}{suppress printing output}
 
@@ -33,9 +40,8 @@ data frame of the correlation table
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-This function uses the psych::corr.test function to generated the Pearson correlation table and their associated significance values.
+This function uses the \code{correlation::correlation()} to generate the correlation table.
 }
 \examples{
 cor_test(iris, where(is.numeric))
-
 }

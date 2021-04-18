@@ -10,7 +10,7 @@ three_way_interaction_plot(
   cateogrical_var = NULL,
   graph_label_name = NULL,
   y_lim = NULL,
-  plot_color = F
+  plot_color = FALSE
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ three_way_interaction_plot(
 
 \item{y_lim}{the plot's upper and lower limit for the y-axis. Length of 2. Example: \code{c(lower_limit, upper_limit)}}
 
-\item{plot_color}{default if \code{F}. Set to \code{T} if you want to plot in color}
+\item{plot_color}{default if \code{FALSE}. Set to \code{TRUE} if you want to plot in color}
 }
 \value{
 a object of class \code{ggplot}
@@ -39,7 +39,7 @@ It appears that predict cannot handle categorical factors. Make sure you convert
 \examples{
 # I am going to show the more generic usage of this function
 # You can also use this package's built in function to fit the models
-# I recommend using the model_summary_with_plot to get everything
+# I recommend using the integrated_multilevel_model_summary to get everything
 
 # lme example
 lme_fit <- lme4::lmer("popular ~ extrav + sex + texp + extrav:sex:texp +

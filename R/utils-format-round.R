@@ -1,9 +1,9 @@
 #' Format digits (internal use only)
 #'
 #' @param x object
-#' @param digits number of digit
+#' @param digits number of digits to round to
 #'
 #' @keywords internal
 format_round <- function(x, digits = 3) {
-  format(round(x, digits = digits), nsmall = digits, scientific = F)
+  format(round(x, digits = digits), nsmall = digits, scientific = FALSE)
 }

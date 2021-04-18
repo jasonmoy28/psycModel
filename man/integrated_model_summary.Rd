@@ -2,7 +2,7 @@
 % Please edit documentation in R/integrated_model_summary.R
 \name{integrated_model_summary}
 \alias{integrated_model_summary}
-\title{Integrated Function for Mixed Effect Model}
+\title{Integrated Function for Linear Regression}
 \usage{
 integrated_model_summary(
   data,
@@ -12,36 +12,34 @@ integrated_model_summary(
   two_way_interaction_factor = NULL,
   three_way_interaction_factor = NULL,
   cateogrical_var = NULL,
-  streamlined_output = F,
   graph_label_name = NULL,
-  return_result = F,
   print_result = c("model_summary", "plot"),
   y_lim = NULL,
-  plot_color = F,
+  plot_color = FALSE,
   digits = 3,
-  simple_slope = F,
-  assumption_plot = F,
-  quite = F
+  simple_slope = FALSE,
+  assumption_plot = FALSE,
+  quite = FALSE,
+  streamline = FALSE,
+  return_result = FALSE
 )
 }
 \arguments{
 \item{data}{data frame}
 
-\item{model}{}
+\item{model}{explicit model of object \code{lm}}
 
-\item{response_variable}{DV (i.e., outcome variable / response variable). Length of 1. Support \code{dplyr::select} syntax.}
+\item{response_variable}{DV (i.e., outcome variable / response variable). Length of 1. Support \code{dplyr::select()} syntax.}
 
-\item{predictor_variable}{}
+\item{predictor_variable}{IV.  Support \code{dplyr::select()} syntax.}
 
-\item{three_way_interaction_factor}{three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support \code{dplyr::select} syntax.}
+\item{two_way_interaction_factor}{two-way interaction factors. You need to pass 2+ factor. Support \code{dplyr::select()} syntax.}
+
+\item{three_way_interaction_factor}{three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support \code{dplyr::select()} syntax.}
 
 \item{cateogrical_var}{list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of \code{list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))}}
 
-\item{streamlined_output}{Only print model estimate and model performance. Default is \code{FALSE}}
-
 \item{graph_label_name}{optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)}
-
-\item{return_result}{If set to \code{TRUE} (default is \code{FALSE}), it will return the \code{model}, \code{model_summary}, and \code{plot} (if the interaction term is included)}
 
 \item{print_result}{Default is \code{model_summary} and \code{plot}. Options are \code{model_summary} or \code{plot}.}
 
@@ -49,21 +47,41 @@ integrated_model_summary(
 
 \item{plot_color}{If it is set to \code{TRUE} (default is \code{FALSE}), the interaction plot will plot with color.}
 
-\item{digits}{number of digit.}
+\item{digits}{number of digits to round to}
 
 \item{simple_slope}{Compute the slope differing with ± 1 SD of the IVs. In the background, it calls interaction:sim_slopes()}
 
-\item{assumption_plot}{Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the backgdigits, it calls performance::check_model()}
+\item{assumption_plot}{Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()}
 
 \item{quite}{suppress printing output}
+
+\item{streamline}{print streamlined output}
+
+\item{return_result}{If it is set to \code{TRUE} (default is \code{FALSE}), it will return the \code{model}, \code{model_summary}, and \code{plot} (if the interaction term is included)}
 }
 \value{
 return a list of all requested items in the order of model, model_summary, plot
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
-It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019).
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
+It will first compute the linear regression. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will calls the interaction::sim_slopes (Long, 2019).
 }
 \examples{
-
+fit <- integrated_model_summary(
+  data = iris,
+  response_variable = "Sepal.Length",
+  predictor_variable = tidyselect::everything(),
+  two_way_interaction_factor = c(Sepal.Width, Species)
+)
+\dontrun{
+fit <- integrated_model_summary(
+  data = iris,
+  response_variable = "Sepal.Length",
+  predictor_variable = tidyselect::everything(),
+  two_way_interaction_factor = c(Sepal.Width, Species),
+  simple_slope = TRUE, # you can request simple slope
+  assumption_plot = TRUE, # you can also request assumption plot
+  plot_color = TRUE # you can also request the plot in color
+)
+}
 }

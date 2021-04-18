@@ -1,18 +1,14 @@
 #' Confirmatory Factor Analysis (groupwise)
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' This function will run a series of CFA (n = length(group)) with respect to each group. The function is intended to help you get a better understanding of which group has abnormal fit indicator
+#' This function will run N number of CFA where N = `length(group)`, and report the fit measures of CFA in each group. The function is intended to help you get a better understanding of which group has abnormal fit indicator
 #'
 #' @param data data frame
-#' @param model explicit lavaan model. Must be specify with `model = lavaan_model_syntax`.
-#' @param group character. group variable.
-#' @param ordered logical. default is F. If it is set to T, lavaan will treat it as a ordinal variable and use DWLS instead of ML
-#' @param ... CFA items.
+#' @param model explicit lavaan model. Must be specify with `model = lavaan_model_syntax`. `r lifecycle::badge("experimental")`
+#' @param group character. group variable. Support `dplyr::select` syntax.
+#' @param ordered logical. default is `FALSE`. If it is set to `TRUE`, lavaan will treat it as a ordinal variable and use `DWLS` instead of `ML`
+#' @param ... CFA items. Support `dplyr::select` syntax.
 #'
-#' @references
-#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
-#'
-#' Rosseel Y (2012). lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software, 48(2), 1–36. https://www.jstatsoft.org/v48/i02/.
 #'
 #' @details
 #' All argument must be explicitly specified. If not, all arguments will be treated as CFA items
@@ -32,9 +28,9 @@
 #' )
 cfa_groupwise <- function(data,
                           ...,
-                          model = NULL,
                           group,
-                          ordered = F) {
+                          model = NULL,
+                          ordered = FALSE) {
   group <- enquo(group)
   items <- enquos(...)
 

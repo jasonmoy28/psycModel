@@ -10,10 +10,10 @@ descriptive_table(
   ...,
   digits = 3,
   descriptive_indicator = c("mean", "sd", "cor"),
-  streamline = F,
-  quite = F,
-  return_result = F,
-  file_path = NULL
+  file_path = NULL,
+  streamline = FALSE,
+  quite = FALSE,
+  return_result = FALSE
 )
 }
 \arguments{
@@ -27,13 +27,13 @@ descriptive_table(
 
 \item{descriptive_indicator}{Default is mean, sd, cor. Options are missing (missing value count), non_missing (non-missing value count), cor (correlation table), n, mean, sd, median, trimmed (trimmed mean), median, mad (median absolute deviation from the median), min, max, range, skew, kurtosis, se (standard error)}
 
+\item{file_path}{file path for export. The function will implicitly pass this argument to the write.csv(file = file_path)}
+
 \item{streamline}{print streamlined output}
 
 \item{quite}{suppress printing output}
 
 \item{return_result}{If it is set to \code{TRUE}, it will return the data frame of the descriptive table}
-
-\item{file_path}{file path for export. The function will implicitly pass this argument to the write.csv(file = file_path)}
 }
 \value{
 data frame of the descriptive table

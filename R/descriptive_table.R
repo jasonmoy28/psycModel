@@ -27,13 +27,13 @@
 #' )
 descriptive_table <- function(data,
                               cols,
-                              ..., 
-                              digits = 3, 
+                              ...,
+                              digits = 3,
                               descriptive_indicator = c("mean", "sd", "cor"),
-                              streamline = F,
-                              quite = F,
-                              return_result = F,
-                              file_path = NULL) {
+                              file_path = NULL,
+                              streamline = FALSE,
+                              quite = FALSE,
+                              return_result = FALSE) {
   if (!requireNamespace("correlation", quietly = TRUE)) {
     stop("please install.packages('correlation')")
   }
@@ -49,7 +49,7 @@ descriptive_table <- function(data,
 
   # init return_df
   return_df <- tibble::tibble(Var = colnames(data))
-  
+
   # compute the missing table
   if (any(descriptive_indicator %in% "missing")) {
     missing_df <- data %>%
@@ -79,13 +79,13 @@ descriptive_table <- function(data,
     return_df <- return_df %>% dplyr::full_join(descriptive_table, by = "Var")
   }
   # compute the correlation table
-  if (compute_cor_table == T) {
-    cor_table <- data %>% cor_test(cols = !!cols, return_result = T,quite = T,...)
+  if (compute_cor_table == TRUE) {
+    cor_table <- data %>% cor_test(cols = !!cols, return_result = TRUE, quite = TRUE, ...)
     return_df <- return_df %>% dplyr::full_join(cor_table, by = "Var")
   }
-  
-  if (quite == F) {
-    if (streamline == F) {
+
+  if (quite == FALSE) {
+    if (streamline == FALSE) {
       cat("\n")
       super_print("underline|Model Summary")
       super_print("Model Type = Descriptive Statistics")
@@ -97,7 +97,7 @@ descriptive_table <- function(data,
   if (!is.null(file_path)) {
     utils::write.csv(x = return_df, file = file_path)
   }
-  if (return_result == T) {
+  if (return_result == TRUE) {
     return(return_df)
   }
 }

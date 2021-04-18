@@ -14,20 +14,20 @@ integrated_multilevel_model_summary(
   three_way_interaction_factor = NULL,
   cateogrical_var = NULL,
   id = NULL,
-  streamlined_output = F,
   graph_label_name = NULL,
   estimation_method = "REML",
   opt_control = "bobyqa",
   na.action = stats::na.omit,
-  return_result = F,
   print_result = c("model_summary", "plot"),
   y_lim = NULL,
-  plot_color = F,
+  plot_color = FALSE,
   digits = 3,
   use_package = "lmerTest",
-  simple_slope = F,
-  assumption_plot = F,
-  quite = F
+  simple_slope = FALSE,
+  assumption_plot = FALSE,
+  quite = FALSE,
+  streamline = FALSE,
+  return_result = FALSE
 )
 }
 \arguments{
@@ -35,21 +35,19 @@ integrated_multilevel_model_summary(
 
 \item{model}{lme4 model syntax. Support more complicated model structure from lme4. It is not well-tested to handle all edge cases. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
 
-\item{response_variable}{DV (i.e., outcome variable / response variable). Length of 1. Support \code{dplyr::select} syntax.}
+\item{response_variable}{DV (i.e., outcome variable / response variable). Length of 1. Support \code{dplyr::select()} syntax.}
 
-\item{random_effect_factors}{random effect factors (level-1 variable for HLM from a HLM perspective) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support \code{dplyr::select} syntax.}
+\item{random_effect_factors}{random effect factors (level-1 variable for HLM from a HLM perspective) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support \code{dplyr::select()} syntax.}
 
-\item{non_random_effect_factors}{non-random effect factors (level-2 variable from a HLM perspective). Factors only need to estimate fixed effect. Support \code{dplyr::select} syntax.}
+\item{non_random_effect_factors}{non-random effect factors (level-2 variable from a HLM perspective). Factors only need to estimate fixed effect. Support \code{dplyr::select()} syntax.}
 
-\item{two_way_interaction_factor}{two-way interaction factors. You need to pass 2+ factor. Support \code{dplyr::select} syntax.}
+\item{two_way_interaction_factor}{two-way interaction factors. You need to pass 2+ factor. Support \code{dplyr::select()} syntax.}
 
-\item{three_way_interaction_factor}{three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support \code{dplyr::select} syntax.}
+\item{three_way_interaction_factor}{three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support \code{dplyr::select()} syntax.}
 
 \item{cateogrical_var}{list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of \code{list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))}}
 
-\item{id}{the nesting variable (e.g. group, time). Length of 1. Support \code{dplyr::select} syntax.}
-
-\item{streamlined_output}{Only print model estimate and model performance. Default is \code{FALSE}}
+\item{id}{the nesting variable (e.g. group, time). Length of 1. Support \code{dplyr::select()} syntax.}
 
 \item{graph_label_name}{optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)}
 
@@ -57,9 +55,7 @@ integrated_multilevel_model_summary(
 
 \item{opt_control}{default is \code{optim} for \code{lme} and \code{bobyqa} for lmerTest}
 
-\item{na.action}{default is \code{stats::na.exclude}. Required to be \code{stats::na.omit} if assumption_plot if \code{T}. It should produce similar result, but you should check using \code{na.exclude} to confirm.}
-
-\item{return_result}{If set to \code{TRUE} (default is \code{FALSE}), it will return the \code{model}, \code{model_summary}, and \code{plot} (if the interaction term is included)}
+\item{na.action}{default is \code{stats::na.exclude}. Required to be \code{stats::na.omit} if assumption_plot if \code{TRUE}. It should produce similar result, but you should check using \code{na.exclude} to confirm.}
 
 \item{print_result}{Default is \code{model_summary} and \code{plot}. Options are \code{model_summary} or \code{plot}.}
 
@@ -67,7 +63,7 @@ integrated_multilevel_model_summary(
 
 \item{plot_color}{If it is set to \code{TRUE} (default is \code{FALSE}), the interaction plot will plot with color.}
 
-\item{digits}{number of digit.}
+\item{digits}{number of digits to round to}
 
 \item{use_package}{Default is \code{nlme}. Only available for linear mixed effect model. Options are \code{nlme} or \code{lmerTest},\code{lme4}(\verb{'lme4} return similar result as \code{lmerTest} except the return model)}
 
@@ -76,6 +72,10 @@ integrated_multilevel_model_summary(
 \item{assumption_plot}{Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()}
 
 \item{quite}{suppress printing output}
+
+\item{streamline}{print streamlined output.}
+
+\item{return_result}{If it is set to \code{TRUE} (default is \code{FALSE}), it will return the \code{model}, \code{model_summary}, and \code{plot} (\code{plot} if the interaction term is included)}
 }
 \value{
 return a list of all requested items in the order of model, model_summary, plot

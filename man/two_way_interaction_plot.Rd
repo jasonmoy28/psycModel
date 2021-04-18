@@ -24,7 +24,7 @@ two_way_interaction_plot(
 
 \item{y_lim}{the plot's upper and lower limit for the y-axis. Length of 2. Example: \code{c(lower_limit, upper_limit)}}
 
-\item{plot_color}{default if \code{F}. Set to \code{T} if you want to plot in color}
+\item{plot_color}{default if \code{F}. Set to \code{TRUE} if you want to plot in color}
 }
 \value{
 a object of class \code{ggplot}

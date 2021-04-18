@@ -17,8 +17,7 @@ lme_model(
   opt_control = "bobyqa",
   na.action = stats::na.omit,
   use_package = "lmerTest",
-  quite = F,
-  ...
+  quite = FALSE
 )
 }
 \arguments{
@@ -26,29 +25,27 @@ lme_model(
 
 \item{model}{lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates.}
 
-\item{response_variable}{DV (i.e., outcome variable / response variable). Length of 1. Support \code{dplyr::select} syntax.}
+\item{response_variable}{DV (i.e., outcome variable / response variable). Length of 1. Support \code{dplyr::select()} syntax.}
 
-\item{random_effect_factors}{random effect factors (level-1 variable for HLM people) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support \code{dplyr::select} syntax.}
+\item{random_effect_factors}{random effect factors (level-1 variable for HLM people) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support \code{dplyr::select()} syntax.}
 
-\item{non_random_effect_factors}{non-random effect factors (level-2 variable for HLM people). Factors only need to estimate fixed effect. Support \code{dplyr::select} syntax.}
+\item{non_random_effect_factors}{non-random effect factors (level-2 variable for HLM people). Factors only need to estimate fixed effect. Support \code{dplyr::select()} syntax.}
 
-\item{two_way_interaction_factor}{two-way interaction factors. You need to pass 2+ factor. Support \code{dplyr::select} syntax.}
+\item{two_way_interaction_factor}{two-way interaction factors. You need to pass 2+ factor. Support \code{dplyr::select()} syntax.}
 
-\item{three_way_interaction_factor}{three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support \code{dplyr::select} syntax.}
+\item{three_way_interaction_factor}{three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support \code{dplyr::select()} syntax.}
 
-\item{id}{the nesting variable (e.g. group, time). Length of 1. Support \code{dplyr::select} syntax.}
+\item{id}{the nesting variable (e.g. group, time). Length of 1. Support \code{dplyr::select()} syntax.}
 
 \item{estimation_method}{character. \code{ML} or \code{REML} default to \code{REML}.}
 
 \item{opt_control}{default is \code{optim} for \code{lme} and \code{bobyqa} for lmerTest}
 
-\item{na.action}{default is \code{stats::na.exclude}. Required to be \code{stats::na.omit} if check_assumption if \code{T}.}
+\item{na.action}{default is \code{stats::na.exclude}. Required to be \code{stats::na.omit} if check_assumption if \code{TRUE}.}
 
 \item{use_package}{Default is \code{nlme}. Only available for linear mixed effect model. Options are \code{nlme} or \code{lmerTest},\code{lme4}(\verb{'lme4} return similar result as \code{lmerTest} except the return model)}
 
 \item{quite}{suppress printing output}
-
-\item{...}{Internal use only. It doesn't work in other cases}
 }
 \value{
 An object representing the linear mixed-effects model fit (it maybe an object from \code{lme} or \code{lmer} depending of the package you use)

@@ -8,11 +8,13 @@
 #' @param cols columns. dplyr::select syntax.
 #' @param rotation the rotation to use in estimation. Default is oblimin. Options are 'none', 'varimax', 'quartimax', 'promax', 'oblimin', or 'simplimax'
 #' @param n_factor number of factors for EFA. It will bypass the initial optimization algorithm, and fit the EFA model using this specified number of factor
-#' @param efa_plot show explained variance by number of factor plot. default is `T`.
-#' @param digits number of digits
+#' @param efa_plot show explained variance by number of factor plot. default is `TRUE`.
+#' @param digits number of digits to round to
 #' @param optimal_factor_method Show a summary of the number of factors by optimization method (e.g., BIC, VSS complexity, Velicer's MAP)
 #' @param post_hoc_cfa a CFA model based on the extracted factor
-#' @param return_result If set to `TRUE` (default is `FALSE`), it will return a `fa` object from `psych`
+#' @param return_result If it is set to `TRUE` (default is `FALSE`), it will return a `fa` object from `psych`
+#' @param streamline print streamlined output
+#' @param quite suppress printing output
 #'
 #' @return an `fa` object from `psych`
 #'
@@ -23,16 +25,18 @@
 efa_summary <- function(data,
                         cols,
                         rotation = "varimax",
-                        optimal_factor_method = F,
-                        efa_plot = T,
+                        optimal_factor_method = FALSE,
+                        efa_plot = TRUE,
                         digits = 3,
                         n_factor = NULL,
-                        post_hoc_cfa = F,
-                        return_result = F) {
+                        post_hoc_cfa = FALSE,
+                        quite = FALSE,
+                        streamline = FALSE,
+                        return_result = FALSE) {
   data <- data %>% dplyr::select(!!enquo(cols))
   ######################################## Optimal Factor ##########################################################
   if (is.null(n_factor)) {
-    if (requireNamespace("nFactors", quietly = T)) {
+    if (requireNamespace("nFactors", quietly = TRUE)) {
       getmode <- function(v) {
         uniqv <- unique(v)
         uniqv[which.max(tabulate(match(v, uniqv)))]
@@ -92,45 +96,47 @@ efa_summary <- function(data,
     dplyr::bind_rows(KMO_MSA_var) %>%
     dplyr::select("Var", "KMO Value")
   #################################################### Output Model ##############################################
+  if (quite == TRUE) {
+    if (streamline == FALSE) {
+      cat("\n \n \n")
+      super_print("underline|Model Summary")
+      super_print("Model Type = Exploratory Factor Analysis")
+      super_print("Optimal Factors = {n_factor}")
+      cat("\n")
+    }
+    super_print("underline|Factor Loadings")
+    print_table(efa_loadings)
+    cat("\n")
+    cat("\n")
+    super_print("underline|Explained Variance")
+    print_table(efa_variance)
+    cat("\n")
+    cat("\n")
 
-  cat("\n \n \n")
-  super_print("underline|Model Summary")
-  super_print("Model Type = Exploratory Factor Analysis")
-  super_print("Optimal Factors = {n_factor}")
-  cat("\n")
-  super_print("underline|Factor Loadings")
-  print_table(efa_loadings)
-  cat("\n")
-  cat("\n")
-  super_print("underline|Explained Variance")
-  print_table(efa_variance)
-  cat("\n")
-  cat("\n")
+    if (!is.null(n_factor_output) & optimal_factor_method == TRUE) {
+      super_print("underline|Optimal Factor by Method")
+      print_table(n_factor_output, digits = 0)
+      cat("\n")
+    }
 
-  if (!is.null(n_factor_output) & optimal_factor_method == T) {
-    super_print("underline|Optimal Factor by Method")
-    print_table(n_factor_output, digits = 0)
+    super_print("EFA Model Assumption Test:")
+    if (sphericity_p < 0.05) {
+      super_print("green|OK. Bartlett's test of sphericity suggest the data is appropriate for factor analysis. $chi$^2({sphericity_df}) = {sphericity_chi}, {sphericity_p_output}")
+    } else {
+      super_print("red|Warning. Bartlett's test of sphericity suggest the data is not appropriate for factor analysis. $chi$^2({sphericity_df}) = {sphericity_chi}, {sphericity_p_output})")
+    }
+
+    if (KMO_MSA_overall > 0.7) {
+      super_print("green|OK. KMO measure of sampling adequacy suggests the data is appropriate for factor analysis. KMO = {KMO_MSA_overall}")
+    } else {
+      super_print("red|Warning. KMO measure of sampling adequacy suggests the data is not appropriate for factor analysis. KMO = {KMO_MSA_overall}")
+    }
+    cat("\n")
+    super_print("underline|KMO Measure of Sampling Adequacy")
+    print_table(KMO_MSA_table, digits = 0)
     cat("\n")
   }
-
-  super_print("EFA Model Assumption Test:")
-  if (sphericity_p < 0.05) {
-    super_print("green|OK. Bartlett's test of sphericity suggest the data is appropriate for factor analysis. $chi$^2({sphericity_df}) = {sphericity_chi}, {sphericity_p_output}")
-  } else {
-    super_print("red|Warning. Bartlett's test of sphericity suggest the data is not appropriate for factor analysis. $chi$^2({sphericity_df}) = {sphericity_chi}, {sphericity_p_output})")
-  }
-
-  if (KMO_MSA_overall > 0.7) {
-    super_print("green|OK. KMO measure of sampling adequacy suggests the data is appropriate for factor analysis. KMO = {KMO_MSA_overall}")
-  } else {
-    super_print("red|Warning. KMO measure of sampling adequacy suggests the data is not appropriate for factor analysis. KMO = {KMO_MSA_overall}")
-  }
-  cat("\n")
-  super_print("underline|KMO Measure of Sampling Adequacy")
-  print_table(KMO_MSA_table, digits = 0)
-  cat("\n")
-
-  if (efa_plot == T) {
+  if (efa_plot == TRUE) {
     plot <- efa_variance %>%
       dplyr::filter(.data$Var %in% c("Proportion Var")) %>%
       tidyr::pivot_longer(cols = dplyr::contains("Factor")) %>%
@@ -149,8 +155,8 @@ efa_summary <- function(data,
       )
     print(plot)
   }
-
-  if (post_hoc_cfa == T) {
+  # run CFA
+  if (post_hoc_cfa == TRUE) {
     cfa_model <- parameters::efa_to_cfa(efa_result)
     cfa_model <- cfa_model %>% stringr::str_replace_all(pattern = "MR", replacement = "Factor.")
     cat("\n")
@@ -159,11 +165,11 @@ efa_summary <- function(data,
     cfa_summary(
       data = data,
       model = cfa_model,
-      model_variance = F,
-      streamline = T
+      model_variance = FALSE,
+      streamline = TRUE
     )
   }
-  if (return_result == T) {
+  if (return_result == TRUE) {
     return(efa_result)
   }
 }

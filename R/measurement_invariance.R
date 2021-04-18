@@ -9,11 +9,11 @@
 #' @param ... CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for example
 #' @param model explicit lavaan model. Either the `model` argument or the `items` argument must be specified.
 #' @param group character. group variable.
-#' @param ordered logical. default is F. If it is set to T, lavaan will treat it as a ordinal variable and use DWLS instead of ML
+#' @param ordered logical. default is `FALSE`. If it is set to `TRUE`, lavaan will treat it as a ordinal variable and use DWLS instead of ML
 #' @param group_partial items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2'). See details for recommended practice.
 #' @param invariance_level "metric" or "scalar". Default is 'metric'. Set as 'metric' for configural-metric comparison, and set as 'scalar' for configural-metric-scalar comparison.
-#' @param digits number of digit to round
-#' @param return_result Default is `FALSE`. If it is `TRUE`, it will return a data frame of the fit measure summary
+#' @param digits number of digits to round to
+#' @param return_result If it is set to `TRUE`, it will return a data frame of the fit measure summary
 #' @param quite suppress printing output except the model summary.
 #'
 #' @details
@@ -82,12 +82,12 @@ measurement_invariance <- function(data,
                                    ...,
                                    model = NULL,
                                    group,
-                                   ordered = F,
+                                   ordered = FALSE,
                                    group_partial = NULL,
-                                   return_result = F,
+                                   return_result = FALSE,
                                    invariance_level = "scalar",
                                    digits = 3,
-                                   quite = F) {
+                                   quite = FALSE) {
   if (is.null(model)) { # construct model if explicit model is not passed
     items <- enquos(...)
     model <- ""
@@ -107,12 +107,12 @@ measurement_invariance <- function(data,
     names()
 
   # super_print statement
-  if (quite == F) {
+  if (quite == FALSE) {
     cat("Computing CFA using:\n", model)
   }
 
   if (invariance_level == "metric") {
-    if (quite == F) {
+    if (quite == FALSE) {
       print("Computing for configural model")
     }
 
@@ -124,7 +124,7 @@ measurement_invariance <- function(data,
       group.partial = group_partial
     )
 
-    if (quite == F) {
+    if (quite == FALSE) {
       print("Computing for metric model")
     }
 
@@ -139,7 +139,7 @@ measurement_invariance <- function(data,
 
     fit <- compare_fit(config_model, metric_model, digits = digits)
   } else if (invariance_level == "scalar") {
-    if (quite == F) {
+    if (quite == FALSE) {
       print("Computing for configural model")
     }
     config_model <- lavaan::cfa(
@@ -150,7 +150,7 @@ measurement_invariance <- function(data,
       group.partial = group_partial
     )
 
-    if (quite == F) {
+    if (quite == FALSE) {
       print("Computing for metric model")
     }
     metric_model <- lavaan::cfa(
@@ -162,7 +162,7 @@ measurement_invariance <- function(data,
       group.partial = group_partial
     )
 
-    if (quite == F) {
+    if (quite == FALSE) {
       print("Computing for scalar model")
     }
     scalar_model <- lavaan::cfa(
@@ -258,7 +258,7 @@ measurement_invariance <- function(data,
   }
 
 
-  if (return_result == T) {
+  if (return_result == TRUE) {
     return(fit)
   }
 }

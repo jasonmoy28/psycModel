@@ -4,7 +4,10 @@
 #' Compare the fit indices models (see below for model support)
 #'
 #' @param ... model. If it is a lavaan object, it will try to perform measurement invariance. Other model type will passed to performance::compare_performance
-#' @param digits number of digit to round
+#' @param digits number of digits to round to
+#' @param streamline print streamlined output
+#' @param quite suppress printing output
+#' @param return_result  If it is set to `TRUE`, it will return the the compare fit data frame.
 #'
 #' @return
 #' data frame with fit indices and change in fit indices
@@ -29,7 +32,10 @@
 #'
 #' # see ?measurement_invariance for measurement invariance example
 compare_fit <- function(...,
-                        digits = 3) {
+                        digits = 3,
+                        streamline = FALSE,
+                        quite = FALSE,
+                        return_result = FALSE) {
 
   # lavaan models
   if (class(list(...)[[1]]) == "lavaan") {
@@ -70,15 +76,23 @@ compare_fit <- function(...,
     return_df <-
       rbind(fit_indices_df, blank_df, compare_fit_df) %>%
       dplyr::rename("$chi$^2" = "chisq")
+
     return(return_df)
 
     ## lme & glme models
   } else {
-    super_print("underline|Model Summary")
-    super_print("Model Type = Model Comparison")
-    cat("\n")
     output_table <- performance::compare_performance(...)
-    output_table <- output_table %>% dplyr::select(-1)
-    print_table(output_table)
+    if (quite == FALSE) {
+      if (streamline == FALSE) {
+        super_print("underline|Model Summary")
+        super_print("Model Type = Model Comparison")
+        cat("\n")
+      }
+      output_table <- output_table %>% dplyr::select(-1)
+      print_table(output_table)
+    }
+    if (return_result == TRUE) {
+      return(output_table)
+    }
   }
 }

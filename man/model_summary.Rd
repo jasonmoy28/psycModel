@@ -2,11 +2,11 @@
 % Please edit documentation in R/model_summary.R
 \name{model_summary}
 \alias{model_summary}
-\title{Model Summary for Mixed Effect Model}
+\title{Model Summary for Regression Models}
 \usage{
 model_summary(
   model,
-  streamlined_output = FALSE,
+  streamline = FALSE,
   digits = 3,
   assumption_plot = FALSE,
   return_result = FALSE,
@@ -14,15 +14,15 @@ model_summary(
 )
 }
 \arguments{
-\item{model}{an object from nlme::lme, lmerTest::lmer, or lme4::glmer}
+\item{model}{an model object. The following model are tested for accuracy: stats::lm, nlme::lme, lmerTest::lmer, lme4::lmer, lme4::glmer. Other model object may work if it work with parameters::model_parameters()}
 
-\item{streamlined_output}{Only super_print model estimate and model performance. Default is \code{FALSE}}
+\item{streamline}{print streamlined output. Only print model estimate and performance.}
 
-\item{digits}{number of digit to round the values.}
+\item{digits}{number of digits to round to}
 
 \item{assumption_plot}{Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()}
 
-\item{return_result}{return the model estimates data frame. Default is \code{FALSE}}
+\item{return_result}{It set to \code{TRUE}, it return the model estimates data frame.}
 
 \item{quite}{suppress printing output}
 }
@@ -31,7 +31,7 @@ If return_result is \code{TRUE}, it will return a data frame with estimate, df, 
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-The function will extract the relevant coefficients from the linear mixed effect models (see supported model below).
+The function will extract the relevant coefficients from the regression models (see below for supported model).
 }
 \details{
 If you working with \code{lm}, fixed factor estimate is just the model estimate. It

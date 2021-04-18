@@ -48,7 +48,8 @@ Suggests:
     semPlot,
     testthat (>= 3.0.0),
     tidyselect,
-    GPArotation
+    GPArotation,
+    correlation
 VignetteBuilder: 
     knitr
 Encoding: UTF-8

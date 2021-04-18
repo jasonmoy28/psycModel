@@ -7,14 +7,13 @@
 #' There is a promising package called `brms` that use bayesian statistics. If you are interested, you can check that one out.
 #'
 #' @param data data frame
-#' @param response_variable response variable. Support `dplyr::select` syntax.
-#' @param mediator mediator. Support `dplyr::select` syntax.
-#' @param predictor_variable predictor variable. Support `dplyr::select` syntax.
-#' @param control_variable control variables. Support `dplyr::select` syntax.
+#' @param response_variable response variable. Support `dplyr::select()` syntax.
+#' @param mediator mediator. Support `dplyr::select()` syntax.
+#' @param predictor_variable predictor variable. Support `dplyr::select()` syntax.
+#' @param control_variable control variables. Support `dplyr::select()` syntax.
 #' @param standardize standardized coefficients. Default is `TRUE`
 #' @param digits number of digits to round to
-#' @param plot plot using semPlot::semPath. I haven't found a nice-looking way to plot mediation using semPlot. `r lifecycle::badge("experimental")` \cr
-#' @param return_result Default is `FALSE`. If it is `TRUE`, it will return the `lavaan` object
+#' @param return_result If it is set to `TRUE`, it will return the `lavaan` object
 #' @param group nesting variable for multilevel mediation. Not confident about the implementation method. `r lifecycle::badge("experimental")`
 #'
 #' @return an object from `lavaan`
@@ -33,10 +32,9 @@ mediation_summary <- function(data,
                               predictor_variable,
                               control_variable = NULL,
                               group = NULL,
-                              standardize = T,
-                              plot = F,
+                              standardize = TRUE,
                               digits = 3,
-                              return_result = F) {
+                              return_result = FALSE) {
   response_variable <- data %>%
     dplyr::select(!!enquo(response_variable)) %>%
     names()
@@ -71,7 +69,7 @@ mediation_summary <- function(data,
     dplyr::select(-c("CI_low", "CI_high")) %>%
     dplyr::select(-c("Label"))
 
-  if (standardize == T) {
+  if (standardize == TRUE) {
     mediation_output <- mediation_output %>% dplyr::rename(Est.Std = .data$Est)
   }
 
@@ -86,21 +84,6 @@ mediation_summary <- function(data,
     dplyr::rename("Predict" = .data$From) %>%
     dplyr::select(-"Component")
 
-  if (plot == T) {
-    plot <- semPlot::semPaths(mediation_result,
-      what = "std",
-      edge.color = "black",
-      thresholdColor = "black",
-      sizeMan = 5,
-      sizeLat = 8,
-      edge.label.cex = 1,
-      nCharEdges = 5,
-      esize = 1,
-      trans = 1,
-      rotation = 2
-    )
-    print(plot)
-  }
   ########################################## Output ###############################################
   super_print("underline|Model Summary")
   super_print("Model Type = Mediation Analysis (fitted using lavaan)")
@@ -112,7 +95,7 @@ mediation_summary <- function(data,
   super_print("underline|Regression Summary")
   print_table(mediation_reg_output, digits = digits)
 
-  if (return_result == T) {
+  if (return_result == TRUE) {
     return(mediation_result)
   }
 }

@@ -11,32 +11,29 @@ mediation_summary(
   predictor_variable,
   control_variable = NULL,
   group = NULL,
-  standardize = T,
-  plot = F,
+  standardize = TRUE,
   digits = 3,
-  return_result = F
+  return_result = FALSE
 )
 }
 \arguments{
 \item{data}{data frame}
 
-\item{response_variable}{response variable. Support \code{dplyr::select} syntax.}
+\item{response_variable}{response variable. Support \code{dplyr::select()} syntax.}
 
-\item{mediator}{mediator. Support \code{dplyr::select} syntax.}
+\item{mediator}{mediator. Support \code{dplyr::select()} syntax.}
 
-\item{predictor_variable}{predictor variable. Support \code{dplyr::select} syntax.}
+\item{predictor_variable}{predictor variable. Support \code{dplyr::select()} syntax.}
 
-\item{control_variable}{control variables. Support \code{dplyr::select} syntax.}
+\item{control_variable}{control variables. Support \code{dplyr::select()} syntax.}
 
 \item{group}{nesting variable for multilevel mediation. Not confident about the implementation method. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
 
 \item{standardize}{standardized coefficients. Default is \code{TRUE}}
 
-\item{plot}{plot using semPlot::semPath. I haven't found a nice-looking way to plot mediation using semPlot. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr}
-
 \item{digits}{number of digits to round to}
 
-\item{return_result}{Default is \code{FALSE}. If it is \code{TRUE}, it will return the \code{lavaan} object}
+\item{return_result}{If it is set to \code{TRUE}, it will return the \code{lavaan} object}
 }
 \value{
 an object from \code{lavaan}

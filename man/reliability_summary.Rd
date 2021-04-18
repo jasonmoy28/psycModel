@@ -9,22 +9,22 @@ reliability_summary(
   cols,
   dimensionality = NULL,
   digits = 3,
-  descriptive_table = T,
-  return_result = F
+  descriptive_table = TRUE,
+  return_result = FALSE
 )
 }
 \arguments{
 \item{data}{data frame}
 
-\item{cols}{items for reliability analysis.  Support \code{dplyr::select} syntax.}
+\item{cols}{items for reliability analysis.  Support \code{dplyr::select()} syntax.}
 
 \item{dimensionality}{Specify the dimensionality. Either \code{uni} (uni-dimensionality) or \code{multi} (multi-dimensionality). Default is \code{NULL} that determines the dimensionality using EFA.}
 
-\item{digits}{number of digits}
+\item{digits}{number of digits to round to}
 
 \item{descriptive_table}{Get descriptive statistics. Default is \code{TRUE}}
 
-\item{return_result}{If set to \code{TRUE} (default is \code{FALSE}), it will return \code{psych::alpha} for unidimensional scale, and \code{psych::omega} for multidimensional scale.}
+\item{return_result}{If it is set to \code{TRUE} (default is \code{FALSE}), it will return \code{psych::alpha} for unidimensional scale, and \code{psych::omega} for multidimensional scale.}
 }
 \value{
 \code{psych::alpha} for unidimensional scale, and \code{psych::omega} for multidimensional scale.

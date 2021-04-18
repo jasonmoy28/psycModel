@@ -4,12 +4,24 @@
 \alias{compare_fit}
 \title{Comparison of Model Fit}
 \usage{
-compare_fit(..., digits = 3)
+compare_fit(
+  ...,
+  digits = 3,
+  streamline = FALSE,
+  quite = FALSE,
+  return_result = FALSE
+)
 }
 \arguments{
 \item{...}{model. If it is a lavaan object, it will try to perform measurement invariance. Other model type will passed to performance::compare_performance}
 
-\item{digits}{number of digit to round}
+\item{digits}{number of digits to round to}
+
+\item{streamline}{print streamlined output}
+
+\item{quite}{suppress printing output}
+
+\item{return_result}{If it is set to \code{TRUE}, it will return the the compare fit data frame.}
 }
 \value{
 data frame with fit indices and change in fit indices
