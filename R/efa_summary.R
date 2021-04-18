@@ -96,7 +96,7 @@ efa_summary <- function(data,
     dplyr::bind_rows(KMO_MSA_var) %>%
     dplyr::select("Var", "KMO Value")
   #################################################### Output Model ##############################################
-  if (quite == TRUE) {
+  if (quite == FALSE) {
     if (streamline == FALSE) {
       cat("\n \n \n")
       super_print("underline|Model Summary")

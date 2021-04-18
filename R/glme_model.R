@@ -137,7 +137,7 @@ glme_model <- function(data,
   fixed_factors <- c(random_effect_factors, non_random_effect_factors)
 
   # Random factor only include individual_level factor
-  random_factors <- random_effect_factors
+  random_factors <- c(1,random_effect_factors)
 
   two_way_interaction_terms <- NULL
   three_way_interaction_terms <- NULL
@@ -155,11 +155,11 @@ glme_model <- function(data,
   # Create the formula for fixed factor
   glmer_fixed_factors_formula <- paste(paste(response_variable, "~"), paste(fixed_factors, collapse = " + "))
   # Created the formula for random factors
-  glmer_random_factors_formula <- paste("1 +", paste(random_factors, collapse = " + "), paste("|", id))
+  glmer_random_factors_formula <- paste(paste(random_factors, collapse = " + "), paste("|", id))
   glmerformula <- stats::as.formula(paste(glmer_fixed_factors_formula, " + (", glmer_random_factors_formula, ")", sep = ""))
   glmerCtr <- lme4::glmerControl(optimizer = opt_control)
 
-  if (quite == F) {
+  if (quite == FALSE) {
     fit_formula <- paste(glmer_fixed_factors_formula, " + (", glmer_random_factors_formula, ")", sep = "")
     cat(paste("Fitting Model with glmer: \n Formula = ", fit_formula, "\n Family = ", family[1], "\n", sep = ""))
   }

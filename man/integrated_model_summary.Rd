@@ -6,7 +6,6 @@
 \usage{
 integrated_model_summary(
   data,
-  model = NULL,
   response_variable = NULL,
   predictor_variable = NULL,
   two_way_interaction_factor = NULL,
@@ -28,8 +27,6 @@ integrated_model_summary(
 }
 \arguments{
 \item{data}{data frame}
-
-\item{model}{explicit model of object \code{lm}}
 
 \item{response_variable}{DV (i.e., outcome variable / response variable). Length of 1. Support \code{dplyr::select()} syntax.}
 

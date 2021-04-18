@@ -264,21 +264,27 @@ integrated_multilevel_model_summary <- function(data,
         stop("Please install.packages(c('cowplot','interactions')) use simple_slope with three-way interaction")
       }
     }
+  } else{
+    simple_slope_output = NULL
+    jnp_plot = NULL
   }
 
   # Print result
-  if (model_summary == TRUE | return_result == TRUE) {
-    model_summary_df <- model_summary(
+  if (model_summary == TRUE) {
+    model_summary_list <- model_summary(
       model = model,
       streamline = streamline,
       digits = digits,
       return_result = TRUE,
-      assumption_plot = assumption_plot
+      assumption_plot = assumption_plot,
+      quite = quite
     )
+  } else{
+    model_summary_list = NULL
   }
 
 
-  if (simple_slope == TRUE) {
+  if (simple_slope == TRUE & quite == FALSE)  {
     super_print("underline|Slope Estimates at Each Level of Moderators")
     print_table(simple_slope_output)
     print(jnp_plot)
@@ -295,7 +301,11 @@ integrated_multilevel_model_summary <- function(data,
 
   # Return Result
   if (return_result == TRUE) {
-    return_list <- list(model = model, summary = model_summary_df, plot = interaction_plot_object)
+    return_list <- list(model = model,
+                        summary = model_summary_list, 
+                        interaction_plot = interaction_plot_object, 
+                        simple_slope_df = simple_slope_output, 
+                        jnp_plot = jnp_plot)
     return(return_list)
   }
 }

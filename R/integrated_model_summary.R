@@ -18,7 +18,6 @@
 #' @param simple_slope Compute the slope differing with ± 1 SD of the IVs. In the background, it calls interaction:sim_slopes()
 #' @param assumption_plot Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()
 #' @param streamline print streamlined output
-#' @param model explicit model of object `lm`
 #' @param two_way_interaction_factor two-way interaction factors. You need to pass 2+ factor. Support `dplyr::select()` syntax.
 #' @param family a GLM family. It will passed to the family argument in glm. See `?glm` for possible options. `r lifecycle::badge("experimental")`
 #' @param model_summary print model summary
@@ -47,7 +46,6 @@
 #' )
 #' }
 integrated_model_summary <- function(data,
-                                     model = NULL,
                                      response_variable = NULL,
                                      predictor_variable = NULL,
                                      two_way_interaction_factor = NULL,
@@ -67,10 +65,7 @@ integrated_model_summary <- function(data,
                                      return_result = FALSE) {
 
   ##################################### Set up #########################################
-  # Temporary disable plots for glmer object
-  data <- data_check(data) # check data and coerced into numeric
-
-  ##################################### Run Model #########################################
+  # parse select syntax
   response_variable <- data %>%
     dplyr::select(!!enquo(response_variable)) %>%
     names()
@@ -83,7 +78,10 @@ integrated_model_summary <- function(data,
   three_way_interaction_factor <- data %>%
     dplyr::select(!!enquo(three_way_interaction_factor)) %>%
     names()
-
+  # coerced into numeric after selecting variables
+  data <- data_check(data) 
+  
+  ##################################### Running Model #########################################
   if (is.null(family)) {
     model <- lm_model(
       data = data,
@@ -218,16 +216,20 @@ integrated_model_summary <- function(data,
         stop("Please install.packages(c('cowplot','interactions')) use simple_slope with three-way interaction")
       }
     }
+  } else{
+    simple_slope_output = NULL
+    jnp_plot = NULL
   }
 
   # Print result
   if (model_summary == TRUE | return_result == TRUE) {
-    model_summary_df <- model_summary(
+    model_summary_list <- model_summary(
       model = model,
       streamline = streamline,
       digits = digits,
       return_result = TRUE,
-      assumption_plot = assumption_plot
+      assumption_plot = assumption_plot,
+      quite = quite
     )
   }
 
@@ -235,7 +237,7 @@ integrated_model_summary <- function(data,
     try(print(interaction_plot_object))
   }
 
-  if (simple_slope == TRUE) {
+  if (simple_slope == TRUE & quite == F) {
     super_print("underline|Slope Estimates at Each Level of Moderators")
     print_table(simple_slope_output)
     print(jnp_plot)
@@ -249,7 +251,11 @@ integrated_model_summary <- function(data,
 
   # Return Result
   if (return_result == TRUE) {
-    return_list <- list(model = model, summary = model_summary_df, plot = interaction_plot)
+    return_list <- list(model = model,
+                        summary = model_summary_list, 
+                        interaction_plot = interaction_plot_object, 
+                        simple_slope_df = simple_slope_output, 
+                        jnp_plot = jnp_plot)
     return(return_list)
   }
 }

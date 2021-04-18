@@ -188,7 +188,7 @@ lme_model <- function(data,
   fixed_factors <- c(random_effect_factors, non_random_effect_factors)
 
   # Random factor only include individual_level factor
-  random_factors <- random_effect_factors
+  random_factors <- c(1, random_effect_factors)
 
   two_way_interaction_terms <- NULL
   three_way_interaction_terms <- NULL
@@ -217,7 +217,7 @@ lme_model <- function(data,
     # print formula
     if (quite == FALSE) {
       fit_fixed_effect_formula <- paste(paste(response_variable, "~"), paste(fixed_factors, collapse = " + "))
-      fit_random_effect_formula <- paste("~ 1 +", paste(random_factors, collapse = " + "), paste("|", id))
+      fit_random_effect_formula <- paste("~", paste(random_factors, collapse = " + "), paste("|", id))
       fit_formula <- paste("\n Fixed =", fit_fixed_effect_formula, "\n Random =", fit_random_effect_formula)
       cat(paste("Fitting Model with lme:", fit_formula, "\n"))
     }
@@ -238,7 +238,7 @@ lme_model <- function(data,
     # Create the formula for fixed factor
     lmer_fixed_factors_formula <- paste(paste(response_variable, "~"), paste(fixed_factors, collapse = " + "))
     # Created the formula for random factors
-    lmer_random_factors_formula <- paste("1 +", paste(random_factors, collapse = " + "), paste("|", id))
+    lmer_random_factors_formula <- paste(paste(random_factors, collapse = " + "), paste("|", id))
     lmerformula <- stats::as.formula(paste(lmer_fixed_factors_formula, " + (", lmer_random_factors_formula, ")", sep = ""))
     lmerCtr <- lme4::lmerControl(optimizer = opt_control)
 

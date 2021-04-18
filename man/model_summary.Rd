@@ -27,14 +27,11 @@ model_summary(
 \item{return_result}{It set to \code{TRUE}, it return the model estimates data frame.}
 }
 \value{
-If return_result is \code{TRUE}, it will return a data frame with estimate, df, p_value, and the p-value significance.
+model estimate, model performance, and the assumption plot (only when \code{assumption_plot} = \code{TRUE})
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 The function will extract the relevant coefficients from the regression models (see below for supported model).
-}
-\details{
-If you working with \code{lm}, fixed factor estimate is just the model estimate. It
 }
 \examples{
 # I am going to show the more generic usage of this function
