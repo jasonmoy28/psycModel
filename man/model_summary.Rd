@@ -6,25 +6,25 @@
 \usage{
 model_summary(
   model,
-  streamline = FALSE,
   digits = 3,
   assumption_plot = FALSE,
-  return_result = FALSE,
-  quite = FALSE
+  quite = FALSE,
+  streamline = FALSE,
+  return_result = FALSE
 )
 }
 \arguments{
-\item{model}{an model object. The following model are tested for accuracy: stats::lm, nlme::lme, lmerTest::lmer, lme4::lmer, lme4::glmer. Other model object may work if it work with parameters::model_parameters()}
-
-\item{streamline}{print streamlined output. Only print model estimate and performance.}
+\item{model}{an model object. The following model are tested for accuracy: stats::lm, nlme::lme, lmerTest::lmer, lme4::lmer, lme4::glmer (experimental). Other model object may work if it work with parameters::model_parameters()}
 
 \item{digits}{number of digits to round to}
 
 \item{assumption_plot}{Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()}
 
-\item{return_result}{It set to \code{TRUE}, it return the model estimates data frame.}
-
 \item{quite}{suppress printing output}
+
+\item{streamline}{print streamlined output. Only print model estimate and performance.}
+
+\item{return_result}{It set to \code{TRUE}, it return the model estimates data frame.}
 }
 \value{
 If return_result is \code{TRUE}, it will return a data frame with estimate, df, p_value, and the p-value significance.
