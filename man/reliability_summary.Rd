@@ -10,6 +10,8 @@ reliability_summary(
   dimensionality = NULL,
   digits = 3,
   descriptive_table = TRUE,
+  quite = FALSE,
+  streamline = FALSE,
   return_result = FALSE
 )
 }
@@ -23,6 +25,10 @@ reliability_summary(
 \item{digits}{number of digits to round to}
 
 \item{descriptive_table}{Get descriptive statistics. Default is \code{TRUE}}
+
+\item{quite}{suppress printing output}
+
+\item{streamline}{print streamlined output}
 
 \item{return_result}{If it is set to \code{TRUE} (default is \code{FALSE}), it will return \code{psych::alpha} for unidimensional scale, and \code{psych::omega} for multidimensional scale.}
 }

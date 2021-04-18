@@ -13,6 +13,8 @@ mediation_summary(
   group = NULL,
   standardize = TRUE,
   digits = 3,
+  quite = FALSE,
+  streamline = FALSE,
   return_result = FALSE
 )
 }
@@ -32,6 +34,10 @@ mediation_summary(
 \item{standardize}{standardized coefficients. Default is \code{TRUE}}
 
 \item{digits}{number of digits to round to}
+
+\item{quite}{suppress printing output}
+
+\item{streamline}{print streamlined output}
 
 \item{return_result}{If it is set to \code{TRUE}, it will return the \code{lavaan} object}
 }

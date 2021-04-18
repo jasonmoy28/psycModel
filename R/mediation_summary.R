@@ -15,6 +15,8 @@
 #' @param digits number of digits to round to
 #' @param return_result If it is set to `TRUE`, it will return the `lavaan` object
 #' @param group nesting variable for multilevel mediation. Not confident about the implementation method. `r lifecycle::badge("experimental")`
+#' @param streamline print streamlined output
+#' @param quite suppress printing output
 #'
 #' @return an object from `lavaan`
 #' @export
@@ -34,6 +36,8 @@ mediation_summary <- function(data,
                               group = NULL,
                               standardize = TRUE,
                               digits = 3,
+                              quite = FALSE,
+                              streamline = FALSE,
                               return_result = FALSE) {
   response_variable <- data %>%
     dplyr::select(!!enquo(response_variable)) %>%
@@ -65,8 +69,8 @@ mediation_summary <- function(data,
     tibble::as_tibble() %>%
     dplyr::select("Label", tidyselect::everything()) %>%
     dplyr::rename(Est = .data$Coefficient) %>%
-    dplyr::mutate(`95% CI` = paste0("[", round(.data$CI_low, digits), ", ", round(.data$CI_high, digits), "]")) %>%
-    dplyr::select(-c("CI_low", "CI_high")) %>%
+    dplyr::rename(ci.lower = .data$CI_low) %>% 
+    dplyr::rename(ci.upper = .data$CI_high) %>% 
     dplyr::select(-c("Label"))
 
   if (standardize == TRUE) {
@@ -85,15 +89,18 @@ mediation_summary <- function(data,
     dplyr::select(-"Component")
 
   ########################################## Output ###############################################
-  super_print("underline|Model Summary")
-  super_print("Model Type = Mediation Analysis (fitted using lavaan)")
-  cat("\n")
-  super_print("underline|Effect Summary")
-  print_table(mediation_effect_output, digits = digits)
-  cat("\n")
-  cat("\n")
-  super_print("underline|Regression Summary")
-  print_table(mediation_reg_output, digits = digits)
+  if (quite == FALSE) {
+    if (streamline == FALSE) {
+      super_print("underline|Model Summary")
+      super_print("Model Type = Mediation Analysis (fitted using lavaan)")
+    }
+    cat("\n")
+    super_print("underline|Effect Summary")
+    print_table(mediation_effect_output, digits = digits)
+    cat("\n")
+    super_print("underline|Regression Summary")
+    print_table(mediation_reg_output, digits = digits)
+  }
 
   if (return_result == TRUE) {
     return(mediation_result)

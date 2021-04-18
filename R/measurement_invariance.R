@@ -15,6 +15,7 @@
 #' @param digits number of digits to round to
 #' @param return_result If it is set to `TRUE`, it will return a data frame of the fit measure summary
 #' @param quite suppress printing output except the model summary.
+#' @param streamline print streamlined output
 #'
 #' @details
 #' Chen (2007) suggested that change in CFI <= |-0.010| supplemented by RMSEA <= 0.015 indicate non-invariance when sample sizes were equal across groups and larger than 300 in each group (Chen, 2007).
@@ -84,10 +85,11 @@ measurement_invariance <- function(data,
                                    group,
                                    ordered = FALSE,
                                    group_partial = NULL,
-                                   return_result = FALSE,
                                    invariance_level = "scalar",
                                    digits = 3,
-                                   quite = FALSE) {
+                                   quite = FALSE,
+                                   streamline = FALSE, 
+                                   return_result = FALSE) {
   if (is.null(model)) { # construct model if explicit model is not passed
     items <- enquos(...)
     model <- ""
@@ -106,7 +108,7 @@ measurement_invariance <- function(data,
     dplyr::select(!!enquo(group)) %>%
     names()
 
-  # super_print statement
+  # print CFA model  
   if (quite == FALSE) {
     cat("Computing CFA using:\n", model)
   }
@@ -187,14 +189,17 @@ measurement_invariance <- function(data,
   fit <- fit %>% dplyr::rename(p = .data$pvalue)
 
   colnames(fit) <- stringr::str_to_upper(colnames(fit))
-
-  super_print("\n \n \n")
-  super_print("underline|Model Summary")
-  super_print("Model Type = Measurement Invariance")
-  super_print("Comparsion Type = {invariance_level_print}")
-  super_print("Group = {group}")
-  super_print("Model Formula = \n .{model}")
-  super_print("\n \n \n")
+################################################ Output Start ################################################################
+if (quite == FALSE) {
+  if (streamline == FALSE) {
+    super_print("\n \n")
+    super_print("underline|Model Summary")
+    super_print("Model Type = Measurement Invariance")
+    super_print("Comparsion Type = {invariance_level_print}")
+    super_print("Group = {group}")
+    super_print("Model Formula = \n .{model}")
+  }
+  super_print("\n \n")
   super_print("underline|Fit Measure Summary")
   print_table(fit)
   cat("\n")
@@ -256,7 +261,7 @@ measurement_invariance <- function(data,
       super_print("red| Warning. Unacceptable measurement scalar-invariance based on $DELTA$SRMR > 0.015")
     }
   }
-
+} #end quite
 
   if (return_result == TRUE) {
     return(fit)

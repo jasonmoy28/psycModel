@@ -7,8 +7,8 @@
 compare_fit(
   ...,
   digits = 3,
-  streamline = FALSE,
   quite = FALSE,
+  streamline = FALSE,
   return_result = FALSE
 )
 }
@@ -17,9 +17,9 @@ compare_fit(
 
 \item{digits}{number of digits to round to}
 
-\item{streamline}{print streamlined output}
-
 \item{quite}{suppress printing output}
+
+\item{streamline}{print streamlined output}
 
 \item{return_result}{If it is set to \code{TRUE}, it will return the the compare fit data frame.}
 }
@@ -27,7 +27,7 @@ compare_fit(
 data frame with fit indices and change in fit indices
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 Compare the fit indices models (see below for model support)
 }
 \examples{

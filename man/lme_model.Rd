@@ -8,7 +8,7 @@ lme_model(
   data,
   model = NULL,
   response_variable,
-  random_effect_factors,
+  random_effect_factors = NULL,
   non_random_effect_factors = NULL,
   two_way_interaction_factor = NULL,
   three_way_interaction_factor = NULL,

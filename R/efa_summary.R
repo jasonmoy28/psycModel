@@ -1,6 +1,6 @@
 #' Exploratory Factor Analysis
 #'
-#' `r lifecycle::badge("experimental")` \cr
+#' `r lifecycle::badge("stable")` \cr
 #' The function is used to fit a exploratory factor analysis model. It will first find the optimal number of factors using parameters::n_factors. Once the optimal number of factor is determined, the function will fit the model using
 #' psych::fa(). Optionally, you can request a post-hoc CFA model that fit the EFA model using CFA which gives you more fit indexes (e.g., CFI, RMSEA, TLI)
 #'

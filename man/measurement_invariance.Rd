@@ -11,10 +11,11 @@ measurement_invariance(
   group,
   ordered = FALSE,
   group_partial = NULL,
-  return_result = FALSE,
   invariance_level = "scalar",
   digits = 3,
-  quite = FALSE
+  quite = FALSE,
+  streamline = FALSE,
+  return_result = FALSE
 )
 }
 \arguments{
@@ -30,13 +31,15 @@ measurement_invariance(
 
 \item{group_partial}{items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2'). See details for recommended practice.}
 
-\item{return_result}{If it is set to \code{TRUE}, it will return a data frame of the fit measure summary}
-
 \item{invariance_level}{"metric" or "scalar". Default is 'metric'. Set as 'metric' for configural-metric comparison, and set as 'scalar' for configural-metric-scalar comparison.}
 
 \item{digits}{number of digits to round to}
 
 \item{quite}{suppress printing output except the model summary.}
+
+\item{streamline}{print streamlined output}
+
+\item{return_result}{If it is set to \code{TRUE}, it will return a data frame of the fit measure summary}
 }
 \value{
 return the a data frame of the fit measure summary

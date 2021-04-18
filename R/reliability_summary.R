@@ -10,6 +10,8 @@
 #' @param digits number of digits to round to
 #' @param dimensionality Specify the dimensionality. Either `uni` (uni-dimensionality) or `multi` (multi-dimensionality). Default is `NULL` that determines the dimensionality using EFA.
 #' @param return_result If it is set to `TRUE` (default is `FALSE`), it will return `psych::alpha` for unidimensional scale, and `psych::omega` for multidimensional scale.
+#' @param streamline print streamlined output
+#' @param quite suppress printing output
 #'
 #' @return `psych::alpha` for unidimensional scale, and `psych::omega` for multidimensional scale.
 #' @export
@@ -23,6 +25,8 @@ reliability_summary <- function(data,
                                 dimensionality = NULL,
                                 digits = 3,
                                 descriptive_table = TRUE,
+                                quite = FALSE,
+                                streamline = FALSE,
                                 return_result = FALSE) {
   cols <- data %>%
     dplyr::select(!!enquo(cols)) %>%
@@ -56,32 +60,33 @@ reliability_summary <- function(data,
       dplyr::rename(`G6 (smc)` = .data$`G6(smc)`)
     names(alpha_fit_measure) <- c("Alpha", "Alpha.Std", "G6 (smc)")
 
-    super_print("underline|Model Summary")
-    super_print("Model Type = Reliability Analysis")
-    super_print("Dimensionality = {paste(dimensionality,'-dimensionality', sep = '')}")
-    cat("\n")
-    super_print("underline|Composite Reliability Measures")
-    print_table(alpha_fit_measure)
-    cat("\n")
-    cat("\n")
-    super_print("underline|Item Reliability (item dropped)")
-    print_table(alpha_item_statistics)
-    cat("\n")
-    cat("\n")
+    if (quite == FALSE) {
+      if (streamline == FALSE) {
+        super_print("underline|Model Summary")
+        super_print("Model Type = Reliability Analysis")
+        super_print("Dimensionality = {paste(dimensionality,'-dimensionality', sep = '')}")
+        cat("\n")
+      }
+      super_print("underline|Composite Reliability Measures")
+      print_table(alpha_fit_measure)
+      cat("\n")
+      super_print("underline|Item Reliability (item dropped)")
+      print_table(alpha_item_statistics)
+      cat("\n")
+      super_print("CFA Model:")
+      cfa_summary(
+        data = data,
+        dplyr::all_of(cols),
+        model_variance = FALSE,
+        model_covariance = FALSE,
+        digits = digits,
+        streamline = TRUE,
+        plot = FALSE
+      )
+      cat("\n")
+    }
 
-    cat("\n")
-    super_print("CFA Model:")
-    cfa_summary(
-      data = data,
-      cols,
-      model_variance = FALSE,
-      model_covariance = FALSE,
-      digits = digits,
-      streamline = TRUE,
-      plot = FALSE
-    )
-    cat("\n")
-    cat("\n")
+
   } else {
     ############################################ Multidimensionality Model ################################################################
     alpha_fit <- suppressMessages(data %>% psych::alpha())
@@ -105,22 +110,24 @@ reliability_summary <- function(data,
       dplyr::rename(Alpha = .data$raw_alpha) %>%
       dplyr::rename(Alpha.Std = .data$std.alpha) %>%
       dplyr::rename(`G6 (smc)` = .data$`G6(smc)`)
-
-    super_print("underline|Model Summary")
-    super_print("Model Type = Reliability Analysis")
-    super_print("Dimensionality = {paste(dimensionality,'-dimensionality', sep = '')}")
-    cat("\n")
-    super_print("underline|Composite Reliability Measures")
-    print_table(composite_measure)
-    cat("\n")
-    cat("\n")
-    super_print("underline|Item Reliability (item dropped)")
-    print_table(alpha_item_statistics)
-    cat("\n")
-    cat("\n")
-  }
-  if (descriptive_table == TRUE) {
-    super_print("Descriptive Statistics Table:")
+    if (quite == FALSE){
+      if (streamline == FALSE) {
+        super_print("underline|Model Summary")
+        super_print("Model Type = Reliability Analysis")
+        super_print("Dimensionality = {paste(dimensionality,'-dimensionality', sep = '')}")
+        cat("\n")
+      }
+      super_print("underline|Composite Reliability Measures")
+      print_table(composite_measure)
+      cat("\n")
+      super_print("underline|Item Reliability (item dropped)")
+      print_table(alpha_item_statistics)
+      cat("\n")
+    }
+  } 
+  
+  if (descriptive_table == TRUE & quite == FALSE) {
+    super_print("underline|Descriptive Statistics Table:")
     descriptive_table(
       data = data,
       cols = dplyr::all_of(cols),

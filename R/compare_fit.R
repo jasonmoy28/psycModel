@@ -1,6 +1,6 @@
 #' Comparison of Model Fit
 #'
-#' `r lifecycle::badge("experimental")` \cr
+#' `r lifecycle::badge("stable")` \cr
 #' Compare the fit indices models (see below for model support)
 #'
 #' @param ... model. If it is a lavaan object, it will try to perform measurement invariance. Other model type will passed to performance::compare_performance
@@ -33,8 +33,8 @@
 #' # see ?measurement_invariance for measurement invariance example
 compare_fit <- function(...,
                         digits = 3,
-                        streamline = FALSE,
                         quite = FALSE,
+                        streamline = FALSE,
                         return_result = FALSE) {
 
   # lavaan models

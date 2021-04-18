@@ -54,7 +54,7 @@
 lme_model <- function(data,
                       model = NULL,
                       response_variable,
-                      random_effect_factors,
+                      random_effect_factors = NULL,
                       non_random_effect_factors = NULL,
                       two_way_interaction_factor = NULL,
                       three_way_interaction_factor = NULL,
@@ -64,7 +64,7 @@ lme_model <- function(data,
                       na.action = stats::na.omit,
                       use_package = "lmerTest",
                       quite = FALSE) {
-  ###################################### Set up #############################################
+  ########################################### Set up #############################################
   # check data type and covert all variable to numeric
   data <- data_check(data)
   lme_model_check <- function(object, method) {
@@ -79,8 +79,13 @@ lme_model <- function(data,
       }
     }
     if (method == "three_way_interaction_factor_check") {
-      if (length(three_way_interaction_factor) != 3) {
+      if (length(object) != 3) {
         stop("three_way_interaction_factor must have three factors")
+      }
+    }
+    if (method == "two_interaction_factor_check") {
+      if (length(object) < 2) {
+        stop("two_way_interaction_factor must have three factors")
       }
     }
   }
@@ -108,13 +113,14 @@ lme_model <- function(data,
 
   ###################################### Modeling with Explict Model #############################################
   if (!is.null(model)) {
-    lmerformula <- stats::as.formula(model)
     if (use_package == "nlme") {
       warning("A model is specified explicitly. Switching to lmerTest for estimation.")
       use_package <- "lmerTest"
     }
-
+    
+    lmerformula <- stats::as.formula(model)
     lmerCtr <- lme4::lmerControl(optimizer = opt_control)
+    
     if (use_package == "lmerTest") {
       model <- do.call(getfun("lmerTest::lmer"), list(
         formula = lmerformula,
@@ -155,26 +161,26 @@ lme_model <- function(data,
     names()
 
 
-  ## remove response variable and id from random_effect_factors
+  ## remove response variable and id from all other variables
   random_effect_factors <- random_effect_factors[!random_effect_factors %in% c(response_variable, id)]
   non_random_effect_factors <- non_random_effect_factors[!non_random_effect_factors %in% c(response_variable, id)]
   two_way_interaction_factor <- two_way_interaction_factor[!two_way_interaction_factor %in% c(response_variable, id)]
   three_way_interaction_factor <- three_way_interaction_factor[!three_way_interaction_factor %in% c(response_variable, id)]
 
-  # if factors is NULL, assign NULL
+  # Check variable length & assign NULL to variables that is NULL
   if (length(non_random_effect_factors) == 0) {
     non_random_effect_factors <- NULL
   }
   if (length(two_way_interaction_factor) == 0) {
     two_way_interaction_factor <- NULL
+  } else {
+    lme_model_check(two_way_interaction_factor, method = "two_interaction_factor_check")
   }
   if (length(three_way_interaction_factor) == 0) {
     three_way_interaction_factor <- NULL
   } else {
     lme_model_check(three_way_interaction_factor, method = "three_way_interaction_factor_check")
   }
-
-
   lme_model_check(response_variable, method = "response_variable_check")
   lme_model_check(id, method = "id_check")
 
