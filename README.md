@@ -22,10 +22,8 @@ devtools::install_github('jasonmoy28/psycModel')
 
 ## Supported Models
 Regression models:  <br/>
-* Linear regression (i.e., support ANOVA, ANCOVA)  <br/>
-* Generalized linear regression  <br/>
-* Linear mixed effect model (i.e., HLM, MLM)  <br/>
-* Generalized linear mixed effect model.  <br/>
+* Linear regression (i.e., support ANOVA, ANCOVA)  & generalized linear regression  <br/>
+* Linear mixed effect model (i.e., HLM, MLM)  & generalized linear mixed effect model.  <br/>
 
 Structure Equation Modeling:  <br/>
 * Exploratory & confirmatory factor analysis  <br/>
