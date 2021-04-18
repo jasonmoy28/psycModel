@@ -11,7 +11,6 @@
 * Added a new function that allow convert HTML to PDF function for knitting Rmd <br/>
 * `model_performance` support a wider array of model performance measure <br/>
 * `cfa_summary` and `measurement_invariance` support checking goodness of fit <br/>
-* Re-write `bruceR::Print` and `bruceR::print_table`. <br/>
 
 **Bugs fixed**  
 * Critical bug fix for `model_summary_with_plot`. You can no request `simple_slope` and `check_assumption` correctly. <br/>
@@ -36,7 +35,6 @@
 * `measurement_invariance` stop using `semTools::compareFit`. Added a self-created `compare_fit` function for the package <br/>
 * remove `papaja::apa_theme()` dependency. <br/>
 * use `.data` from `rlang` for `mutate` function <br/>
-* remove `bruceR` from import. <br/>
 * `model_summary_with_plot` always return list and changed to logical (set to T to return result_list) <br/>
 * `model_summary_with_plot` return a named list object <br/>
 

@@ -20,6 +20,7 @@ Imports:
     ggplot2,
     glue,
     lavaan,
+    lme4,
     lifecycle,
     lmerTest,
     parameters,
@@ -32,7 +33,6 @@ Imports:
     utils
 Suggests:
     nlme,
-    lme4,
     covr,
     cowplot,
     ggrepel,

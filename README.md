@@ -15,15 +15,25 @@
 devtools::install_github('jasonmoy28/psycModel')
 ```
 ## Key Features
-<span style="color:#009900">✓</span> Easy to use for R beginners who don't want to find dedicated packages for each analysis. <br/>
+<span style="color:#009900">✓</span> An beginner-friendly R package for modeling in psychology or related field (intermediate & advanced R users should also find it useful) <br/>
 <span style="color:#009900">✓</span>  Tired of manually writing all variables in a model? You can use [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models <br/>
 <span style="color:#009900">✓</span> Rich-text formatted output. Check out the  [exmaple](https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html) here now. <br/>
-<span style="color:#009900">✓</span> Fitting models, plotting, checking model performance and model assumption violations all in one place. <br/>
+<span style="color:#009900">✓</span> Fitting models, plotting, checking goodness of fit and model assumption violations all in one place. <br/>
 
 ## Supported Models
-<span style="color:#009900">✓</span> Regression models: Linear regression (i.e., support ANOVA, ANCOVA) Hierarchical linear modeling (i.e., linear mixed effect model). <br/>
-<span style="color:#009900">✓</span> Measurement models: Exploratory & confirmatory factor analysis, measurement invariance. <br/>
-<span style="color:#009900">✓</span> Other: Descriptive statistics & correlation table. <br/>
+<span style="color:#009900">✓</span> Regression models:  <br/>
+* Linear regression (i.e., support ANOVA, ANCOVA)  <br/>
+* Generalized linear regression  <br/>
+* Linear mixed effect model (i.e., HLM, MLM)  <br/>
+* Generalized linear mixed effect model.  <br/>
+<span style="color:#009900">✓</span> Structure Equation Modeling:  <br/>
+* Exploratory & confirmatory factor analysis  <br/>
+* Measurement invariance (MGCFA)  <br/>
+* Mediation analysis (only SEM approach) <br/>
+<span style="color:#009900">✓</span> Other:  <br/>
+* Descriptive statistics 
+* Correlation (e.g., pearson, polychoric, tetrachoric, spearman), 
+* Reliability analysis <br/>
 
 ## Credit
 **Authors:** [Jason Moy](https://jasonmoy.us)
@@ -31,10 +41,10 @@ devtools::install_github('jasonmoy28/psycModel')
 **Citation:** Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 
 ## Contributing:
-This package is still in its early stage. There are a lots of features / models that I plan to implement in the near future (see [here](https://github.com/jasonmoy28/psycModel/issues/3)), but it takes a long time for me to implement everything. So, if you are interested in help building this package, please feel free to submit a [pull request](https://github.com/jasonmoy28/psycModel/pulls) / [Github issue](https://github.com/jasonmoy28/psycModel/issues). I also tried my best to fix any bugs, but I cannot guarantee that the package can handle all edge cases. If you find any bug, please submit them in the [Github issue](https://github.com/jasonmoy28/psycModel/issues). Finally, if you like the package, please considering give it a star. It meant a lot to me knowing that people actually find it useful. 
+If you like the package, please considering give it a star. It meant a lot to me knowing that people actually find it useful. This package is still in its early stage. There are a lots of features / models that I plan to implement in the near future (see [here](https://github.com/jasonmoy28/psycModel/issues/3)), but it takes a long time for me to implement everything. So, if you are interested in help building this package, please feel free to submit a [pull request](https://github.com/jasonmoy28/psycModel/pulls) / [Github issue](https://github.com/jasonmoy28/psycModel/issues). I also tried my best to fix any bugs, but I cannot guarantee that the package can handle all edge cases. If you find any bug, please submit them in the [Github issue](https://github.com/jasonmoy28/psycModel/issues). Additionally, you should expect changes that are not backward compatible until the package's first major release (i.e., v1.0.0). 
 
 ## Acknowledgement
-This package was built by standing on the shoulders of giants with special thanks to researchers and developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [`parameters`](https://easystats.github.io/parameters/), [`psych`](https://personality-project.org/r/psych/), and of couse, all of the [`tidyverse`](https://tidyverse.tidyverse.org/) packages. I hope my package can help someone as they had helped me. 
+This package was built by standing on the shoulders of giants with special thanks to researchers and developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [`parameters`](https://easystats.github.io/parameters/), [`psych`](https://personality-project.org/r/psych/), and of course, all of the [`tidyverse`](https://tidyverse.tidyverse.org/) packages. I hope my package will be help someone as they had helped me. 
 
 
 ## Updates
@@ -59,7 +69,6 @@ This package was built by standing on the shoulders of giants with special thank
 * Added a new function that allow convert HTML to PDF function for knitting Rmd <br/>
 * `model_performance` support a wider array of model performance measure <br/>
 * `cfa_summary` and `measurement_invariance` support checking goodness of fit <br/>
-* Re-write `bruceR::Print` and `bruceR::print_table`. <br/>
 
 **Bugs fixed** <br/>
 * Critical bug fix for `model_summary_with_plot`. You can request `simple_slope` and `assumption_plot` correctly. <br/>
@@ -84,7 +93,6 @@ This package was built by standing on the shoulders of giants with special thank
 * `measurement_invariance` stop using `semTools::compareFit`. Added a self-created `compare_fit` function for the package <br/>
 * remove `papaja::apa_theme()` dependency. <br/>
 * use `.data` from `rlang` for `mutate` function <br/>
-* remove `bruceR` from import. <br/>
 * `model_summary_with_plot` always return list and changed to logical (set to T to return result_list) <br/>
 * `model_summary_with_plot` return a named list object <br/>
 
