@@ -4,16 +4,16 @@
 #' It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019).
 #'
 #' @param data data frame
-#' @param model lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates.
+#' @param model lme4 model syntax. Support more complicated model structure from lme4. It is not well-tested to handle all edge cases. `r lifecycle::badge("experimental")`
 #' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select` syntax.
-#' @param random_effect_factors random effect factors (level-1 variable for HLM people) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support `dplyr::select` syntax.
-#' @param non_random_effect_factors non-random effect factors (level-2 variable for HLM people). Factors only need to estimate fixed effect. Support `dplyr::select` syntax.
+#' @param random_effect_factors random effect factors (level-1 variable for HLM from a HLM perspective) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support `dplyr::select` syntax.
+#' @param non_random_effect_factors non-random effect factors (level-2 variable from a HLM perspective). Factors only need to estimate fixed effect. Support `dplyr::select` syntax.
 #' @param two_way_interaction_factor two-way interaction factors. You need to pass 2+ factor. Support `dplyr::select` syntax.
 #' @param three_way_interaction_factor three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support `dplyr::select` syntax.
 #' @param id the nesting variable (e.g. group, time). Length of 1. Support `dplyr::select` syntax.
 #' @param graph_label_name optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)
 #' @param estimation_method character. `ML` or `REML` default is `REML`.
-#' @param return_result If set to `TRUE` (default is `FALSE`), it will return the `model`, `model_summary`, and `plot` (if the interaction term is included)
+#' @param return_result If set to `TRUE` (default is `FALSE`), it will return the `model`, `model_summary`, and `plot` (`plot` if the interaction term is included)
 #' @param print_result  Default is `model_summary` and `plot`. Options are `model_summary` or `plot`.
 #' @param na.action default is `stats::na.exclude`. Required to be `stats::na.omit` if assumption_plot if `T`. It should produce similar result, but you should check using `na.exclude` to confirm.
 #' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
@@ -22,7 +22,7 @@
 #' @param plot_color If it is set to `TRUE` (default is `FALSE`), the interaction plot will plot with color.
 #' @param use_package Default is `nlme`. Only available for linear mixed effect model. Options are `nlme` or `lmerTest`,`lme4`(`'lme4` return similar result as `lmerTest` except the return model)
 #' @param quite suppress printing output
-#' @param round number of digit.
+#' @param digits number of digit.
 #' @param simple_slope Compute the slope differing with ± 1 SD of the IVs. In the background, it calls interaction:sim_slopes()
 #' @param assumption_plot Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()
 #' @param streamlined_output Only print model estimate and model performance. Default is `FALSE`
@@ -32,7 +32,7 @@
 #' @export
 #'
 #' @examples
-#' fit <- model_summary_with_plot(
+#' fit <- integrated_multilevel_model_summary(
 #'   data = popular,
 #'   response_variable = popular,
 #'   random_effect_factors = c(extrav),
@@ -42,7 +42,7 @@
 #'   id = class
 #' )
 #' \dontrun{
-#' fit <- model_summary_with_plot(
+#' fit <- integrated_multilevel_model_summary(
 #'   data = popular,
 #'   response_variable = popular,
 #'   random_effect_factors = c(extrav, sex),
@@ -56,7 +56,7 @@
 #' )
 #' }
 #'
-model_summary_with_plot <- function(data,
+integrated_multilevel_model_summary <- function(data,
                                     model = NULL,
                                     response_variable = NULL,
                                     random_effect_factors = NULL,
@@ -74,7 +74,7 @@ model_summary_with_plot <- function(data,
                                     print_result = c("model_summary", "plot"),
                                     y_lim = NULL,
                                     plot_color = F,
-                                    round = 3,
+                                    digits = 3,
                                     use_package = "lmerTest",
                                     simple_slope = F,
                                     assumption_plot = F,
@@ -91,22 +91,41 @@ model_summary_with_plot <- function(data,
     }
   }
 
+  response_variable <- data %>%
+    dplyr::select(!!enquo(response_variable)) %>%
+    names()
+  random_effect_factors <- data %>%
+    dplyr::select(!!enquo(random_effect_factors)) %>%
+    names()
+  non_random_effect_factors <- data %>%
+    dplyr::select(!!enquo(non_random_effect_factors)) %>%
+    names()
+  two_way_interaction_factor <- data %>%
+    dplyr::select(!!enquo(two_way_interaction_factor)) %>%
+    names()
+  three_way_interaction_factor <- data %>%
+    dplyr::select(!!enquo(three_way_interaction_factor)) %>%
+    names()
+  id <- data %>%
+    dplyr::select(!!enquo(id)) %>%
+    names()
+  
   ##################################### Run Model #########################################
   model <- lme_model(
     model = model,
     data = data,
-    response_variable = enquo(response_variable),
-    random_effect_factors = enquo(random_effect_factors),
-    non_random_effect_factors = enquo(non_random_effect_factors),
-    two_way_interaction_factor = enquo(two_way_interaction_factor),
-    three_way_interaction_factor = enquo(three_way_interaction_factor),
-    id = enquo(id),
+    response_variable = tidyselect::all_of(response_variable),
+    random_effect_factors = tidyselect::all_of(random_effect_factors),
+    non_random_effect_factors = tidyselect::all_of(non_random_effect_factors),
+    two_way_interaction_factor = tidyselect::all_of(two_way_interaction_factor),
+    three_way_interaction_factor = tidyselect::all_of(three_way_interaction_factor),
+    id = tidyselect::all_of(id),
     opt_control = opt_control,
     na.action = na.action,
     estimation_method = estimation_method,
     use_package = use_package,
     quite = quite,
-    ... = "model_summary_with_plot"
+    ... = "integrated_multilevel_model_summary"
   )
 
   ############################### Generate Interaction Plots ###############################
@@ -173,7 +192,7 @@ model_summary_with_plot <- function(data,
     model_summary_df <- model_summary(
       model = model,
       streamlined_output = streamlined_output,
-      round = round,
+      digits = digits,
       return_result = T,
       assumption_plot = assumption_plot
     )
