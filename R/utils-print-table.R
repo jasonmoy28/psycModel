@@ -7,12 +7,31 @@
 #' @keywords internal
 #' @return none
 #'
-print_table <- function(data_frame, digits = 3) {
+print_table <- function(data_frame, 
+                        digits = 3) {
   data_frame <- data_frame %>%
-    dplyr::mutate(dplyr::across(where(is.numeric), ~ format_round(x = ., digits = digits))) %>%
+    as_tibble() %>% 
+    dplyr::mutate(dplyr::across(where(is.double), ~ format_round(x = ., digits = digits))) %>%
     dplyr::mutate(dplyr::across(tidyselect::everything(), ~ as.character(.))) %>%
-    dplyr::mutate(dplyr::across(tidyselect::everything(), ~ tidyr::replace_na(., replace = "NA")))
-
+    # replace na value with empty space
+    dplyr::mutate(dplyr::across(tidyselect::everything(), function(x) {tidyr::replace_na(data = x, replace = '')}))  %>%
+  dplyr::mutate(dplyr::across(tidyselect::everything(), function(x){if_else(stringr::str_detect(string = x,pattern = 'NA'), true = '',false = x)})) %>% 
+    # if p value exist, code p value 
+    dplyr::mutate(dplyr::across(tidyselect::any_of(c('p','P')), function(x){dplyr::case_when(
+      x == '' ~ paste(x,'   '),
+      x <= 0.001 ~ paste(x,"***"),
+      x <= 0.01 & x > 0.001 ~ paste(x,"** "),
+      x < 0.05 & x > 0.01 ~ paste(x,'*  '),
+      x > 0.05 ~ paste(x,'   '),
+      T ~ paste(x,'   ')
+    )}))
+  
+  # code CI continue
+  if (any(colnames(data_frame) %in% c('ci.lower','ci.upper'))) {
+    data_frame = data_frame %>% 
+      dplyr::mutate(`95% CI` = paste0('[',.data$ci.lower,', ',.data$ci.upper,']')) %>% 
+      select(-c('ci.upper','ci.lower'))
+  }
   # Calculate the white space need to insert for each cell
   column_name <- sapply(colnames(data_frame), function(x) {
     text_convert(x, type = "greek")
@@ -66,4 +85,5 @@ print_table <- function(data_frame, digits = 3) {
   }
   cat("\n")
   cat(paste(rep("\u2500", linewidth), collapse = "")) # print the last output line
+  cat("\n")
 }
