@@ -10,7 +10,7 @@ testthat::test_that(desc = 'checking model correctness',{
     model_summary = TRUE,
     return_result = TRUE,
     assumption_plot = FALSE,
-    quite = T
+    quite = TRUE
   )))
   expect_equal(return_list$summary$assumption_plot,NULL)
   expect_false(is.null(return_list$interaction_plot))
@@ -37,7 +37,7 @@ testthat::test_that(desc = 'test glm',{
     family = "poisson", # or you can enter as poisson(link = 'log'),
     data = lme4::cbpp,
     assumption_plot = TRUE, 
-    quite = T,
+    quite = TRUE,
     return_result = TRUE
   )))
   expect_false(is.null(return_list$summary$assumption_plot))

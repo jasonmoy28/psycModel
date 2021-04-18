@@ -33,6 +33,7 @@ Imports:
     tidyr,
     utils
 Suggests:
+    sandwich,
     correlation,
     covr,
     cowplot,

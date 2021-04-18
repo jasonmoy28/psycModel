@@ -140,8 +140,15 @@ integrated_model_summary <- function(data,
 
 
   if (simple_slope == TRUE) {
+    if (!requireNamespace("interactions", quietly = TRUE)) {
+      stop("Please install.packages(c('interactions','sandwich')) use simple_slope with three-way interaction")
+    }
+    
+    if (!requireNamespace("sandwich", quietly = TRUE)) {
+      stop("Please install.packages('sandwich') use simple_slope with three-way interaction")
+    }
+    
     if (length(two_way_interaction_factor) != 0) {
-      if (requireNamespace("interactions", quietly = TRUE)) {
         simple_slope_model <- interactions::sim_slopes(
           data = data,
           model = model,
@@ -163,12 +170,12 @@ integrated_model_summary <- function(data,
 
         colnames(simple_slope_output)[1] <- c(paste(two_way_interaction_factor[2], "Level"))
         jnp_plot <- simple_slope_model$jnplot
-      } else {
-        stop("Please install.packages('interactions') to use simple_slope")
       }
     }
     if (length(three_way_interaction_factor) != 0) {
-      if (all(unlist(lapply(c("cowplot", "interactions"), requireNamespace)))) {
+      if (!requireNamespace("cowplot", quietly = TRUE)) {
+        stop("Please install.packages('cowplot') use simple_slope with three-way interaction")
+      }
         simple_slope_model <- interactions::sim_slopes(
           data = data,
           model = model,
@@ -212,9 +219,7 @@ integrated_model_summary <- function(data,
         colnames(simple_slope_output)[c(1, 2)] <- c(paste(three_way_interaction_factor[3], "Level"), paste(three_way_interaction_factor[2], "Level"))
 
         jnp_plot <- simple_slope_model$jnplot
-      } else {
-        stop("Please install.packages(c('cowplot','interactions')) use simple_slope with three-way interaction")
-      }
+      } 
     }
   } else{
     simple_slope_output = NULL
