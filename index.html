@@ -104,12 +104,32 @@
 <div id="key-features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#key-features" class="anchor"></a>Key Features</h2>
-<p><span style="color:#009900">✓</span> Easy to use for R beginners who don’t want to find dedicated packages for each analysis. <br><span style="color:#009900">✓</span> Tired of manually writing all variables in a model? You can use <a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a> syntax for all models <br><span style="color:#009900">✓</span> Rich-text formatted output. Check out the <a href="https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html">exmaple</a> here now. <br><span style="color:#009900">✓</span> Fitting models, plotting, checking model performance and model assumption violations all in one place. <br></p>
+<p><span style="color:#009900">✓</span> An beginner-friendly R package for modeling in psychology or related field (intermediate &amp; advanced R users should also find it useful) <br><span style="color:#009900">✓</span> Tired of manually writing all variables in a model? You can use <a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a> syntax for all models <br><span style="color:#009900">✓</span> Rich-text formatted output. Check out the <a href="https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html">exmaple</a> here now. <br><span style="color:#009900">✓</span> Fitting models, plotting, checking goodness of fit and model assumption violations all in one place. <br></p>
 </div>
 <div id="supported-models" class="section level2">
 <h2 class="hasAnchor">
 <a href="#supported-models" class="anchor"></a>Supported Models</h2>
-<p><span style="color:#009900">✓</span> Regression models: Linear regression (i.e., support ANOVA, ANCOVA) Hierarchical linear modeling (i.e., linear mixed effect model). <br><span style="color:#009900">✓</span> Measurement models: Exploratory &amp; confirmatory factor analysis, measurement invariance. <br><span style="color:#009900">✓</span> Other: Descriptive statistics &amp; correlation table. <br></p>
+<p><span style="color:#009900">✓</span> Regression models: <br></p>
+<ul>
+<li>Linear regression (i.e., support ANOVA, ANCOVA) <br>
+</li>
+<li>Generalized linear regression <br>
+</li>
+<li>Linear mixed effect model (i.e., HLM, MLM) <br>
+</li>
+<li>Generalized linear mixed effect model. <br><span style="color:#009900">✓</span> Structure Equation Modeling: <br>
+</li>
+<li>Exploratory &amp; confirmatory factor analysis <br>
+</li>
+<li>Measurement invariance (MGCFA) <br>
+</li>
+<li>Mediation analysis (only SEM approach) <br><span style="color:#009900">✓</span> Other: <br>
+</li>
+<li>Descriptive statistics</li>
+<li>Correlation (e.g., pearson, polychoric, tetrachoric, spearman),</li>
+<li>Reliability analysis <br>
+</li>
+</ul>
 </div>
 <div id="credit" class="section level2">
 <h2 class="hasAnchor">
@@ -120,12 +140,12 @@
 <div id="contributing" class="section level2">
 <h2 class="hasAnchor">
 <a href="#contributing" class="anchor"></a>Contributing:</h2>
-<p>This package is still in its early stage. There are a lots of features / models that I plan to implement in the near future (see <a href="https://github.com/jasonmoy28/psycModel/issues/3">here</a>), but it takes a long time for me to implement everything. So, if you are interested in help building this package, please feel free to submit a <a href="https://github.com/jasonmoy28/psycModel/pulls">pull request</a> / <a href="https://github.com/jasonmoy28/psycModel/issues">Github issue</a>. I also tried my best to fix any bugs, but I cannot guarantee that the package can handle all edge cases. If you find any bug, please submit them in the <a href="https://github.com/jasonmoy28/psycModel/issues">Github issue</a>. Finally, if you like the package, please considering give it a star. It meant a lot to me knowing that people actually find it useful.</p>
+<p>If you like the package, please considering give it a star. It meant a lot to me knowing that people actually find it useful. This package is still in its early stage. There are a lots of features / models that I plan to implement in the near future (see <a href="https://github.com/jasonmoy28/psycModel/issues/3">here</a>), but it takes a long time for me to implement everything. So, if you are interested in help building this package, please feel free to submit a <a href="https://github.com/jasonmoy28/psycModel/pulls">pull request</a> / <a href="https://github.com/jasonmoy28/psycModel/issues">Github issue</a>. I also tried my best to fix any bugs, but I cannot guarantee that the package can handle all edge cases. If you find any bug, please submit them in the <a href="https://github.com/jasonmoy28/psycModel/issues">Github issue</a>. Additionally, you should expect changes that are not backward compatible until the package’s first major release (i.e., v1.0.0).</p>
 </div>
 <div id="acknowledgement" class="section level2">
 <h2 class="hasAnchor">
 <a href="#acknowledgement" class="anchor"></a>Acknowledgement</h2>
-<p>This package was built by standing on the shoulders of giants with special thanks to researchers and developers of <a href="https://lavaan.ugent.be/"><code>lavaan</code></a>, <a href="https://github.com/lme4/lme4"><code>lme4</code></a>, <a href="https://github.com/runehaubo/lmerTestR"><code>lmerTest</code></a>, <a href="https://cran.r-project.org/package=nlme"><code>nlme</code></a>, <a href="https://easystats.github.io/performance/"><code>performance</code></a>, <a href="https://easystats.github.io/parameters/"><code>parameters</code></a>, <a href="https://personality-project.org/r/psych/"><code>psych</code></a>, and of couse, all of the <a href="https://tidyverse.tidyverse.org/"><code>tidyverse</code></a> packages. I hope my package can help someone as they had helped me.</p>
+<p>This package was built by standing on the shoulders of giants with special thanks to researchers and developers of <a href="https://lavaan.ugent.be/"><code>lavaan</code></a>, <a href="https://github.com/lme4/lme4"><code>lme4</code></a>, <a href="https://github.com/runehaubo/lmerTestR"><code>lmerTest</code></a>, <a href="https://cran.r-project.org/package=nlme"><code>nlme</code></a>, <a href="https://easystats.github.io/performance/"><code>performance</code></a>, <a href="https://easystats.github.io/parameters/"><code>parameters</code></a>, <a href="https://personality-project.org/r/psych/"><code>psych</code></a>, and of course, all of the <a href="https://tidyverse.tidyverse.org/"><code>tidyverse</code></a> packages. I hope my package will be help someone as they had helped me.</p>
 </div>
 <div id="updates" class="section level2">
 <h2 class="hasAnchor">
@@ -171,8 +191,6 @@
 </li>
 <li>
 <code>cfa_summary</code> and <code>measurement_invariance</code> support checking goodness of fit <br>
-</li>
-<li>Re-write <code><a href="https://rdrr.io/pkg/bruceR/man/Print.html">bruceR::Print</a></code> and <code><a href="https://rdrr.io/pkg/bruceR/man/print_table.html">bruceR::print_table</a></code>. <br>
 </li>
 </ul>
 <p><strong>Bugs fixed</strong> <br></p>
@@ -226,8 +244,6 @@
 <li>remove <code>papaja::apa_theme()</code> dependency. <br>
 </li>
 <li>use <code>.data</code> from <code>rlang</code> for <code>mutate</code> function <br>
-</li>
-<li>remove <code>bruceR</code> from import. <br>
 </li>
 <li>
 <code>model_summary_with_plot</code> always return list and changed to logical (set to T to return result_list) <br>
