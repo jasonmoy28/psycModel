@@ -1,7 +1,7 @@
 #' Generalized Linear Mixed Effect Model
 #'
 #' `r lifecycle::badge("experimental")` \cr
-#' Fit a generalized linear mixed effect model using `lme4::glmer`. This function is still in early development stage. 
+#' Fit a generalized linear mixed effect model using `lme4::glmer`. This function is still in early development stage.
 #'
 #' @param data data frame
 #' @param response_variable character or vector of length 1
@@ -15,7 +15,7 @@
 #' @param na.action default to `stats::na.exclude`.
 #' @param opt_control character. default to `bobyqa`
 #' @param quite suppress printing output
-#' @param model  lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates 
+#' @param model  lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates
 #'
 #' @return An object of class "glmerMod" representing the linear mixed-effects model fit.
 #' @export
@@ -23,7 +23,7 @@
 #' fit <- glme_model(
 #'   response_variable = incidence,
 #'   random_effect_factors = period,
-#'   family = 'poisson', # or you can enter as poisson(link = 'log')
+#'   family = "poisson", # or you can enter as poisson(link = 'log')
 #'   id = herd,
 #'   data = lme4::cbpp
 #' )
@@ -76,7 +76,6 @@ glme_model <- function(data,
 
   ###################################### Modeling with Explict Model #############################################
   if (!is.null(model)) {
-    
     glmerformula <- stats::as.formula(model)
     glmerCtr <- lme4::glmerControl(optimizer = opt_control)
 

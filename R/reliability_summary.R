@@ -85,8 +85,6 @@ reliability_summary <- function(data,
       )
       cat("\n")
     }
-
-
   } else {
     ############################################ Multidimensionality Model ################################################################
     alpha_fit <- suppressMessages(data %>% psych::alpha())
@@ -110,7 +108,7 @@ reliability_summary <- function(data,
       dplyr::rename(Alpha = .data$raw_alpha) %>%
       dplyr::rename(Alpha.Std = .data$std.alpha) %>%
       dplyr::rename(`G6 (smc)` = .data$`G6(smc)`)
-    if (quite == FALSE){
+    if (quite == FALSE) {
       if (streamline == FALSE) {
         super_print("underline|Model Summary")
         super_print("Model Type = Reliability Analysis")
@@ -124,8 +122,8 @@ reliability_summary <- function(data,
       print_table(alpha_item_statistics)
       cat("\n")
     }
-  } 
-  
+  }
+
   if (descriptive_table == TRUE & quite == FALSE) {
     super_print("underline|Descriptive Statistics Table:")
     descriptive_table(

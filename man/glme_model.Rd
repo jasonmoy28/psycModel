@@ -58,7 +58,7 @@ Fit a generalized linear mixed effect model using \code{lme4::glmer}. This funct
 fit <- glme_model(
   response_variable = incidence,
   random_effect_factors = period,
-  family = 'poisson', # or you can enter as poisson(link = 'log')
+  family = "poisson", # or you can enter as poisson(link = 'log')
   id = herd,
   data = lme4::cbpp
 )

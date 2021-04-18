@@ -1,9 +1,9 @@
 #' Integrated Function for Mixed Effect Model
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' It will first compute the mixed effect model. It will use either the nlme::lme or the lmerTest::lmer for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. 
+#' It will first compute the mixed effect model. It will use either the nlme::lme or the lmerTest::lmer for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model.
 #' Then, it will print the model summary and assumption_plot if you requested it. If you requested the interaction plot (default is `TRUE`), it will graph the interaction (Currently only support lme model not glme)
-#' If you requested simple slope summary, it will uses the interaction::sim_slopes. 
+#' If you requested simple slope summary, it will uses the interaction::sim_slopes.
 #'
 #' @param data data frame
 #' @param model lme4 model syntax. Support more complicated model structure from lme4. It is not well-tested to handle all edge cases. `r lifecycle::badge("experimental")`
@@ -67,7 +67,7 @@ integrated_multilevel_model_summary <- function(data,
                                                 non_random_effect_factors = NULL,
                                                 two_way_interaction_factor = NULL,
                                                 three_way_interaction_factor = NULL,
-                                                family = NULL, 
+                                                family = NULL,
                                                 cateogrical_var = NULL,
                                                 id = NULL,
                                                 graph_label_name = NULL,
@@ -133,11 +133,11 @@ integrated_multilevel_model_summary <- function(data,
       use_package = use_package,
       quite = TRUE
     )
-  } else{
-    if (simple_slope == TRUE |interaction_plot == TRUE) {
-      simple_slope = FALSE
-      interaction_plot = FALSE
-      warning('interaction_plot & simple_slope is not avaliable for glme model for now')
+  } else {
+    if (simple_slope == TRUE | interaction_plot == TRUE) {
+      simple_slope <- FALSE
+      interaction_plot <- FALSE
+      warning("interaction_plot & simple_slope is not avaliable for glme model for now")
     }
     model <- glme_model(
       model = model,
@@ -147,7 +147,7 @@ integrated_multilevel_model_summary <- function(data,
       non_random_effect_factors = tidyselect::all_of(non_random_effect_factors),
       two_way_interaction_factor = tidyselect::all_of(two_way_interaction_factor),
       three_way_interaction_factor = tidyselect::all_of(three_way_interaction_factor),
-      family = family, 
+      family = family,
       id = tidyselect::all_of(id),
       opt_control = opt_control,
       na.action = na.action,
@@ -183,7 +183,7 @@ integrated_multilevel_model_summary <- function(data,
     )
   } else {
     interaction_plot_object <- NULL
-    interaction_plot = FALSE
+    interaction_plot <- FALSE
   }
 
 
@@ -197,14 +197,18 @@ integrated_multilevel_model_summary <- function(data,
           modx = !!two_way_interaction_factor[2],
           jnplot = TRUE,
         )
-        simple_slope_output <- 
-          rbind(simple_slope_model$slopes) %>% 
-          dplyr::mutate(dplyr::across(1, function(x){dplyr::case_when(x > mean(x) ~ 'High',
-                                                                      x == mean(x) ~ 'Mean',
-                                                                      x < mean(x) ~ 'Low ')})) %>% 
+        simple_slope_output <-
+          rbind(simple_slope_model$slopes) %>%
+          dplyr::mutate(dplyr::across(1, function(x) {
+            dplyr::case_when(
+              x > mean(x) ~ "High",
+              x == mean(x) ~ "Mean",
+              x < mean(x) ~ "Low "
+            )
+          })) %>%
           dplyr::rename(ci.lower = "2.5%") %>%
-          dplyr::rename(ci.upper = "97.5%") 
-        
+          dplyr::rename(ci.upper = "97.5%")
+
         colnames(simple_slope_output)[1] <- c(paste(two_way_interaction_factor[2], "Level"))
         jnp_plot <- simple_slope_model$jnplot
       } else {
@@ -222,32 +226,39 @@ integrated_multilevel_model_summary <- function(data,
           jnplot = TRUE
         )
         if (length(simple_slope_model$slopes) == 3) { # if mod 2 is continuous
-          simple_slope_output <- 
-            rbind(simple_slope_model$slopes[[1]], simple_slope_model$slopes[[2]], simple_slope_model$slopes[[3]]) %>% 
-            dplyr::mutate(dplyr::across(1, function(x){dplyr::case_when(x > mean(x) ~ 'High',
-                                                                        x == mean(x) ~ 'Mean',
-                                                                        x < mean(x) ~ 'Low ')})) 
-          simple_slope_output = simple_slope_output %>% 
-            dplyr::mutate(Mod_1_Level = rep(c("Low ", "Mean", "High"), each = nrow(simple_slope_output) / 3)) %>% 
-            dplyr::select('Mod_1_Level', tidyselect::everything())
-          
-        } else if(length(simple_slope_model$slopes) == 2){ # if mod 2 is binary 
-          simple_slope_output = 
-            rbind(simple_slope_model$slopes[[1]], simple_slope_model$slopes[[2]]) %>% 
-            dplyr::mutate(dplyr::across(1, function(x){dplyr::case_when(x > mean(x) ~ 'High',
-                                                                        x == mean(x) ~ 'Mean',
-                                                                        x < mean(x) ~ 'Low ')}))
-          simple_slope_output = simple_slope_output %>% 
-            dplyr::mutate(Mod_1_Level = rep(c("Low ","High"), each = nrow(simple_slope_output) / 2)) %>% 
-            dplyr::select('Mod_1_Level', tidyselect::everything())
+          simple_slope_output <-
+            rbind(simple_slope_model$slopes[[1]], simple_slope_model$slopes[[2]], simple_slope_model$slopes[[3]]) %>%
+            dplyr::mutate(dplyr::across(1, function(x) {
+              dplyr::case_when(
+                x > mean(x) ~ "High",
+                x == mean(x) ~ "Mean",
+                x < mean(x) ~ "Low "
+              )
+            }))
+          simple_slope_output <- simple_slope_output %>%
+            dplyr::mutate(Mod_1_Level = rep(c("Low ", "Mean", "High"), each = nrow(simple_slope_output) / 3)) %>%
+            dplyr::select("Mod_1_Level", tidyselect::everything())
+        } else if (length(simple_slope_model$slopes) == 2) { # if mod 2 is binary
+          simple_slope_output <-
+            rbind(simple_slope_model$slopes[[1]], simple_slope_model$slopes[[2]]) %>%
+            dplyr::mutate(dplyr::across(1, function(x) {
+              dplyr::case_when(
+                x > mean(x) ~ "High",
+                x == mean(x) ~ "Mean",
+                x < mean(x) ~ "Low "
+              )
+            }))
+          simple_slope_output <- simple_slope_output %>%
+            dplyr::mutate(Mod_1_Level = rep(c("Low ", "High"), each = nrow(simple_slope_output) / 2)) %>%
+            dplyr::select("Mod_1_Level", tidyselect::everything())
         }
-        
-        simple_slope_output = simple_slope_output %>% 
+
+        simple_slope_output <- simple_slope_output %>%
           dplyr::rename(ci.lower = "2.5%") %>%
           dplyr::rename(ci.upper = "97.5%") %>%
           dplyr::mutate(dplyr::across("Mod_1_Level", ~ replace(., duplicated(.), "")))
         colnames(simple_slope_output)[c(1, 2)] <- c(paste(three_way_interaction_factor[3], "Level"), paste(three_way_interaction_factor[2], "Level"))
-        
+
         jnp_plot <- simple_slope_model$jnplot
       } else {
         stop("Please install.packages(c('cowplot','interactions')) use simple_slope with three-way interaction")
@@ -256,7 +267,7 @@ integrated_multilevel_model_summary <- function(data,
   }
 
   # Print result
-  if (model_summary == TRUE| return_result == TRUE) {
+  if (model_summary == TRUE | return_result == TRUE) {
     model_summary_df <- model_summary(
       model = model,
       streamline = streamline,
@@ -272,16 +283,16 @@ integrated_multilevel_model_summary <- function(data,
     print_table(simple_slope_output)
     print(jnp_plot)
   }
-  
+
   if (interaction_plot == TRUE) {
     try(print(interaction_plot_object))
   }
-  plot_logical = c(interaction_plot,simple_slope,assumption_plot)
-  number_of_plot_requested = length(plot_logical[plot_logical])
+  plot_logical <- c(interaction_plot, simple_slope, assumption_plot)
+  number_of_plot_requested <- length(plot_logical[plot_logical])
   if (number_of_plot_requested > 1) {
-    warning('You requested > 2 plots. Since 1 plot can be displayed at a time, considering using Rmd for better viewing experience.')
+    warning("You requested > 2 plots. Since 1 plot can be displayed at a time, considering using Rmd for better viewing experience.")
   }
-  
+
   # Return Result
   if (return_result == TRUE) {
     return_list <- list(model = model, summary = model_summary_df, plot = interaction_plot_object)

@@ -117,10 +117,10 @@ lme_model <- function(data,
       warning("A model is specified explicitly. Switching to lmerTest for estimation.")
       use_package <- "lmerTest"
     }
-    
+
     lmerformula <- stats::as.formula(model)
     lmerCtr <- lme4::lmerControl(optimizer = opt_control)
-    
+
     if (use_package == "lmerTest") {
       model <- do.call(getfun("lmerTest::lmer"), list(
         formula = lmerformula,

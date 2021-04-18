@@ -69,8 +69,8 @@ mediation_summary <- function(data,
     tibble::as_tibble() %>%
     dplyr::select("Label", tidyselect::everything()) %>%
     dplyr::rename(Est = .data$Coefficient) %>%
-    dplyr::rename(ci.lower = .data$CI_low) %>% 
-    dplyr::rename(ci.upper = .data$CI_high) %>% 
+    dplyr::rename(ci.lower = .data$CI_low) %>%
+    dplyr::rename(ci.upper = .data$CI_high) %>%
     dplyr::select(-c("Label"))
 
   if (standardize == TRUE) {

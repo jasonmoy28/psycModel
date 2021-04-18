@@ -40,7 +40,7 @@ Fit a generalinear regression using \code{glm}. This function is still in early 
 fit <- glm_model(
   response_variable = incidence,
   predictor_variable = period,
-  family = 'poisson', # or you can enter as poisson(link = 'log'),
+  family = "poisson", # or you can enter as poisson(link = 'log'),
   data = lme4::cbpp
 )
 }

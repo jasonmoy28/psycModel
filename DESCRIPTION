@@ -20,8 +20,8 @@ Imports:
     ggplot2,
     glue,
     lavaan,
-    lme4,
     lifecycle,
+    lme4,
     lmerTest,
     parameters,
     performance,
@@ -32,14 +32,16 @@ Imports:
     tidyr,
     utils
 Suggests:
-    nlme,
+    correlation,
     covr,
     cowplot,
     ggrepel,
+    GPArotation,
     gridExtra,
     interactions,
     knitr,
     nFactors,
+    nlme,
     pagedown,
     qqplotr,
     rmarkdown,
@@ -47,9 +49,7 @@ Suggests:
     see,
     semPlot,
     testthat (>= 3.0.0),
-    tidyselect,
-    GPArotation,
-    correlation
+    tidyselect
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
