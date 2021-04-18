@@ -141,7 +141,7 @@ The function creates a two-way interaction plot. It will creates a plot with ± 
   cateogrical_var <span class='op'>=</span> <span class='cn'>NULL</span>,
   graph_label_name <span class='op'>=</span> <span class='cn'>NULL</span>,
   y_lim <span class='op'>=</span> <span class='cn'>NULL</span>,
-  plot_color <span class='op'>=</span> <span class='cn'>F</span>
+  plot_color <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -169,7 +169,7 @@ The function creates a two-way interaction plot. It will creates a plot with ± 
     </tr>
     <tr>
       <th>plot_color</th>
-      <td><p>default if <code>F</code>. Set to <code>T</code> if you want to plot in color</p></td>
+      <td><p>default if <code>FALSE</code>. Set to <code>TRUE</code> if you want to plot in color</p></td>
     </tr>
     </table>
 
@@ -186,7 +186,7 @@ The function creates a two-way interaction plot. It will creates a plot with ± 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># I am going to show the more generic usage of this function</span>
 <span class='co'># You can also use this package's built in function to fit the models</span>
-<span class='co'># I recommend using the model_summary_with_plot to get everything</span>
+<span class='co'># I recommend using the integrated_multilevel_model_summary to get everything</span>
 
 <span class='co'># lme example</span>
 <span class='va'>lme_fit</span> <span class='op'>&lt;-</span> <span class='fu'>lme4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='st'>"popular ~ extrav + sex + texp + extrav:sex:texp +

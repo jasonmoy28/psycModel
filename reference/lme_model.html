@@ -148,8 +148,7 @@ Fit a linear mixed effect model (i.e., hierarchical linear model, multilevel lin
   opt_control <span class='op'>=</span> <span class='st'>"bobyqa"</span>,
   na.action <span class='op'>=</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>,
   use_package <span class='op'>=</span> <span class='st'>"lmerTest"</span>,
-  quite <span class='op'>=</span> <span class='cn'>F</span>,
-  <span class='va'>...</span>
+  quite <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -165,27 +164,27 @@ Fit a linear mixed effect model (i.e., hierarchical linear model, multilevel lin
     </tr>
     <tr>
       <th>response_variable</th>
-      <td><p>DV (i.e., outcome variable / response variable). Length of 1. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
+      <td><p>DV (i.e., outcome variable / response variable). Length of 1. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>random_effect_factors</th>
-      <td><p>random effect factors (level-1 variable for HLM people) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
+      <td><p>random effect factors (level-1 variable for HLM people) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>non_random_effect_factors</th>
-      <td><p>non-random effect factors (level-2 variable for HLM people). Factors only need to estimate fixed effect. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
+      <td><p>non-random effect factors (level-2 variable for HLM people). Factors only need to estimate fixed effect. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>two_way_interaction_factor</th>
-      <td><p>two-way interaction factors. You need to pass 2+ factor. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
+      <td><p>two-way interaction factors. You need to pass 2+ factor. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>three_way_interaction_factor</th>
-      <td><p>three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
+      <td><p>three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>id</th>
-      <td><p>the nesting variable (e.g. group, time). Length of 1. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
+      <td><p>the nesting variable (e.g. group, time). Length of 1. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>estimation_method</th>
@@ -197,7 +196,7 @@ Fit a linear mixed effect model (i.e., hierarchical linear model, multilevel lin
     </tr>
     <tr>
       <th>na.action</th>
-      <td><p>default is <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.exclude</a></code>. Required to be <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.omit</a></code> if check_assumption if <code>T</code>.</p></td>
+      <td><p>default is <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.exclude</a></code>. Required to be <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.omit</a></code> if check_assumption if <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>use_package</th>
@@ -206,10 +205,6 @@ Fit a linear mixed effect model (i.e., hierarchical linear model, multilevel lin
     <tr>
       <th>quite</th>
       <td><p>suppress printing output</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Internal use only. It doesn't work in other cases</p></td>
     </tr>
     </table>
 

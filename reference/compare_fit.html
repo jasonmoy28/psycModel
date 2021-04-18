@@ -135,7 +135,13 @@ Compare the fit indices models (see below for model support)" />
 Compare the fit indices models (see below for model support)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>compare_fit</span><span class='op'>(</span><span class='va'>...</span>, digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>compare_fit</span><span class='op'>(</span>
+  <span class='va'>...</span>,
+  digits <span class='op'>=</span> <span class='fl'>3</span>,
+  streamline <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quite <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  return_result <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,7 +152,19 @@ Compare the fit indices models (see below for model support)</p>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>number of digit to round</p></td>
+      <td><p>number of digits to round to</p></td>
+    </tr>
+    <tr>
+      <th>streamline</th>
+      <td><p>print streamlined output</p></td>
+    </tr>
+    <tr>
+      <th>quite</th>
+      <td><p>suppress printing output</p></td>
+    </tr>
+    <tr>
+      <th>return_result</th>
+      <td><p>If it is set to <code>TRUE</code>, it will return the the compare fit data frame.</p></td>
     </tr>
     </table>
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Model Summary for Mixed Effect Model — model_summary • psycModel</title>
+<title>Model Summary for Regression Models — model_summary • psycModel</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Model Summary for Mixed Effect Model — model_summary" />
+<meta property="og:title" content="Model Summary for Regression Models — model_summary" />
 <meta property="og:description" content=" 
-The function will extract the relevant coefficients from the linear mixed effect models (see supported model below)." />
+The function will extract the relevant coefficients from the regression models (see below for supported model)." />
 
 
 
@@ -125,20 +125,20 @@ The function will extract the relevant coefficients from the linear mixed effect
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Model Summary for Mixed Effect Model</h1>
+    <h1>Model Summary for Regression Models</h1>
     
     <div class="hidden name"><code>model_summary.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#stable'><img src='figures/lifecycle-stable.svg' alt='[Stable]' /></a> <br />
-The function will extract the relevant coefficients from the linear mixed effect models (see supported model below).</p>
+The function will extract the relevant coefficients from the regression models (see below for supported model).</p>
     </div>
 
     <pre class="usage"><span class='fu'>model_summary</span><span class='op'>(</span>
   <span class='va'>model</span>,
-  streamlined_output <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  round <span class='op'>=</span> <span class='fl'>3</span>,
+  streamline <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  digits <span class='op'>=</span> <span class='fl'>3</span>,
   assumption_plot <span class='op'>=</span> <span class='cn'>FALSE</span>,
   return_result <span class='op'>=</span> <span class='cn'>FALSE</span>,
   quite <span class='op'>=</span> <span class='cn'>FALSE</span>
@@ -149,15 +149,15 @@ The function will extract the relevant coefficients from the linear mixed effect
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>an object from nlme::lme, lmerTest::lmer, or lme4::glmer</p></td>
+      <td><p>an model object. The following model are tested for accuracy: stats::lm, nlme::lme, lmerTest::lmer, lme4::lmer, lme4::glmer. Other model object may work if it work with parameters::model_parameters()</p></td>
     </tr>
     <tr>
-      <th>streamlined_output</th>
-      <td><p>Only super_print model estimate and model performance. Default is <code>FALSE</code></p></td>
+      <th>streamline</th>
+      <td><p>print streamlined output. Only print model estimate and performance.</p></td>
     </tr>
     <tr>
-      <th>round</th>
-      <td><p>number of digit to round the values.</p></td>
+      <th>digits</th>
+      <td><p>number of digits to round to</p></td>
     </tr>
     <tr>
       <th>assumption_plot</th>
@@ -165,7 +165,7 @@ The function will extract the relevant coefficients from the linear mixed effect
     </tr>
     <tr>
       <th>return_result</th>
-      <td><p>return the model estimates data frame. Default is <code>FALSE</code></p></td>
+      <td><p>It set to <code>TRUE</code>, it return the model estimates data frame.</p></td>
     </tr>
     <tr>
       <th>quite</th>
@@ -186,7 +186,7 @@ The function will extract the relevant coefficients from the linear mixed effect
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># I am going to show the more generic usage of this function</span>
 <span class='co'># You can also use this package's built in function to fit the models</span>
-<span class='co'># I recommend using the model_summary_with_plot to get everything</span>
+<span class='co'># I recommend using the integrated_multilevel_model_summary to get everything</span>
 
 <span class='co'># lme example</span>
 <span class='va'>lme_fit</span> <span class='op'>&lt;-</span> <span class='fu'>lme4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='st'>"popular ~ texp  + (1 | class)"</span>,
@@ -194,29 +194,27 @@ The function will extract the relevant coefficients from the linear mixed effect
 <span class='op'>)</span>
 
 <span class='fu'>model_summary</span><span class='op'>(</span><span class='va'>lme_fit</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Degree of freedom and p-value is extracted from lmerTest</span></div><div class='output co'>#&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
+</div><div class='output co'>#&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
 #&gt; Model Type = Linear Mixed Effect Model (fitted using lme4 or lmerTest)
 #&gt; Outcome = popular
 #&gt;  class
-#&gt;  
-#&gt;  
+#&gt; 
 #&gt; </span><span style='text-decoration: underline;'>Model Estimates</span><span>
-#&gt; ──────────────────────────────────────────────
-#&gt;      variable  estimate      DF  p_value  sig.
-#&gt; ──────────────────────────────────────────────
-#&gt;   (Intercept)     4.197  97.989    0.000   ***
-#&gt;          texp     0.062  98.105    0.000   ***
-#&gt; ────────────────────────────────────────────── 
-#&gt;  
-#&gt; </span><span style='text-decoration: underline;'>Model Performance</span><span>
+#&gt; ───────────────────────────────────────────────────────────────────────────────────
+#&gt;     Parameter  Effects  Coefficient       t    df     SE          p          95% CI
+#&gt; ───────────────────────────────────────────────────────────────────────────────────
+#&gt;   (Intercept)    fixed        4.197  22.552  1996  0.186  0.000 ***  [3.832, 4.561]
+#&gt;          texp    fixed        0.062   5.212  1996  0.012  0.000 ***  [0.038, 0.085]
+#&gt; ───────────────────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt; </span><span style='text-decoration: underline;'>Goodness of Fit</span><span>
 #&gt; ──────────────────────────────────────────────────────────────────────
 #&gt;        AIC       BIC  R²_conditional  R²_marginal    ICC   RMSE      σ
 #&gt; ──────────────────────────────────────────────────────────────────────
 #&gt;   6321.320  6343.724           0.366        0.085  0.308  1.080  1.105
-#&gt; ────────────────────────────────────────────────────────────────────── 
-#&gt;  
-#&gt; </span><span style='text-decoration: underline;'>Model Assumption Check</span><span>
+#&gt; ──────────────────────────────────────────────────────────────────────
 #&gt; 
+#&gt; </span><span style='text-decoration: underline;'>Model Assumption Check</span><span>
 #&gt; </span><span style='color: #00BB00;'>OK: Model is converged</span><span>
 #&gt; </span><span style='color: #00BB00;'>OK: No singularity is detected</span><span>
 #&gt; </span><span style='color: #BB0000;'>Warning: Autocorrelated residuals detected (p &lt; .001).</span><span>
@@ -236,28 +234,26 @@ The function will extract the relevant coefficients from the linear mixed effect
 #&gt; Model Type = Linear regression
 #&gt; Outcome = Sepal.Length
 #&gt; Predictors = Sepal.Width, Petal.Length, Petal.Width
-#&gt;  
-#&gt;  
+#&gt; 
 #&gt; </span><span style='text-decoration: underline;'>Model Estimates</span><span>
-#&gt; ────────────────────────────────────────────────
-#&gt;       variable  estimate  t_value  p_value  sig.
-#&gt; ────────────────────────────────────────────────
-#&gt;    (Intercept)     1.856    7.401    0.000   ***
-#&gt;    Sepal.Width     0.651    9.765    0.000   ***
-#&gt;   Petal.Length     0.709   12.502    0.000   ***
-#&gt;    Petal.Width    -0.556   -4.363    0.000   ***
-#&gt; ──────────────────────────────────────────────── 
-#&gt;  
-#&gt; </span><span style='text-decoration: underline;'>Model Performance</span><span>
+#&gt; ────────────────────────────────────────────────────────────────────────────
+#&gt;      Parameter  Coefficient       t   df     SE          p            95% CI
+#&gt; ────────────────────────────────────────────────────────────────────────────
+#&gt;    (Intercept)        1.856   7.401  146  0.251  0.000 ***  [ 1.360,  2.352]
+#&gt;    Sepal.Width        0.651   9.765  146  0.067  0.000 ***  [ 0.519,  0.783]
+#&gt;   Petal.Length        0.709  12.502  146  0.057  0.000 ***  [ 0.597,  0.821]
+#&gt;    Petal.Width       -0.556  -4.363  146  0.128  0.000 ***  [-0.809, -0.304]
+#&gt; ────────────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt; </span><span style='text-decoration: underline;'>Goodness of Fit</span><span>
 #&gt; ──────────────────────────────────────────────────
 #&gt;      AIC     BIC     R²  R²_adjusted   RMSE      σ
 #&gt; ──────────────────────────────────────────────────
 #&gt;   84.643  99.696  0.859        0.856  0.310  0.315
-#&gt; ────────────────────────────────────────────────── 
-#&gt;  
-#&gt; </span><span style='text-decoration: underline;'>Model Assumption Check</span><span>
+#&gt; ──────────────────────────────────────────────────
 #&gt; 
-#&gt; </span><span style='color: #00BB00;'>OK: Residuals appear to be independent and not autocorrelated (p = 0.772).</span><span>
+#&gt; </span><span style='text-decoration: underline;'>Model Assumption Check</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK: Residuals appear to be independent and not autocorrelated (p = 0.842).</span><span>
 #&gt; </span><span style='color: #00BB00;'>OK: residuals appear as normally distributed (p = 0.943).
 #&gt; </span><span style='color: #0000BB;'>Unable to check autocorrelation. Try changing na.action to na.omit.</span><span>
 #&gt; </span><span style='color: #BB0000;'>Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.035).

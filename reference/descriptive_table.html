@@ -138,14 +138,13 @@ This function generates a table of descriptive statistics (mainly using psych::d
     <pre class="usage"><span class='fu'>descriptive_table</span><span class='op'>(</span>
   <span class='va'>data</span>,
   <span class='va'>cols</span>,
-  cor_sig_test <span class='op'>=</span> <span class='st'>"raw"</span>,
-  cor_digit <span class='op'>=</span> <span class='fl'>3</span>,
+  <span class='va'>...</span>,
+  digits <span class='op'>=</span> <span class='fl'>3</span>,
   descriptive_indicator <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mean"</span>, <span class='st'>"sd"</span>, <span class='st'>"cor"</span><span class='op'>)</span>,
-  descriptive_indicator_digit <span class='op'>=</span> <span class='fl'>3</span>,
-  streamline <span class='op'>=</span> <span class='cn'>F</span>,
-  quite <span class='op'>=</span> <span class='cn'>F</span>,
-  return_result <span class='op'>=</span> <span class='cn'>F</span>,
-  file_path <span class='op'>=</span> <span class='cn'>NULL</span>
+  file_path <span class='op'>=</span> <span class='cn'>NULL</span>,
+  streamline <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quite <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  return_result <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -157,23 +156,23 @@ This function generates a table of descriptive statistics (mainly using psych::d
     </tr>
     <tr>
       <th>cols</th>
-      <td><p>column(s) need to be included in the table. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
+      <td><p>column(s) need to be included in the table. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
-      <th>cor_sig_test</th>
-      <td><p>adjusted or raw. Default as adjusted. See psych::corr.test to learn more.</p></td>
+      <th>...</th>
+      <td><p>additional arguments passed to cor_test. See ?cor_test.</p></td>
     </tr>
     <tr>
-      <th>cor_digit</th>
-      <td><p>number of digit for correlation table</p></td>
+      <th>digits</th>
+      <td><p>number of digit for the descriptive table</p></td>
     </tr>
     <tr>
       <th>descriptive_indicator</th>
       <td><p>Default is mean, sd, cor. Options are missing (missing value count), non_missing (non-missing value count), cor (correlation table), n, mean, sd, median, trimmed (trimmed mean), median, mad (median absolute deviation from the median), min, max, range, skew, kurtosis, se (standard error)</p></td>
     </tr>
     <tr>
-      <th>descriptive_indicator_digit</th>
-      <td><p>number of digit for the descriptive table</p></td>
+      <th>file_path</th>
+      <td><p>file path for export. The function will implicitly pass this argument to the write.csv(file = file_path)</p></td>
     </tr>
     <tr>
       <th>streamline</th>
@@ -185,11 +184,7 @@ This function generates a table of descriptive statistics (mainly using psych::d
     </tr>
     <tr>
       <th>return_result</th>
-      <td><p>return the data frame of the descriptive table</p></td>
-    </tr>
-    <tr>
-      <th>file_path</th>
-      <td><p>file path for export. The function will implicitly pass this argument to the write.csv(file = file_path)</p></td>
+      <td><p>If it is set to <code>TRUE</code>, it will return the data frame of the descriptive table</p></td>
     </tr>
     </table>
 
@@ -202,14 +197,16 @@ This function generates a table of descriptive statistics (mainly using psych::d
 </div><div class='output co'>#&gt; 
 #&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
 #&gt; Model Type = Descriptive Statistics
-#&gt; ──────────────────────────────────────────────────────────────────────────────────
-#&gt;            Var   mean     sd  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width
-#&gt; ──────────────────────────────────────────────────────────────────────────────────
-#&gt;   Sepal.Length  5.843  0.828                                                      
-#&gt;    Sepal.Width  3.057  0.436        -0.118                                        
-#&gt;   Petal.Length  3.758  1.765      0.872***    -0.428***                           
-#&gt;    Petal.Width  1.199  0.762      0.818***    -0.366***      0.963***             
-#&gt; ──────────────────────────────────────────────────────────────────────────────────</div><div class='input'>
+#&gt; 
+#&gt; ─────────────────────────────────────────────────────────────────────
+#&gt;            Var   mean     sd  Sepal.Length  Sepal.Width  Petal.Length
+#&gt; ─────────────────────────────────────────────────────────────────────
+#&gt;   Sepal.Length  5.843  0.828                                         
+#&gt;    Sepal.Width  3.057  0.436    -0.118                               
+#&gt;   Petal.Length  3.758  1.765     0.872 ***   -0.428 ***              
+#&gt;    Petal.Width  1.199  0.762     0.818 ***   -0.366 ***     0.963 ***
+#&gt; ─────────────────────────────────────────────────────────────────────
+#&gt; </div><div class='input'>
 <span class='fu'>descriptive_table</span><span class='op'>(</span><span class='va'>iris</span>,
   cols <span class='op'>=</span> <span class='fu'>where</span><span class='op'>(</span><span class='va'>is.numeric</span><span class='op'>)</span>,
   <span class='co'># get missing count, non-missing count, and mean &amp; sd &amp; correlation table</span>
@@ -218,14 +215,16 @@ This function generates a table of descriptive statistics (mainly using psych::d
 </div><div class='output co'>#&gt; 
 #&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
 #&gt; Model Type = Descriptive Statistics
-#&gt; ────────────────────────────────────────────────────────────────────────────────────────────────────────────
-#&gt;            Var  missing_n  non_missing_n   mean     sd  Sepal.Length  Sepal.Width  Petal.Length  Petal.Width
-#&gt; ────────────────────────────────────────────────────────────────────────────────────────────────────────────
-#&gt;   Sepal.Length      0.000        150.000  5.843  0.828                                                      
-#&gt;    Sepal.Width      0.000        150.000  3.057  0.436        -0.118                                        
-#&gt;   Petal.Length      0.000        150.000  3.758  1.765      0.872***    -0.428***                           
-#&gt;    Petal.Width      0.000        150.000  1.199  0.762      0.818***    -0.366***      0.963***             
-#&gt; ────────────────────────────────────────────────────────────────────────────────────────────────────────────</div></span></pre>
+#&gt; 
+#&gt; ───────────────────────────────────────────────────────────────────────────────────────────────
+#&gt;            Var  missing_n  non_missing_n   mean     sd  Sepal.Length  Sepal.Width  Petal.Length
+#&gt; ───────────────────────────────────────────────────────────────────────────────────────────────
+#&gt;   Sepal.Length          0            150  5.843  0.828                                         
+#&gt;    Sepal.Width          0            150  3.057  0.436    -0.118                               
+#&gt;   Petal.Length          0            150  3.758  1.765     0.872 ***   -0.428 ***              
+#&gt;    Petal.Width          0            150  1.199  0.762     0.818 ***   -0.366 ***     0.963 ***
+#&gt; ───────────────────────────────────────────────────────────────────────────────────────────────
+#&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

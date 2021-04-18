@@ -148,10 +148,9 @@ There is a promising package called <code>brms</code> that use bayesian statisti
   <span class='va'>predictor_variable</span>,
   control_variable <span class='op'>=</span> <span class='cn'>NULL</span>,
   group <span class='op'>=</span> <span class='cn'>NULL</span>,
-  standardize <span class='op'>=</span> <span class='cn'>T</span>,
-  plot <span class='op'>=</span> <span class='cn'>F</span>,
+  standardize <span class='op'>=</span> <span class='cn'>TRUE</span>,
   digits <span class='op'>=</span> <span class='fl'>3</span>,
-  return_result <span class='op'>=</span> <span class='cn'>F</span>
+  return_result <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -163,19 +162,19 @@ There is a promising package called <code>brms</code> that use bayesian statisti
     </tr>
     <tr>
       <th>response_variable</th>
-      <td><p>response variable. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
+      <td><p>response variable. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>mediator</th>
-      <td><p>mediator. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
+      <td><p>mediator. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>predictor_variable</th>
-      <td><p>predictor variable. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
+      <td><p>predictor variable. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>control_variable</th>
-      <td><p>control variables. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
+      <td><p>control variables. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>group</th>
@@ -186,16 +185,12 @@ There is a promising package called <code>brms</code> that use bayesian statisti
       <td><p>standardized coefficients. Default is <code>TRUE</code></p></td>
     </tr>
     <tr>
-      <th>plot</th>
-      <td><p>plot using semPlot::semPath. I haven't found a nice-looking way to plot mediation using semPlot. <a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a> <br /></p></td>
-    </tr>
-    <tr>
       <th>digits</th>
       <td><p>number of digits to round to</p></td>
     </tr>
     <tr>
       <th>return_result</th>
-      <td><p>Default is <code>FALSE</code>. If it is <code>TRUE</code>, it will return the <code>lavaan</code> object</p></td>
+      <td><p>If it is set to <code>TRUE</code>, it will return the <code>lavaan</code> object</p></td>
     </tr>
     </table>
 
@@ -214,22 +209,23 @@ There is a promising package called <code>brms</code> that use bayesian statisti
 #&gt; Model Type = Mediation Analysis (fitted using lavaan)
 #&gt; 
 #&gt; </span><span style='text-decoration: underline;'>Effect Summary</span><span>
-#&gt; ────────────────────────────────────────────────────────────
-#&gt;   Effect Type  Est.Std     SE       z      p          95% CI
-#&gt; ────────────────────────────────────────────────────────────
-#&gt;        direct    0.197  0.029   6.880  0.000  [0.141, 0.253]
-#&gt;      indirect    0.219  0.017  12.656  0.000  [0.185, 0.253]
-#&gt;         total    0.416  0.023  18.444  0.000   [0.372, 0.46]
-#&gt; ────────────────────────────────────────────────────────────
+#&gt; ────────────────────────────────────────────────────────────────
+#&gt;   Effect Type  Est.Std     SE       z          p          95% CI
+#&gt; ────────────────────────────────────────────────────────────────
+#&gt;        direct    0.197  0.029   6.880  0.000 ***  [0.141, 0.253]
+#&gt;      indirect    0.219  0.017  12.656  0.000 ***  [0.185, 0.253]
+#&gt;         total    0.416  0.023  18.444  0.000 ***   [0.372, 0.46]
+#&gt; ────────────────────────────────────────────────────────────────
+#&gt; 
 #&gt; 
 #&gt; </span><span style='text-decoration: underline;'>Regression Summary</span><span>
-#&gt; ────────────────────────────────────────────────────────────────────────────────
-#&gt;     Response  Operator    Predict  Est.Std     SE       z      p          95% CI
-#&gt; ────────────────────────────────────────────────────────────────────────────────
-#&gt;    Sweetness         ~      Crisp    0.558  0.018  30.893  0.000  [0.523, 0.593]
-#&gt;   Preference         ~  Sweetness    0.392  0.028  14.177  0.000  [0.338, 0.446]
-#&gt;   Preference         ~      Crisp    0.197  0.029   6.880  0.000  [0.141, 0.253]
-#&gt; ────────────────────────────────────────────────────────────────────────────────</div></span></pre>
+#&gt; ────────────────────────────────────────────────────────────────────────────────────
+#&gt;     Response  Operator    Predict  Est.Std     SE       z          p          95% CI
+#&gt; ────────────────────────────────────────────────────────────────────────────────────
+#&gt;    Sweetness         ~      Crisp    0.558  0.018  30.893  0.000 ***  [0.523, 0.593]
+#&gt;   Preference         ~  Sweetness    0.392  0.028  14.177  0.000 ***  [0.338, 0.446]
+#&gt;   Preference         ~      Crisp    0.197  0.029   6.880  0.000 ***  [0.141, 0.253]
+#&gt; ────────────────────────────────────────────────────────────────────────────────────</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

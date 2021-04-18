@@ -31,6 +31,12 @@
     <loc>https://jasonmoy28.github.io/psycModel/reference/html_to_pdf.html</loc>
   </url>
   <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/integrated_model_summary.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/integrated_multilevel_model_summary.html</loc>
+  </url>
+  <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/lm_model.html</loc>
   </url>
   <url>
@@ -44,9 +50,6 @@
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/model_summary.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/model_summary_with_plot.html</loc>
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/pipe.html</loc>

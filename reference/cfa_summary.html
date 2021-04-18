@@ -41,9 +41,9 @@
 
 <meta property="og:title" content="Confirmatory Factor Analysis — cfa_summary" />
 <meta property="og:description" content=" 
-The function fits a CFA model using the lavaan::cfa function. Users can fit single and multiple factors CFA, and it also supports multilevel CFA (specifying the group).
-Users can pass fit the model by passing the items using dplyr::select syntax or an explicit lavaan model for more versatile usage.
-All arguments (except the CFA items) must be explicitly named (like model = your-model; see example for inappropriate behavior)." />
+The function fits a CFA model using the lavaan::cfa(). Users can fit single and multiple factors CFA, and it also supports multilevel CFA (by specifying the group).
+Users can fit the model by passing the items using dplyr::select syntax or an explicit lavaan model for more versatile usage.
+All arguments (except the CFA items) must be explicitly named (e.g., model = your-model; see example for inappropriate behavior)." />
 
 
 
@@ -134,9 +134,9 @@ All arguments (except the CFA items) must be explicitly named (like model = your
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#stable'><img src='figures/lifecycle-stable.svg' alt='[Stable]' /></a> <br />
-The function fits a CFA model using the lavaan::cfa function. Users can fit single and multiple factors CFA, and it also supports multilevel CFA (specifying the group).
-Users can pass fit the model by passing the items using dplyr::select syntax or an explicit lavaan model for more versatile usage.
-All arguments (except the CFA items) must be explicitly named (like model = your-model; see example for inappropriate behavior).</p>
+The function fits a CFA model using the <code><a href='https://rdrr.io/pkg/lavaan/man/cfa.html'>lavaan::cfa()</a></code>. Users can fit single and multiple factors CFA, and it also supports multilevel CFA (by specifying the group).
+Users can fit the model by passing the items using <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax or an explicit lavaan model for more versatile usage.
+All arguments (except the CFA items) must be explicitly named (e.g., model = your-model; see example for inappropriate behavior).</p>
     </div>
 
     <pre class="usage"><span class='fu'>cfa_summary</span><span class='op'>(</span>
@@ -144,15 +144,15 @@ All arguments (except the CFA items) must be explicitly named (like model = your
   <span class='va'>...</span>,
   model <span class='op'>=</span> <span class='cn'>NULL</span>,
   group <span class='op'>=</span> <span class='cn'>NULL</span>,
-  ordered <span class='op'>=</span> <span class='cn'>F</span>,
-  return_result <span class='op'>=</span> <span class='cn'>F</span>,
+  ordered <span class='op'>=</span> <span class='cn'>FALSE</span>,
   digits <span class='op'>=</span> <span class='fl'>3</span>,
-  model_covariance <span class='op'>=</span> <span class='cn'>T</span>,
-  model_variance <span class='op'>=</span> <span class='cn'>T</span>,
-  plot <span class='op'>=</span> <span class='cn'>T</span>,
-  quite <span class='op'>=</span> <span class='cn'>F</span>,
-  streamline <span class='op'>=</span> <span class='cn'>F</span>,
-  group_partial <span class='op'>=</span> <span class='cn'>NULL</span>
+  model_covariance <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  model_variance <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  group_partial <span class='op'>=</span> <span class='cn'>NULL</span>,
+  streamline <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quite <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  return_result <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -164,23 +164,19 @@ All arguments (except the CFA items) must be explicitly named (like model = your
     </tr>
     <tr>
       <th>...</th>
-      <td><p>CFA items using dplyr::select syntax. Multi-factor CFA items should be separated by comma (as different argument). See below for examples</p></td>
+      <td><p>CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for examples. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>model</th>
-      <td><p>explicit lavaan model. Must be specify with <code>model = lavaan_model_syntax</code>.</p></td>
+      <td><p>explicit lavaan model. Must be specify with <code>model = lavaan_model_syntax</code>. <a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country)</p></td>
+      <td><p>optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country). Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>ordered</th>
-      <td><p>Default is <code>FALSE</code>. If it is set to <code>TRUE</code>, lavaan will treat it as a ordinal variable and use DWLS instead of ML</p></td>
-    </tr>
-    <tr>
-      <th>return_result</th>
-      <td><p>Default is <code>FALSE</code>. If it is <code>TRUE</code>, it will return the lavaan model</p></td>
+      <td><p>Default is <code>FALSE</code>. If it is set to <code>TRUE</code>, lavaan will treat it as a ordinal variable and use <code>DWLS</code> instead of <code>ML</code></p></td>
     </tr>
     <tr>
       <th>digits</th>
@@ -199,16 +195,20 @@ All arguments (except the CFA items) must be explicitly named (like model = your
       <td><p>print a path diagram. Default is <code>TRUE</code></p></td>
     </tr>
     <tr>
-      <th>quite</th>
-      <td><p>suppress printing output</p></td>
+      <th>group_partial</th>
+      <td><p>Items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').</p></td>
     </tr>
     <tr>
       <th>streamline</th>
       <td><p>print streamlined output</p></td>
     </tr>
     <tr>
-      <th>group_partial</th>
-      <td><p>Items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').</p></td>
+      <th>quite</th>
+      <td><p>suppress printing output</p></td>
+    </tr>
+    <tr>
+      <th>return_result</th>
+      <td><p>If it is set to <code>TRUE</code>, it will return the lavaan model</p></td>
     </tr>
     </table>
 
@@ -244,53 +244,57 @@ The model is considered an acceptable fit if CFI &gt; 0.9 and RMSEA &lt; 0.08. I
 #&gt;   DV3 =~ x7 + x8 + x9
 #&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Fit Measure</span><span>
-#&gt; ─────────────────────────────────────────────────────────────────────────────────
-#&gt;       Χ²      DF      P    CFI  RMSEA   SRMR    TLI       AIC       BIC      BIC2
-#&gt; ─────────────────────────────────────────────────────────────────────────────────
-#&gt;   85.306  24.000  0.000  0.931  0.092  0.065  0.896  7517.490  7595.339  7528.739
-#&gt; ─────────────────────────────────────────────────────────────────────────────────
+#&gt; ─────────────────────────────────────────────────────────────────────────────────────
+#&gt;       Χ²      DF          P    CFI  RMSEA   SRMR    TLI       AIC       BIC      BIC2
+#&gt; ─────────────────────────────────────────────────────────────────────────────────────
+#&gt;   85.306  24.000  0.000 ***  0.931  0.092  0.065  0.896  7517.490  7595.339  7528.739
+#&gt; ─────────────────────────────────────────────────────────────────────────────────────
+#&gt; 
 #&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Factor Loadings</span><span>
-#&gt; ──────────────────────────────────────────────────────────────────────────────────
-#&gt;   Latent.Factor  Observed.Var  Std.Est     SE       Z  P.Value  CI.Lower  CI.Upper
-#&gt; ──────────────────────────────────────────────────────────────────────────────────
-#&gt;             DV1            x1    0.772  0.055  14.041    0.000     0.664     0.880
-#&gt;                            x2    0.424  0.060   7.105    0.000     0.307     0.540
-#&gt;                            x3    0.581  0.055  10.539    0.000     0.473     0.689
-#&gt;             DV2            x4    0.852  0.023  37.776    0.000     0.807     0.896
-#&gt;                            x5    0.855  0.022  38.273    0.000     0.811     0.899
-#&gt;                            x6    0.838  0.023  35.881    0.000     0.792     0.884
-#&gt;             DV3            x7    0.570  0.053  10.714    0.000     0.465     0.674
-#&gt;                            x8    0.723  0.051  14.309    0.000     0.624     0.822
-#&gt;                            x9    0.665  0.051  13.015    0.000     0.565     0.765
-#&gt; ──────────────────────────────────────────────────────────────────────────────────
+#&gt; ────────────────────────────────────────────────────────────────────────────────
+#&gt;   Latent.Factor  Observed.Var  Std.Est     SE       Z          P          95% CI
+#&gt; ────────────────────────────────────────────────────────────────────────────────
+#&gt;             DV1            x1    0.772  0.055  14.041  0.000 ***  [0.664, 0.880]
+#&gt;                            x2    0.424  0.060   7.105  0.000 ***  [0.307, 0.540]
+#&gt;                            x3    0.581  0.055  10.539  0.000 ***  [0.473, 0.689]
+#&gt;             DV2            x4    0.852  0.023  37.776  0.000 ***  [0.807, 0.896]
+#&gt;                            x5    0.855  0.022  38.273  0.000 ***  [0.811, 0.899]
+#&gt;                            x6    0.838  0.023  35.881  0.000 ***  [0.792, 0.884]
+#&gt;             DV3            x7    0.570  0.053  10.714  0.000 ***  [0.465, 0.674]
+#&gt;                            x8    0.723  0.051  14.309  0.000 ***  [0.624, 0.822]
+#&gt;                            x9    0.665  0.051  13.015  0.000 ***  [0.565, 0.765]
+#&gt; ────────────────────────────────────────────────────────────────────────────────
+#&gt; 
 #&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Model Covariances</span><span>
-#&gt; ────────────────────────────────────────────────────────────────
-#&gt;   Var.1  Var.2    Est     SE      Z  P.Value  CI.Lower  CI.Upper
-#&gt; ────────────────────────────────────────────────────────────────
-#&gt;     DV1    DV2  0.459  0.064  7.189    0.000     0.334     0.584
-#&gt;     DV1    DV3  0.471  0.073  6.461    0.000     0.328     0.613
-#&gt;     DV2    DV3  0.283  0.069  4.117    0.000     0.148     0.418
-#&gt; ────────────────────────────────────────────────────────────────
+#&gt; ──────────────────────────────────────────────────────────────
+#&gt;   Var.1  Var.2    Est     SE      Z          P          95% CI
+#&gt; ──────────────────────────────────────────────────────────────
+#&gt;     DV1    DV2  0.459  0.064  7.189  0.000 ***  [0.334, 0.584]
+#&gt;     DV1    DV3  0.471  0.073  6.461  0.000 ***  [0.328, 0.613]
+#&gt;     DV2    DV3  0.283  0.069  4.117  0.000 ***  [0.148, 0.418]
+#&gt; ──────────────────────────────────────────────────────────────
+#&gt; 
 #&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Model Variance</span><span>
-#&gt; ─────────────────────────────────────────────────────────────────
-#&gt;   Var.1  Var.2    Est     SE       Z  P.Value  CI.Lower  CI.Upper
-#&gt; ─────────────────────────────────────────────────────────────────
-#&gt;      x1     x1  0.404  0.085   4.763    0.000     0.238     0.571
-#&gt;      x2     x2  0.821  0.051  16.246    0.000     0.722     0.920
-#&gt;      x3     x3  0.662  0.064  10.334    0.000     0.537     0.788
-#&gt;      x4     x4  0.275  0.038   7.157    0.000     0.200     0.350
-#&gt;      x5     x5  0.269  0.038   7.037    0.000     0.194     0.344
-#&gt;      x6     x6  0.298  0.039   7.606    0.000     0.221     0.374
-#&gt;      x7     x7  0.676  0.061  11.160    0.000     0.557     0.794
-#&gt;      x8     x8  0.477  0.073   6.531    0.000     0.334     0.620
-#&gt;      x9     x9  0.558  0.068   8.208    0.000     0.425     0.691
-#&gt;     DV1    DV1  1.000  0.000      NA       NA     1.000     1.000
-#&gt;     DV2    DV2  1.000  0.000      NA       NA     1.000     1.000
-#&gt;     DV3    DV3  1.000  0.000      NA       NA     1.000     1.000
-#&gt; ─────────────────────────────────────────────────────────────────
+#&gt; ──────────────────────────────────────────────────────
+#&gt;   Var    Est     SE       Z          P          95% CI
+#&gt; ──────────────────────────────────────────────────────
+#&gt;    x1  0.404  0.085   4.763  0.000 ***  [0.238, 0.571]
+#&gt;    x2  0.821  0.051  16.246  0.000 ***  [0.722, 0.920]
+#&gt;    x3  0.662  0.064  10.334  0.000 ***  [0.537, 0.788]
+#&gt;    x4  0.275  0.038   7.157  0.000 ***  [0.200, 0.350]
+#&gt;    x5  0.269  0.038   7.037  0.000 ***  [0.194, 0.344]
+#&gt;    x6  0.298  0.039   7.606  0.000 ***  [0.221, 0.374]
+#&gt;    x7  0.676  0.061  11.160  0.000 ***  [0.557, 0.794]
+#&gt;    x8  0.477  0.073   6.531  0.000 ***  [0.334, 0.620]
+#&gt;    x9  0.558  0.068   8.208  0.000 ***  [0.425, 0.691]
+#&gt;   DV1  1.000  0.000     NaN    NaN      [1.000, 1.000]
+#&gt;   DV2  1.000  0.000     NaN    NaN      [1.000, 1.000]
+#&gt;   DV3  1.000  0.000     NaN    NaN      [1.000, 1.000]
+#&gt; ──────────────────────────────────────────────────────
+#&gt; 
 #&gt;  
 #&gt; Goodness of Fit:
 #&gt; </span><span style='color: #BBBB00;'> Warning. Poor χ² fit (p &lt; 0.05). It is common to get p &lt; 0.05. Check other fit measure.</span><span>
@@ -313,7 +317,7 @@ The model is considered an acceptable fit if CFI &gt; 0.9 and RMSEA &lt; 0.08. I
 
 <span class='co'># Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)</span>
 <span class='co'># Note in the below function how I added `model = ` in front of the lavaan model.</span>
-<span class='co'># Similarly, the same rule apply for all arguments (e.g., `ordered = F` instead of `F`)</span>
+<span class='co'># Similarly, the same rule apply for all arguments (e.g., `ordered = FALSE` instead of just `FALSE`)</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>cfa_summary</span><span class='op'>(</span>
   model <span class='op'>=</span> <span class='st'>"visual  =~ x1 + x2 + x3; textual =~ x4 + x5 + x6;"</span>,

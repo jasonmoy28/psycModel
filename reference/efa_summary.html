@@ -141,12 +141,14 @@ psych::fa(). Optionally, you can request a post-hoc CFA model that fit the EFA m
   <span class='va'>data</span>,
   <span class='va'>cols</span>,
   rotation <span class='op'>=</span> <span class='st'>"varimax"</span>,
-  optimal_factor_method <span class='op'>=</span> <span class='cn'>F</span>,
-  efa_plot <span class='op'>=</span> <span class='cn'>T</span>,
+  optimal_factor_method <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  efa_plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
   digits <span class='op'>=</span> <span class='fl'>3</span>,
   n_factor <span class='op'>=</span> <span class='cn'>NULL</span>,
-  post_hoc_cfa <span class='op'>=</span> <span class='cn'>F</span>,
-  return_result <span class='op'>=</span> <span class='cn'>F</span>
+  post_hoc_cfa <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  quite <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  streamline <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  return_result <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -170,11 +172,11 @@ psych::fa(). Optionally, you can request a post-hoc CFA model that fit the EFA m
     </tr>
     <tr>
       <th>efa_plot</th>
-      <td><p>show explained variance by number of factor plot. default is <code>T</code>.</p></td>
+      <td><p>show explained variance by number of factor plot. default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>number of digits</p></td>
+      <td><p>number of digits to round to</p></td>
     </tr>
     <tr>
       <th>n_factor</th>
@@ -185,8 +187,16 @@ psych::fa(). Optionally, you can request a post-hoc CFA model that fit the EFA m
       <td><p>a CFA model based on the extracted factor</p></td>
     </tr>
     <tr>
+      <th>quite</th>
+      <td><p>suppress printing output</p></td>
+    </tr>
+    <tr>
+      <th>streamline</th>
+      <td><p>print streamlined output</p></td>
+    </tr>
+    <tr>
       <th>return_result</th>
-      <td><p>If set to <code>TRUE</code> (default is <code>FALSE</code>), it will return a <code>fa</code> object from <code>psych</code></p></td>
+      <td><p>If it is set to <code>TRUE</code> (default is <code>FALSE</code>), it will return a <code>fa</code> object from <code>psych</code></p></td>
     </tr>
     </table>
 
@@ -196,90 +206,32 @@ psych::fa(). Optionally, you can request a post-hoc CFA model that fit the EFA m
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>efa_summary</span><span class='op'>(</span><span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>, <span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>"x"</span><span class='op'>)</span>, post_hoc_cfa <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt;  
-#&gt;  
-#&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
-#&gt; Model Type = Exploratory Factor Analysis
-#&gt; Optimal Factors = 3
-#&gt; 
-#&gt; </span><span style='text-decoration: underline;'>Factor Loadings</span><span>
-#&gt; ────────────────────────────────────────────────────────────────
-#&gt;   Variable  Factor 1  Factor 3  Factor 2  Complexity  Uniqueness
-#&gt; ────────────────────────────────────────────────────────────────
-#&gt;         x1               0.613                 1.539       0.523
-#&gt;         x2               0.494                 1.093       0.745
-#&gt;         x3               0.660                 1.084       0.547
-#&gt;         x4     0.832                           1.104       0.272
-#&gt;         x5     0.859                           1.043       0.246
-#&gt;         x6     0.799                           1.167       0.309
-#&gt;         x7                         0.709       1.062       0.481
-#&gt;         x8                         0.699       1.131       0.480
-#&gt;         x9               0.415     0.521       2.046       0.540
-#&gt; ────────────────────────────────────────────────────────────────
-#&gt; 
-#&gt; </span><span style='text-decoration: underline;'>Explained Variance</span><span>
-#&gt; ─────────────────────────────────────────────────────
-#&gt;                     Var  Factor 1  Factor 3  Factor 2
-#&gt; ─────────────────────────────────────────────────────
-#&gt;             SS loadings     2.187     1.342     1.329
-#&gt;          Proportion Var     0.243     0.149     0.148
-#&gt;          Cumulative Var     0.243     0.392     0.540
-#&gt;    Proportion Explained     0.450     0.276     0.274
-#&gt;   Cumulative Proportion     0.450     0.726     1.000
-#&gt; ─────────────────────────────────────────────────────
-#&gt; 
-#&gt; EFA Model Assumption Test:
-#&gt; </span><span style='color: #00BB00;'>OK. Bartlett's test of sphericity suggest the data is appropriate for factor analysis. χ²(36) = 904.097, p &lt; 0.001</span><span>
-#&gt; </span><span style='color: #00BB00;'>OK. KMO measure of sampling adequacy suggests the data is appropriate for factor analysis. KMO = 0.752</span><span>
-#&gt; 
-#&gt; </span><span style='text-decoration: underline;'>KMO Measure of Sampling Adequacy</span><span>
-#&gt; ────────────────────
-#&gt;       Var  KMO Value
-#&gt; ────────────────────
-#&gt;   Overall          1
-#&gt;        x1          1
-#&gt;        x2          1
-#&gt;        x3          1
-#&gt;        x4          1
-#&gt;        x5          1
-#&gt;        x6          1
-#&gt;        x7          1
-#&gt;        x8          1
-#&gt;        x9          1
-#&gt; ────────────────────</div><div class='img'><img src='efa_summary-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; </span><span style='text-decoration: underline;'>Post-hoc CFA Model Summary</span><span>
+</div><div class='img'><img src='efa_summary-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; <span style='text-decoration: underline;'>Post-hoc CFA Model Summary</span><span>
 #&gt; 
 #&gt; </span><span style='text-decoration: underline;'>Fit Measure</span><span>
-#&gt; ─────────────────────────────────────────────────────────────────────────────────
-#&gt;       Χ²      DF      P    CFI  RMSEA   SRMR    TLI       AIC       BIC      BIC2
-#&gt; ─────────────────────────────────────────────────────────────────────────────────
-#&gt;   85.306  24.000  0.000  0.931  0.092  0.065  0.896  7517.490  7595.339  7528.739
-#&gt; ─────────────────────────────────────────────────────────────────────────────────
+#&gt; ─────────────────────────────────────────────────────────────────────────────────────
+#&gt;       Χ²      DF          P    CFI  RMSEA   SRMR    TLI       AIC       BIC      BIC2
+#&gt; ─────────────────────────────────────────────────────────────────────────────────────
+#&gt;   85.306  24.000  0.000 ***  0.931  0.092  0.065  0.896  7517.490  7595.339  7528.739
+#&gt; ─────────────────────────────────────────────────────────────────────────────────────
+#&gt; 
 #&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Factor Loadings</span><span>
-#&gt; ──────────────────────────────────────────────────────────────────────────────────
-#&gt;   Latent.Factor  Observed.Var  Std.Est     SE       Z  P.Value  CI.Lower  CI.Upper
-#&gt; ──────────────────────────────────────────────────────────────────────────────────
-#&gt;        Factor.1            x4    0.852  0.023  37.776    0.000     0.807     0.896
-#&gt;                            x5    0.855  0.022  38.273    0.000     0.811     0.899
-#&gt;                            x6    0.838  0.023  35.881    0.000     0.792     0.884
-#&gt;        Factor.3            x1    0.772  0.055  14.041    0.000     0.664     0.880
-#&gt;                            x2    0.424  0.060   7.105    0.000     0.307     0.540
-#&gt;                            x3    0.581  0.055  10.539    0.000     0.473     0.689
-#&gt;        Factor.2            x7    0.570  0.053  10.714    0.000     0.465     0.674
-#&gt;                            x8    0.723  0.051  14.309    0.000     0.624     0.822
-#&gt;                            x9    0.665  0.051  13.015    0.000     0.565     0.765
-#&gt; ──────────────────────────────────────────────────────────────────────────────────
-#&gt;  
-#&gt; </span><span style='text-decoration: underline;'>Model Covariances</span><span>
-#&gt; ──────────────────────────────────────────────────────────────────────
-#&gt;      Var.1     Var.2    Est     SE      Z  P.Value  CI.Lower  CI.Upper
-#&gt; ──────────────────────────────────────────────────────────────────────
-#&gt;   Factor.1  Factor.3  0.459  0.064  7.189    0.000     0.334     0.584
-#&gt;   Factor.1  Factor.2  0.283  0.069  4.117    0.000     0.148     0.418
-#&gt;   Factor.3  Factor.2  0.471  0.073  6.461    0.000     0.328     0.613
-#&gt; ──────────────────────────────────────────────────────────────────────
+#&gt; ────────────────────────────────────────────────────────────────────────────────
+#&gt;   Latent.Factor  Observed.Var  Std.Est     SE       Z          P          95% CI
+#&gt; ────────────────────────────────────────────────────────────────────────────────
+#&gt;        Factor.1            x4    0.852  0.023  37.776  0.000 ***  [0.807, 0.896]
+#&gt;                            x5    0.855  0.022  38.273  0.000 ***  [0.811, 0.899]
+#&gt;                            x6    0.838  0.023  35.881  0.000 ***  [0.792, 0.884]
+#&gt;        Factor.3            x1    0.772  0.055  14.041  0.000 ***  [0.664, 0.880]
+#&gt;                            x2    0.424  0.060   7.105  0.000 ***  [0.307, 0.540]
+#&gt;                            x3    0.581  0.055  10.539  0.000 ***  [0.473, 0.689]
+#&gt;        Factor.2            x7    0.570  0.053  10.714  0.000 ***  [0.465, 0.674]
+#&gt;                            x8    0.723  0.051  14.309  0.000 ***  [0.624, 0.822]
+#&gt;                            x9    0.665  0.051  13.015  0.000 ***  [0.565, 0.765]
+#&gt; ────────────────────────────────────────────────────────────────────────────────
+#&gt; 
 #&gt;  
 #&gt; Goodness of Fit:
 #&gt; </span><span style='color: #BBBB00;'> Warning. Poor χ² fit (p &lt; 0.05). It is common to get p &lt; 0.05. Check other fit measure.</span><span>
