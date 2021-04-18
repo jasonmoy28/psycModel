@@ -7,27 +7,26 @@
 cor_test(
   data,
   cols,
-  sig_test = "raw",
-  digit = 3,
+  ...,
+  digits = 3,
   quite = F,
-  return_result = F,
-  ...
+  method = "pearson",
+  p_adjust = "holm",
+  return_result = F
 )
 }
 \arguments{
 \item{data}{data frame}
 
-\item{cols}{columns. tidyselect syntax or helpers.}
+\item{cols}{correlation items. Support \code{dplyr::select()} syntax.}
 
-\item{sig_test}{Default is raw. Options are 'adjusted' or 'raw'. Adjusted use holm adjustment method. See ?stats::p.adjust to learn why.}
+\item{...}{additional arguments passed to correlation::correlation(). See ?correlation::correlation. Note that the return data.frame from correlation::correlation() must contains \code{r} and \code{p} (e.g., passing \code{baysesian = T} will not work)}
 
-\item{digit}{number of digits}
+\item{digits}{number of digits to round to}
 
 \item{quite}{suppress printing output}
 
-\item{return_result}{return the data frame of the descriptive table}
-
-\item{...}{additional argument for internal use}
+\item{return_result}{If it is set to \code{TRUE}, it will return the data frame of the correlation table}
 }
 \value{
 data frame of the correlation table
@@ -38,5 +37,5 @@ This function uses the psych::corr.test function to generated the Pearson correl
 }
 \examples{
 cor_test(iris, where(is.numeric))
-cor_test(iris, where(is.numeric), sig_test = "adjusted") # use adjusted correlation
+
 }

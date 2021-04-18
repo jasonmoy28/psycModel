@@ -7,10 +7,9 @@
 descriptive_table(
   data,
   cols,
-  cor_sig_test = "raw",
-  cor_digit = 3,
+  ...,
+  digits = 3,
   descriptive_indicator = c("mean", "sd", "cor"),
-  descriptive_indicator_digit = 3,
   streamline = F,
   quite = F,
   return_result = F,
@@ -20,21 +19,19 @@ descriptive_table(
 \arguments{
 \item{data}{data frame}
 
-\item{cols}{column(s) need to be included in the table. Support \code{dplyr::select} syntax.}
+\item{cols}{column(s) need to be included in the table. Support \code{dplyr::select()} syntax.}
 
-\item{cor_sig_test}{adjusted or raw. Default as adjusted. See psych::corr.test to learn more.}
+\item{...}{additional arguments passed to cor_test. See ?cor_test.}
 
-\item{cor_digit}{number of digit for correlation table}
+\item{digits}{number of digit for the descriptive table}
 
 \item{descriptive_indicator}{Default is mean, sd, cor. Options are missing (missing value count), non_missing (non-missing value count), cor (correlation table), n, mean, sd, median, trimmed (trimmed mean), median, mad (median absolute deviation from the median), min, max, range, skew, kurtosis, se (standard error)}
-
-\item{descriptive_indicator_digit}{number of digit for the descriptive table}
 
 \item{streamline}{print streamlined output}
 
 \item{quite}{suppress printing output}
 
-\item{return_result}{return the data frame of the descriptive table}
+\item{return_result}{If it is set to \code{TRUE}, it will return the data frame of the descriptive table}
 
 \item{file_path}{file path for export. The function will implicitly pass this argument to the write.csv(file = file_path)}
 }
