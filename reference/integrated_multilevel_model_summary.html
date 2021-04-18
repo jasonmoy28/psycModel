@@ -41,7 +41,9 @@
 
 <meta property="og:title" content="Integrated Function for Mixed Effect Model — integrated_multilevel_model_summary" />
 <meta property="og:description" content=" 
-It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019)." />
+It will first compute the mixed effect model. It will use either the nlme::lme or the lmerTest::lmer for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model.
+Then, it will print the model summary and assumption_plot if you requested it. If you requested the interaction plot (default is TRUE), it will graph the interaction (Currently only support lme model not glme)
+If you requested simple slope summary, it will uses the interaction::sim_slopes." />
 
 
 
@@ -131,8 +133,10 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
     </div>
 
     <div class="ref-description">
-    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a> <br />
-It will first compute the mixed effect model. It will use either the nlme::lme (Pinheiro, 2006) or the lmerTest::lmer (Kuznetsova, 2017) for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function. If you requested simple slope summary, it will uses the interaction::sim_slopes (Long, 2019).</p>
+    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#stable'><img src='figures/lifecycle-stable.svg' alt='[Stable]' /></a> <br />
+It will first compute the mixed effect model. It will use either the nlme::lme or the lmerTest::lmer for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model.
+Then, it will print the model summary and assumption_plot if you requested it. If you requested the interaction plot (default is <code>TRUE</code>), it will graph the interaction (Currently only support lme model not glme)
+If you requested simple slope summary, it will uses the interaction::sim_slopes.</p>
     </div>
 
     <pre class="usage"><span class='fu'>integrated_multilevel_model_summary</span><span class='op'>(</span>
@@ -143,13 +147,15 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
   non_random_effect_factors <span class='op'>=</span> <span class='cn'>NULL</span>,
   two_way_interaction_factor <span class='op'>=</span> <span class='cn'>NULL</span>,
   three_way_interaction_factor <span class='op'>=</span> <span class='cn'>NULL</span>,
+  family <span class='op'>=</span> <span class='cn'>NULL</span>,
   cateogrical_var <span class='op'>=</span> <span class='cn'>NULL</span>,
   id <span class='op'>=</span> <span class='cn'>NULL</span>,
   graph_label_name <span class='op'>=</span> <span class='cn'>NULL</span>,
   estimation_method <span class='op'>=</span> <span class='st'>"REML"</span>,
   opt_control <span class='op'>=</span> <span class='st'>"bobyqa"</span>,
   na.action <span class='op'>=</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span>,
-  print_result <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"model_summary"</span>, <span class='st'>"plot"</span><span class='op'>)</span>,
+  model_summary <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  interaction_plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
   y_lim <span class='op'>=</span> <span class='cn'>NULL</span>,
   plot_color <span class='op'>=</span> <span class='cn'>FALSE</span>,
   digits <span class='op'>=</span> <span class='fl'>3</span>,
@@ -193,6 +199,10 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
       <td><p>three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
+      <th>family</th>
+      <td><p>a GLM family. It will passed to the family argument in glmer. See <code>?glmer</code> for possible options. <a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p></td>
+    </tr>
+    <tr>
       <th>cateogrical_var</th>
       <td><p>list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of <code><a href='https://rdrr.io/r/base/list.html'>list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))</a></code></p></td>
     </tr>
@@ -217,8 +227,12 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
       <td><p>default is <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.exclude</a></code>. Required to be <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.omit</a></code> if assumption_plot if <code>TRUE</code>. It should produce similar result, but you should check using <code>na.exclude</code> to confirm.</p></td>
     </tr>
     <tr>
-      <th>print_result</th>
-      <td><p>Default is <code>model_summary</code> and <code>plot</code>. Options are <code>model_summary</code> or <code>plot</code>.</p></td>
+      <th>model_summary</th>
+      <td><p>print model summary</p></td>
+    </tr>
+    <tr>
+      <th>interaction_plot</th>
+      <td><p>generate interaction plot</p></td>
     </tr>
     <tr>
       <th>y_lim</th>
@@ -272,8 +286,9 @@ It will first compute the mixed effect model. It will use either the nlme::lme (
   graph_label_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"popular"</span>, <span class='st'>"extraversion"</span>, <span class='st'>"teacher experience"</span><span class='op'>)</span>,
   id <span class='op'>=</span> <span class='va'>class</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; Fitting Model with lmer:
-#&gt;  Formula = popular ~ extrav + texp + extrav*texp + (1 + extrav | class)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span style='color: #BB0000;'>Random effect variances not available. Returned R2 does not account for random effects.
+</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span style='color: #BB0000;'>Random effect variances not available. Returned R2 does not account for random effects.
+#&gt; </span><span>
+#&gt;  
 #&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
 #&gt; Model Type = Linear Mixed Effect Model (fitted using lme4 or lmerTest)
 #&gt; Outcome = popular

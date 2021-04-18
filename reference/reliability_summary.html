@@ -143,6 +143,8 @@ bypass this by specifying the dimensionality argument.</p>
   dimensionality <span class='op'>=</span> <span class='cn'>NULL</span>,
   digits <span class='op'>=</span> <span class='fl'>3</span>,
   descriptive_table <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  quite <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  streamline <span class='op'>=</span> <span class='cn'>FALSE</span>,
   return_result <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
@@ -170,6 +172,14 @@ bypass this by specifying the dimensionality argument.</p>
       <td><p>Get descriptive statistics. Default is <code>TRUE</code></p></td>
     </tr>
     <tr>
+      <th>quite</th>
+      <td><p>suppress printing output</p></td>
+    </tr>
+    <tr>
+      <th>streamline</th>
+      <td><p>print streamlined output</p></td>
+    </tr>
+    <tr>
       <th>return_result</th>
       <td><p>If it is set to <code>TRUE</code> (default is <code>FALSE</code>), it will return <code><a href='https://rdrr.io/pkg/psych/man/alpha.html'>psych::alpha</a></code> for unidimensional scale, and <code><a href='https://rdrr.io/pkg/psych/man/omega.html'>psych::omega</a></code> for multidimensional scale.</p></td>
     </tr>
@@ -193,7 +203,6 @@ bypass this by specifying the dimensionality argument.</p>
 #&gt;   0.626      0.627     0.535
 #&gt; ────────────────────────────
 #&gt; 
-#&gt; 
 #&gt; </span><span style='text-decoration: underline;'>Item Reliability (item dropped)</span><span>
 #&gt; ─────────────────────────────────
 #&gt;   Var  Alpha  Alpha.Std  G6 (smc)
@@ -202,8 +211,6 @@ bypass this by specifying the dimensionality argument.</p>
 #&gt;    x2  0.612      0.612     0.441
 #&gt;    x3  0.458      0.458     0.297
 #&gt; ─────────────────────────────────
-#&gt; 
-#&gt; 
 #&gt; 
 #&gt; CFA Model:
 #&gt; </span><span style='text-decoration: underline;'>Fit Measure</span><span>
@@ -232,8 +239,7 @@ bypass this by specifying the dimensionality argument.</p>
 #&gt; </span><span style='color: #00BB00;'> OK. Excellent TLI fit (TLI &gt; 0.95)</span><span>
 #&gt; </span><span style='color: #BBBB00;'> OK. Barely acceptable factor loadings (0.4 &lt; some loadings &lt; 0.7)</span><span>
 #&gt; 
-#&gt; 
-#&gt; Descriptive Statistics Table:
+#&gt; </span><span style='text-decoration: underline;'>Descriptive Statistics Table:</span><span>
 #&gt; 
 #&gt; ─────────────────────────────────────────
 #&gt;   Var   mean     sd         x1         x2
@@ -254,7 +260,6 @@ bypass this by specifying the dimensionality argument.</p>
 #&gt;    0.76       0.76  0.808               0.449        0.851
 #&gt; ──────────────────────────────────────────────────────────
 #&gt; 
-#&gt; 
 #&gt; </span><span style='text-decoration: underline;'>Item Reliability (item dropped)</span><span>
 #&gt; ─────────────────────────────────
 #&gt;   Var  Alpha  Alpha.Std  G6 (smc)
@@ -270,8 +275,7 @@ bypass this by specifying the dimensionality argument.</p>
 #&gt;    x9  0.731      0.728     0.782
 #&gt; ─────────────────────────────────
 #&gt; 
-#&gt; 
-#&gt; Descriptive Statistics Table:
+#&gt; </span><span style='text-decoration: underline;'>Descriptive Statistics Table:</span><span>
 #&gt; 
 #&gt; ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 #&gt;   Var   mean     sd          x1          x2          x3          x4          x5          x6          x7          x8

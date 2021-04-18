@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Generalized Linear Mixed Effect Model — glme_model" />
 <meta property="og:description" content=" 
-Generalized linear mixed effect model. The function uses the lme4::glmer(Bates et al., 2014) function. This function is still in very early development stage." />
+Fit a generalized linear mixed effect model using lme4::glmer. This function is still in early development stage." />
 
 
 
@@ -73,7 +73,7 @@ Generalized linear mixed effect model. The function uses the lme4::glmer(Bates e
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psycModel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -132,13 +132,14 @@ Generalized linear mixed effect model. The function uses the lme4::glmer(Bates e
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a> <br />
-Generalized linear mixed effect model. The function uses the <code><a href='https://rdrr.io/pkg/lme4/man/glmer.html'>lme4::glmer</a></code>(Bates et al., 2014) function. This function is still in very early development stage.</p>
+Fit a generalized linear mixed effect model using <code><a href='https://rdrr.io/pkg/lme4/man/glmer.html'>lme4::glmer</a></code>. This function is still in early development stage.</p>
     </div>
 
     <pre class="usage"><span class='fu'>glme_model</span><span class='op'>(</span>
   <span class='va'>data</span>,
+  model <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>response_variable</span>,
-  <span class='va'>random_effect_factors</span>,
+  random_effect_factors <span class='op'>=</span> <span class='cn'>NULL</span>,
   non_random_effect_factors <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>family</span>,
   two_way_interaction_factor <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -156,6 +157,10 @@ Generalized linear mixed effect model. The function uses the <code><a href='http
     <tr>
       <th>data</th>
       <td><p>data frame</p></td>
+    </tr>
+    <tr>
+      <th>model</th>
+      <td><p>lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates</p></td>
     </tr>
     <tr>
       <th>response_variable</th>
@@ -199,18 +204,25 @@ Generalized linear mixed effect model. The function uses the <code><a href='http
     </tr>
     <tr>
       <th>quite</th>
-      <td><p>default to F. If set to <code>T</code>, it will not print the fitting model statement</p></td>
+      <td><p>suppress printing output</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class "glmerMod" representing the linear mixed-effects model fit.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Bates, D., Mächler, M., Bolker, B., &amp; Walker, S. (2014). Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software, 67(1), 1–48. doi: 10.18637/jss.v067.i01.</p>
-<p>Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel</p>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>glme_model</span><span class='op'>(</span>
+  response_variable <span class='op'>=</span> <span class='va'>incidence</span>,
+  random_effect_factors <span class='op'>=</span> <span class='va'>period</span>,
+  family <span class='op'>=</span> <span class='st'>"poisson"</span>, <span class='co'># or you can enter as poisson(link = 'log')</span>
+  id <span class='op'>=</span> <span class='va'>herd</span>,
+  data <span class='op'>=</span> <span class='fu'>lme4</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lme4/man/cbpp.html'>cbpp</a></span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: The following columns are coerced into numeric: herd, period</span></div><div class='output co'>#&gt; Fitting Model with glmer: 
+#&gt;  Formula = incidence ~ period + (1 + period | herd)
+#&gt;  Family = poisson</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

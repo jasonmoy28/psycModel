@@ -137,11 +137,11 @@ The function will extract the relevant coefficients from the regression models (
 
     <pre class="usage"><span class='fu'>model_summary</span><span class='op'>(</span>
   <span class='va'>model</span>,
-  streamline <span class='op'>=</span> <span class='cn'>FALSE</span>,
   digits <span class='op'>=</span> <span class='fl'>3</span>,
   assumption_plot <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  return_result <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  quite <span class='op'>=</span> <span class='cn'>FALSE</span>
+  quite <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  streamline <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  return_result <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -149,11 +149,7 @@ The function will extract the relevant coefficients from the regression models (
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>an model object. The following model are tested for accuracy: stats::lm, nlme::lme, lmerTest::lmer, lme4::lmer, lme4::glmer. Other model object may work if it work with parameters::model_parameters()</p></td>
-    </tr>
-    <tr>
-      <th>streamline</th>
-      <td><p>print streamlined output. Only print model estimate and performance.</p></td>
+      <td><p>an model object. The following model are tested for accuracy: stats::lm, nlme::lme, lmerTest::lmer, lme4::lmer, lme4::glmer (experimental). Other model object may work if it work with parameters::model_parameters()</p></td>
     </tr>
     <tr>
       <th>digits</th>
@@ -164,12 +160,16 @@ The function will extract the relevant coefficients from the regression models (
       <td><p>Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()</p></td>
     </tr>
     <tr>
-      <th>return_result</th>
-      <td><p>It set to <code>TRUE</code>, it return the model estimates data frame.</p></td>
-    </tr>
-    <tr>
       <th>quite</th>
       <td><p>suppress printing output</p></td>
+    </tr>
+    <tr>
+      <th>streamline</th>
+      <td><p>print streamlined output. Only print model estimate and performance.</p></td>
+    </tr>
+    <tr>
+      <th>return_result</th>
+      <td><p>It set to <code>TRUE</code>, it return the model estimates data frame.</p></td>
     </tr>
     </table>
 
@@ -194,7 +194,9 @@ The function will extract the relevant coefficients from the regression models (
 <span class='op'>)</span>
 
 <span class='fu'>model_summary</span><span class='op'>(</span><span class='va'>lme_fit</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
+</div><div class='output co'>#&gt; 
+#&gt;  
+#&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
 #&gt; Model Type = Linear Mixed Effect Model (fitted using lme4 or lmerTest)
 #&gt; Outcome = popular
 #&gt;  class
@@ -230,7 +232,9 @@ The function will extract the relevant coefficients from the regression models (
 <span class='op'>)</span>
 
 <span class='fu'>model_summary</span><span class='op'>(</span><span class='va'>lm_fit</span>, assumption_plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
+</div><div class='output co'>#&gt; 
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
 #&gt; Model Type = Linear regression
 #&gt; Outcome = Sepal.Length
 #&gt; Predictors = Sepal.Width, Petal.Length, Petal.Width

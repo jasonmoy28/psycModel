@@ -150,6 +150,8 @@ There is a promising package called <code>brms</code> that use bayesian statisti
   group <span class='op'>=</span> <span class='cn'>NULL</span>,
   standardize <span class='op'>=</span> <span class='cn'>TRUE</span>,
   digits <span class='op'>=</span> <span class='fl'>3</span>,
+  quite <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  streamline <span class='op'>=</span> <span class='cn'>FALSE</span>,
   return_result <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
@@ -189,6 +191,14 @@ There is a promising package called <code>brms</code> that use bayesian statisti
       <td><p>number of digits to round to</p></td>
     </tr>
     <tr>
+      <th>quite</th>
+      <td><p>suppress printing output</p></td>
+    </tr>
+    <tr>
+      <th>streamline</th>
+      <td><p>print streamlined output</p></td>
+    </tr>
+    <tr>
       <th>return_result</th>
       <td><p>If it is set to <code>TRUE</code>, it will return the <code>lavaan</code> object</p></td>
     </tr>
@@ -214,9 +224,8 @@ There is a promising package called <code>brms</code> that use bayesian statisti
 #&gt; ────────────────────────────────────────────────────────────────
 #&gt;        direct    0.197  0.029   6.880  0.000 ***  [0.141, 0.253]
 #&gt;      indirect    0.219  0.017  12.656  0.000 ***  [0.185, 0.253]
-#&gt;         total    0.416  0.023  18.444  0.000 ***   [0.372, 0.46]
+#&gt;         total    0.416  0.023  18.444  0.000 ***  [0.372, 0.460]
 #&gt; ────────────────────────────────────────────────────────────────
-#&gt; 
 #&gt; 
 #&gt; </span><span style='text-decoration: underline;'>Regression Summary</span><span>
 #&gt; ────────────────────────────────────────────────────────────────────────────────────

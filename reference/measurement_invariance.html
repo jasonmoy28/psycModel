@@ -146,10 +146,11 @@ All arguments (except the CFA items) must be explicitly named (like model = your
   <span class='va'>group</span>,
   ordered <span class='op'>=</span> <span class='cn'>FALSE</span>,
   group_partial <span class='op'>=</span> <span class='cn'>NULL</span>,
-  return_result <span class='op'>=</span> <span class='cn'>FALSE</span>,
   invariance_level <span class='op'>=</span> <span class='st'>"scalar"</span>,
   digits <span class='op'>=</span> <span class='fl'>3</span>,
-  quite <span class='op'>=</span> <span class='cn'>FALSE</span>
+  quite <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  streamline <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  return_result <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -180,10 +181,6 @@ All arguments (except the CFA items) must be explicitly named (like model = your
       <td><p>items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2'). See details for recommended practice.</p></td>
     </tr>
     <tr>
-      <th>return_result</th>
-      <td><p>If it is set to <code>TRUE</code>, it will return a data frame of the fit measure summary</p></td>
-    </tr>
-    <tr>
       <th>invariance_level</th>
       <td><p>"metric" or "scalar". Default is 'metric'. Set as 'metric' for configural-metric comparison, and set as 'scalar' for configural-metric-scalar comparison.</p></td>
     </tr>
@@ -194,6 +191,14 @@ All arguments (except the CFA items) must be explicitly named (like model = your
     <tr>
       <th>quite</th>
       <td><p>suppress printing output except the model summary.</p></td>
+    </tr>
+    <tr>
+      <th>streamline</th>
+      <td><p>print streamlined output</p></td>
+    </tr>
+    <tr>
+      <th>return_result</th>
+      <td><p>If it is set to <code>TRUE</code>, it will return a data frame of the fit measure summary</p></td>
     </tr>
     </table>
 
@@ -233,8 +238,8 @@ it is important to note that no empirical studies were cited to support the part
 #&gt;  [1] "Computing for configural model"
 #&gt; [1] "Computing for metric model"
 #&gt; [1] "Computing for scalar model"
-#&gt;  
-#&gt;  
+#&gt; 
+#&gt; 
 #&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
 #&gt; Model Type = Measurement Invariance
 #&gt; Comparsion Type = Configural-Metric-Scalar Comparsion
@@ -244,8 +249,8 @@ it is important to note that no empirical studies were cited to support the part
 #&gt;   DV2 =~ x4 + x5 + x6
 #&gt;   DV3 =~ x7 + x8 + x9
 #&gt;  
-#&gt;  
-#&gt;  
+#&gt; 
+#&gt; 
 #&gt; </span><span style='text-decoration: underline;'>Fit Measure Summary</span><span>
 #&gt; ─────────────────────────────────────────────────────────────────────────────────────────
 #&gt;        Χ²      DF          P     CFI   RMSEA   SRMR     TLI       AIC       BIC      BIC2
