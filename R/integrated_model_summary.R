@@ -171,11 +171,11 @@ integrated_model_summary <- function(data,
         colnames(simple_slope_output)[1] <- c(paste(two_way_interaction_factor[2], "Level"))
         jnp_plot <- simple_slope_model$jnplot
       }
-    }
     if (length(three_way_interaction_factor) != 0) {
       if (!requireNamespace("cowplot", quietly = TRUE)) {
         stop("Please install.packages('cowplot') use simple_slope with three-way interaction")
       }
+      
         simple_slope_model <- interactions::sim_slopes(
           data = data,
           model = model,
@@ -219,9 +219,8 @@ integrated_model_summary <- function(data,
         colnames(simple_slope_output)[c(1, 2)] <- c(paste(three_way_interaction_factor[3], "Level"), paste(three_way_interaction_factor[2], "Level"))
 
         jnp_plot <- simple_slope_model$jnplot
-      } 
-    }
-  } else{
+      } #three-way interaction end 
+    } else{
     simple_slope_output = NULL
     jnp_plot = NULL
   }
