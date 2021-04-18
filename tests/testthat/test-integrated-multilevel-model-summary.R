@@ -48,16 +48,16 @@ testthat::test_that(desc = '',{
 
 testthat::test_that(desc = '',{
   testthat::skip_on_cran()
-  fit <- expect_warning(expect_warning(
+  fit <- expect_warning(expect_warning(expect_warning(
     integrated_multilevel_model_summary(
     response_variable = incidence,
     random_effect_factors = period,
     family = "poisson", # or you can enter as poisson(link = 'log')
     id = herd,
     data = lme4::cbpp,
-    quite = T,
+    model_summary = TRUE, 
     return_result = T
-  ),regexp = 'coerced'),regexp = 'interaction_plot')
+  ),regexp = 'coerced'),regexp = 'interaction_plot'))
   
   expect_false(any(fit$simple_slope_df[2] == 'Mean'))
   expect_equal(fit$jnp_plot,NULL)
