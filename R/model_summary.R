@@ -4,7 +4,7 @@
 #' The function will extract the relevant coefficients from the linear mixed effect models (see supported model below).
 #'
 #' @param model an object from nlme::lme, lmerTest::lmer, or lme4::glmer
-#' @param round number of digit to round the values.
+#' @param digits number of digit to round the values.
 #' @param streamlined_output Only super_print model estimate and model performance. Default is `FALSE`
 #' @param return_result return the model estimates data frame. Default is `FALSE`
 #' @param assumption_plot Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()
@@ -21,7 +21,7 @@
 #' @examples
 #' # I am going to show the more generic usage of this function
 #' # You can also use this package's built in function to fit the models
-#' # I recommend using the model_summary_with_plot to get everything
+#' # I recommend using the integrated_multilevel_model_summary to get everything
 #'
 #' # lme example
 #' lme_fit <- lme4::lmer("popular ~ texp  + (1 | class)",
@@ -39,7 +39,7 @@
 #' model_summary(lm_fit, assumption_plot = TRUE)
 model_summary <- function(model,
                           streamlined_output = FALSE,
-                          round = 3,
+                          digits = 3,
                           assumption_plot = FALSE,
                           return_result = FALSE,
                           quite = FALSE) {
@@ -61,26 +61,16 @@ model_summary <- function(model,
     heteroscedasticity_check <- TRUE
     collinearity_check <- TRUE
     singular_check <- TRUE
-
-    summary <- as.data.frame(summary(model)[20])
-    model_summary_df <- summary %>%
-      tibble::rownames_to_column(var = "variable") %>%
-      dplyr::select("variable", "tTable.Value", "tTable.DF", "tTable.p.value") %>%
-      dplyr::mutate(estimate = .data$tTable.Value) %>%
-      dplyr::mutate(DF = .data$tTable.DF) %>%
-      dplyr::mutate(p_value = .data$tTable.p.value) %>%
-      dplyr::mutate(dplyr::across(.data$estimate, ~ format(round(., round), nsmall = round))) %>%
-      dplyr::mutate(dplyr::across(.data$DF, ~ round(., round))) %>%
-      dplyr::mutate(sig. = dplyr::case_when(
-        .data$p_value < 0.001 ~ "***",
-        .data$p_value < 0.01 & .data$p_value >= 0.001 ~ "**",
-        .data$p_value < 0.05 & .data$p_value >= 0.01 ~ "*",
-        .data$p_value > 0.05 ~ ""
-      )) %>%
-      dplyr::mutate(dplyr::across(.data$p_value, ~ format(round(., round), nsmall = round))) %>%
-      # must plaec below case_when
-      dplyr::select("variable", "estimate", "DF", "p_value", "sig.")
-
+    
+    lme_param = parameters::model_parameters(model)
+    model_summary_df = lme_param %>% 
+      as.data.frame() %>% 
+      dplyr::rename(df = .data$df_error) %>% 
+      dplyr::rename(ci.lower = CI_low) %>% 
+      dplyr::rename(ci.upper = CI_high) %>% 
+      dplyr::select(-CI) %>% 
+      dplyr::select('Parameter','Effects', 'Coefficient','t','df','SE', 'p','ci.lower','ci.upper','p',everything())
+    
     ## lmer package
   } else if (class(model) == "lmerModLmerTest" | class(model) == "lmerMod") {
     model_type <- "Linear Mixed Effect Model (fitted using lme4 or lmerTest)"
@@ -98,28 +88,15 @@ model_summary <- function(model,
     heteroscedasticity_check <- TRUE
     collinearity_check <- TRUE
     singular_check <- TRUE
-
-
-    if (class(model) == "lmerMod") {
-      model <- lmerTest::as_lmerModLmerTest(model = model)
-      warning("Degree of freedom and p-value is extracted from lmerTest")
-    }
-
-    summary <- as.data.frame(summary(model)$coefficients)
-    model_summary_df <- summary %>%
-      tibble::rownames_to_column(var = "variable") %>%
-      dplyr::select("variable", "Estimate", "df", "Pr(>|t|)") %>%
-      dplyr::mutate(DF = format(round(.data$df, round), nsmall = round)) %>%
-      dplyr::mutate(estimate = format(round(.data$Estimate, round), nsmall = round)) %>%
-      dplyr::mutate(p_value = .data$`Pr(>|t|)`) %>%
-      dplyr::mutate(sig. = dplyr::case_when(
-        .data$p_value <= 0.001 ~ "***",
-        .data$p_value <= 0.01 & .data$p_value > 0.001 ~ "**",
-        .data$p_value < 0.05 & .data$p_value > 0.01 ~ "*",
-        .data$p_value > 0.05 ~ ""
-      )) %>%
-      dplyr::mutate(p_value = format(round(.data$`Pr(>|t|)`, round), nsmall = round)) %>%
-      dplyr::select("variable", "estimate", "DF", "p_value", "sig.")
+    
+    lme_param = parameters::model_parameters(model)
+    model_summary_df = lme_param %>% 
+      as.data.frame() %>% 
+      dplyr::rename(df = .data$df_error) %>% 
+      dplyr::rename(ci.lower = CI_low) %>% 
+      dplyr::rename(ci.upper = CI_high) %>% 
+      dplyr::select(-CI) %>% 
+      dplyr::select('Parameter','Effects', 'Coefficient','t','df','SE', 'p','ci.lower','ci.upper','p',everything())
 
     ################################################ Generalized Linear Mixed Effect Model ################################################
     ## glmer model
@@ -157,59 +134,60 @@ model_summary <- function(model,
     collinearity_check <- TRUE
     singular_check <- FALSE
 
-    summary <- as.data.frame(summary(model)$coefficients)
-    model_summary_df <- summary %>%
-      tibble::rownames_to_column(var = "variable") %>%
-      dplyr::select("variable", "Estimate", "t value", "Pr(>|t|)") %>%
-      dplyr::mutate(t_value = format(round(.data$`t value`, round), nsmall = round)) %>%
-      dplyr::mutate(estimate = format(round(.data$Estimate, round), nsmall = round)) %>%
-      dplyr::mutate(p_value = .data$`Pr(>|t|)`) %>%
-      dplyr::mutate(sig. = dplyr::case_when(
-        .data$p_value <= 0.001 ~ "***",
-        .data$p_value <= 0.01 & .data$p_value > 0.001 ~ "**",
-        .data$p_value < 0.05 & .data$p_value > 0.01 ~ "*",
-        .data$p_value > 0.05 ~ ""
-      )) %>%
-      dplyr::mutate(p_value = format(round(.data$`Pr(>|t|)`, round), nsmall = round)) %>%
-      dplyr::select("variable", "estimate", "t_value", "p_value", "sig.")
+   lm_param = parameters::parameters(model)
+   model_summary_df = lm_param %>% 
+     as.data.frame() %>% 
+     dplyr::rename(df = .data$df_error) %>% 
+     dplyr::rename(ci.lower = CI_low) %>% 
+     dplyr::rename(ci.upper = CI_high) %>% 
+     dplyr::select(-CI) %>% 
+     dplyr::select('Parameter','Coefficient','t','df','SE', 'p','ci.lower','ci.upper','p',everything())
+
   }
   else {
-    stop("The function currently only support lme,lmerMod,lmerModLmerTest, glmerMod object. You can coerced the function to fit by specifying the model_fit argument.Be aware that result is not teseted.")
+    other_param = parameters::parameters(model)
+    model_summary_df = other_param %>% 
+      as.data.frame() %>% 
+      dplyr::rename(df = .data$df_error) %>% 
+      dplyr::rename(ci.lower = CI_low) %>% 
+      dplyr::rename(ci.upper = CI_high) %>% 
+      dplyr::select(-CI) %>% 
+      dplyr::select('Parameter','Coefficient','t','df','SE', 'p','ci.lower','ci.upper','p',everything())
+    warning('The inputted model is not tested for accuracy. Please proceed with cautious. The model is passed to parameters::parameters() to extract relevant parameters')
+    
   }
-
+  
+  model_performance_df <- performance::performance(model)
+  colnames(model_performance_df) <- stringr::str_replace_all(pattern = "R2", replacement = "R^2", string = colnames(model_performance_df))
+  colnames(model_performance_df) <- stringr::str_replace_all(pattern = "Sigma", replacement = "$sigma$", string = colnames(model_performance_df))
   ################################################  Output Table  ################################################
   if (quite == FALSE) { # check whether quite the entire output table
     if (streamlined_output == TRUE) { # streamline model output
       super_print("underline|Model Estimates")
       # super_print model estimates table and model performance table
       print_table(model_summary_df)
-      super_print("\n \n \n")
-      super_print("underline|Model Performance")
-      model_performance_df <- performance::performance(model)
-      colnames(model_performance_df) <- stringr::str_replace_all(pattern = "R2", replacement = "R^2", string = colnames(model_performance_df))
-      colnames(model_performance_df) <- stringr::str_replace_all(pattern = "Sigma", replacement = "$sigma$", string = colnames(model_performance_df))
+      super_print("\n \n")
+      super_print("underline|Goodness of Fit")
       print_table(model_performance_df)
+      
+      
     } else { # full model output
       super_print("underline|Model Summary")
       super_print("Model Type = {model_type}")
       super_print("Outcome = {DV}")
       super_print("Predictors = {IV}")
-      super_print("\n \n \n")
+      super_print("\n")
       # super_print model estimates table
       super_print("underline|Model Estimates")
       print_table(model_summary_df)
-      super_print("\n \n \n")
+      super_print("\n")
       # super_print model performance table
-      super_print("underline|Model Performance")
-      model_performance_df <- performance::performance(model)
-      colnames(model_performance_df) <- stringr::str_replace_all(pattern = "R2", replacement = "R^2", string = colnames(model_performance_df))
-      colnames(model_performance_df) <- stringr::str_replace_all(pattern = "Sigma", replacement = "$sigma$", string = colnames(model_performance_df))
+      super_print("underline|Goodness of Fit")
       print_table(model_performance_df)
 
       # Check assumption
-      super_print("\n \n \n")
-      super_print("underline|Model Assumption Check")
       super_print("\n")
+      super_print("underline|Model Assumption Check")
       if (convergence_check == TRUE) {
         convergence_output <- performance::check_convergence(model)
         if (convergence_output[[1]] == TRUE) {
@@ -307,7 +285,9 @@ model_summary <- function(model,
   # Check assumption plot
   if (assumption_plot == TRUE) {
     if (all(unlist(lapply(c("gridExtra", "qqplotr", "see"), requireNamespace)))) {
-      suppressMessages(print(performance::check_model(model)))
+      tryCatch(suppressMessages(print(performance::check_model(model))),error = function(cond){
+        warning('assumption_plot does not support this model type')
+        warning(cond)})
     } else {
       stop("please install.packages(c('gridExtra','qqplotr','see')) to use assumption_plot")
     }

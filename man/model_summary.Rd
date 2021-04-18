@@ -7,7 +7,7 @@
 model_summary(
   model,
   streamlined_output = FALSE,
-  round = 3,
+  digits = 3,
   assumption_plot = FALSE,
   return_result = FALSE,
   quite = FALSE
@@ -18,7 +18,7 @@ model_summary(
 
 \item{streamlined_output}{Only super_print model estimate and model performance. Default is \code{FALSE}}
 
-\item{round}{number of digit to round the values.}
+\item{digits}{number of digit to round the values.}
 
 \item{assumption_plot}{Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()}
 
@@ -39,7 +39,7 @@ If you working with \code{lm}, fixed factor estimate is just the model estimate.
 \examples{
 # I am going to show the more generic usage of this function
 # You can also use this package's built in function to fit the models
-# I recommend using the model_summary_with_plot to get everything
+# I recommend using the integrated_multilevel_model_summary to get everything
 
 # lme example
 lme_fit <- lme4::lmer("popular ~ texp  + (1 | class)",
