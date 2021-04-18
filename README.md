@@ -21,16 +21,18 @@ devtools::install_github('jasonmoy28/psycModel')
 <span style="color:#009900">✓</span> Fitting models, plotting, checking goodness of fit and model assumption violations all in one place. <br/>
 
 ## Supported Models
-<span style="color:#009900">✓</span> Regression models:  <br/>
+Regression models:  <br/>
 * Linear regression (i.e., support ANOVA, ANCOVA)  <br/>
 * Generalized linear regression  <br/>
 * Linear mixed effect model (i.e., HLM, MLM)  <br/>
 * Generalized linear mixed effect model.  <br/>
-<span style="color:#009900">✓</span> Structure Equation Modeling:  <br/>
+
+Structure Equation Modeling:  <br/>
 * Exploratory & confirmatory factor analysis  <br/>
-* Measurement invariance (MGCFA)  <br/>
-* Mediation analysis (only SEM approach) <br/>
-<span style="color:#009900">✓</span> Other:  <br/>
+* Measurement invariance (MGCFA approach)  <br/>
+* Mediation analysis (SEM approach) <br/>
+
+Other:  <br/>
 * Descriptive statistics 
 * Correlation (e.g., pearson, polychoric, tetrachoric, spearman), 
 * Reliability analysis <br/>
