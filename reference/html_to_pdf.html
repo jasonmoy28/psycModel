@@ -42,8 +42,8 @@
 <meta property="og:title" content="Convert HTML to PDF — html_to_pdf" />
 <meta property="og:description" content=" 
 This is a helper function for knitting Rmd. Due to technological limitation, the output cannot knit to PDF in Rmd directly. It uses the pagedown::chrome_print() in the backend.
-You must first knit to HTML, then you can use this function to covert them to PDF if you wish. I am sorry. I can't find any way to implement it.
-If you know how to implement it, please submit an issue on github to let me know." />
+You must first knit to HTML, then you can use this function to covert them to PDF if you wish. I know this is a workaround to the issue,
+but the problem is with the latex engine printing unicode character. If you happen to know how to fix it, please let me know." />
 
 
 
@@ -135,11 +135,11 @@ If you know how to implement it, please submit an issue on github to let me know
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a> <br />
 This is a helper function for knitting Rmd. Due to technological limitation, the output cannot knit to PDF in Rmd directly. It uses the pagedown::chrome_print() in the backend.
-You must first knit to HTML, then you can use this function to covert them to PDF if you wish. I am sorry. I can't find any way to implement it.
-If you know how to implement it, please submit an issue on github to let me know.</p>
+You must first knit to HTML, then you can use this function to covert them to PDF if you wish. I know this is a workaround to the issue,
+but the problem is with the latex engine printing unicode character. If you happen to know how to fix it, please let me know.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>html_to_pdf</span><span class='op'>(</span>file_path <span class='op'>=</span> <span class='cn'>NULL</span>, dir <span class='op'>=</span> <span class='cn'>NULL</span>, render_exist <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>html_to_pdf</span><span class='op'>(</span>file_path <span class='op'>=</span> <span class='cn'>NULL</span>, dir <span class='op'>=</span> <span class='cn'>NULL</span>, scale <span class='op'>=</span> <span class='fl'>1</span>, render_exist <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,6 +151,10 @@ If you know how to implement it, please submit an issue on github to let me know
     <tr>
       <th>dir</th>
       <td><p>file path to the directory of all HTML files (can be relative if you are in a R project)</p></td>
+    </tr>
+    <tr>
+      <th>scale</th>
+      <td><p>the scale of the PDF</p></td>
     </tr>
     <tr>
       <th>render_exist</th>
