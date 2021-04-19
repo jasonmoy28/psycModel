@@ -1,3 +1,21 @@
+# psycModel 0.3.0
+
+**Major Feature:** <br/>
+* Support reliability measure summary
+* Support mediation
+* Support generalized linear regression (`glm` and `glmer` without plot)
+
+**Minor Feature:** <br/>
+* `cfa_summary`  support path diagram
+* `efa_summary` rewrite using functions from `parameters` and support post-hoc CFA test
+* `cfa_summary` support factor loading is hidden for same latent factor (only when group = `NULL`)
+* `cor_test` and `descriptive_table` support rich-text formatted table output
+* `model_summary` rewrite using `parameters::model_parameters` 
+*  integrate summary with plot for `lm_summary` to `integrated_model_summary`
+* `cor_test` re-write using the correlation package, so it supports more methods and robust standard errors
+* `quite` and `streamline` support in all models that print output
+* Give instruction on how to use R Markdown (see `knit_to_Rmd`)
+
 # psycModel 0.2.1
 **Major Feature:**  
 * Support linear regression <br/>
