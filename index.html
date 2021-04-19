@@ -12,10 +12,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Integrated Toolkit for Psychological Analysis and Modeling in R">
-<meta property="og:description" content="An beginner-friendly R package for modeling in psychology or
-    related field. It allow users fitting models, plotting, checking
-    goodness of fit and model assumption violations all in one place. It
-    also produces beautiful and easy-to-read output.">
+<meta property="og:description" content="A beginner-friendly R package for modeling in psychology or
+    related field. It allows fitting models, plotting, checking goodness
+    of fit, and model assumption violations all in one place. It also
+    produces beautiful and easy-to-read output.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">psycModel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@
 <div id="key-features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#key-features" class="anchor"></a>Key Features</h2>
-<p><span style="color:#009900">✓</span> An beginner-friendly R package for modeling in psychology or related field (intermediate &amp; advanced R users should also find it useful) <br><span style="color:#009900">✓</span> Tired of manually writing all variables in a model? You can use <a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a> syntax for all models <br><span style="color:#009900">✓</span> Fitting models, plotting, checking goodness of fit and model assumption violations all in one place. <br><span style="color:#009900">✓</span> Beautiful and easy-to-read output. Check out the <a href="https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html">example</a> here now. <br></p>
+<p><span style="color:#009900">✓</span> A beginner-friendly R package for modeling in psychology or related field (intermediate &amp; advanced R users should also find it useful) <br><span style="color:#009900">✓</span> Tired of manually writing all variables in a model? You can use <a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a> syntax for all models <br><span style="color:#009900">✓</span> Fitting models, plotting, checking goodness of fit, and model assumption violations all in one place. <br><span style="color:#009900">✓</span> Beautiful and easy-to-read output. Check out the <a href="https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html">example</a> here now. <br></p>
 </div>
 <div id="supported-models" class="section level2">
 <h2 class="hasAnchor">
@@ -143,19 +143,19 @@
 <div id="contributing" class="section level2">
 <h2 class="hasAnchor">
 <a href="#contributing" class="anchor"></a>Contributing:</h2>
-<p>If you like the package, please considering give it a star. It meant a lot to me knowing that people actually find it useful. This package is still in its early stage. There are a lots of features / models that I plan to implement in the near future (see <a href="https://github.com/jasonmoy28/psycModel/issues/3">here</a>), but it takes a long time for me to implement everything. So, if you are interested in help building this package, please feel free to submit a <a href="https://github.com/jasonmoy28/psycModel/pulls">pull request</a> / <a href="https://github.com/jasonmoy28/psycModel/issues">GitHub issue</a>. I also tried my best to fix any bugs, but I cannot guarantee that the package can handle all edge cases. If you find any bug, please submit them in the <a href="https://github.com/jasonmoy28/psycModel/issues">GitHub issue</a>. Additionally, you should expect changes that are not backward compatible until the package’s first major release (i.e., v1.0.0).</p>
+<p>If you like the package, please considering give it a star. It meant a lot to me knowing that people find it useful. This package is still in its early stage. There are lots of features / models that I plan to implement in the near future (see <a href="https://github.com/jasonmoy28/psycModel/issues/3">here</a>), but it takes a long time for me to implement everything. So, if you are interested in help building this package, please feel free to submit a <a href="https://github.com/jasonmoy28/psycModel/pulls">pull request</a> / <a href="https://github.com/jasonmoy28/psycModel/issues">GitHub issue</a>. I also tried my best to fix any bugs, but the package is still beta testing. If you find any bugs, please submit them in the <a href="https://github.com/jasonmoy28/psycModel/issues">GitHub issue</a>. Additionally, you should expect changes that are not backward compatible until the package’s first major release (i.e., v1.0.0).</p>
 </div>
 <div id="acknowledgement" class="section level2">
 <h2 class="hasAnchor">
 <a href="#acknowledgement" class="anchor"></a>Acknowledgement</h2>
-<p>This package was built by standing on the shoulders of giants with special thanks to researchers and developers of <a href="https://lavaan.ugent.be/"><code>lavaan</code></a>, <a href="https://github.com/lme4/lme4"><code>lme4</code></a>, <a href="https://github.com/runehaubo/lmerTestR"><code>lmerTest</code></a>, <a href="https://cran.r-project.org/package=nlme"><code>nlme</code></a>, <a href="https://easystats.github.io/performance/"><code>performance</code></a>, <a href="https://easystats.github.io/parameters/"><code>parameters</code></a>, <a href="https://personality-project.org/r/psych/"><code>psych</code></a>, and of course, all of the <a href="https://tidyverse.tidyverse.org/"><code>tidyverse</code></a> packages. I hope my package will be help someone as they had helped me.</p>
+<p>This package was built by standing on the shoulders of giants with special thanks to researchers and developers of <a href="https://lavaan.ugent.be/"><code>lavaan</code></a>, <a href="https://github.com/lme4/lme4"><code>lme4</code></a>, <a href="https://github.com/runehaubo/lmerTestR"><code>lmerTest</code></a>, <a href="https://cran.r-project.org/package=nlme"><code>nlme</code></a>, <a href="https://easystats.github.io/performance/"><code>performance</code></a>, <a href="https://easystats.github.io/parameters/"><code>parameters</code></a>, <a href="https://personality-project.org/r/psych/"><code>psych</code></a>, and of course, all of the <a href="https://tidyverse.tidyverse.org/"><code>tidyverse</code></a> packages. I hope my package will help someone as they had helped me.</p>
 </div>
 <div id="updates" class="section level2">
 <h2 class="hasAnchor">
 <a href="#updates" class="anchor"></a>Updates</h2>
 <div id="upcoming-features" class="section level3">
 <h3 class="hasAnchor">
-<a href="#upcoming-features" class="anchor"></a>Upcoming Features:</h3>
+<a href="#upcoming-features" class="anchor"></a><a href="https://github.com/jasonmoy28/psycModel/issues/3">Upcoming Features</a>:</h3>
 <ol>
 <li>Support bootstrapping and robust standard error for relevant models</li>
 <li>Support moderated mediation analysis and multilevel mediation analysis (currently support multilevel with level-1 variable only)</li>
@@ -164,6 +164,37 @@
 <li>Support polynomial regression</li>
 <li>Support outputting table to MS word (don’t know how to implement yet)</li>
 </ol>
+</div>
+<div id="version-030-initial-cran-released-on-4192021" class="section level3">
+<h3 class="hasAnchor">
+<a href="#version-030-initial-cran-released-on-4192021" class="anchor"></a>version 0.3.0 (initial CRAN released on 4/19/2021)</h3>
+<p><strong>Major Feature:</strong> <br></p>
+<ul>
+<li>Support reliability measure summary</li>
+<li>Support mediation</li>
+<li>Support generalized linear regression (<code>glm</code> and <code>glmer</code> without plot)</li>
+</ul>
+<p><strong>Minor Feature:</strong> <br></p>
+<ul>
+<li>
+<code>cfa_summary</code> support path diagram</li>
+<li>
+<code>efa_summary</code> rewrite using functions from <code>parameters</code> and support post-hoc CFA test</li>
+<li>
+<code>cfa_summary</code> support factor loading is hidden for same latent factor (only when group = <code>NULL</code>)</li>
+<li>
+<code>cor_test</code> and <code>descriptive_table</code> support rich-text formatted table output</li>
+<li>
+<code>model_summary</code> rewrite using <code><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters::model_parameters</a></code>
+</li>
+<li>integrate summary with plot for <code>lm_summary</code> to <code>integrated_model_summary</code>
+</li>
+<li>
+<code>cor_test</code> re-write using the correlation package, so it supports more methods and robust standard errors</li>
+<li>
+<code>quite</code> and <code>streamline</code> support in all models that print output</li>
+<li>Give instruction on how to use R Markdown (see <code>knit_to_Rmd</code>)</li>
+</ul>
 </div>
 <div id="version-021-released-on-4162021" class="section level3">
 <h3 class="hasAnchor">
