@@ -3,7 +3,7 @@
 #' `r lifecycle::badge("stable")` \cr
 #' The function will extract the relevant coefficients from the regression models (see below for supported model).
 #'
-#' @param model an model object. The following model are tested for accuracy: stats::lm, nlme::lme, lmerTest::lmer, lme4::lmer, lme4::glmer (experimental). Other model object may work if it work with parameters::model_parameters()
+#' @param model an model object. The following model are tested for accuracy: `lm`, `glm`, `lme`, `lmer`, `glmer`. Other model object may work if it work with parameters::model_parameters()
 #' @param digits number of digits to round to
 #' @param streamline print streamlined output. Only print model estimate and performance.
 #' @param return_result It set to `TRUE`, it return the model estimates data frame.

@@ -24,7 +24,7 @@ simple_slope(
 a list with the slope estimate data frame and a Johnson-Newman plot that shows when the slope estimate is not significant
 }
 \description{
-The function uses the interaction::sim_slopes function to calculate the slope estimate at varying level of moderators (+/- 1 SD and mean).
+The function uses the \code{interaction::sim_slopes()} to calculate the slope estimate at varying level of moderators (+/- 1 SD and mean).
 }
 \examples{
 fit <- lm_model(

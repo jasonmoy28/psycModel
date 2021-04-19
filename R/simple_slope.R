@@ -1,6 +1,6 @@
 #' Slope Estimate at Varying Level of Moderators
 #'
-#' The function uses the interaction::sim_slopes function to calculate the slope estimate at varying level of moderators (+/- 1 SD and mean).
+#' The function uses the `interaction::sim_slopes()` to calculate the slope estimate at varying level of moderators (+/- 1 SD and mean).
 #'
 #' @param data data frame
 #' @param model model object from `lm`, `lme`,`lmer`

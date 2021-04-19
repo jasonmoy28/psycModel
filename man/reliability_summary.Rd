@@ -36,7 +36,7 @@ reliability_summary(
 \code{psych::alpha} for unidimensional scale, and \code{psych::omega} for multidimensional scale.
 }
 \description{
-First, it will determine whether the data is uni-dimensional or multi-dimensional using parameters::n_factors(). If the data is uni-dimensional, then it will print a summary
+First, it will determine whether the data is uni-dimensional or multi-dimensional using \code{parameters::n_factors()}. If the data is uni-dimensional, then it will print a summary
 consists of alpha, G6, single-factor CFA, and descriptive statistics result. If it is multi-dimensional, it will print a summary consist of alpha, G6, omega result. You can
 bypass this by specifying the dimensionality argument.
 }

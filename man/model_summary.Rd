@@ -14,7 +14,7 @@ model_summary(
 )
 }
 \arguments{
-\item{model}{an model object. The following model are tested for accuracy: stats::lm, nlme::lme, lmerTest::lmer, lme4::lmer, lme4::glmer (experimental). Other model object may work if it work with parameters::model_parameters()}
+\item{model}{an model object. The following model are tested for accuracy: \code{lm}, \code{glm}, \code{lme}, \code{lmer}, \code{glmer}. Other model object may work if it work with parameters::model_parameters()}
 
 \item{digits}{number of digits to round to}
 
