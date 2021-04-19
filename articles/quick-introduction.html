@@ -287,13 +287,13 @@ Model Type = Model Comparison
 </span></code></pre>
 </div>
 </div>
-<div id="strcture-equation-modeling" class="section level1">
+<div id="structure-equation-modeling" class="section level1">
 <h1 class="hasAnchor">
-<a href="#strcture-equation-modeling" class="anchor"></a>Strcture Equation Modeling</h1>
+<a href="#structure-equation-modeling" class="anchor"></a>Structure Equation Modeling</h1>
 <div id="confirmatory-factor-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#confirmatory-factor-analysis" class="anchor"></a>Confirmatory Factor Analysis</h2>
-<p>CFA model is fitted using <code><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">lavaan::cfa()</a></code>. You can pass multiple factor (in the below example, x1, x2, x3 represent one factor, x4,x5,x6 represent another factor etc.). It will show you the fit measure, factor loadings, and goodness of fit based on cut-off criteria (you should review literature for the cut-off criteria as the recommendations are subjected to changes). Additionally, it will show you a nice-looking path diagram.</p>
+<p>CFA model is fitted using <code><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">lavaan::cfa()</a></code>. You can pass multiple factor (in the below example, x1, x2, x3 represent one factor, x4,x5,x6 represent another factor etc.). It will show you the fit measure, factor loading, and goodness of fit based on cut-off criteria (you should review literature for the cut-off criteria as the recommendations are subjected to changes). Additionally, it will show you a nice-looking path diagram.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cfa_summary.html">cfa_summary</a></span><span class="op">(</span>
    data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html">HolzingerSwineford1939</a></span>,
