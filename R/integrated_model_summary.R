@@ -79,8 +79,8 @@ integrated_model_summary <- function(data,
     dplyr::select(!!enquo(three_way_interaction_factor)) %>%
     names()
   # coerced into numeric after selecting variables
-  data <- data_check(data) 
-  
+  data <- data_check(data)
+
   ##################################### Running Model #########################################
   if (is.null(family)) {
     model <- lm_model(
@@ -139,93 +139,18 @@ integrated_model_summary <- function(data,
   }
 
 
+  ############################### Generate Simple Slope Output ###############################
   if (simple_slope == TRUE) {
-    if (!requireNamespace("interactions", quietly = TRUE)) {
-      stop("Please install.packages(c('interactions','sandwich')) use simple_slope with three-way interaction")
-    }
-    
-    if (!requireNamespace("sandwich", quietly = TRUE)) {
-      stop("Please install.packages('sandwich') use simple_slope with three-way interaction")
-    }
-    
-    if (length(two_way_interaction_factor) != 0) {
-        simple_slope_model <- interactions::sim_slopes(
-          data = data,
-          model = model,
-          pred = !!two_way_interaction_factor[1],
-          modx = !!two_way_interaction_factor[2],
-          jnplot = TRUE,
-        )
-        simple_slope_output <-
-          rbind(simple_slope_model$slopes) %>%
-          dplyr::mutate(dplyr::across(1, function(x) {
-            dplyr::case_when(
-              x > mean(x) ~ "High",
-              x == mean(x) ~ "Mean",
-              x < mean(x) ~ "Low "
-            )
-          })) %>%
-          dplyr::rename(ci.lower = "2.5%") %>%
-          dplyr::rename(ci.upper = "97.5%")
-
-        colnames(simple_slope_output)[1] <- c(paste(two_way_interaction_factor[2], "Level"))
-        jnp_plot <- simple_slope_model$jnplot
-      }
-    if (length(three_way_interaction_factor) != 0) {
-      if (!requireNamespace("cowplot", quietly = TRUE)) {
-        stop("Please install.packages('cowplot') use simple_slope with three-way interaction")
-      }
-      
-        simple_slope_model <- interactions::sim_slopes(
-          data = data,
-          model = model,
-          pred = !!three_way_interaction_factor[1],
-          modx = !!three_way_interaction_factor[2],
-          mod2 = !!three_way_interaction_factor[3],
-          jnplot = TRUE
-        )
-        if (length(simple_slope_model$slopes) == 3) { # if mod 2 is continuous
-          simple_slope_output <-
-            rbind(simple_slope_model$slopes[[1]], simple_slope_model$slopes[[2]], simple_slope_model$slopes[[3]]) %>%
-            dplyr::mutate(dplyr::across(1, function(x) {
-              dplyr::case_when(
-                x > mean(x) ~ "High",
-                x == mean(x) ~ "Mean",
-                x < mean(x) ~ "Low "
-              )
-            }))
-          simple_slope_output <- simple_slope_output %>%
-            dplyr::mutate(Mod_1_Level = rep(c("Low ", "Mean", "High"), each = nrow(simple_slope_output) / 3)) %>%
-            dplyr::select("Mod_1_Level", tidyselect::everything())
-        } else if (length(simple_slope_model$slopes) == 2) { # if mod 2 is binary
-          simple_slope_output <-
-            rbind(simple_slope_model$slopes[[1]], simple_slope_model$slopes[[2]]) %>%
-            dplyr::mutate(dplyr::across(1, function(x) {
-              dplyr::case_when(
-                x > mean(x) ~ "High",
-                x == mean(x) ~ "Mean",
-                x < mean(x) ~ "Low "
-              )
-            }))
-          simple_slope_output <- simple_slope_output %>%
-            dplyr::mutate(Mod_1_Level = rep(c("Low ", "High"), each = nrow(simple_slope_output) / 2)) %>%
-            dplyr::select("Mod_1_Level", tidyselect::everything())
-        }
-
-        simple_slope_output <- simple_slope_output %>%
-          dplyr::rename(ci.lower = "2.5%") %>%
-          dplyr::rename(ci.upper = "97.5%") %>%
-          dplyr::mutate(dplyr::across("Mod_1_Level", ~ replace(., duplicated(.), "")))
-        colnames(simple_slope_output)[c(1, 2)] <- c(paste(three_way_interaction_factor[3], "Level"), paste(three_way_interaction_factor[2], "Level"))
-
-        jnp_plot <- simple_slope_model$jnplot
-      } #three-way interaction end 
-    } else{
-    simple_slope_output = NULL
-    jnp_plot = NULL
+    simple_slope_list = simple_slope(data = data,
+                                     model = model,
+                                     two_way_interaction_factor = two_way_interaction_factor,
+                                     three_way_interaction_factor = three_way_interaction_factor)
+  } else {
+    simple_slope_list = list(simple_slope_df = NULL,
+                             jn_plot = NULL)
   }
-
-  # Print result
+  
+  ######################################### Output Result  #########################################
   if (model_summary == TRUE | return_result == TRUE) {
     model_summary_list <- model_summary(
       model = model,
@@ -237,16 +162,18 @@ integrated_model_summary <- function(data,
     )
   }
 
+  if (simple_slope == TRUE & quite == FALSE) {
+    super_print("underline|Slope Estimates at Each Level of Moderators")
+    print_table(simple_slope_list$simple_slope_df)
+    super_print('italic|Note: For continuous variable, low and high represent -1 and +1 SD from the mean, respectively.')
+    print(simple_slope_list$jn_plot)
+  }
+  
   if (interaction_plot == TRUE) {
     try(print(interaction_plot_object))
   }
-
-  if (simple_slope == TRUE & quite == F) {
-    super_print("underline|Slope Estimates at Each Level of Moderators")
-    print_table(simple_slope_output)
-    print(jnp_plot)
-  }
-
+  
+  # warning message 
   plot_logical <- c(interaction_plot, simple_slope, assumption_plot)
   number_of_plot_requested <- length(plot_logical[plot_logical])
   if (number_of_plot_requested > 1) {
@@ -255,11 +182,12 @@ integrated_model_summary <- function(data,
 
   # Return Result
   if (return_result == TRUE) {
-    return_list <- list(model = model,
-                        summary = model_summary_list, 
-                        interaction_plot = interaction_plot_object, 
-                        simple_slope_df = simple_slope_output, 
-                        jnp_plot = jnp_plot)
+    return_list <- list(
+      model = model,
+      summary = model_summary_list,
+      interaction_plot = interaction_plot_object,
+      simple_slope = simple_slope_list
+    )
     return(return_list)
   }
 }
