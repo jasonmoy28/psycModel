@@ -1,4 +1,4 @@
-#' Generalized Linear Regressions
+#' Generalized Linear Regression
 #'
 #' `r lifecycle::badge("experimental")` \cr
 #' Fit a generalized linear regression using `glm`. This function is still in early development stage.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/knit_to_Rmd.R
 \name{knit_to_Rmd}
 \alias{knit_to_Rmd}
-\title{Knit Rmd Files}
+\title{Knit Rmd Files Instruction}
 \usage{
 knit_to_Rmd()
 }

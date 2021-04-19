@@ -2,7 +2,7 @@
 % Please edit documentation in R/glm_model.R
 \name{glm_model}
 \alias{glm_model}
-\title{Generalized Linear Regressions}
+\title{Generalized Linear Regression}
 \usage{
 glm_model(
   data,

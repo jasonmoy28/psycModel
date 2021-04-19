@@ -1,4 +1,4 @@
-#' Knit Rmd Files
+#' Knit Rmd Files Instruction
 #'
 #' This is a helper function that instruct users of the package how to knit a R Markdown (Rmd) files
 #' @return nothing
