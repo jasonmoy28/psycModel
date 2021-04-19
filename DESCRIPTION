@@ -9,9 +9,9 @@ Authors@R:
            email = "jasonmoy28@gmail.com",
            comment = c(ORCID = "0000-0001-8795-3311"))
 Description: An beginner-friendly R package for modeling in psychology or
-    related field. It allow users fitting models, plotting, checking goodness
-    of fit and model assumption violations all in one place. It also produces
-    beautiful and easy-to-read output. 
+    related field. It allow users fitting models, plotting, checking
+    goodness of fit and model assumption violations all in one place. It
+    also produces beautiful and easy-to-read output.
 License: GPL (>= 3)
 URL: https://jasonmoy28.github.io/psycModel/
 Depends: 
@@ -33,10 +33,10 @@ Imports:
     tidyr,
     utils
 Suggests:
-    sandwich,
     correlation,
     covr,
     cowplot,
+    fansi,
     ggrepel,
     GPArotation,
     gridExtra,
@@ -48,15 +48,15 @@ Suggests:
     qqplotr,
     rmarkdown,
     roxygen2,
+    sandwich,
     see,
     semPlot,
     testthat (>= 3.0.0),
-    tidyselect,
-    fansi
+    tidyselect
 VignetteBuilder: 
     knitr
+Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Config/testthat/edition: 3

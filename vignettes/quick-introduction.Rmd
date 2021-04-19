@@ -77,9 +77,9 @@ This can be used to compared model. All type of model comparison supported by `p
  compare_fit(fit1, fit2)
 ```
 
-# Strcture Equation Modeling 
+# Structure Equation Modeling 
 ## Confirmatory Factor Analysis 
-CFA model is fitted using `lavaan::cfa()`. You can pass multiple factor (in the below example, x1, x2, x3 represent one factor, x4,x5,x6 represent another factor etc.). It will show you the fit measure, factor loadings, and goodness of fit based on cut-off criteria (you should review literature for the cut-off criteria as the recommendations are subjected to changes). Additionally, it will show you a nice-looking path diagram. 
+CFA model is fitted using `lavaan::cfa()`. You can pass multiple factor (in the below example, x1, x2, x3 represent one factor, x4,x5,x6 represent another factor etc.). It will show you the fit measure, factor loading, and goodness of fit based on cut-off criteria (you should review literature for the cut-off criteria as the recommendations are subjected to changes). Additionally, it will show you a nice-looking path diagram. 
 ```{r fig.width=10.5,fig.height=6,out.width=700,out.height=400}
 cfa_summary(
    data = lavaan::HolzingerSwineford1939,

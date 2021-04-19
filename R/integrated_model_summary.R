@@ -141,15 +141,19 @@ integrated_model_summary <- function(data,
 
   ############################### Generate Simple Slope Output ###############################
   if (simple_slope == TRUE) {
-    simple_slope_list = simple_slope(data = data,
-                                     model = model,
-                                     two_way_interaction_factor = two_way_interaction_factor,
-                                     three_way_interaction_factor = three_way_interaction_factor)
+    simple_slope_list <- simple_slope(
+      data = data,
+      model = model,
+      two_way_interaction_factor = two_way_interaction_factor,
+      three_way_interaction_factor = three_way_interaction_factor
+    )
   } else {
-    simple_slope_list = list(simple_slope_df = NULL,
-                             jn_plot = NULL)
+    simple_slope_list <- list(
+      simple_slope_df = NULL,
+      jn_plot = NULL
+    )
   }
-  
+
   ######################################### Output Result  #########################################
   if (model_summary == TRUE | return_result == TRUE) {
     model_summary_list <- model_summary(
@@ -165,15 +169,15 @@ integrated_model_summary <- function(data,
   if (simple_slope == TRUE & quite == FALSE) {
     super_print("underline|Slope Estimates at Each Level of Moderators")
     print_table(simple_slope_list$simple_slope_df)
-    super_print('italic|Note: For continuous variable, low and high represent -1 and +1 SD from the mean, respectively.')
+    super_print("italic|Note: For continuous variable, low and high represent -1 and +1 SD from the mean, respectively.")
     print(simple_slope_list$jn_plot)
   }
-  
+
   if (interaction_plot == TRUE) {
     try(print(interaction_plot_object))
   }
-  
-  # warning message 
+
+  # warning message
   plot_logical <- c(interaction_plot, simple_slope, assumption_plot)
   number_of_plot_requested <- length(plot_logical[plot_logical])
   if (number_of_plot_requested > 1) {

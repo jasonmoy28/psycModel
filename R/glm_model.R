@@ -1,7 +1,7 @@
 #' Generalized Linear Regressions
 #'
 #' `r lifecycle::badge("experimental")` \cr
-#' Fit a generalinear regression using `glm`. This function is still in early development stage.
+#' Fit a generalized linear regression using `glm`. This function is still in early development stage.
 #'
 #' @param data data frame
 #' @param response_variable response variable. Support `dplyr::select()` syntax.

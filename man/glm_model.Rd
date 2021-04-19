@@ -34,7 +34,7 @@ an object class of \code{glm} representing the linear regression fit
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
-Fit a generalinear regression using \code{glm}. This function is still in early development stage.
+Fit a generalized linear regression using \code{glm}. This function is still in early development stage.
 }
 \examples{
 fit <- glm_model(

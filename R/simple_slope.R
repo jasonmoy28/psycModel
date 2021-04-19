@@ -108,10 +108,10 @@ simple_slope <- function(data,
 
     colnames(simple_slope_output)[c(1, 2)] <- c(paste(three_way_interaction_factor[3], "Level"), paste(three_way_interaction_factor[2], "Level"))
     jn_plot <- simple_slope_model$jnplot
-  } else{
-    stop('Length of the interaction factor is not correct (must be 2 for two-way interaction and 3 for three-way interaction')
+  } else {
+    stop("Length of the interaction factor is not correct (must be 2 for two-way interaction and 3 for three-way interaction")
   }
-  
+
   simple_slope_list <- list(
     simple_slope_df = simple_slope_output,
     jn_plot = jn_plot

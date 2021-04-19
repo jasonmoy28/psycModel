@@ -85,18 +85,18 @@ integrated_multilevel_model_summary <- function(data,
                                                 quite = FALSE,
                                                 streamline = FALSE,
                                                 return_result = FALSE) {
-  
+
   ##################################### Set up #########################################
   # Temporary disable plots for glmer object
   data <- data_check(data) # check data and coerced into numeric
-  
+
   if (simple_slope == TRUE) {
     if (use_package == "nlme") {
       warning("Switched use_package to lmerTest since you requested simple_slope")
       use_package <- "lmerTest"
     }
   }
-  
+
   response_variable <- data %>%
     dplyr::select(!!enquo(response_variable)) %>%
     names()
@@ -115,7 +115,7 @@ integrated_multilevel_model_summary <- function(data,
   id <- data %>%
     dplyr::select(!!enquo(id)) %>%
     names()
-  
+
   ##################################### Run Model #########################################
   if (is.null(family)) {
     model <- lme_model(
@@ -155,8 +155,8 @@ integrated_multilevel_model_summary <- function(data,
       quite = TRUE
     )
   }
-  
-  
+
+
   ############################### Generate Interaction Plots ###############################
   two_way_interaction_factor <- data %>%
     dplyr::select(!!enquo(two_way_interaction_factor)) %>%
@@ -185,18 +185,22 @@ integrated_multilevel_model_summary <- function(data,
     interaction_plot_object <- NULL
     interaction_plot <- FALSE
   }
-  
+
   ############################### Generate Simple Slope Output ###############################
   if (simple_slope == TRUE) {
-    simple_slope_list = simple_slope(data = data,
-                                     model = model,
-                                     two_way_interaction_factor = two_way_interaction_factor,
-                                     three_way_interaction_factor = three_way_interaction_factor)
+    simple_slope_list <- simple_slope(
+      data = data,
+      model = model,
+      two_way_interaction_factor = two_way_interaction_factor,
+      three_way_interaction_factor = three_way_interaction_factor
+    )
   } else {
-    simple_slope_list = list(simple_slope_df = NULL,
-                             jn_plot = NULL)
+    simple_slope_list <- list(
+      simple_slope_df = NULL,
+      jn_plot = NULL
+    )
   }
-  
+
   ######################################### Output Result  #########################################
   if (model_summary == TRUE) {
     model_summary_list <- model_summary(
@@ -210,25 +214,25 @@ integrated_multilevel_model_summary <- function(data,
   } else {
     model_summary_list <- NULL
   }
-  
-  
+
+
   if (simple_slope == TRUE & quite == FALSE) {
     super_print("underline|Slope Estimates at Each Level of Moderators")
     print_table(simple_slope_list$simple_slope_df)
-    super_print('italic|Note: For continuous variable, low and high represent -1 and +1 SD from the mean, respectively.')
+    super_print("italic|Note: For continuous variable, low and high represent -1 and +1 SD from the mean, respectively.")
     print(simple_slope_list$jn_plot)
   }
-  
+
   if (interaction_plot == TRUE) {
     try(print(interaction_plot_object))
   }
-  # warning message 
+  # warning message
   plot_logical <- c(interaction_plot, simple_slope, assumption_plot)
   number_of_plot_requested <- length(plot_logical[plot_logical])
   if (number_of_plot_requested > 1) {
     warning("You requested > 2 plots. Since 1 plot can be displayed at a time, considering using Rmd for better viewing experience.")
   }
-  
+
   # Return Result
   if (return_result == TRUE) {
     return_list <- list(

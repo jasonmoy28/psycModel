@@ -54,6 +54,3 @@ lm_fit <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width +
 
 three_way_interaction_plot(lm_fit, data = iris)
 }
-\references{
-Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
-}

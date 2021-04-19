@@ -14,5 +14,4 @@ This is a helper function that instruct users of the package how to knit a R Mar
 }
 \examples{
 knit_to_Rmd()
-
 }

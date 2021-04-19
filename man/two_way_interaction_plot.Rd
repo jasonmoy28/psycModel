@@ -69,6 +69,3 @@ label_name <- function(var_name) {
 
 two_way_interaction_plot(lme_fit, data = popular, graph_label_name = label_name)
 }
-\references{
-Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
-}

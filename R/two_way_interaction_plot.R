@@ -11,8 +11,6 @@
 #' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
 #' @param plot_color default if `F`. Set to `TRUE` if you want to plot in color
 #'
-#' @references
-#' Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
 #' @return a object of class `ggplot`
 #' @export
 #'

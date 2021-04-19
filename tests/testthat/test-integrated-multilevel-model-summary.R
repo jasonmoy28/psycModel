@@ -8,7 +8,7 @@ testthat::test_that(desc = "simple_slope test", {
     id = class,
     simple_slope = TRUE, # you can request simple slope
     model_summary = TRUE,
-    quite = T, 
+    quite = T,
     interaction_plot = FALSE,
     return_result = TRUE
   )
@@ -57,7 +57,7 @@ testthat::test_that(desc = "", {
       id = herd,
       data = lme4::cbpp,
       model_summary = TRUE,
-      quite = TRUE, 
+      quite = TRUE,
       return_result = TRUE
     ),
     regexp = "coerced"
