@@ -2,12 +2,14 @@
 #'
 #' `r lifecycle::badge("experimental")` \cr
 #' This is a helper function for knitting Rmd. Due to technological limitation, the output cannot knit to PDF in Rmd directly. It uses the pagedown::chrome_print() in the backend.
-#'  You must first knit to HTML, then you can use this function to covert them to PDF if you wish. I am sorry. I can't find any way to implement it.
-#'  If you know how to implement it, please submit an issue on github to let me know.
+#'  You must first knit to HTML, then you can use this function to covert them to PDF if you wish. I know this is a workaround to the issue, 
+#'  but the problem is with the latex engine printing unicode character. If you happen to know how to fix it, please let me know. 
 #'
 #' @param file_path file path to the HTML file (can be relative if you are in a R project)
 #' @param dir file path to the directory of all HTML files (can be relative if you are in a R project)
+#' @param scale the scale of the PDF
 #' @param render_exist overwrite exist PDF. Default is `F`
+#'
 #' @return no return
 #' @export
 #'
@@ -19,10 +21,12 @@
 #' }
 html_to_pdf <- function(file_path = NULL,
                         dir = NULL,
+                        scale = 1,
                         render_exist = F) {
   if (requireNamespace("pagedown", quietly = TRUE)) {
+    pagedown::find_chrome()
     if (!is.null(file_path)) {
-      pagedown::chrome_print(input = file_path)
+      pagedown::chrome_print(input = file_path,options = list(scale = scale))
     } else if (!is.null(dir)) {
       files <- list.files(dir)
       if (render_exist == F) {

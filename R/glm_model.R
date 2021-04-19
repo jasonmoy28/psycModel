@@ -29,7 +29,6 @@ glm_model <- function(data,
                       three_way_interaction_factor = NULL,
                       family,
                       quite = FALSE) {
-  
   getfun <- function(x) {
     if (length(grep("::", x)) > 0) {
       parts <- strsplit(x, "::")[[1]]
@@ -66,10 +65,10 @@ glm_model <- function(data,
     dplyr::select(!!enquo(three_way_interaction_factor)) %>%
     names()
   predictor_variable <- predictor_variable[!predictor_variable %in% c(response_variable)]
-  
+
   # data_check after parsing variable
   data <- data_check(data)
-  
+
   ## remove response variable and id from random_effect_factors
   predictor_variable <- predictor_variable[!predictor_variable %in% c(response_variable)]
   two_way_interaction_factor <- two_way_interaction_factor[!two_way_interaction_factor %in% c(response_variable)]

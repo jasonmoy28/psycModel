@@ -77,10 +77,10 @@ efa_summary <- function(data,
   if (sphericity_p < 0.001) {
     sphericity_p_output <- "p < 0.001"
   } else {
-    sphericity_p_format <- format_round(sphericity_p, 3)
+    sphericity_p_format <- format_round(sphericity_p, digits)
     sphericity_p_output <- glue::glue("p = {sphericity_p_format}")
   }
-  sphericity_chi <- format_round(factor_structure_test$sphericity$chisq, 3)
+  sphericity_chi <- format_round(factor_structure_test$sphericity$chisq, digits)
   sphericity_df <- factor_structure_test$sphericity$dof
 
   KMO_MSA_var <- factor_structure_test$KMO$MSA_variable %>%
@@ -88,7 +88,7 @@ efa_summary <- function(data,
     tibble::rownames_to_column("Var") %>%
     dplyr::rename(`KMO Value` = .data$.)
 
-  KMO_MSA_overall <- as.numeric(format_round(factor_structure_test$KMO$MSA, 3))
+  KMO_MSA_overall <- as.numeric(format_round(factor_structure_test$KMO$MSA, digits = digits))
 
   KMO_MSA_table <- factor_structure_test$KMO$MSA %>%
     tibble::as_tibble_col(column_name = "KMO Value") %>%
@@ -133,7 +133,7 @@ efa_summary <- function(data,
     }
     cat("\n")
     super_print("underline|KMO Measure of Sampling Adequacy")
-    print_table(KMO_MSA_table, digits = 0)
+    print_table(KMO_MSA_table, digits = digits)
     cat("\n")
   }
   if (efa_plot == TRUE) {

@@ -203,21 +203,15 @@ model_summary <- function(model,
     warning("This model is not formally supported. Please proceed with cautious. The model is passed to parameters::parameters() to extract relevant parameters")
   }
   
-  model_performance_df <- performance::performance(model)
+  performance_warning = utils::capture.output(model_performance_df <- performance::model_performance(model))
+  if (length(performance_warning) > 0) {
+    warning(performance_warning)
+  }
   colnames(model_performance_df) <- stringr::str_replace_all(pattern = "R2", replacement = "R^2", string = colnames(model_performance_df))
   colnames(model_performance_df) <- stringr::str_replace_all(pattern = "Sigma", replacement = "$sigma$", string = colnames(model_performance_df))
   ################################################  Output Table  ################################################
   if (quite == FALSE) { # check whether quite the entire output table
-    if (streamline == TRUE) { # streamline model output
-      cat("\n \n")
-      super_print("underline|Model Estimates")
-      # super_print model estimates table and model performance table
-      print_table(model_summary_df)
-      super_print("\n \n")
-      super_print("underline|Goodness of Fit")
-      print_table(model_performance_df)
-    } else { # full model output
-      # header
+    if (streamline == FALSE) {
       cat("\n \n")
       super_print("underline|Model Summary")
       super_print("Model Type = {model_type}")
@@ -227,16 +221,16 @@ model_summary <- function(model,
         super_print("Family = {family}")
       }
       super_print("\n")
-      
-      # super_print model estimates table
-      super_print("underline|Model Estimates")
-      print_table(model_summary_df)
-      super_print("\n")
-      
-      # super_print model performance table
-      super_print("underline|Goodness of Fit")
-      print_table(model_performance_df)
-      
+    }
+    
+    # super_print model estimates table
+    super_print("underline|Model Estimates")
+    print_table(model_summary_df)
+    super_print("\n")
+    # super_print model performance table
+    super_print("underline|Goodness of Fit")
+    print_table(model_performance_df)
+    if (streamline == FALSE) {
       # Check assumption
       super_print("\n")
       super_print("underline|Model Assumption Check")
@@ -307,35 +301,36 @@ model_summary <- function(model,
                  }
         )
       }
-    }
-    
-    if (outlier_check == TRUE) {
-      tryCatch(super_print(performance::check_outliers(model)),
-               error = function(cond) {
-                 super_print("blue|Unable to check autocorrelation. Try changing na.action to na.omit.")
-               }
-      )
-    }
-    
-    if (heteroscedasticity_check == TRUE) {
-      try(performance::check_heteroscedasticity(model))
-    }
-    
-    if (collinearity_check == TRUE) {
-      try({
-        collinearity_df <- performance::check_collinearity(model)
-        if (all(collinearity_df$VIF < 5)) {
-          super_print("green|OK: No multicolinearity detected (VIF < 5)")
-        } else if (any(collinearity_df$VIF >= 5) & all(collinearity_df$VIF < 10)) {
-          super_print("yellow|Cautious: Moderate multicolinearity detected  (5 < VIF < 10). Please inspect the following table to identify high correlation factors.")
-          super_print("underline|Multicollinearity Table ")
-          print_table(collinearity_df)
-        } else if (any(collinearity_df$VIF > 10)) {
-          super_print("red|Warning: Severe multicolinearity detected (VIF > 10). Please inspect the following table to identify high correlation factors.")
-          super_print("underline|Multicollinearity Table ")
-          print_table(collinearity_df)
-        }
-      })
+      
+      
+      if (outlier_check == TRUE) {
+        tryCatch(super_print(performance::check_outliers(model)),
+                 error = function(cond) {
+                   super_print("blue|Unable to check autocorrelation. Try changing na.action to na.omit.")
+                 }
+        )
+      }
+      
+      if (heteroscedasticity_check == TRUE) {
+        try(performance::check_heteroscedasticity(model))
+      }
+      
+      if (collinearity_check == TRUE) {
+        try({
+          collinearity_df <- performance::check_collinearity(model)
+          if (all(collinearity_df$VIF < 5)) {
+            super_print("green|OK: No multicolinearity detected (VIF < 5)")
+          } else if (any(collinearity_df$VIF >= 5) & all(collinearity_df$VIF < 10)) {
+            super_print("yellow|Cautious: Moderate multicolinearity detected  (5 < VIF < 10). Please inspect the following table to identify high correlation factors.")
+            super_print("underline|Multicollinearity Table ")
+            print_table(collinearity_df)
+          } else if (any(collinearity_df$VIF > 10)) {
+            super_print("red|Warning: Severe multicolinearity detected (VIF > 10). Please inspect the following table to identify high correlation factors.")
+            super_print("underline|Multicollinearity Table ")
+            print_table(collinearity_df)
+          }
+        })
+      }
     }
   } # quite stop here
   
@@ -343,25 +338,29 @@ model_summary <- function(model,
   # Check assumption plot
   if (assumption_plot == TRUE) {
     if (all(unlist(lapply(c("gridExtra", "qqplotr", "see"), requireNamespace)))) {
-      tryCatch({
-        assumption_plot = suppressMessages(performance::check_model(model))
-        print(assumption_plot)
-      },
-      error = function(cond) {
-        warning("assumption_plot does not support this model type")
-        warning(cond)
-      })
+      tryCatch(
+        {
+          assumption_plot <- suppressMessages(performance::check_model(model))
+          print(assumption_plot)
+        },
+        error = function(cond) {
+          warning("assumption_plot does not support this model type")
+          warning(cond)
+        }
+      )
     } else {
       stop("Please install.packages(c('gridExtra','qqplotr','see')) to use assumption_plot")
     }
-  } else{
-    assumption_plot = NULL
+  } else {
+    assumption_plot <- NULL
   }
   cat("\n")
   if (return_result == TRUE) {
-    return_list = list(model_summary = model_summary_df, 
-                model_performance_df = model_performance_df, 
-                assumption_plot = assumption_plot)
+    return_list <- list(
+      model_summary = model_summary_df,
+      model_performance_df = model_performance_df,
+      assumption_plot = assumption_plot
+    )
     
     return(return_list)
   }

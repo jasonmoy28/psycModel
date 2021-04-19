@@ -137,7 +137,7 @@ glme_model <- function(data,
   fixed_factors <- c(random_effect_factors, non_random_effect_factors)
 
   # Random factor only include individual_level factor
-  random_factors <- c(1,random_effect_factors)
+  random_factors <- c(1, random_effect_factors)
 
   two_way_interaction_terms <- NULL
   three_way_interaction_terms <- NULL
