@@ -51,7 +51,8 @@ Suggests:
     see,
     semPlot,
     testthat (>= 3.0.0),
-    tidyselect
+    tidyselect,
+    fansi
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
