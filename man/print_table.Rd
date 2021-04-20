@@ -12,7 +12,7 @@ print_table(data_frame, digits = 3)
 \item{digits}{number of digits to round to}
 }
 \value{
-none
+no return value
 }
 \description{
 Rich-text fitted table printing in console

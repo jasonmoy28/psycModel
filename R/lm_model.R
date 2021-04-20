@@ -1,7 +1,9 @@
 #' Linear Regressions / ANOVA / ANCOVA
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' Fit a linear regression using `lm`. Linear regression is used to explore the effect of continuous variables / categorical variables in predicting a normally-distributed continuous variables. If you are using a categorical predictor to predict a continuous variable, some may call it a ANOVA / ANCOVA while it is just a special form of linear regression). In this package, I will not build separate function for ANOVA & ANCOVA since they are the same as linear regression
+#' Fit a linear regression using `lm()`. Linear regression is used to explore the effect of continuous variables / categorical variables in predicting a normally-distributed continuous variables. 
+#' If you are using a categorical predictor to predict a continuous variable, some may call it a ANOVA / ANCOVA while it is just a special form of linear regression). 
+#' In this package, I will not build separate function for ANOVA & ANCOVA since they are the same as linear regression
 #'
 #' @param data data frame
 #' @param response_variable response variable. Support `dplyr::select()` syntax.
@@ -10,8 +12,7 @@
 #' @param two_way_interaction_factor two-way interaction factors. You need to pass 2+ factor. Support `dplyr::select()` syntax.
 #' @param three_way_interaction_factor three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support `dplyr::select()` syntax.
 #'
-#' @return
-#' an object class of `lm` representing the linear regression fit
+#' @return an object class of `lm` representing the linear regression fit
 #' @export
 #'
 #' @examples

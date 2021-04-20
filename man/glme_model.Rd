@@ -16,43 +16,43 @@ glme_model(
   id,
   estimation_method = "REML",
   opt_control = "bobyqa",
-  na.action = stats::na.exclude,
-  quite = F
+  na.action = stats::na.omit,
+  quite = FALSE
 )
 }
 \arguments{
 \item{data}{data frame}
 
-\item{model}{lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates}
+\item{model}{\code{lme4} model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates. This is not tested. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
 
-\item{response_variable}{character or vector of length 1}
+\item{response_variable}{DV (i.e., outcome variable / response variable). Length of 1. Support \code{dplyr::select()} syntax.}
 
-\item{random_effect_factors}{vector. Level-1 variables (e.g., individual-level)}
+\item{random_effect_factors}{random effect factors (level-1 variable for HLM people) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support \code{dplyr::select()} syntax.}
 
-\item{non_random_effect_factors}{optional vector. level-2 variables (e.g., group-level)}
+\item{non_random_effect_factors}{non-random effect factors (level-2 variable for HLM people). Factors only need to estimate fixed effect. Support \code{dplyr::select()} syntax.}
 
 \item{family}{a GLM family. It will passed to the family argument in glmer. See \code{?glmer} for possible options.}
 
-\item{two_way_interaction_factor}{optional vector of length more than 2. Default to \code{null}}
+\item{two_way_interaction_factor}{two-way interaction factors. You need to pass 2+ factor. Support \code{dplyr::select()} syntax.}
 
-\item{three_way_interaction_factor}{optional vector of length 3. Do not include two-way interaction factors if this is not null. Default to \code{null}}
+\item{three_way_interaction_factor}{three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support \code{dplyr::select()} syntax.}
 
-\item{id}{character or vector of length 1. The nesting variable (e.g. group)}
+\item{id}{the nesting variable (e.g. group, time). Length of 1. Support \code{dplyr::select()} syntax.}
 
 \item{estimation_method}{character. \code{ML} or \code{REML} default to \code{REML}.}
 
-\item{opt_control}{character. default to \code{bobyqa}}
+\item{opt_control}{character. default is \code{bobyqa}. See \code{?lme4::glmerControl} for more options.}
 
-\item{na.action}{default to \code{stats::na.exclude}.}
+\item{na.action}{default is \code{stats::na.omit}. Another common option is \code{na.exclude}}
 
 \item{quite}{suppress printing output}
 }
 \value{
-An object of class "glmerMod" representing the linear mixed-effects model fit.
+An object of class \code{glmerMod} representing the linear mixed-effects model fit.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
-Fit a generalized linear mixed effect model using \code{lme4::glmer}. This function is still in early development stage.
+Fit a generalized linear mixed effect model using \code{lme4::glmer()}. This function is still in early development stage.
 }
 \examples{
 fit <- glme_model(

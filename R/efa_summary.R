@@ -2,11 +2,11 @@
 #'
 #' `r lifecycle::badge("stable")` \cr
 #' The function is used to fit a exploratory factor analysis model. It will first find the optimal number of factors using parameters::n_factors. Once the optimal number of factor is determined, the function will fit the model using
-#' psych::fa(). Optionally, you can request a post-hoc CFA model that fit the EFA model using CFA which gives you more fit indexes (e.g., CFI, RMSEA, TLI)
+#' `psych::fa()`. Optionally, you can request a post-hoc CFA model based on the EFA model which gives you more fit indexes (e.g., CFI, RMSEA, TLI)
 #'
 #' @param data data frame
-#' @param cols columns. dplyr::select syntax.
-#' @param rotation the rotation to use in estimation. Default is oblimin. Options are 'none', 'varimax', 'quartimax', 'promax', 'oblimin', or 'simplimax'
+#' @param cols columns. Support `dplyr::select()` syntax.
+#' @param rotation the rotation to use in estimation. Default is 'oblimin'. Options are 'none', 'varimax', 'quartimax', 'promax', 'oblimin', or 'simplimax'
 #' @param n_factor number of factors for EFA. It will bypass the initial optimization algorithm, and fit the EFA model using this specified number of factor
 #' @param efa_plot show explained variance by number of factor plot. default is `TRUE`.
 #' @param digits number of digits to round to
@@ -16,7 +16,7 @@
 #' @param streamline print streamlined output
 #' @param quite suppress printing output
 #'
-#' @return an `fa` object from `psych`
+#' @return a `fa` object from `psych`
 #'
 #' @export
 #'

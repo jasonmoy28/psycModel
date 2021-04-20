@@ -2,17 +2,17 @@
 #'
 #' `r lifecycle::badge("stable")` \cr
 #' The function fits a CFA model using the `lavaan::cfa()`. Users can fit single and multiple factors CFA, and it also supports multilevel CFA (by specifying the group).
-#' Users can fit the model by passing the items using `dplyr::select` syntax or an explicit lavaan model for more versatile usage.
+#' Users can fit the model by passing the items using `dplyr::select()` syntax or an explicit lavaan model for more versatile usage.
 #' All arguments (except the CFA items) must be explicitly named (e.g., model = your-model; see example for inappropriate behavior).
 #'
 #' @param data data frame
-#' @param ... CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for examples. Support `dplyr::select` syntax.
-#' @param model explicit lavaan model. Must be specify with `model = lavaan_model_syntax`. `r lifecycle::badge("experimental")`
-#' @param group optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country). Support `dplyr::select` syntax.
-#' @param ordered Default is `FALSE`. If it is set to `TRUE`, lavaan will treat it as a ordinal variable and use `DWLS` instead of `ML`
+#' @param ... CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for examples. Support `dplyr::select()` syntax.
+#' @param model explicit `lavaan` model. Must be specify with `model = lavaan_model_syntax`. `r lifecycle::badge("experimental")`
+#' @param group optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country). Support `dplyr::select()` syntax.
+#' @param ordered Default is `FALSE`. If it is set to `TRUE`, `lavaan` will treat it as a ordinal variable and use `DWLS` instead of `ML`
 #' @param group_partial Items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').
 #' @param digits number of digits to round to
-#' @param return_result  If it is set to `TRUE`, it will return the lavaan model
+#' @param return_result  If it is set to `TRUE`, it will return the `lavaan` model
 #' @param quite suppress printing output
 #' @param model_covariance print model covariance. Default is `TRUE`
 #' @param model_variance print model variance. Default is `TRUE`
@@ -42,7 +42,7 @@
 #' )
 #'
 #' # Fitting a multilevel single factor CFA model
-#' \dontrun{
+#' \donttest{
 #' fit <- cfa_summary(
 #'   data = lavaan::HolzingerSwineford1939,
 #'   x1:x3,
@@ -56,7 +56,7 @@
 #' # Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)
 #' # Note in the below function how I added `model = ` in front of the lavaan model.
 #' # Similarly, the same rule apply for all arguments (e.g., `ordered = FALSE` instead of just `FALSE`)
-#' \dontrun{
+#' \donttest{
 #' fit <- cfa_summary(
 #'   model = "visual  =~ x1 + x2 + x3; textual =~ x4 + x5 + x6;",
 #'   data = lavaan::HolzingerSwineford1939,

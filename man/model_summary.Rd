@@ -18,7 +18,7 @@ model_summary(
 
 \item{digits}{number of digits to round to}
 
-\item{assumption_plot}{Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()}
+\item{assumption_plot}{Generate an panel of plots that check major assumptions. It is usually recommended to inspect model assumption violation visually. In the background, it calls \code{performance::check_model()}.}
 
 \item{quite}{suppress printing output}
 
@@ -27,7 +27,7 @@ model_summary(
 \item{return_result}{It set to \code{TRUE}, it return the model estimates data frame.}
 }
 \value{
-model estimate, model performance, and the assumption plot (only when \code{assumption_plot} = \code{TRUE})
+a list of model estimate data frame, model performance data frame, and the assumption plot (an \code{ggplot} object)
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr

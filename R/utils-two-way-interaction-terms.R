@@ -2,7 +2,7 @@
 #' Create interaction terms for regression models
 #'
 #' @param interaction_terms vector. names of the interaction terms
-#' @return vector.
+#' @return a vector of all two-way interaction terms
 #'
 #' @keywords internal
 #'

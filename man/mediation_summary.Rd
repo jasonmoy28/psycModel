@@ -47,9 +47,8 @@ an object from \code{lavaan}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
 It currently only support simple mediation analysis.
-In the backend, it called the lavaan::sem() model. I am trying to implement multilevel mediation in \code{lavaan}.
+In the backend, it called the \code{lavaan::sem()} model. I am trying to implement multilevel mediation in \code{lavaan}.
 In the future, I will try supporting moderated mediation (through \code{lavaan} or \code{mediation}) and mediation with latent variable (through \code{lavaan}).
-There is a promising package called \code{brms} that use bayesian statistics. If you are interested, you can check that one out.
 }
 \examples{
 mediation_summary(

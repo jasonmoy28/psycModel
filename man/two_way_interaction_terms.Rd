@@ -11,7 +11,7 @@ two_way_interaction_terms(interaction_terms)
 \item{interaction_terms}{vector. names of the interaction terms}
 }
 \value{
-vector.
+a vector of all two-way interaction terms
 }
 \description{
 Interaction term for Mixed Effect Model (internal use only)

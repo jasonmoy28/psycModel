@@ -13,7 +13,7 @@
 #' @param streamline print streamlined output
 #' @param quite suppress printing output
 #'
-#' @return `psych::alpha` for unidimensional scale, and `psych::omega` for multidimensional scale.
+#' @return a `psych::alpha` object for unidimensional scale, and a `psych::omega` object for multidimensional scale.
 #' @export
 #'
 #' @examples

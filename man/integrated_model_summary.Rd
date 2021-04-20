@@ -30,7 +30,7 @@ integrated_model_summary(
 
 \item{response_variable}{DV (i.e., outcome variable / response variable). Length of 1. Support \code{dplyr::select()} syntax.}
 
-\item{predictor_variable}{IV.  Support \code{dplyr::select()} syntax.}
+\item{predictor_variable}{IV. Support \code{dplyr::select()} syntax.}
 
 \item{two_way_interaction_factor}{two-way interaction factors. You need to pass 2+ factor. Support \code{dplyr::select()} syntax.}
 
@@ -42,9 +42,9 @@ integrated_model_summary(
 
 \item{graph_label_name}{optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)}
 
-\item{model_summary}{print model summary}
+\item{model_summary}{print model summary. Required to be \code{TRUE} if you want \code{assumption_plot}.}
 
-\item{interaction_plot}{generate interaction plot}
+\item{interaction_plot}{generate the interaction plot. Default is \code{TRUE}}
 
 \item{y_lim}{the plot's upper and lower limit for the y-axis. Length of 2. Example: \code{c(lower_limit, upper_limit)}}
 
@@ -52,9 +52,9 @@ integrated_model_summary(
 
 \item{digits}{number of digits to round to}
 
-\item{simple_slope}{Compute the slope differing with ± 1 SD of the IVs. In the background, it calls interaction:sim_slopes()}
+\item{simple_slope}{Slope estimate at +1/-1 SD and the mean of the moderator. Uses \code{interactions::sim_slope()} in the background.}
 
-\item{assumption_plot}{Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()}
+\item{assumption_plot}{Generate an panel of plots that check major assumptions. It is usually recommended to inspect model assumption violation visually. In the background, it calls \code{performance::check_model()}}
 
 \item{quite}{suppress printing output}
 
@@ -63,12 +63,12 @@ integrated_model_summary(
 \item{return_result}{If it is set to \code{TRUE} (default is \code{FALSE}), it will return the \code{model}, \code{model_summary}, and \code{plot} (if the interaction term is included)}
 }
 \value{
-return a list of all requested items in the order of model, model_summary, plot
+a list of all requested items in the order of model, model_summary, interaction_plot, simple_slope
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 It will first compute the linear regression. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function.
-If you requested simple slope summary, it will calls the interaction::sim_slopes (Long, 2019).
+If you requested simple slope summary, it will calls the \code{interaction::sim_slopes()}
 }
 \examples{
 fit <- integrated_model_summary(
@@ -77,7 +77,7 @@ fit <- integrated_model_summary(
   predictor_variable = tidyselect::everything(),
   two_way_interaction_factor = c(Sepal.Width, Species)
 )
-\dontrun{
+\donttest{
 fit <- integrated_model_summary(
   data = iris,
   response_variable = "Sepal.Length",

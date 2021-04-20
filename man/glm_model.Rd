@@ -19,7 +19,7 @@ glm_model(
 
 \item{response_variable}{response variable. Support \code{dplyr::select()} syntax.}
 
-\item{predictor_variable}{predictor variable. Support \code{dplyr::select()} syntax. It will automatically remove the response variable from predictor variable, so you can use \code{contains()} or \code{start_with()} safely.}
+\item{predictor_variable}{predictor variable. Support \code{dplyr::select()} syntax.}
 
 \item{two_way_interaction_factor}{two-way interaction factors. You need to pass 2+ factor. Support \code{dplyr::select()} syntax.}
 
@@ -34,7 +34,7 @@ an object class of \code{glm} representing the linear regression fit
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
-Fit a generalized linear regression using \code{glm}. This function is still in early development stage.
+Fit a generalized linear regression using \code{glm()}. This function is still in early development stage.
 }
 \examples{
 fit <- glm_model(

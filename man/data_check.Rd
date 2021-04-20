@@ -9,6 +9,9 @@ data_check(data)
 \arguments{
 \item{data}{data frame}
 }
+\value{
+a data frame with all columns converted to numeric
+}
 \description{
 Data Check (internal use only)
 }

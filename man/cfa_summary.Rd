@@ -23,13 +23,13 @@ cfa_summary(
 \arguments{
 \item{data}{data frame}
 
-\item{...}{CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for examples. Support \code{dplyr::select} syntax.}
+\item{...}{CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for examples. Support \code{dplyr::select()} syntax.}
 
-\item{model}{explicit lavaan model. Must be specify with \code{model = lavaan_model_syntax}. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
+\item{model}{explicit \code{lavaan} model. Must be specify with \code{model = lavaan_model_syntax}. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
 
-\item{group}{optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country). Support \code{dplyr::select} syntax.}
+\item{group}{optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country). Support \code{dplyr::select()} syntax.}
 
-\item{ordered}{Default is \code{FALSE}. If it is set to \code{TRUE}, lavaan will treat it as a ordinal variable and use \code{DWLS} instead of \code{ML}}
+\item{ordered}{Default is \code{FALSE}. If it is set to \code{TRUE}, \code{lavaan} will treat it as a ordinal variable and use \code{DWLS} instead of \code{ML}}
 
 \item{digits}{number of digits to round to}
 
@@ -45,7 +45,7 @@ cfa_summary(
 
 \item{quite}{suppress printing output}
 
-\item{return_result}{If it is set to \code{TRUE}, it will return the lavaan model}
+\item{return_result}{If it is set to \code{TRUE}, it will return the \code{lavaan} model}
 }
 \value{
 a \code{lavaan} object
@@ -53,7 +53,7 @@ a \code{lavaan} object
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 The function fits a CFA model using the \code{lavaan::cfa()}. Users can fit single and multiple factors CFA, and it also supports multilevel CFA (by specifying the group).
-Users can fit the model by passing the items using \code{dplyr::select} syntax or an explicit lavaan model for more versatile usage.
+Users can fit the model by passing the items using \code{dplyr::select()} syntax or an explicit lavaan model for more versatile usage.
 All arguments (except the CFA items) must be explicitly named (e.g., model = your-model; see example for inappropriate behavior).
 }
 \details{
@@ -73,7 +73,7 @@ fit <- cfa_summary(
 )
 
 # Fitting a multilevel single factor CFA model
-\dontrun{
+\donttest{
 fit <- cfa_summary(
   data = lavaan::HolzingerSwineford1939,
   x1:x3,
@@ -87,7 +87,7 @@ fit <- cfa_summary(
 # Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)
 # Note in the below function how I added `model = ` in front of the lavaan model.
 # Similarly, the same rule apply for all arguments (e.g., `ordered = FALSE` instead of just `FALSE`)
-\dontrun{
+\donttest{
 fit <- cfa_summary(
   model = "visual  =~ x1 + x2 + x3; textual =~ x4 + x5 + x6;",
   data = lavaan::HolzingerSwineford1939,

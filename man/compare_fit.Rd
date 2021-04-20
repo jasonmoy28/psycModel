@@ -13,7 +13,7 @@ compare_fit(
 )
 }
 \arguments{
-\item{...}{model. If it is a lavaan object, it will try to perform measurement invariance. Other model type will passed to performance::compare_performance}
+\item{...}{model. If it is a \code{lavaan} object, it will try to compute the measurement invariance. Other model types will be passed to \code{performance::compare_performance()}.}
 
 \item{digits}{number of digits to round to}
 
@@ -28,7 +28,7 @@ data frame with fit indices and change in fit indices
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-Compare the fit indices models (see below for model support)
+Compare the fit indices of models (see below for model support)
 }
 \examples{
 # lme model

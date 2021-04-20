@@ -16,7 +16,10 @@
 * `quite` and `streamline` support in all models that print output
 * Give instruction on how to use R Markdown (see `knit_to_Rmd`)
 
+
+
 # psycModel 0.2.1
+
 **Major Feature:**  
 * Support linear regression <br/>
 * Support exploratory factor analysis <br/>

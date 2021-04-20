@@ -12,3 +12,4 @@ version_checklist.md
 ^Meta$
 ^cran-comments\.md$
 ^revdep$
+^CRAN-RELEASE$

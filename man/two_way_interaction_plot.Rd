@@ -24,14 +24,18 @@ two_way_interaction_plot(
 
 \item{y_lim}{the plot's upper and lower limit for the y-axis. Length of 2. Example: \code{c(lower_limit, upper_limit)}}
 
-\item{plot_color}{default if \code{F}. Set to \code{TRUE} if you want to plot in color}
+\item{plot_color}{default if \code{FALSE}. Set to \code{TRUE} if you want to plot in color}
 }
 \value{
-a object of class \code{ggplot}
+an object of class \code{ggplot}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below. I recommend using concurrently with \code{lm_model} or \code{lme_model}. Although I strive to work with outside model, I have yet to test all use-cases thus I cannot guarantee it works nor give useful debug messages.
+The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below.
+I recommend using concurrently with \code{lm_model} or \code{lme_model}.
+}
+\details{
+It appears that ``predict` cannot handle categorical factors. All variables are converted to numeric before plotting.
 }
 \examples{
 # If you pass the model directly, it can't extract the data-frame from fit object

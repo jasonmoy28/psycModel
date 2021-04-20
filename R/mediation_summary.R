@@ -1,10 +1,9 @@
 #' Mediation Analysis
 #'
 #' `r lifecycle::badge("experimental")` \cr
-#' It currently only support simple mediation analysis.
-#' In the backend, it called the lavaan::sem() model. I am trying to implement multilevel mediation in `lavaan`.
+#' It currently only support simple mediation analysis. 
+#' In the backend, it called the `lavaan::sem()` model. I am trying to implement multilevel mediation in `lavaan`.
 #' In the future, I will try supporting moderated mediation (through `lavaan` or `mediation`) and mediation with latent variable (through `lavaan`).
-#' There is a promising package called `brms` that use bayesian statistics. If you are interested, you can check that one out.
 #'
 #' @param data data frame
 #' @param response_variable response variable. Support `dplyr::select()` syntax.

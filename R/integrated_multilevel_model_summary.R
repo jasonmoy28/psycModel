@@ -1,12 +1,12 @@
 #' Integrated Function for Mixed Effect Model
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' It will first compute the mixed effect model. It will use either the nlme::lme or the lmerTest::lmer for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model.
-#' Then, it will print the model summary and assumption_plot if you requested it. If you requested the interaction plot (default is `TRUE`), it will graph the interaction (Currently only support lme model not glme)
-#' If you requested simple slope summary, it will uses the interaction::sim_slopes.
+#' It will first compute the mixed effect model. It will use either the `nlme::lme` or the `lmerTest::lmer` for linear mixed effect model. It will use `lme4::glmer` for generalized linear mixed effect model.
+#' Then, it will print the model summary and the panel of the plots that are useful for checking assumption (default is `FALSE`). If you requested the interaction plot (default is `TRUE`), it will graph the interaction (Currently only support `lme` model but not `glme`)
+#' If you requested simple slope summary, it will uses the `interaction::sim_slopes()` to generate the slope estimate at varying level of the moderator (see `?simple_slope` for more detail)
 #'
 #' @param data data frame
-#' @param model lme4 model syntax. Support more complicated model structure from lme4. It is not well-tested to handle all edge cases. `r lifecycle::badge("experimental")`
+#' @param model `lme4` model syntax. Support more complicated model structure from `lme4`. It is not well-tested to ensure accuracy `r lifecycle::badge("experimental")`
 #' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select()` syntax.
 #' @param random_effect_factors random effect factors (level-1 variable for HLM from a HLM perspective) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support `dplyr::select()` syntax.
 #' @param non_random_effect_factors non-random effect factors (level-2 variable from a HLM perspective). Factors only need to estimate fixed effect. Support `dplyr::select()` syntax.
@@ -16,23 +16,22 @@
 #' @param graph_label_name optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)
 #' @param estimation_method character. `ML` or `REML` default is `REML`.
 #' @param return_result If it is set to `TRUE` (default is `FALSE`), it will return the `model`, `model_summary`, and `plot` (`plot` if the interaction term is included)
-#' @param na.action default is `stats::na.exclude`. Required to be `stats::na.omit` if assumption_plot if `TRUE`. It should produce similar result, but you should check using `na.exclude` to confirm.
+#' @param na.action default is `stats::na.omit`. Another common option is `na.exclude`
 #' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
-#' @param opt_control default is `optim` for `lme` and `bobyqa` for lmerTest
+#' @param opt_control default is `optim` for `lme` and `bobyqa` for `lmerTest`.
 #' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
 #' @param plot_color If it is set to `TRUE` (default is `FALSE`), the interaction plot will plot with color.
-#' @param use_package Default is `nlme`. Only available for linear mixed effect model. Options are `nlme` or `lmerTest`,`lme4`(`'lme4` return similar result as `lmerTest` except the return model)
+#' @param use_package Default is `lmerTest`. Only available for linear mixed effect model. Options are `nlme`, `lmerTest`, or `lme4`(`'lme4` return similar result as `lmerTest` except the return model)
 #' @param quite suppress printing output
 #' @param digits number of digits to round to
-#' @param simple_slope Compute the slope differing with ± 1 SD of the IVs. In the background, it calls interaction:sim_slopes()
-#' @param assumption_plot Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()
+#' @param simple_slope Slope estimate at ± 1 SD and the mean of the moderator. Uses `interactions::sim_slope()` in the background.
+#' @param assumption_plot Generate an panel of plots that check major assumptions. It is usually recommended to inspect model assumption violation visually. In the background, it calls `performance::check_model()`.
 #' @param streamline print streamlined output.
 #' @param family a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options. `r lifecycle::badge("experimental")`
-#' @param model_summary print model summary
-#' @param interaction_plot generate interaction plot
+#' @param model_summary print model summary.  Required to be `TRUE` if you want `assumption_plot`.
+#' @param interaction_plot generate interaction plot. Default is `TRUE`
 #'
-#' @return
-#' return a list of all requested items in the order of model, model_summary, plot
+#' @return a list of all requested items in the order of model, model_summary, interaction_plot, simple_slope
 #' @export
 #'
 #' @examples
@@ -45,7 +44,7 @@
 #'   graph_label_name = c("popular", "extraversion", "teacher experience"),
 #'   id = class
 #' )
-#' \dontrun{
+#' \donttest{
 #' fit <- integrated_multilevel_model_summary(
 #'   data = popular,
 #'   response_variable = popular,

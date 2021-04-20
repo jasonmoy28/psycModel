@@ -9,11 +9,11 @@ cfa_groupwise(data, ..., group, model = NULL, ordered = FALSE)
 \arguments{
 \item{data}{data frame}
 
-\item{...}{CFA items. Support \code{dplyr::select} syntax.}
+\item{...}{CFA items. Support \code{dplyr::select()} syntax.}
 
-\item{group}{character. group variable. Support \code{dplyr::select} syntax.}
+\item{group}{character. group variable. Support \code{dplyr::select()} syntax.}
 
-\item{model}{explicit lavaan model. Must be specify with \code{model = lavaan_model_syntax}. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
+\item{model}{explicit \code{lavaan} model. Must be specify with \code{model = lavaan_model_syntax}. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
 
 \item{ordered}{logical. default is \code{FALSE}. If it is set to \code{TRUE}, lavaan will treat it as a ordinal variable and use \code{DWLS} instead of \code{ML}}
 }
@@ -22,7 +22,8 @@ data frame with group-wise CFA result
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-This function will run N number of CFA where N = \code{length(group)}, and report the fit measures of CFA in each group. The function is intended to help you get a better understanding of which group has abnormal fit indicator
+This function will run N number of CFA where N = \code{length(group)}, and report the fit measures of CFA in each group.
+The function is intended to help you get a better understanding of which group has abnormal fit indicator
 }
 \details{
 All argument must be explicitly specified. If not, all arguments will be treated as CFA items

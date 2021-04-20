@@ -1,11 +1,12 @@
 #' Linear Mixed Effect Model
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' Fit a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the `nlme::lme` (Pinheiro, 2006)  or the `lmerTest::lmer` (Kuznetsova, 2017) function. Linear mixed effect model is used to explore the effect of continuous / categorical variables in predicting a normally distributed continuous variable. The model support all dplyr::select syntax (see `?dplyr::select` or `vignette('mixed_effect_model)` for detailed description). It will also automatically remove the response variable and id from other variables (see details below for an example). It currently only support two-level model. More complicated model structure is supported by passing the `model` argument.
+#' Fit a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the `nlme::lme()`  or the `lmerTest::lmer()` function. 
+#' Linear mixed effect model is used to explore the effect of continuous / categorical variables in predicting a normally distributed continuous variable.
 #'
 #'
 #' @param data data frame
-#' @param model  lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates.
+#' @param model  `lme4` model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates.
 #' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select()` syntax.
 #' @param random_effect_factors random effect factors (level-1 variable for HLM people) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support `dplyr::select()` syntax.
 #' @param non_random_effect_factors non-random effect factors (level-2 variable for HLM people). Factors only need to estimate fixed effect. Support `dplyr::select()` syntax.
@@ -13,15 +14,15 @@
 #' @param three_way_interaction_factor three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support `dplyr::select()` syntax.
 #' @param id the nesting variable (e.g. group, time). Length of 1. Support `dplyr::select()` syntax.
 #' @param estimation_method character. `ML` or `REML` default to `REML`.
-#' @param na.action default is `stats::na.exclude`. Required to be `stats::na.omit` if check_assumption if `TRUE`.
-#' @param opt_control default is `optim` for `lme` and `bobyqa` for lmerTest
-#' @param use_package Default is `nlme`. Only available for linear mixed effect model. Options are `nlme` or `lmerTest`,`lme4`(`'lme4` return similar result as `lmerTest` except the return model)
+#' @param na.action default is `stats::na.omit`. Another common option is `na.exclude`
+#' @param opt_control default is `optim` for `lme` and `bobyqa` for `lmerTest`
+#' @param use_package Default is `lmerTest`. Only available for linear mixed effect model. Options are `nlme`, `lmerTest`, or `lme4`(`'lme4` return similar result as `lmerTest` except the return model)
 #' @param quite suppress printing output
 #'
 #' @details
 #' Here is a little tip. If you are using generic selecting syntax (e.g., contains() or start_with()), you don't need to remove the response variable and the id from the factors. It will be automatically remove. For example, if you have x1:x9 as your factors. You want to regress x2:x8 on x1. Your probably pass something like response_variable = x1, random_effect_factors = c(contains('x'),-x1) to the function. However, you don't need to do that, you can just pass random_effect_factors = c(contains('x')) to the function since it will automatically remove the response variable from selection.
 #'
-#' @return An object representing the linear mixed-effects model fit (it maybe an object from `lme` or `lmer` depending of the package you use)
+#' @return an object representing the linear mixed-effects model fit (it maybe an object from `lme` or `lmer` depending of the package you use)
 #'
 #' @export
 #'

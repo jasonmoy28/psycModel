@@ -4,7 +4,7 @@
 \alias{html_to_pdf}
 \title{Convert HTML to PDF}
 \usage{
-html_to_pdf(file_path = NULL, dir = NULL, scale = 1, render_exist = F)
+html_to_pdf(file_path = NULL, dir = NULL, scale = 1, render_exist = FALSE)
 }
 \arguments{
 \item{file_path}{file path to the HTML file (can be relative if you are in a R project)}
@@ -13,10 +13,10 @@ html_to_pdf(file_path = NULL, dir = NULL, scale = 1, render_exist = F)
 
 \item{scale}{the scale of the PDF}
 
-\item{render_exist}{overwrite exist PDF. Default is \code{F}}
+\item{render_exist}{overwrite exist PDF. Default is \code{FALSE}}
 }
 \value{
-no return
+no return value
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr

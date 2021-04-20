@@ -2,11 +2,11 @@
 #'
 #' `r lifecycle::badge("stable")` \cr
 #' It will first compute the linear regression. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function.
-#' If you requested simple slope summary, it will calls the interaction::sim_slopes (Long, 2019).
+#' If you requested simple slope summary, it will calls the `interaction::sim_slopes()`
 #'
 #' @param data data frame
 #' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select()` syntax.
-#' @param predictor_variable IV.  Support `dplyr::select()` syntax.
+#' @param predictor_variable IV. Support `dplyr::select()` syntax.
 #' @param three_way_interaction_factor three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support `dplyr::select()` syntax.
 #' @param graph_label_name optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)
 #' @param return_result If it is set to `TRUE` (default is `FALSE`), it will return the `model`, `model_summary`, and `plot` (if the interaction term is included)
@@ -15,16 +15,15 @@
 #' @param plot_color If it is set to `TRUE` (default is `FALSE`), the interaction plot will plot with color.
 #' @param quite suppress printing output
 #' @param digits number of digits to round to
-#' @param simple_slope Compute the slope differing with ± 1 SD of the IVs. In the background, it calls interaction:sim_slopes()
-#' @param assumption_plot Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()
+#' @param simple_slope Slope estimate at +1/-1 SD and the mean of the moderator. Uses `interactions::sim_slope()` in the background.
+#' @param assumption_plot Generate an panel of plots that check major assumptions. It is usually recommended to inspect model assumption violation visually. In the background, it calls `performance::check_model()`
 #' @param streamline print streamlined output
 #' @param two_way_interaction_factor two-way interaction factors. You need to pass 2+ factor. Support `dplyr::select()` syntax.
 #' @param family a GLM family. It will passed to the family argument in glm. See `?glm` for possible options. `r lifecycle::badge("experimental")`
-#' @param model_summary print model summary
-#' @param interaction_plot generate interaction plot
+#' @param model_summary print model summary. Required to be `TRUE` if you want `assumption_plot`.
+#' @param interaction_plot generate the interaction plot. Default is `TRUE`
 #'
-#' @return
-#' return a list of all requested items in the order of model, model_summary, plot
+#' @return  a list of all requested items in the order of model, model_summary, interaction_plot, simple_slope
 #' @export
 #'
 #' @examples
@@ -34,7 +33,7 @@
 #'   predictor_variable = tidyselect::everything(),
 #'   two_way_interaction_factor = c(Sepal.Width, Species)
 #' )
-#' \dontrun{
+#' \donttest{
 #' fit <- integrated_model_summary(
 #'   data = iris,
 #'   response_variable = "Sepal.Length",
@@ -92,7 +91,7 @@ integrated_model_summary <- function(data,
       quite = TRUE
     )
   } else {
-    if (simple_slope == TRUE | interaction_plot == T) {
+    if (simple_slope == TRUE | interaction_plot == TRUE) {
       simple_slope <- FALSE
       interaction_plot <- FALSE
       warning("interaction_plot & simple_slope is not avaliable for glme model for now")

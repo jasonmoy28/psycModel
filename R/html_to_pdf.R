@@ -8,9 +8,9 @@
 #' @param file_path file path to the HTML file (can be relative if you are in a R project)
 #' @param dir file path to the directory of all HTML files (can be relative if you are in a R project)
 #' @param scale the scale of the PDF
-#' @param render_exist overwrite exist PDF. Default is `F`
+#' @param render_exist overwrite exist PDF. Default is `FALSE`
 #'
-#' @return no return
+#' @return no return value
 #' @export
 #'
 #' @examples
@@ -22,14 +22,14 @@
 html_to_pdf <- function(file_path = NULL,
                         dir = NULL,
                         scale = 1,
-                        render_exist = F) {
+                        render_exist = FALSE) {
   if (requireNamespace("pagedown", quietly = TRUE)) {
     pagedown::find_chrome()
     if (!is.null(file_path)) {
       pagedown::chrome_print(input = file_path, options = list(scale = scale))
     } else if (!is.null(dir)) {
       files <- list.files(dir)
-      if (render_exist == F) {
+      if (render_exist == FALSE) {
         pdf_files <- files[stringr::str_detect(pattern = ".pdf", string = files)]
         pdf_cleaned <- stringr::str_replace(pdf_files, ".pdf", "")
         files <- files[stringr::str_detect(pattern = ".html", string = files)]

@@ -1,13 +1,14 @@
 #' Slope Estimate at Varying Level of Moderators
 #'
-#' The function uses the `interaction::sim_slopes()` to calculate the slope estimate at varying level of moderators (+/- 1 SD and mean).
+#' The function uses the `interaction::sim_slopes()` to calculate the slope estimate at varying level of moderators (+/- 1 SD and mean). 
+#' Additionally, it will produce a Johnson-Newman plot that shows when the slope estimate is not significant
 #'
 #' @param data data frame
 #' @param model model object from `lm`, `lme`,`lmer`
 #' @param two_way_interaction_factor vector of character of the two_way_interaction_factor
 #' @param three_way_interaction_factor vector of character of the three_way_interaction_factor
 #'
-#' @return a list with the slope estimate data frame and a Johnson-Newman plot that shows when the slope estimate is not significant
+#' @return a list with the slope estimate data frame and a Johnson-Newman plot. 
 #' @export
 #'
 #' @examples

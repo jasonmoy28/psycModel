@@ -21,13 +21,13 @@ measurement_invariance(
 \arguments{
 \item{data}{data frame}
 
-\item{...}{CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for example}
+\item{...}{CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for examples. Support \code{dplyr::select()} syntax.}
 
-\item{model}{explicit lavaan model. Either the \code{model} argument or the \code{items} argument must be specified.}
+\item{model}{explicit \code{lavaan} model. Must be specify with \code{model = lavaan_model_syntax}. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
 
-\item{group}{character. group variable.}
+\item{group}{the nested variable for multilevel dataset (e.g., Country). Support \code{dplyr::select()} syntax.}
 
-\item{ordered}{logical. default is \code{FALSE}. If it is set to \code{TRUE}, lavaan will treat it as a ordinal variable and use DWLS instead of ML}
+\item{ordered}{Default is \code{FALSE}. If it is set to \code{TRUE}, \code{lavaan} will treat it as a ordinal variable and use \code{DWLS} instead of \code{ML}}
 
 \item{group_partial}{items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2'). See details for recommended practice.}
 
@@ -42,7 +42,7 @@ measurement_invariance(
 \item{return_result}{If it is set to \code{TRUE}, it will return a data frame of the fit measure summary}
 }
 \value{
-return the a data frame of the fit measure summary
+a data frame of the fit measure summary
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
@@ -71,7 +71,7 @@ measurement_invariance(
 
 # Fitting measurement invariance model by passing explicit lavaan model
 # I am also going to only test for metric invariance instead of the default scalar invariance
-\dontrun{
+\donttest{
 measurement_invariance(
   model = "visual  =~ x1 + x2 + x3;
            textual =~ x4 + x5 + x6;

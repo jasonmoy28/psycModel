@@ -1,16 +1,15 @@
 #' Comparison of Model Fit
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' Compare the fit indices models (see below for model support)
+#' Compare the fit indices of models (see below for model support)
 #'
-#' @param ... model. If it is a lavaan object, it will try to perform measurement invariance. Other model type will passed to performance::compare_performance
+#' @param ... model. If it is a `lavaan` object, it will try to compute the measurement invariance. Other model types will be passed to `performance::compare_performance()`. 
 #' @param digits number of digits to round to
 #' @param streamline print streamlined output
 #' @param quite suppress printing output
 #' @param return_result  If it is set to `TRUE`, it will return the the compare fit data frame.
 #'
-#' @return
-#' data frame with fit indices and change in fit indices
+#' @return data frame with fit indices and change in fit indices
 #' @export
 #' @examples
 #' # lme model

@@ -19,6 +19,7 @@ devtools::install_github('jasonmoy28/psycModel')
 <span style="color:#009900">✓</span>  Tired of manually writing all variables in a model? You can use [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models <br/>
 <span style="color:#009900">✓</span> Fitting models, plotting, checking goodness of fit, and model assumption violations all in one place. <br/>
 <span style="color:#009900">✓</span> Beautiful and easy-to-read output. Check out the  [example](https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html) here now. <br/>
+<span style="color:#009900">✓</span> In the backend, this package uses reliable and well-established R packages (e.g., lavaan, lme4, psych) to handle all statistical analysis <br/>
 
 ## Supported Models
 Regression models:  <br/>

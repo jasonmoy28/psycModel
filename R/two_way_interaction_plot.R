@@ -1,7 +1,8 @@
 #' Two-way Interaction Plot
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below. I recommend using concurrently with `lm_model` or `lme_model`. Although I strive to work with outside model, I have yet to test all use-cases thus I cannot guarantee it works nor give useful debug messages.
+#' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below. 
+#' I recommend using concurrently with `lm_model` or `lme_model`. 
 #'
 #'
 #' @param model object from `lm`, `nlme`, `lme4`, or `lmerTest`
@@ -9,9 +10,10 @@
 #' @param graph_label_name vector of length 3 or function. Vector should be passed in the form of `c(response_var, predict_var1, predict_var2)`. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)
 #' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
 #' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
-#' @param plot_color default if `F`. Set to `TRUE` if you want to plot in color
-#'
-#' @return a object of class `ggplot`
+#' @param plot_color default if `FALSE`. Set to `TRUE` if you want to plot in color
+#' 
+#' @details It appears that ``predict` cannot handle categorical factors. All variables are converted to numeric before plotting.
+#' @return an object of class `ggplot`
 #' @export
 #'
 #' @examples

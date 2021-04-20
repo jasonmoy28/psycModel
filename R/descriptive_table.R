@@ -1,7 +1,7 @@
 #' Descriptive Statistics Table
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' This function generates a table of descriptive statistics (mainly using psych::describe; Revelle, 2021) and or a correlation table. User can export this to a csv file (optionally, using the file_path argument). Users can open the csv file with MS Excel then copy and paste the table into MS Word table.
+#' This function generates a table of descriptive statistics (mainly using `psych::describe()`) and or a correlation table. User can export this to a csv file (optionally, using the file_path argument). Users can open the csv file with MS Excel then copy and paste the table into MS Word table.
 #'
 #' @param data data frame
 #' @param cols  column(s) need to be included in the table. Support `dplyr::select()` syntax.

@@ -5,7 +5,7 @@
 #' @param data_frame data frame object
 #' @param digits number of digits to round to
 #' @keywords internal
-#' @return none
+#' @return no return value
 #'
 print_table <- function(data_frame,
                         digits = 3) {

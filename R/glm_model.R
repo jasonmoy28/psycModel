@@ -1,18 +1,17 @@
 #' Generalized Linear Regression
 #'
 #' `r lifecycle::badge("experimental")` \cr
-#' Fit a generalized linear regression using `glm`. This function is still in early development stage.
+#' Fit a generalized linear regression using `glm()`. This function is still in early development stage.
 #'
 #' @param data data frame
 #' @param response_variable response variable. Support `dplyr::select()` syntax.
-#' @param predictor_variable predictor variable. Support `dplyr::select()` syntax. It will automatically remove the response variable from predictor variable, so you can use `contains()` or `start_with()` safely.
+#' @param predictor_variable predictor variable. Support `dplyr::select()` syntax. 
 #' @param quite suppress printing output
 #' @param two_way_interaction_factor two-way interaction factors. You need to pass 2+ factor. Support `dplyr::select()` syntax.
 #' @param three_way_interaction_factor three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support `dplyr::select()` syntax.
 #' @param family a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options.
 #'
-#' @return
-#' an object class of `glm` representing the linear regression fit
+#' @return an object class of `glm` representing the linear regression fit
 #' @export
 #'
 #' @examples

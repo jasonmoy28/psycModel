@@ -11,6 +11,9 @@ format_round(x, digits = 3)
 
 \item{digits}{number of digits to round to}
 }
+\value{
+a rounded string
+}
 \description{
 Format digits (internal use only)
 }

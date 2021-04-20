@@ -7,4 +7,5 @@
 #' @export
 #' @importFrom dplyr %>%
 #' @usage lhs \%>\% rhs
+#' @return no return value
 NULL

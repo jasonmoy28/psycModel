@@ -7,7 +7,7 @@
 knit_to_Rmd()
 }
 \value{
-nothing
+no return value
 }
 \description{
 This is a helper function that instruct users of the package how to knit a R Markdown (Rmd) files

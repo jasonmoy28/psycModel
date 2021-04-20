@@ -23,7 +23,7 @@ lme_model(
 \arguments{
 \item{data}{data frame}
 
-\item{model}{lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates.}
+\item{model}{\code{lme4} model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates.}
 
 \item{response_variable}{DV (i.e., outcome variable / response variable). Length of 1. Support \code{dplyr::select()} syntax.}
 
@@ -39,20 +39,21 @@ lme_model(
 
 \item{estimation_method}{character. \code{ML} or \code{REML} default to \code{REML}.}
 
-\item{opt_control}{default is \code{optim} for \code{lme} and \code{bobyqa} for lmerTest}
+\item{opt_control}{default is \code{optim} for \code{lme} and \code{bobyqa} for \code{lmerTest}}
 
-\item{na.action}{default is \code{stats::na.exclude}. Required to be \code{stats::na.omit} if check_assumption if \code{TRUE}.}
+\item{na.action}{default is \code{stats::na.omit}. Another common option is \code{na.exclude}}
 
-\item{use_package}{Default is \code{nlme}. Only available for linear mixed effect model. Options are \code{nlme} or \code{lmerTest},\code{lme4}(\verb{'lme4} return similar result as \code{lmerTest} except the return model)}
+\item{use_package}{Default is \code{lmerTest}. Only available for linear mixed effect model. Options are \code{nlme}, \code{lmerTest}, or \code{lme4}(\verb{'lme4} return similar result as \code{lmerTest} except the return model)}
 
 \item{quite}{suppress printing output}
 }
 \value{
-An object representing the linear mixed-effects model fit (it maybe an object from \code{lme} or \code{lmer} depending of the package you use)
+an object representing the linear mixed-effects model fit (it maybe an object from \code{lme} or \code{lmer} depending of the package you use)
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-Fit a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the \code{nlme::lme} (Pinheiro, 2006)  or the \code{lmerTest::lmer} (Kuznetsova, 2017) function. Linear mixed effect model is used to explore the effect of continuous / categorical variables in predicting a normally distributed continuous variable. The model support all dplyr::select syntax (see \code{?dplyr::select} or \verb{vignette('mixed_effect_model)} for detailed description). It will also automatically remove the response variable and id from other variables (see details below for an example). It currently only support two-level model. More complicated model structure is supported by passing the \code{model} argument.
+Fit a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the \code{nlme::lme()}  or the \code{lmerTest::lmer()} function.
+Linear mixed effect model is used to explore the effect of continuous / categorical variables in predicting a normally distributed continuous variable.
 }
 \details{
 Here is a little tip. If you are using generic selecting syntax (e.g., contains() or start_with()), you don't need to remove the response variable and the id from the factors. It will be automatically remove. For example, if you have x1:x9 as your factors. You want to regress x2:x8 on x1. Your probably pass something like response_variable = x1, random_effect_factors = c(contains('x'),-x1) to the function. However, you don't need to do that, you can just pass random_effect_factors = c(contains('x')) to the function since it will automatically remove the response variable from selection.

@@ -27,14 +27,14 @@ three_way_interaction_plot(
 \item{plot_color}{default if \code{FALSE}. Set to \code{TRUE} if you want to plot in color}
 }
 \value{
-a object of class \code{ggplot}
+a \code{ggplot} object
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with \code{lm_model} or \code{lme_model}. Although I strive to work with outside model, I have yet to test all use-cases thus I cannot guarantee it works nor give useful debug messages.
+The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with \code{lm_model()}, \code{lme_model()}.
 }
 \details{
-It appears that predict cannot handle categorical factors. Make sure you convert categorical data into numeric for this to work (I am not sure about statistical implication)
+It appears that ``predict` cannot handle categorical factors. All variables are converted to numeric before plotting.
 }
 \examples{
 # I am going to show the more generic usage of this function

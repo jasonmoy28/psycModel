@@ -6,10 +6,10 @@
 #' All arguments (except the CFA items) must be explicitly named (like model = your-model; see example for inappropriate behavior).
 #'
 #' @param data data frame
-#' @param ... CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for example
-#' @param model explicit lavaan model. Either the `model` argument or the `items` argument must be specified.
-#' @param group character. group variable.
-#' @param ordered logical. default is `FALSE`. If it is set to `TRUE`, lavaan will treat it as a ordinal variable and use DWLS instead of ML
+#' @param ... CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for examples. Support `dplyr::select()` syntax.
+#' @param model explicit `lavaan` model. Must be specify with `model = lavaan_model_syntax`. `r lifecycle::badge("experimental")`
+#' @param group the nested variable for multilevel dataset (e.g., Country). Support `dplyr::select()` syntax.
+#' @param ordered Default is `FALSE`. If it is set to `TRUE`, `lavaan` will treat it as a ordinal variable and use `DWLS` instead of `ML`
 #' @param group_partial items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2'). See details for recommended practice.
 #' @param invariance_level "metric" or "scalar". Default is 'metric'. Set as 'metric' for configural-metric comparison, and set as 'scalar' for configural-metric-scalar comparison.
 #' @param digits number of digits to round to
@@ -39,8 +39,7 @@
 #'
 #'
 #' @export
-#' @return
-#' return the a data frame of the fit measure summary
+#' @return a data frame of the fit measure summary
 #'
 #' @examples
 #' # REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT
@@ -56,7 +55,7 @@
 #'
 #' # Fitting measurement invariance model by passing explicit lavaan model
 #' # I am also going to only test for metric invariance instead of the default scalar invariance
-#' \dontrun{
+#' \donttest{
 #' measurement_invariance(
 #'   model = "visual  =~ x1 + x2 + x3;
 #'            textual =~ x4 + x5 + x6;

@@ -33,7 +33,7 @@ reliability_summary(
 \item{return_result}{If it is set to \code{TRUE} (default is \code{FALSE}), it will return \code{psych::alpha} for unidimensional scale, and \code{psych::omega} for multidimensional scale.}
 }
 \value{
-\code{psych::alpha} for unidimensional scale, and \code{psych::omega} for multidimensional scale.
+a \code{psych::alpha} object for unidimensional scale, and a \code{psych::omega} object for multidimensional scale.
 }
 \description{
 First, it will determine whether the data is uni-dimensional or multi-dimensional using \code{parameters::n_factors()}. If the data is uni-dimensional, then it will print a summary

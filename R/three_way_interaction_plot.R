@@ -1,7 +1,7 @@
 #' Three-way Interaction Plot
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with `lm_model` or `lme_model`. Although I strive to work with outside model, I have yet to test all use-cases thus I cannot guarantee it works nor give useful debug messages.
+#' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with `lm_model()`, `lme_model()`. 
 #'
 #' @param model object from `lme`, `lme4`, `lmerTest` object.
 #' @param data data frame. If the function is unable to extract data frame from the object, then you may need to pass it directly
@@ -11,8 +11,8 @@
 #' @param plot_color default if `FALSE`. Set to `TRUE` if you want to plot in color
 #'
 #'
-#' @details It appears that predict cannot handle categorical factors. Make sure you convert categorical data into numeric for this to work (I am not sure about statistical implication)
-#' @return a object of class `ggplot`
+#' @details It appears that ``predict` cannot handle categorical factors. All variables are converted to numeric before plotting.
+#' @return a `ggplot` object
 #'
 #' @export
 #'

@@ -7,13 +7,13 @@
 #' @param digits number of digits to round to
 #' @param streamline print streamlined output. Only print model estimate and performance.
 #' @param return_result It set to `TRUE`, it return the model estimates data frame.
-#' @param assumption_plot Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()
+#' @param assumption_plot Generate an panel of plots that check major assumptions. It is usually recommended to inspect model assumption violation visually. In the background, it calls `performance::check_model()`.
 #' @param quite suppress printing output
 #'
 #' @references
 #' Nakagawa, S., & Schielzeth, H. (2013). A general and simple method for obtaining R2 from generalized linear mixed-effects models. Methods in Ecology and Evolution, 4(2), 133–142. https://doi.org/10.1111/j.2041-210x.2012.00261.x
 #'
-#' @return model estimate, model performance, and the assumption plot (only when `assumption_plot` = `TRUE`)
+#' @return a list of model estimate data frame, model performance data frame, and the assumption plot (an `ggplot` object)
 #'
 #' @export
 #' @examples

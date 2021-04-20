@@ -1,23 +1,23 @@
 #' Generalized Linear Mixed Effect Model
 #'
 #' `r lifecycle::badge("experimental")` \cr
-#' Fit a generalized linear mixed effect model using `lme4::glmer`. This function is still in early development stage.
+#' Fit a generalized linear mixed effect model using `lme4::glmer()`. This function is still in early development stage.
 #'
 #' @param data data frame
-#' @param response_variable character or vector of length 1
-#' @param random_effect_factors vector. Level-1 variables (e.g., individual-level)
-#' @param non_random_effect_factors optional vector. level-2 variables (e.g., group-level)
+#' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select()` syntax.
+#' @param random_effect_factors random effect factors (level-1 variable for HLM people) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support `dplyr::select()` syntax.
+#' @param non_random_effect_factors non-random effect factors (level-2 variable for HLM people). Factors only need to estimate fixed effect. Support `dplyr::select()` syntax.
 #' @param family a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options.
-#' @param two_way_interaction_factor optional vector of length more than 2. Default to `null`
-#' @param three_way_interaction_factor optional vector of length 3. Do not include two-way interaction factors if this is not null. Default to `null`
-#' @param id character or vector of length 1. The nesting variable (e.g. group)
+#' @param two_way_interaction_factor two-way interaction factors. You need to pass 2+ factor. Support `dplyr::select()` syntax.
+#' @param three_way_interaction_factor three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support `dplyr::select()` syntax.
+#' @param id the nesting variable (e.g. group, time). Length of 1. Support `dplyr::select()` syntax.
 #' @param estimation_method character. `ML` or `REML` default to `REML`.
-#' @param na.action default to `stats::na.exclude`.
-#' @param opt_control character. default to `bobyqa`
+#' @param na.action default is `stats::na.omit`. Another common option is `na.exclude`
+#' @param opt_control character. default is `bobyqa`. See `?lme4::glmerControl` for more options. 
 #' @param quite suppress printing output
-#' @param model  lme4 model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates
+#' @param model `lme4` model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates. This is not tested. `r lifecycle::badge("experimental")`
 #'
-#' @return An object of class "glmerMod" representing the linear mixed-effects model fit.
+#' @return An object of class `glmerMod` representing the linear mixed-effects model fit.
 #' @export
 #' @examples
 #' fit <- glme_model(
@@ -38,8 +38,8 @@ glme_model <- function(data,
                        id,
                        estimation_method = "REML",
                        opt_control = "bobyqa",
-                       na.action = stats::na.exclude,
-                       quite = F) {
+                       na.action = stats::na.omit,
+                       quite = FALSE) {
   ########################################## Set up #############################################
   data <- data_check(data) # check data and coerced into numeric
   glme_model_check <- function(object, method) {

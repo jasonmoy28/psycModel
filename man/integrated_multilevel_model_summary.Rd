@@ -35,7 +35,7 @@ integrated_multilevel_model_summary(
 \arguments{
 \item{data}{data frame}
 
-\item{model}{lme4 model syntax. Support more complicated model structure from lme4. It is not well-tested to handle all edge cases. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
+\item{model}{\code{lme4} model syntax. Support more complicated model structure from \code{lme4}. It is not well-tested to ensure accuracy \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
 
 \item{response_variable}{DV (i.e., outcome variable / response variable). Length of 1. Support \code{dplyr::select()} syntax.}
 
@@ -57,13 +57,13 @@ integrated_multilevel_model_summary(
 
 \item{estimation_method}{character. \code{ML} or \code{REML} default is \code{REML}.}
 
-\item{opt_control}{default is \code{optim} for \code{lme} and \code{bobyqa} for lmerTest}
+\item{opt_control}{default is \code{optim} for \code{lme} and \code{bobyqa} for \code{lmerTest}.}
 
-\item{na.action}{default is \code{stats::na.exclude}. Required to be \code{stats::na.omit} if assumption_plot if \code{TRUE}. It should produce similar result, but you should check using \code{na.exclude} to confirm.}
+\item{na.action}{default is \code{stats::na.omit}. Another common option is \code{na.exclude}}
 
-\item{model_summary}{print model summary}
+\item{model_summary}{print model summary.  Required to be \code{TRUE} if you want \code{assumption_plot}.}
 
-\item{interaction_plot}{generate interaction plot}
+\item{interaction_plot}{generate interaction plot. Default is \code{TRUE}}
 
 \item{y_lim}{the plot's upper and lower limit for the y-axis. Length of 2. Example: \code{c(lower_limit, upper_limit)}}
 
@@ -71,11 +71,11 @@ integrated_multilevel_model_summary(
 
 \item{digits}{number of digits to round to}
 
-\item{use_package}{Default is \code{nlme}. Only available for linear mixed effect model. Options are \code{nlme} or \code{lmerTest},\code{lme4}(\verb{'lme4} return similar result as \code{lmerTest} except the return model)}
+\item{use_package}{Default is \code{lmerTest}. Only available for linear mixed effect model. Options are \code{nlme}, \code{lmerTest}, or \code{lme4}(\verb{'lme4} return similar result as \code{lmerTest} except the return model)}
 
-\item{simple_slope}{Compute the slope differing with ± 1 SD of the IVs. In the background, it calls interaction:sim_slopes()}
+\item{simple_slope}{Slope estimate at ± 1 SD and the mean of the moderator. Uses \code{interactions::sim_slope()} in the background.}
 
-\item{assumption_plot}{Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()}
+\item{assumption_plot}{Generate an panel of plots that check major assumptions. It is usually recommended to inspect model assumption violation visually. In the background, it calls \code{performance::check_model()}.}
 
 \item{quite}{suppress printing output}
 
@@ -84,13 +84,13 @@ integrated_multilevel_model_summary(
 \item{return_result}{If it is set to \code{TRUE} (default is \code{FALSE}), it will return the \code{model}, \code{model_summary}, and \code{plot} (\code{plot} if the interaction term is included)}
 }
 \value{
-return a list of all requested items in the order of model, model_summary, plot
+a list of all requested items in the order of model, model_summary, interaction_plot, simple_slope
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-It will first compute the mixed effect model. It will use either the nlme::lme or the lmerTest::lmer for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model.
-Then, it will print the model summary and assumption_plot if you requested it. If you requested the interaction plot (default is \code{TRUE}), it will graph the interaction (Currently only support lme model not glme)
-If you requested simple slope summary, it will uses the interaction::sim_slopes.
+It will first compute the mixed effect model. It will use either the \code{nlme::lme} or the \code{lmerTest::lmer} for linear mixed effect model. It will use \code{lme4::glmer} for generalized linear mixed effect model.
+Then, it will print the model summary and the panel of the plots that are useful for checking assumption (default is \code{FALSE}). If you requested the interaction plot (default is \code{TRUE}), it will graph the interaction (Currently only support \code{lme} model but not \code{glme})
+If you requested simple slope summary, it will uses the \code{interaction::sim_slopes()} to generate the slope estimate at varying level of the moderator (see \code{?simple_slope} for more detail)
 }
 \examples{
 fit <- integrated_multilevel_model_summary(
@@ -102,7 +102,7 @@ fit <- integrated_multilevel_model_summary(
   graph_label_name = c("popular", "extraversion", "teacher experience"),
   id = class
 )
-\dontrun{
+\donttest{
 fit <- integrated_multilevel_model_summary(
   data = popular,
   response_variable = popular,
