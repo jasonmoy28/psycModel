@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Generalized Linear Regression — glm_model" />
 <meta property="og:description" content=" 
-Fit a generalized linear regression using glm. This function is still in early development stage." />
+Fit a generalized linear regression using glm(). This function is still in early development stage." />
 
 
 
@@ -96,6 +96,9 @@ Fit a generalized linear regression using glm. This function is still in early d
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/brief-introduction-to-select-syntax.html">brief-introduction-to-select-syntax</a>
+    </li>
+    <li>
       <a href="../articles/quick-introduction.html">quick-introduction</a>
     </li>
   </ul>
@@ -132,7 +135,7 @@ Fit a generalized linear regression using glm. This function is still in early d
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a> <br />
-Fit a generalized linear regression using <code>glm</code>. This function is still in early development stage.</p>
+Fit a generalized linear regression using <code><a href='https://rdrr.io/r/stats/glm.html'>glm()</a></code>. This function is still in early development stage.</p>
     </div>
 
     <pre class="usage"><span class='fu'>glm_model</span><span class='op'>(</span>
@@ -158,7 +161,7 @@ Fit a generalized linear regression using <code>glm</code>. This function is sti
     </tr>
     <tr>
       <th>predictor_variable</th>
-      <td><p>predictor variable. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax. It will automatically remove the response variable from predictor variable, so you can use <code>contains()</code> or <code>start_with()</code> safely.</p></td>
+      <td><p>predictor variable. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>two_way_interaction_factor</th>

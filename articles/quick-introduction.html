@@ -54,6 +54,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/brief-introduction-to-select-syntax.html">brief-introduction-to-select-syntax</a>
+    </li>
+    <li>
       <a href="../articles/quick-introduction.html">quick-introduction</a>
     </li>
   </ul>
@@ -143,7 +146,7 @@ Predictors = Sepal.Width, Petal.Length, Petal.Width, Species
 ───────────────────────────────────────────────────
 
 </span><span style="text-decoration: underline;">Model Assumption Check</span><span>
-OK: Residuals appear to be independent and not autocorrelated (p = 0.948).
+OK: Residuals appear to be independent and not autocorrelated (p = 0.974).
 OK: residuals appear as normally distributed (p = 0.892).
 </span><span style="color: #0000BB;">Unable to check autocorrelation. Try changing na.action to na.omit.</span><span>
 Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.047).
@@ -379,7 +382,7 @@ Goodness of Fit:
 <p>EFA model is fitted using <code><a href="https://rdrr.io/pkg/psych/man/fa.html">psych::fa()</a></code>. It first find the optimal number of factor. Then, it will show you the factor loading, uniqueness, complexity of the latent factor (loading &lt; 0.4 are hided for better viewing experience). You can additionally request running a post-hoc CFA model based on the EFA model.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/efa_summary.html">efa_summary</a></span><span class="op">(</span><span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html">HolzingerSwineford1939</a></span>, 
-            <span class="fu">starts_with</span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>, <span class="co"># x1, x2, x3 ... x9</span>
+            <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>, <span class="co"># x1, x2, x3 ... x9</span>
             post_hoc_cfa <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># run a post-hoc CFA </span></code></pre></div>
 <pre class="fansi fansi-output"><code>
  

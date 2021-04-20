@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Comparison of Model Fit — compare_fit" />
 <meta property="og:description" content=" 
-Compare the fit indices models (see below for model support)" />
+Compare the fit indices of models (see below for model support)" />
 
 
 
@@ -96,6 +96,9 @@ Compare the fit indices models (see below for model support)" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/brief-introduction-to-select-syntax.html">brief-introduction-to-select-syntax</a>
+    </li>
+    <li>
       <a href="../articles/quick-introduction.html">quick-introduction</a>
     </li>
   </ul>
@@ -132,7 +135,7 @@ Compare the fit indices models (see below for model support)" />
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#stable'><img src='figures/lifecycle-stable.svg' alt='[Stable]' /></a> <br />
-Compare the fit indices models (see below for model support)</p>
+Compare the fit indices of models (see below for model support)</p>
     </div>
 
     <pre class="usage"><span class='fu'>compare_fit</span><span class='op'>(</span>
@@ -148,7 +151,7 @@ Compare the fit indices models (see below for model support)</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>...</th>
-      <td><p>model. If it is a lavaan object, it will try to perform measurement invariance. Other model type will passed to performance::compare_performance</p></td>
+      <td><p>model. If it is a <code>lavaan</code> object, it will try to compute the measurement invariance. Other model types will be passed to <code><a href='https://easystats.github.io/performance/reference/compare_performance.html'>performance::compare_performance()</a></code>.</p></td>
     </tr>
     <tr>
       <th>digits</th>

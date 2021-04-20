@@ -96,6 +96,9 @@ The function will extract the relevant coefficients from the regression models (
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/brief-introduction-to-select-syntax.html">brief-introduction-to-select-syntax</a>
+    </li>
+    <li>
       <a href="../articles/quick-introduction.html">quick-introduction</a>
     </li>
   </ul>
@@ -157,7 +160,7 @@ The function will extract the relevant coefficients from the regression models (
     </tr>
     <tr>
       <th>assumption_plot</th>
-      <td><p>Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()</p></td>
+      <td><p>Generate an panel of plots that check major assumptions. It is usually recommended to inspect model assumption violation visually. In the background, it calls <code><a href='https://easystats.github.io/performance/reference/check_model.html'>performance::check_model()</a></code>.</p></td>
     </tr>
     <tr>
       <th>quite</th>
@@ -175,7 +178,7 @@ The function will extract the relevant coefficients from the regression models (
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>model estimate, model performance, and the assumption plot (only when <code>assumption_plot</code> = <code>TRUE</code>)</p>
+    <p>a list of model estimate data frame, model performance data frame, and the assumption plot (an <code>ggplot</code> object)</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Nakagawa, S., &amp; Schielzeth, H. (2013). A general and simple method for obtaining R2 from generalized linear mixed-effects models. Methods in Ecology and Evolution, 4(2), 133–142. https://doi.org/10.1111/j.2041-210x.2012.00261.x</p>
@@ -254,7 +257,7 @@ The function will extract the relevant coefficients from the regression models (
 #&gt; ──────────────────────────────────────────────────
 #&gt; 
 #&gt; </span><span style='text-decoration: underline;'>Model Assumption Check</span><span>
-#&gt; </span><span style='color: #00BB00;'>OK: Residuals appear to be independent and not autocorrelated (p = 0.842).</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK: Residuals appear to be independent and not autocorrelated (p = 0.790).</span><span>
 #&gt; </span><span style='color: #00BB00;'>OK: residuals appear as normally distributed (p = 0.943).
 #&gt; </span><span style='color: #0000BB;'>Unable to check autocorrelation. Try changing na.action to na.omit.</span><span>
 #&gt; </span><span style='color: #BB0000;'>Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.035).
@@ -266,7 +269,7 @@ The function will extract the relevant coefficients from the regression models (
 #&gt;    Sepal.Width   1.271      1.127
 #&gt;   Petal.Length  15.098      3.886
 #&gt;    Petal.Width  14.234      3.773
-#&gt; ─────────────────────────────────</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: qqplotr</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: see</span></div><div class='img'><img src='model_summary-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div></span></pre>
+#&gt; ─────────────────────────────────</div><div class='img'><img src='model_summary-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

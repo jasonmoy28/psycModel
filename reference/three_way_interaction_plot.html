@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Three-way Interaction Plot — three_way_interaction_plot" />
 <meta property="og:description" content=" 
-The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with lm_model or lme_model. Although I strive to work with outside model, I have yet to test all use-cases thus I cannot guarantee it works nor give useful debug messages." />
+The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with lm_model(), lme_model()." />
 
 
 
@@ -96,6 +96,9 @@ The function creates a two-way interaction plot. It will creates a plot with ± 
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/brief-introduction-to-select-syntax.html">brief-introduction-to-select-syntax</a>
+    </li>
+    <li>
       <a href="../articles/quick-introduction.html">quick-introduction</a>
     </li>
   </ul>
@@ -132,7 +135,7 @@ The function creates a two-way interaction plot. It will creates a plot with ± 
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#stable'><img src='figures/lifecycle-stable.svg' alt='[Stable]' /></a> <br />
-The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with <code>lm_model</code> or <code>lme_model</code>. Although I strive to work with outside model, I have yet to test all use-cases thus I cannot guarantee it works nor give useful debug messages.</p>
+The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with <code><a href='lm_model.html'>lm_model()</a></code>, <code><a href='lme_model.html'>lme_model()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>three_way_interaction_plot</span><span class='op'>(</span>
@@ -175,10 +178,10 @@ The function creates a two-way interaction plot. It will creates a plot with ± 
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a object of class <code>ggplot</code></p>
+    <p>a <code>ggplot</code> object</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>It appears that predict cannot handle categorical factors. Make sure you convert categorical data into numeric for this to work (I am not sure about statistical implication)</p>
+    <p>It appears that ``predict` cannot handle categorical factors. All variables are converted to numeric before plotting.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># I am going to show the more generic usage of this function</span>

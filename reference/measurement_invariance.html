@@ -98,6 +98,9 @@ All arguments (except the CFA items) must be explicitly named (like model = your
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/brief-introduction-to-select-syntax.html">brief-introduction-to-select-syntax</a>
+    </li>
+    <li>
       <a href="../articles/quick-introduction.html">quick-introduction</a>
     </li>
   </ul>
@@ -162,19 +165,19 @@ All arguments (except the CFA items) must be explicitly named (like model = your
     </tr>
     <tr>
       <th>...</th>
-      <td><p>CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for example</p></td>
+      <td><p>CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for examples. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>model</th>
-      <td><p>explicit lavaan model. Either the <code>model</code> argument or the <code>items</code> argument must be specified.</p></td>
+      <td><p>explicit <code>lavaan</code> model. Must be specify with <code>model = lavaan_model_syntax</code>. <a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>character. group variable.</p></td>
+      <td><p>the nested variable for multilevel dataset (e.g., Country). Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>ordered</th>
-      <td><p>logical. default is <code>FALSE</code>. If it is set to <code>TRUE</code>, lavaan will treat it as a ordinal variable and use DWLS instead of ML</p></td>
+      <td><p>Default is <code>FALSE</code>. If it is set to <code>TRUE</code>, <code>lavaan</code> will treat it as a ordinal variable and use <code>DWLS</code> instead of <code>ML</code></p></td>
     </tr>
     <tr>
       <th>group_partial</th>
@@ -204,7 +207,7 @@ All arguments (except the CFA items) must be explicitly named (like model = your
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>return the a data frame of the fit measure summary</p>
+    <p>a data frame of the fit measure summary</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Chen (2007) suggested that change in CFI &lt;= |-0.010| supplemented by RMSEA &lt;= 0.015 indicate non-invariance when sample sizes were equal across groups and larger than 300 in each group (Chen, 2007).
@@ -272,7 +275,7 @@ it is important to note that no empirical studies were cited to support the part
 #&gt; </span><span style='color: #00BB00;'>OK. Good measurement scalar-invariance based on ΔSRMR &lt; 0.015</span><span></div><div class='input'>
 <span class='co'># Fitting measurement invariance model by passing explicit lavaan model</span>
 <span class='co'># I am also going to only test for metric invariance instead of the default scalar invariance</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># \donttest{</span>
 <span class='fu'>measurement_invariance</span><span class='op'>(</span>
   model <span class='op'>=</span> <span class='st'>"visual  =~ x1 + x2 + x3;
            textual =~ x4 + x5 + x6;
@@ -281,7 +284,37 @@ it is important to note that no empirical studies were cited to support the part
   group <span class='op'>=</span> <span class='st'>"school"</span>,
   invariance_level <span class='op'>=</span> <span class='st'>"metric"</span>
 <span class='op'>)</span>
-<span class='op'>}</span>
+</div><div class='output co'>#&gt; Computing CFA using:
+#&gt;  visual  =~ x1 + x2 + x3;
+#&gt;            textual =~ x4 + x5 + x6;
+#&gt;            speed   =~ x7 + x8 + x9[1] "Computing for configural model"
+#&gt; [1] "Computing for metric model"
+#&gt; 
+#&gt; 
+#&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; Model Type = Measurement Invariance
+#&gt; Comparsion Type = Configural-Metric Comparsion
+#&gt; Group = school
+#&gt; Model Formula = 
+#&gt; .visual  =~ x1 + x2 + x3;
+#&gt;            textual =~ x4 + x5 + x6;
+#&gt;            speed   =~ x7 + x8 + x9
+#&gt; 
+#&gt; 
+#&gt; </span><span style='text-decoration: underline;'>Fit Measure Summary</span><span>
+#&gt; ────────────────────────────────────────────────────────────────────────────────────────
+#&gt;        Χ²      DF          P     CFI   RMSEA   SRMR    TLI       AIC       BIC      BIC2
+#&gt; ────────────────────────────────────────────────────────────────────────────────────────
+#&gt;   115.851  48.000  0.000 ***   0.923   0.097  0.068  0.885  7484.395  7706.822  7516.536
+#&gt;   124.044  54.000  0.000 ***   0.921   0.093  0.072  0.895  7480.587  7680.771  7509.514
+#&gt;                                                                                         
+#&gt;     8.192   6.000  0.000 ***  -0.002  -0.004  0.004  0.009    -3.808   -26.050    -7.022
+#&gt; ────────────────────────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt; Goodness of Fit:
+#&gt; </span><span style='color: #00BB00;'> OK. Excellent measurement metric-invariance based on |ΔCFI| &lt; 0.005</span><span>
+#&gt; </span><span style='color: #00BB00;'> OK. Excellent measurement metric-invariance based on |ΔRMSEA| &lt; 0.01</span><span>
+#&gt; </span><span style='color: #00BB00;'> OK. Good measurement metric-invariance based on ΔSRMR &lt; 0.03</span><span></div><div class='input'><span class='co'># }</span>
 
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># This will fail because I did not add `model = ` in front of the lavaan model.</span>

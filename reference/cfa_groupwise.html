@@ -41,7 +41,8 @@
 
 <meta property="og:title" content="Confirmatory Factor Analysis (groupwise) — cfa_groupwise" />
 <meta property="og:description" content=" 
-This function will run N number of CFA where N = length(group), and report the fit measures of CFA in each group. The function is intended to help you get a better understanding of which group has abnormal fit indicator" />
+This function will run N number of CFA where N = length(group), and report the fit measures of CFA in each group.
+The function is intended to help you get a better understanding of which group has abnormal fit indicator" />
 
 
 
@@ -96,6 +97,9 @@ This function will run N number of CFA where N = length(group), and report the f
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/brief-introduction-to-select-syntax.html">brief-introduction-to-select-syntax</a>
+    </li>
+    <li>
       <a href="../articles/quick-introduction.html">quick-introduction</a>
     </li>
   </ul>
@@ -132,7 +136,8 @@ This function will run N number of CFA where N = length(group), and report the f
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#stable'><img src='figures/lifecycle-stable.svg' alt='[Stable]' /></a> <br />
-This function will run N number of CFA where N = <code><a href='https://rdrr.io/r/base/length.html'>length(group)</a></code>, and report the fit measures of CFA in each group. The function is intended to help you get a better understanding of which group has abnormal fit indicator</p>
+This function will run N number of CFA where N = <code><a href='https://rdrr.io/r/base/length.html'>length(group)</a></code>, and report the fit measures of CFA in each group.
+The function is intended to help you get a better understanding of which group has abnormal fit indicator</p>
     </div>
 
     <pre class="usage"><span class='fu'>cfa_groupwise</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>...</span>, <span class='va'>group</span>, model <span class='op'>=</span> <span class='cn'>NULL</span>, ordered <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
@@ -146,15 +151,15 @@ This function will run N number of CFA where N = <code><a href='https://rdrr.io/
     </tr>
     <tr>
       <th>...</th>
-      <td><p>CFA items. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
+      <td><p>CFA items. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>character. group variable. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
+      <td><p>character. group variable. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>model</th>
-      <td><p>explicit lavaan model. Must be specify with <code>model = lavaan_model_syntax</code>. <a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p></td>
+      <td><p>explicit <code>lavaan</code> model. Must be specify with <code>model = lavaan_model_syntax</code>. <a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p></td>
     </tr>
     <tr>
       <th>ordered</th>

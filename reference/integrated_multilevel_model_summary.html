@@ -41,9 +41,9 @@
 
 <meta property="og:title" content="Integrated Function for Mixed Effect Model — integrated_multilevel_model_summary" />
 <meta property="og:description" content=" 
-It will first compute the mixed effect model. It will use either the nlme::lme or the lmerTest::lmer for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model.
-Then, it will print the model summary and assumption_plot if you requested it. If you requested the interaction plot (default is TRUE), it will graph the interaction (Currently only support lme model not glme)
-If you requested simple slope summary, it will uses the interaction::sim_slopes." />
+It will first compute the mixed effect model. It will use either the nlme::lme or the lmerTest::lmer for linear mixed effect model. It will use lme4::glmer for generalized linear mixed effect model.
+Then, it will print the model summary and the panel of the plots that are useful for checking assumption (default is FALSE). If you requested the interaction plot (default is TRUE), it will graph the interaction (Currently only support lme model but not glme)
+If you requested simple slope summary, it will uses the interaction::sim_slopes() to generate the slope estimate at varying level of the moderator (see ?simple_slope for more detail)" />
 
 
 
@@ -98,6 +98,9 @@ If you requested simple slope summary, it will uses the interaction::sim_slopes.
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/brief-introduction-to-select-syntax.html">brief-introduction-to-select-syntax</a>
+    </li>
+    <li>
       <a href="../articles/quick-introduction.html">quick-introduction</a>
     </li>
   </ul>
@@ -134,9 +137,9 @@ If you requested simple slope summary, it will uses the interaction::sim_slopes.
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#stable'><img src='figures/lifecycle-stable.svg' alt='[Stable]' /></a> <br />
-It will first compute the mixed effect model. It will use either the nlme::lme or the lmerTest::lmer for linear mixed effect model. It will use lme4::glmer (Bates et al., 2014) for generalized linear mixed effect model.
-Then, it will print the model summary and assumption_plot if you requested it. If you requested the interaction plot (default is <code>TRUE</code>), it will graph the interaction (Currently only support lme model not glme)
-If you requested simple slope summary, it will uses the interaction::sim_slopes.</p>
+It will first compute the mixed effect model. It will use either the <code><a href='https://rdrr.io/pkg/nlme/man/lme.html'>nlme::lme</a></code> or the <code><a href='https://rdrr.io/pkg/lmerTest/man/lmer.html'>lmerTest::lmer</a></code> for linear mixed effect model. It will use <code><a href='https://rdrr.io/pkg/lme4/man/glmer.html'>lme4::glmer</a></code> for generalized linear mixed effect model.
+Then, it will print the model summary and the panel of the plots that are useful for checking assumption (default is <code>FALSE</code>). If you requested the interaction plot (default is <code>TRUE</code>), it will graph the interaction (Currently only support <code>lme</code> model but not <code>glme</code>)
+If you requested simple slope summary, it will uses the <code>interaction::sim_slopes()</code> to generate the slope estimate at varying level of the moderator (see <code><a href='simple_slope.html'>?simple_slope</a></code> for more detail)</p>
     </div>
 
     <pre class="usage"><span class='fu'>integrated_multilevel_model_summary</span><span class='op'>(</span>
@@ -176,7 +179,7 @@ If you requested simple slope summary, it will uses the interaction::sim_slopes.
     </tr>
     <tr>
       <th>model</th>
-      <td><p>lme4 model syntax. Support more complicated model structure from lme4. It is not well-tested to handle all edge cases. <a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p></td>
+      <td><p><code>lme4</code> model syntax. Support more complicated model structure from <code>lme4</code>. It is not well-tested to ensure accuracy <a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p></td>
     </tr>
     <tr>
       <th>response_variable</th>
@@ -220,19 +223,19 @@ If you requested simple slope summary, it will uses the interaction::sim_slopes.
     </tr>
     <tr>
       <th>opt_control</th>
-      <td><p>default is <code>optim</code> for <code>lme</code> and <code>bobyqa</code> for lmerTest</p></td>
+      <td><p>default is <code>optim</code> for <code>lme</code> and <code>bobyqa</code> for <code>lmerTest</code>.</p></td>
     </tr>
     <tr>
       <th>na.action</th>
-      <td><p>default is <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.exclude</a></code>. Required to be <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.omit</a></code> if assumption_plot if <code>TRUE</code>. It should produce similar result, but you should check using <code>na.exclude</code> to confirm.</p></td>
+      <td><p>default is <code><a href='https://rdrr.io/r/stats/na.fail.html'>stats::na.omit</a></code>. Another common option is <code>na.exclude</code></p></td>
     </tr>
     <tr>
       <th>model_summary</th>
-      <td><p>print model summary</p></td>
+      <td><p>print model summary.  Required to be <code>TRUE</code> if you want <code>assumption_plot</code>.</p></td>
     </tr>
     <tr>
       <th>interaction_plot</th>
-      <td><p>generate interaction plot</p></td>
+      <td><p>generate interaction plot. Default is <code>TRUE</code></p></td>
     </tr>
     <tr>
       <th>y_lim</th>
@@ -248,15 +251,15 @@ If you requested simple slope summary, it will uses the interaction::sim_slopes.
     </tr>
     <tr>
       <th>use_package</th>
-      <td><p>Default is <code>nlme</code>. Only available for linear mixed effect model. Options are <code>nlme</code> or <code>lmerTest</code>,<code>lme4</code>(<code>'lme4</code> return similar result as <code>lmerTest</code> except the return model)</p></td>
+      <td><p>Default is <code>lmerTest</code>. Only available for linear mixed effect model. Options are <code>nlme</code>, <code>lmerTest</code>, or <code>lme4</code>(<code>'lme4</code> return similar result as <code>lmerTest</code> except the return model)</p></td>
     </tr>
     <tr>
       <th>simple_slope</th>
-      <td><p>Compute the slope differing with ± 1 SD of the IVs. In the background, it calls interaction:sim_slopes()</p></td>
+      <td><p>Slope estimate at ± 1 SD and the mean of the moderator. Uses <code>interactions::sim_slope()</code> in the background.</p></td>
     </tr>
     <tr>
       <th>assumption_plot</th>
-      <td><p>Generate an panel of plots that check major assumptions. You can use this if the model summary show violation of assumption (those maybe unreliable due to the use of p-value which is sensitive to the sample size). In the background, it calls performance::check_model()</p></td>
+      <td><p>Generate an panel of plots that check major assumptions. It is usually recommended to inspect model assumption violation visually. In the background, it calls <code><a href='https://easystats.github.io/performance/reference/check_model.html'>performance::check_model()</a></code>.</p></td>
     </tr>
     <tr>
       <th>quite</th>
@@ -274,7 +277,7 @@ If you requested simple slope summary, it will uses the interaction::sim_slopes.
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>return a list of all requested items in the order of model, model_summary, plot</p>
+    <p>a list of all requested items in the order of model, model_summary, interaction_plot, simple_slope</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>integrated_multilevel_model_summary</span><span class='op'>(</span>
@@ -326,7 +329,7 @@ If you requested simple slope summary, it will uses the interaction::sim_slopes.
 #&gt;          texp  3.900      1.975
 #&gt;   extrav:texp  7.082      2.661
 #&gt; ───────────────────────────────
-#&gt; </div><div class='img'><img src='integrated_multilevel_model_summary-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+#&gt; </div><div class='img'><img src='integrated_multilevel_model_summary-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># \donttest{</span>
 <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>integrated_multilevel_model_summary</span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='va'>popular</span>,
   response_variable <span class='op'>=</span> <span class='va'>popular</span>,
@@ -339,7 +342,66 @@ If you requested simple slope summary, it will uses the interaction::sim_slopes.
   assumption_plot <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='co'># you can also request assumption plot</span>
   plot_color <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='co'># you can also request the plot in color</span>
 <span class='op'>)</span>
-<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='warning'>Warning: </span><span style='color: #BB0000;'>Random effect variances not available. Returned R2 does not account for random effects.</span><span></span></div><div class='output co'>#&gt; 
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; Model Type = Linear Mixed Effect Model (fitted using lme4 or lmerTest)
+#&gt; Outcome = popular
+#&gt; Predictors = extrav, sex, texp, extrav:sex, extrav:texp, sex:texp, extrav:sex:texp
+#&gt; 
+#&gt; </span><span style='text-decoration: underline;'>Model Estimates</span><span>
+#&gt; ─────────────────────────────────────────────────────────────────────────────────────────
+#&gt;         Parameter  Effects  Coefficient       t    df     SE          p            95% CI
+#&gt; ─────────────────────────────────────────────────────────────────────────────────────────
+#&gt;       (Intercept)    fixed       -0.958  -2.882  1985  0.332  0.004 **   [-1.609, -0.306]
+#&gt;            extrav    fixed        0.757  14.314  1985  0.053  0.000 ***  [ 0.653,  0.861]
+#&gt;               sex    fixed        0.714   1.890  1985  0.378  0.059      [-0.026,  1.454]
+#&gt;              texp    fixed        0.217  10.201  1985  0.021  0.000 ***  [ 0.175,  0.259]
+#&gt;        extrav:sex    fixed        0.094   1.471  1985  0.064  0.141      [-0.031,  0.219]
+#&gt;       extrav:texp    fixed       -0.023  -6.489  1985  0.004  0.000 ***  [-0.030, -0.016]
+#&gt;          sex:texp    fixed        0.020   0.861  1985  0.024  0.389      [-0.026,  0.067]
+#&gt;   extrav:sex:texp    fixed       -0.004  -0.829  1985  0.004  0.407      [-0.012,  0.005]
+#&gt; ─────────────────────────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt; </span><span style='text-decoration: underline;'>Goodness of Fit</span><span>
+#&gt; ───────────────────────────────────────────────────────────────
+#&gt;        AIC       BIC  R²_conditional  R²_marginal   RMSE      σ
+#&gt; ───────────────────────────────────────────────────────────────
+#&gt;   4827.902  4911.915             NaN        0.656  0.720  0.742
+#&gt; ───────────────────────────────────────────────────────────────
+#&gt; 
+#&gt; </span><span style='text-decoration: underline;'>Model Assumption Check</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK: Model is converged</span><span>
+#&gt; </span><span style='color: #BB0000;'>Warning: Singularity is detected. See ?lme4::isSingular()</span><span>
+#&gt; </span><span style='color: #BB0000;'>Warning: Autocorrelated residuals detected (p &lt; .001).</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK: residuals appear as normally distributed (p = 0.487).
+#&gt; </span><span style='color: #0000BB;'>Unable to check autocorrelation. Try changing na.action to na.omit.</span><span>
+#&gt; </span><span style='color: #00BB00;'>OK: Error variance appears to be homoscedastic (p = 0.752).
+#&gt; </span><span></div><div class='output co'>#&gt; <span class='warning'>Warning: Model has interaction terms. VIFs might be inflated. You may check multicollinearity among predictors of a model without interaction terms.</span></div><div class='output co'>#&gt; </span><span style='color: #BB0000;'>Warning: Severe multicolinearity detected (VIF &gt; 10). Please inspect the following table to identify high correlation factors.</span><span>
+#&gt; </span><span style='text-decoration: underline;'>Multicollinearity Table </span><span>
+#&gt; ─────────────────────────────────────
+#&gt;              Term      VIF  SE_factor
+#&gt; ─────────────────────────────────────
+#&gt;            extrav    9.167      3.028
+#&gt;               sex  107.181     10.353
+#&gt;              texp    6.325      2.515
+#&gt;        extrav:sex   93.909      9.691
+#&gt;       extrav:texp   14.154      3.762
+#&gt;          sex:texp  107.690     10.377
+#&gt;   extrav:sex:texp   95.252      9.760
+#&gt; ─────────────────────────────────────</div><div class='img'><img src='integrated_multilevel_model_summary-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; </span><span style='text-decoration: underline;'>Slope Estimates at Each Level of Moderators</span><span>
+#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt;   texp Level  sex Level   Est.   S.E.  t val.          p          95% CI
+#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt;         Low        Low   0.579  0.031  18.595  0.000 ***  [0.518, 0.640]
+#&gt;                    High  0.646  0.031  20.660  0.000 ***  [0.585, 0.708]
+#&gt;         Mean       Low   0.429  0.024  17.555  0.000 ***  [0.381, 0.476]
+#&gt;                    High  0.472  0.023  20.434  0.000 ***  [0.427, 0.518]
+#&gt;         High       Low   0.278  0.036   7.697  0.000 ***  [0.207, 0.348]
+#&gt;                    High  0.298  0.031   9.565  0.000 ***  [0.237, 0.360]
+#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; </span><span style='font-style: italic;'>Note: For continuous variable, low and high represent -1 and +1 SD from the mean, respectively.</span><span></div><div class='img'><img src='integrated_multilevel_model_summary-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='warning'>Warning: You requested &gt; 2 plots. Since 1 plot can be displayed at a time, considering using Rmd for better viewing experience.</span></div><div class='img'><img src='integrated_multilevel_model_summary-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 
 </div></span></pre>
   </div>

@@ -42,7 +42,7 @@
 <meta property="og:title" content="Confirmatory Factor Analysis — cfa_summary" />
 <meta property="og:description" content=" 
 The function fits a CFA model using the lavaan::cfa(). Users can fit single and multiple factors CFA, and it also supports multilevel CFA (by specifying the group).
-Users can fit the model by passing the items using dplyr::select syntax or an explicit lavaan model for more versatile usage.
+Users can fit the model by passing the items using dplyr::select() syntax or an explicit lavaan model for more versatile usage.
 All arguments (except the CFA items) must be explicitly named (e.g., model = your-model; see example for inappropriate behavior)." />
 
 
@@ -98,6 +98,9 @@ All arguments (except the CFA items) must be explicitly named (e.g., model = you
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/brief-introduction-to-select-syntax.html">brief-introduction-to-select-syntax</a>
+    </li>
+    <li>
       <a href="../articles/quick-introduction.html">quick-introduction</a>
     </li>
   </ul>
@@ -135,7 +138,7 @@ All arguments (except the CFA items) must be explicitly named (e.g., model = you
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#stable'><img src='figures/lifecycle-stable.svg' alt='[Stable]' /></a> <br />
 The function fits a CFA model using the <code><a href='https://rdrr.io/pkg/lavaan/man/cfa.html'>lavaan::cfa()</a></code>. Users can fit single and multiple factors CFA, and it also supports multilevel CFA (by specifying the group).
-Users can fit the model by passing the items using <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax or an explicit lavaan model for more versatile usage.
+Users can fit the model by passing the items using <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax or an explicit lavaan model for more versatile usage.
 All arguments (except the CFA items) must be explicitly named (e.g., model = your-model; see example for inappropriate behavior).</p>
     </div>
 
@@ -164,19 +167,19 @@ All arguments (except the CFA items) must be explicitly named (e.g., model = you
     </tr>
     <tr>
       <th>...</th>
-      <td><p>CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for examples. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
+      <td><p>CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for examples. Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>model</th>
-      <td><p>explicit lavaan model. Must be specify with <code>model = lavaan_model_syntax</code>. <a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p></td>
+      <td><p>explicit <code>lavaan</code> model. Must be specify with <code>model = lavaan_model_syntax</code>. <a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country). Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select</a></code> syntax.</p></td>
+      <td><p>optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country). Support <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> syntax.</p></td>
     </tr>
     <tr>
       <th>ordered</th>
-      <td><p>Default is <code>FALSE</code>. If it is set to <code>TRUE</code>, lavaan will treat it as a ordinal variable and use <code>DWLS</code> instead of <code>ML</code></p></td>
+      <td><p>Default is <code>FALSE</code>. If it is set to <code>TRUE</code>, <code>lavaan</code> will treat it as a ordinal variable and use <code>DWLS</code> instead of <code>ML</code></p></td>
     </tr>
     <tr>
       <th>digits</th>
@@ -208,7 +211,7 @@ All arguments (except the CFA items) must be explicitly named (e.g., model = you
     </tr>
     <tr>
       <th>return_result</th>
-      <td><p>If it is set to <code>TRUE</code>, it will return the lavaan model</p></td>
+      <td><p>If it is set to <code>TRUE</code>, it will return the <code>lavaan</code> model</p></td>
     </tr>
     </table>
 
@@ -304,7 +307,7 @@ The model is considered an acceptable fit if CFI &gt; 0.9 and RMSEA &lt; 0.08. I
 #&gt; </span><span style='color: #BB0000;'> Warning. Poor TLI fit (TLI &lt; 0.90)</span><span>
 #&gt; </span><span style='color: #BBBB00;'> OK. Barely acceptable factor loadings (0.4 &lt; some loadings &lt; 0.7)</span><span></div><div class='img'><img src='cfa_summary-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Fitting a multilevel single factor CFA model</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># \donttest{</span>
 <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>cfa_summary</span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,
   <span class='va'>x1</span><span class='op'>:</span><span class='va'>x3</span>,
@@ -312,19 +315,54 @@ The model is considered an acceptable fit if CFI &gt; 0.9 and RMSEA &lt; 0.08. I
   model_variance <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='co'># do not print the model_variance</span>
   model_covariance <span class='op'>=</span> <span class='cn'>FALSE</span> <span class='co'># do not print the model_covariance</span>
 <span class='op'>)</span>
-<span class='op'>}</span>
+</div><div class='output co'>#&gt; 
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; Model Type = Confirmatory Factor Analysis
+#&gt; Group = sex
+#&gt; Model Formula = 
+#&gt; . DV1 =~ x1 + x2 + x3
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Fit Measure</span><span>
+#&gt; ─────────────────────────────────────────────────────────────────────────────────
+#&gt;      Χ²     DF        P    CFI  RMSEA   SRMR    TLI       AIC       BIC      BIC2
+#&gt; ─────────────────────────────────────────────────────────────────────────────────
+#&gt;   0.000  0.000  NaN      1.000  0.000  0.000  1.000  2723.393  2790.121  2733.035
+#&gt; ─────────────────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt;  
+#&gt; </span><span style='text-decoration: underline;'>Factor Loadings</span><span>
+#&gt; ──────────────────────────────────────────────────────────────────────────────────────
+#&gt;   Latent.Factor  Observed.Var  group  Std.Est     SE      Z          P          95% CI
+#&gt; ──────────────────────────────────────────────────────────────────────────────────────
+#&gt;             DV1            x1      1    0.472  0.119  3.952  0.000 ***  [0.238, 0.706]
+#&gt;                            x2           0.352  0.104  3.376  0.001 ***  [0.148, 0.557]
+#&gt;                            x3           0.919  0.196  4.681  0.000 ***  [0.534, 1.304]
+#&gt;             DV1            x1      2    0.750  0.089  8.437  0.000 ***  [0.576, 0.924]
+#&gt;                            x2           0.561  0.082  6.826  0.000 ***  [0.400, 0.722]
+#&gt;                            x3           0.586  0.083  7.076  0.000 ***  [0.423, 0.748]
+#&gt; ──────────────────────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt;  
+#&gt; Goodness of Fit:
+#&gt; </span><span style='color: #00BB00;'> OK. Excellent χ² fit (p &gt; 0.05)</span><span>
+#&gt; </span><span style='color: #00BB00;'> OK. Excellent CFI fit (CFI &gt; 0.95)</span><span>
+#&gt; </span><span style='color: #00BB00;'> OK. Excellent RMSEA fit (RMSEA &lt; 0.05)</span><span>
+#&gt; </span><span style='color: #00BB00;'> OK. Good SRMR fit (SRMR &lt; 0.08)</span><span>
+#&gt; </span><span style='color: #00BB00;'> OK. Excellent TLI fit (TLI &gt; 0.95)</span><span>
+#&gt; </span><span style='color: #BB0000;'> Warning. Some poor factor loadings (some loadings &lt; 0.4)</span><span></div><div class='img'><img src='cfa_summary-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='cfa_summary-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 
 
 <span class='co'># Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)</span>
 <span class='co'># Note in the below function how I added `model = ` in front of the lavaan model.</span>
 <span class='co'># Similarly, the same rule apply for all arguments (e.g., `ordered = FALSE` instead of just `FALSE`)</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># \donttest{</span>
 <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>cfa_summary</span><span class='op'>(</span>
   model <span class='op'>=</span> <span class='st'>"visual  =~ x1 + x2 + x3; textual =~ x4 + x5 + x6;"</span>,
   data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,
   quite <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='co'># silence all output</span>
 <span class='op'>)</span>
-<span class='op'>}</span>
+</div><div class='img'><img src='cfa_summary-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># This will fail because I did not add `model = ` in front of the lavaan model.</span>
 <span class='co'># Therefore,you must add the tag in front of all arguments</span>

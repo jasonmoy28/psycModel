@@ -40,7 +40,8 @@
 
 
 <meta property="og:title" content="Slope Estimate at Varying Level of Moderators — simple_slope" />
-<meta property="og:description" content="The function uses the interaction::sim_slopes() to calculate the slope estimate at varying level of moderators (+/- 1 SD and mean)." />
+<meta property="og:description" content="The function uses the interaction::sim_slopes() to calculate the slope estimate at varying level of moderators (+/- 1 SD and mean).
+Additionally, it will produce a Johnson-Newman plot that shows when the slope estimate is not significant" />
 
 
 
@@ -95,6 +96,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/brief-introduction-to-select-syntax.html">brief-introduction-to-select-syntax</a>
+    </li>
+    <li>
       <a href="../articles/quick-introduction.html">quick-introduction</a>
     </li>
   </ul>
@@ -130,7 +134,8 @@
     </div>
 
     <div class="ref-description">
-    <p>The function uses the <code>interaction::sim_slopes()</code> to calculate the slope estimate at varying level of moderators (+/- 1 SD and mean).</p>
+    <p>The function uses the <code>interaction::sim_slopes()</code> to calculate the slope estimate at varying level of moderators (+/- 1 SD and mean).
+Additionally, it will produce a Johnson-Newman plot that shows when the slope estimate is not significant</p>
     </div>
 
     <pre class="usage"><span class='fu'>simple_slope</span><span class='op'>(</span>
@@ -163,7 +168,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list with the slope estimate data frame and a Johnson-Newman plot that shows when the slope estimate is not significant</p>
+    <p>a list with the slope estimate data frame and a Johnson-Newman plot.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lm_model.html'>lm_model</a></span><span class='op'>(</span>
