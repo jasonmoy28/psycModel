@@ -108,7 +108,7 @@
 <div id="key-features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#key-features" class="anchor"></a>Key Features</h2>
-<p><span style="color:#009900">✓</span> A beginner-friendly R package for modeling in psychology or related field (intermediate &amp; advanced R users should also find it useful) <br><span style="color:#009900">✓</span> Tired of manually writing all variables in a model? You can use <a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a> syntax for all models <br><span style="color:#009900">✓</span> Fitting models, plotting, checking goodness of fit, and model assumption violations all in one place. <br><span style="color:#009900">✓</span> Beautiful and easy-to-read output. Check out the <a href="https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html">example</a> here now. <br><span style="color:#009900">✓</span> In the backend, this package uses reliable and well-established R packages (e.g., lavaan, lme4, psych) to handle all statistical analysis <br></p>
+<p><span style="color:#009900">✓</span> A beginner-friendly R package for statistical analysis in psychology or related field (intermediate &amp; advanced R users should also find it useful) <br><span style="color:#009900">✓</span> Tired of manually writing all variables in a model? You can use <a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a> syntax for all models (read this <a href="https://jasonmoy28.github.io/psycModel/articles/brief-introduction-to-select-syntax.html">article</a> for more detailed explanation) <br><span style="color:#009900">✓</span> Fitting models, plotting, checking goodness of fit, and model assumption violations all in one place. <br><span style="color:#009900">✓</span> Beautiful and easy-to-read output. Check out this <a href="https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html">example</a> now. <br><span style="color:#009900">✓</span> In the backend, this package uses reliable and well-respected R packages (e.g., <code>lavaan</code>, <code>lme4</code>, <code>psych</code>) to handle all statistical analysis. <br></p>
 </div>
 <div id="supported-models" class="section level2">
 <h2 class="hasAnchor">
@@ -153,12 +153,9 @@
 <a href="#acknowledgement" class="anchor"></a>Acknowledgement</h2>
 <p>This package was built by standing on the shoulders of giants with special thanks to researchers and developers of <a href="https://lavaan.ugent.be/"><code>lavaan</code></a>, <a href="https://github.com/lme4/lme4"><code>lme4</code></a>, <a href="https://github.com/runehaubo/lmerTestR"><code>lmerTest</code></a>, <a href="https://cran.r-project.org/package=nlme"><code>nlme</code></a>, <a href="https://easystats.github.io/performance/"><code>performance</code></a>, <a href="https://easystats.github.io/parameters/"><code>parameters</code></a>, <a href="https://personality-project.org/r/psych/"><code>psych</code></a>, and of course, all of the <a href="https://tidyverse.tidyverse.org/"><code>tidyverse</code></a> packages. I hope my package will help someone as they had helped me.</p>
 </div>
-<div id="updates" class="section level2">
+<div id="upcoming-features" class="section level2">
 <h2 class="hasAnchor">
-<a href="#updates" class="anchor"></a>Updates</h2>
-<div id="upcoming-features" class="section level3">
-<h3 class="hasAnchor">
-<a href="#upcoming-features" class="anchor"></a><a href="https://github.com/jasonmoy28/psycModel/issues/3">Upcoming Features</a>:</h3>
+<a href="#upcoming-features" class="anchor"></a>Upcoming Features</h2>
 <ol>
 <li>Support bootstrapping and robust standard error for relevant models</li>
 <li>Support moderated mediation analysis and multilevel mediation analysis (currently support multilevel with level-1 variable only)</li>
@@ -167,153 +164,7 @@
 <li>Support polynomial regression</li>
 <li>Support outputting table to MS word (don’t know how to implement yet)</li>
 </ol>
-</div>
-<div id="version-030-initial-cran-released-on-4192021" class="section level3">
-<h3 class="hasAnchor">
-<a href="#version-030-initial-cran-released-on-4192021" class="anchor"></a>version 0.3.0 (initial CRAN released on 4/19/2021)</h3>
-<p><strong>Major Feature:</strong> <br></p>
-<ul>
-<li>Support reliability measure summary</li>
-<li>Support mediation</li>
-<li>Support generalized linear regression (<code>glm</code> and <code>glmer</code> without plot)</li>
-</ul>
-<p><strong>Minor Feature:</strong> <br></p>
-<ul>
-<li>
-<code>cfa_summary</code> support path diagram</li>
-<li>
-<code>efa_summary</code> rewrite using functions from <code>parameters</code> and support post-hoc CFA test</li>
-<li>
-<code>cfa_summary</code> support factor loading is hidden for same latent factor (only when group = <code>NULL</code>)</li>
-<li>
-<code>cor_test</code> and <code>descriptive_table</code> support rich-text formatted table output</li>
-<li>
-<code>model_summary</code> rewrite using <code><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters::model_parameters</a></code>
-</li>
-<li>integrate summary with plot for <code>lm_summary</code> to <code>integrated_model_summary</code>
-</li>
-<li>
-<code>cor_test</code> re-write using the correlation package, so it supports more methods and robust standard errors</li>
-<li>
-<code>quite</code> and <code>streamline</code> support in all models that print output</li>
-<li>Give instruction on how to use R Markdown (see <code>knit_to_Rmd</code>)</li>
-</ul>
-</div>
-<div id="version-021-released-on-4162021" class="section level3">
-<h3 class="hasAnchor">
-<a href="#version-021-released-on-4162021" class="anchor"></a>version 0.2.1 (released on 4/16/2021)</h3>
-<p><strong>Major Feature:</strong> <br></p>
-<ul>
-<li>Support linear regression <br>
-</li>
-<li>Support exploratory factor analysis <br>
-</li>
-<li>Complete overhaul to produce rich-text formatted summary output <br>
-</li>
-</ul>
-<p><strong>Minor Feature:</strong> <br></p>
-<ul>
-<li>
-<code>measurement_invariance</code> support multiple-factor model with tidyselect syntax <br>
-</li>
-<li>
-<code>model_summary_with_plot</code> support outlier detection <br>
-</li>
-<li>Changed data from EWCS_2015_shorten to popular (a dataset that is easier to understand) <br>
-</li>
-<li>Added a new function that allow convert HTML to PDF function for knitting Rmd <br>
-</li>
-<li>
-<code>model_performance</code> support a wider array of model performance measure <br>
-</li>
-<li>
-<code>cfa_summary</code> and <code>measurement_invariance</code> support checking goodness of fit <br>
-</li>
-</ul>
-<p><strong>Bugs fixed</strong> <br></p>
-<ul>
-<li>Critical bug fix for <code>model_summary_with_plot</code>. You can request <code>simple_slope</code> and <code>assumption_plot</code> correctly. <br>
-</li>
-<li>Critical bug fix that <code>cor_test</code> is not exported <br>
-</li>
-<li>remove some packages from import and switch to <code><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace()</a></code> <br>
-</li>
-<li>added fallback for normality check <br>
-</li>
-</ul>
-</div>
-<div id="version-020-released-on-4112021" class="section level3">
-<h3 class="hasAnchor">
-<a href="#version-020-released-on-4112021" class="anchor"></a>version 0.2.0 (released on 4/11/2021)</h3>
-<p><strong>Major Feature:</strong> <br></p>
-<ul>
-<li>
-<code>lme_model</code>, <code>model_summary_with_plot</code> support tidyselect syntax <br>
-</li>
-<li>
-<code>cfa_summary</code> support multi-factor CFA with tidyselect syntax <br>
-</li>
-</ul>
-<p><strong>Minor Feature:</strong> <br></p>
-<ul>
-<li>Added <code>assumption_plot</code> to visually inspect assumptions for mixed effect models in <code>model_summary_with_plot</code> <br>
-</li>
-<li>
-<code>two_way_interaction_plot</code>, <code>three_way_interaction_plot</code> only require the model object to produce the plot. <br>
-</li>
-<li>
-<code>lme_model</code>, <code>model_summary_with_plot</code> support using <code>lme4</code> package. <br>
-</li>
-<li>
-<code>model_summary_with_plot</code> <code>lme_model</code> support passing explicit model. <br>
-</li>
-<li>
-<code>compare_fit</code> support more model comparison (e.g., lme, glme). <br>
-</li>
-</ul>
-<p><strong>Bugs fixed:</strong> <br></p>
-<ul>
-<li>the current version build pass CMD check <br>
-</li>
-<li>
-<code>measurement_invariance</code> stop using <code>semTools::compareFit</code>. Added a self-created <code>compare_fit</code> function for the package <br>
-</li>
-<li>remove <code>papaja::apa_theme()</code> dependency. <br>
-</li>
-<li>use <code>.data</code> from <code>rlang</code> for <code>mutate</code> function <br>
-</li>
-<li>
-<code>model_summary_with_plot</code> always return list and changed to logical (set to T to return result_list) <br>
-</li>
-<li>
-<code>model_summary_with_plot</code> return a named list object <br>
-</li>
-</ul>
-</div>
-<div id="version-011-released-on-492021" class="section level3">
-<h3 class="hasAnchor">
-<a href="#version-011-released-on-492021" class="anchor"></a>version 0.1.1 (released on 4/9/2021)</h3>
-<p><strong>New Feature:</strong> <br></p>
-<ul>
-<li>
-<code>descriptive_table</code> support wider array of descriptive indicator (e.g., median, range) and missing &amp; non_missing values count <br>
-</li>
-</ul>
-<p><strong>Bugs fixed:</strong> <br></p>
-<ul>
-<li>Fixed the <code>cor_test</code> bug that the function return a correlation matrix with blank cells if the correlation is too high between the two items (rounded to 1). <br>
-</li>
-<li>Add a <code>data_check</code> function that warns the users if non-numeric variables are coerced into numeric. <br>
-</li>
-</ul>
-</div>
-<div id="version-010-released-on-482021" class="section level3">
-<h3 class="hasAnchor">
-<a href="#version-010-released-on-482021" class="anchor"></a>version 0.1.0 (released on 4/8/2021)</h3>
-<ul>
-<li>initial build of package</li>
-</ul>
-</div>
+<p>A more exhaustive list is avaliable <a href="https://github.com/jasonmoy28/psycModel/issues/3">here</a>. If you have feature request, please feel free to let me know by writing a new GitHub issue.</p>
 </div>
 </div>
   </div>
