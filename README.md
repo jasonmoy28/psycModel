@@ -6,13 +6,17 @@
 [![R-CMD-check](https://github.com/jasonmoy28/psycModel/workflows/R-CMD-check/badge.svg)](https://github.com/jasonmoy28/psycModel/actions)
 [![Codecov test coverage](https://codecov.io/gh/jasonmoy28/psycModel/branch/master/graph/badge.svg)](https://codecov.io/gh/jasonmoy28/psycModel?branch=master)
 [![DOI](https://zenodo.org/badge/355611696.svg)](https://doi.org/10.5281/zenodo.4671947)
-# psycModel <a href='https://jasonmoy28.github.io/psycModel'><img src='man/figures/logo.svg' align="right" height="139" /></a>
+# psycModel <a href='https://jasonmoy28.github.io/psycModel'><img src='man/figures/logo.svg' align="right" height="280" /></a>
 
 <!-- badges: end -->
 
 ## Installation
+**CRAN Stable Version**
 ```R
-#install.packages('devtools') if devtools is not installed
+install.packages('psycModel')
+```
+**Dev Version (newest feature)**
+```R
 devtools::install_github('jasonmoy28/psycModel')
 ```
 ## Key Features
