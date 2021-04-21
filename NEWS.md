@@ -1,4 +1,8 @@
-# psycModel 0.3.0
+# psycModel (development version)
+
+
+
+# psycModel 0.3.0 (first CRAN release)
 
 **Major Feature:** <br/>
 * Support reliability measure summary
