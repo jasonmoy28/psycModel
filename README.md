@@ -6,7 +6,7 @@
 [![R-CMD-check](https://github.com/jasonmoy28/psycModel/workflows/R-CMD-check/badge.svg)](https://github.com/jasonmoy28/psycModel/actions)
 [![Codecov test coverage](https://codecov.io/gh/jasonmoy28/psycModel/branch/master/graph/badge.svg)](https://codecov.io/gh/jasonmoy28/psycModel?branch=master)
 [![DOI](https://zenodo.org/badge/355611696.svg)](https://doi.org/10.5281/zenodo.4671947)
-# psycModel <a href='https://jasonmoy28.github.io/psycModel'><img src='man/figures/logo.svg' align="right" height="280" /></a>
+# psycModel <a href='https://jasonmoy28.github.io/psycModel'><img src='man/figures/logo.png' align="right" height="280" /></a>
 
 <!-- badges: end -->
 
@@ -45,6 +45,8 @@ Other:  <br/>
 **Authors:** [Jason Moy](https://jasonmoy.us)
 
 **Citation:** Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
+
+**Logo Designer:** Danlin Liu
 
 ## Contributing:
 If you like the package, please considering give it a star. It meant a lot to me knowing that people find it useful. This package is still in its early stage. There are lots of features / models that I plan to implement in the near future (see [here](https://github.com/jasonmoy28/psycModel/issues/3)), but it takes a long time for me to implement everything. So, if you are interested in help building this package, please feel free to submit a [pull request](https://github.com/jasonmoy28/psycModel/pulls) / [GitHub issue](https://github.com/jasonmoy28/psycModel/issues). I also tried my best to fix any bugs, but the package is still beta testing. If you find any bugs, please submit them in the [GitHub issue](https://github.com/jasonmoy28/psycModel/issues). Additionally, you should expect changes that are not backward compatible until the package's first major release (i.e., v1.0.0). 
