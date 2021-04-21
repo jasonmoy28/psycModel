@@ -6,7 +6,7 @@
 [![R-CMD-check](https://github.com/jasonmoy28/psycModel/workflows/R-CMD-check/badge.svg)](https://github.com/jasonmoy28/psycModel/actions)
 [![Codecov test coverage](https://codecov.io/gh/jasonmoy28/psycModel/branch/master/graph/badge.svg)](https://codecov.io/gh/jasonmoy28/psycModel?branch=master)
 [![DOI](https://zenodo.org/badge/355611696.svg)](https://doi.org/10.5281/zenodo.4671947)
-# psycModel <a href='https://jasonmoy28.github.io/psycModel'><img src='man/figures/logo.png' align="right" height="280" /></a>
+# psycModel <a href='https://jasonmoy28.github.io/psycModel'><img src='man/figures/logo.png' align="right" height="313" /></a>
 
 <!-- badges: end -->
 
