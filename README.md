@@ -44,7 +44,7 @@ Other:  <br/>
 ## Credit
 **Authors:** [Jason Moy](https://jasonmoy.us)
 
-**Citation:** Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. R package. https://github.com/jasonmoy28/psycModel
+**Citation:** Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. *CRAN*. https://cran.r-project.org/package=psycModel.
 
 **Logo Designer:** Danlin Liu
 
