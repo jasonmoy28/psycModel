@@ -1,7 +1,8 @@
-# psycModel <a href='https://jasonmoy28.github.io/psycModel'><img src='man/figures/logo.png' align="right" height="220" /></a>
+# psycModel 
 ## Integrated Toolkit for Psychological Analysis and Modeling in R
 
 <!-- badges: start -->
+<a href='https://jasonmoy28.github.io/psycModel'><img src='man/figures/logo.png' align="right" height="220" /></a>
 [![CRAN version](https://img.shields.io/cran/v/psycModel)](https://cran.r-project.org/package=psycModel)
 [![R-CMD-check](https://github.com/jasonmoy28/psycModel/workflows/R-CMD-check/badge.svg)](https://github.com/jasonmoy28/psycModel/actions)
 [![Codecov test coverage](https://codecov.io/gh/jasonmoy28/psycModel/branch/master/graph/badge.svg)](https://codecov.io/gh/jasonmoy28/psycModel?branch=master)
