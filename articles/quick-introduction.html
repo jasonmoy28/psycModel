@@ -153,7 +153,7 @@ Predictors = Sepal.Width, Petal.Length, Petal.Width, Species
 ───────────────────────────────────────────────────
 
 </span><span style="text-decoration: underline;">Model Assumption Check</span><span>
-OK: Residuals appear to be independent and not autocorrelated (p = 0.996).
+OK: Residuals appear to be independent and not autocorrelated (p = 0.938).
 OK: residuals appear as normally distributed (p = 0.892).
 </span><span style="color: #0000BB;">Unable to check autocorrelation. Try changing na.action to na.omit.</span><span>
 Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.047).
@@ -735,7 +735,9 @@ Model Type = Descriptive Statistics
 Note: To knit Rmd to HTML, add the following line to the setup chunk of your Rmd file: 
  "old.hooks &lt;- fansi::set_knit_hooks(knitr::knit_hooks)"
 
-Note: Use html_to_pdf to convert it to PDF. See ?html_to_pdf for more info
+Note: Recommending using adding 'fig.width=14,fig.height=8,out.width=700,out.height=400' if you requested assumption plot
+
+Note: Recommending using html_to_pdf to convert it to PDF. See ?html_to_pdf for more info
 </span></code></pre>
 </div>
 </div>
