@@ -86,7 +86,7 @@ lme_model <- function(data,
     }
     if (method == "two_interaction_factor_check") {
       if (length(object) < 2) {
-        stop("two_way_interaction_factor must have three factors")
+        stop("two_way_interaction_factor must have two factors")
       }
     }
   }
