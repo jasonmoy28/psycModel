@@ -41,21 +41,14 @@ Other:  <br/>
 
 <br/>
 
-*Note:* If you like this pacakge, please considering give it a star on [GitHub](https://github.com/jasonmoy28/psycModel). I would really appreciate that.
+*Note:* If you like this package, please considering give it a star on [GitHub](https://github.com/jasonmoy28/psycModel). I would really appreciate that.
 
 ## Credit
 **Authors:** [Jason Moy](https://jasonmoy.us)
 
-**Citation:** Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modelling in R. *CRAN*. https://cran.r-project.org/package=psycModel.
+**Citation:** Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. *CRAN*. https://cran.r-project.org/package=psycModel.
 
 **Logo Design:** Danlin Liu
-
-## Disclaimer:
-The current release is the [alpha version](https://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha) of the package since I plan to add more features and support more models in the future (read more about planned updates [here](https://github.com/jasonmoy28/psycModel/issues/3)). If you are interested in help building this package, please feel free to submit a [pull request](https://github.com/jasonmoy28/psycModel/pulls) / [GitHub issue](https://github.com/jasonmoy28/psycModel/issues). Although I tried my best to fix any bugs, the package is not guarantee to be bug-free. If you find any bugs, please submit them in the [GitHub issue](https://github.com/jasonmoy28/psycModel/issues). Although the pacakge is depended on reliable R packages for all statstical analysis, I still encourage validating the output of this package with another statistical software (e.g., SPSS, MPlus, Python). This package is liscensed under the [GPLv3 liscense](https://www.gnu.org/licenses/gpl-3.0.en.html). You may use, re-distribute, and modified the package. However, based on the GPLv3 liscense, this pacakge DOES NOT provide any kind of warranty, either expressed or implied. And, the authors and contributors of this package cannot be held liable for any damages inflicted by the package (including but not limited to data loss and data being rendered incorrectly). Finally, you should expect many changes that are not backward compatible until the package's first major release (i.e., v1.0.0). 
-
-## Acknowledgement
-This package was built by standing on the shoulders of giants with special thanks to researchers and developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [`parameters`](https://easystats.github.io/parameters/), [`psych`](https://personality-project.org/r/psych/), and of course, all of the [`tidyverse`](https://tidyverse.tidyverse.org/) packages. I hope this package can help someone in the same way that these pacakges has helped me. 
-
 
 ## Upcoming Features
 1. Support bootstrapping and robust standard error for relevant models 
@@ -65,6 +58,11 @@ This package was built by standing on the shoulders of giants with special thank
 5. Support polynomial regression
 6. Support outputting table to MS word (don't know how to implement yet)  
 
-*Note:* A more exhaustive list is avaliable [here](https://github.com/jasonmoy28/psycModel/issues/3). If you have feature request, please feel free to let me know by writing a new GitHub issue. 
+*Note:* A more exhaustive list is available [here](https://github.com/jasonmoy28/psycModel/issues/3). If you have any feature request, please feel free to let me know by writing a new GitHub issue. 
 
 
+## Disclaimer:
+The current release is the [alpha version](https://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha) of the package since I plan to add more features and support more models in the future (read more about planned updates [here](https://github.com/jasonmoy28/psycModel/issues/3)). If you are interested in help building this package, please feel free to submit a [pull request](https://github.com/jasonmoy28/psycModel/pulls) / [GitHub issue](https://github.com/jasonmoy28/psycModel/issues). Although I tried my best to fix any bugs, the package is not guarantee to be bug-free. If you find any bugs, please submit them in the [GitHub issue](https://github.com/jasonmoy28/psycModel/issues). Although the package is depended on reliable R packages for all statistical analysis, I still encourage validating the output of this package with another statistical software (e.g., SPSS, MPlus, Python). This package is licensed under the [GPLv3 liscense](https://www.gnu.org/licenses/gpl-3.0.en.html). You may use, re-distribute, and modified the package. However, based on the GPLv3 license, this package DOES NOT provide any kind of warranty, either expressed or implied. And, the authors and contributors of this package cannot be held liable for any damages inflicted by the package (including but not limited to data loss and data being rendered incorrectly). Finally, you should expect many changes that are not backward compatible until the package's first major release (i.e., v1.0.0). 
+
+## Acknowledgement
+This package was built by standing on the shoulders of giants with special thanks to researchers and developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [`parameters`](https://easystats.github.io/parameters/), [`psych`](https://personality-project.org/r/psych/), and of course, all of the [`tidyverse`](https://tidyverse.tidyverse.org/) packages. I hope this package can help someone in the same way that these packages has helped me. 
