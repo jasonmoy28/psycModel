@@ -7,9 +7,8 @@
 [![Codecov test coverage](https://codecov.io/gh/jasonmoy28/psycModel/branch/master/graph/badge.svg)](https://codecov.io/gh/jasonmoy28/psycModel?branch=master)
 [![DOI](https://zenodo.org/badge/355611696.svg)](https://doi.org/10.5281/zenodo.4671947)
 <!-- badges: end -->
-# <a href='https://jasonmoy28.github.io/psycModel'><img src='man/figures/logo.png' align="right" height="220" /></a>
+# Installation <a href='https://jasonmoy28.github.io/psycModel'><img src='man/figures/logo.png' align="right" height="220" /></a>
 
-## Installation
 **CRAN Stable Version**
 ```R
 install.packages('psycModel')
