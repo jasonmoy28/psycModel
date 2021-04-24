@@ -5,7 +5,7 @@
 [![CRAN version](https://img.shields.io/cran/v/psycModel)](https://cran.r-project.org/package=psycModel)
 [![R-CMD-check](https://github.com/jasonmoy28/psycModel/workflows/R-CMD-check/badge.svg)](https://github.com/jasonmoy28/psycModel/actions)
 [![Codecov test coverage](https://codecov.io/gh/jasonmoy28/psycModel/branch/master/graph/badge.svg)](https://codecov.io/gh/jasonmoy28/psycModel?branch=master)
-[![download](https://cranlogs.r-pkg.org/badges/psycModel)](https://cran.r-project.org/package=psycModel)
+[![download](https://cranlogs.r-pkg.org/badges/grand-total/psycModel)
 <!-- badges: end -->
 
 # Installation <a href='https://jasonmoy28.github.io/psycModel'><img src='man/figures/logo.png' align="right" height="220" /></a>
