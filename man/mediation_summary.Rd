@@ -27,7 +27,7 @@ mediation_summary(
 
 \item{predictor_variable}{predictor variable. Support \code{dplyr::select()} syntax.}
 
-\item{control_variable}{control variables. Support \code{dplyr::select()} syntax.}
+\item{control_variable}{control variables / covariate. Support \code{dplyr::select()} syntax.}
 
 \item{group}{nesting variable for multilevel mediation. Not confident about the implementation method. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
 
