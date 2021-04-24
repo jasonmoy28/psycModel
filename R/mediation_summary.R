@@ -9,7 +9,7 @@
 #' @param response_variable response variable. Support `dplyr::select()` syntax.
 #' @param mediator mediator. Support `dplyr::select()` syntax.
 #' @param predictor_variable predictor variable. Support `dplyr::select()` syntax.
-#' @param control_variable control variables. Support `dplyr::select()` syntax.
+#' @param control_variable control variables / covariate. Support `dplyr::select()` syntax.
 #' @param standardize standardized coefficients. Default is `TRUE`
 #' @param digits number of digits to round to
 #' @param return_result If it is set to `TRUE`, it will return the `lavaan` object
@@ -38,6 +38,7 @@ mediation_summary <- function(data,
                               quite = FALSE,
                               streamline = FALSE,
                               return_result = FALSE) {
+  data = data_check(data)
   response_variable <- data %>%
     dplyr::select(!!enquo(response_variable)) %>%
     names()

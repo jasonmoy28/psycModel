@@ -113,15 +113,16 @@ Measurement invariance is fitted using `lavaan::cfa()`. It uses the multi-group 
 ```
 
 ## Mediation Model
-Currently, the package only support simple mediation. You can try to fit a multi-group mediation by specifying the group argument. But, honestly, I don't know that's the correct approach to implement it. If you want more complicated mediation, I highly recommend using the `mediation` package. Eventually, I probably will switch to using that for this package. 
+Currently, the package only support simple mediation with covariate. You can try to fit a multi-group mediation by specifying the group argument. But, honestly, I don't know that's the correct approach to implement it. If you want more complicated mediation, I highly recommend using the `mediation` package. Eventually, I probably will switch to using that for this package. 
 
 ```{r}
 mediation_summary(
-   data = lmerTest::carrots,
-   response_variable = Preference,
-   mediator = Sweetness,
-   predictor_variable = Crisp
- )
+  data = lmerTest::carrots,
+  response_variable = Preference,
+  mediator = Sweetness,
+  predictor_variable = Crisp,
+  control_variable = Age:Income
+)
 ```
 
 # Other Model
