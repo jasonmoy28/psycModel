@@ -153,7 +153,7 @@ Predictors = Sepal.Width, Petal.Length, Petal.Width, Species
 ───────────────────────────────────────────────────
 
 </span><span style="text-decoration: underline;">Model Assumption Check</span><span>
-OK: Residuals appear to be independent and not autocorrelated (p = 0.990).
+OK: Residuals appear to be independent and not autocorrelated (p = 0.950).
 OK: residuals appear as normally distributed (p = 0.892).
 </span><span style="color: #0000BB;">Unable to check autocorrelation. Try changing na.action to na.omit.</span><span>
 Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.047).
@@ -540,14 +540,15 @@ Goodness of Fit:
 <div id="mediation-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#mediation-model" class="anchor"></a>Mediation Model</h2>
-<p>Currently, the package only support simple mediation. You can try to fit a multi-group mediation by specifying the group argument. But, honestly, I don’t know that’s the correct approach to implement it. If you want more complicated mediation, I highly recommend using the <code>mediation</code> package. Eventually, I probably will switch to using that for this package.</p>
+<p>Currently, the package only support simple mediation with covariate. You can try to fit a multi-group mediation by specifying the group argument. But, honestly, I don’t know that’s the correct approach to implement it. If you want more complicated mediation, I highly recommend using the <code>mediation</code> package. Eventually, I probably will switch to using that for this package.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mediation_summary.html">mediation_summary</a></span><span class="op">(</span>
-   data <span class="op">=</span> <span class="fu">lmerTest</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lmerTest/man/carrots.html">carrots</a></span>,
-   response_variable <span class="op">=</span> <span class="va">Preference</span>,
-   mediator <span class="op">=</span> <span class="va">Sweetness</span>,
-   predictor_variable <span class="op">=</span> <span class="va">Crisp</span>
- <span class="op">)</span></code></pre></div>
+  data <span class="op">=</span> <span class="fu">lmerTest</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lmerTest/man/carrots.html">carrots</a></span>,
+  response_variable <span class="op">=</span> <span class="va">Preference</span>,
+  mediator <span class="op">=</span> <span class="va">Sweetness</span>,
+  predictor_variable <span class="op">=</span> <span class="va">Crisp</span>,
+  control_variable <span class="op">=</span> <span class="va">Age</span><span class="op">:</span><span class="va">Income</span>
+<span class="op">)</span></code></pre></div>
 <pre class="fansi fansi-output"><code><span style="text-decoration: underline;">Model Summary</span><span>
 Model Type = Mediation Analysis (fitted using lavaan)
 
@@ -555,19 +556,27 @@ Model Type = Mediation Analysis (fitted using lavaan)
 ────────────────────────────────────────────────────────────────
   Effect Type  Est.Std     SE       z          p          95% CI
 ────────────────────────────────────────────────────────────────
-       direct    0.197  0.029   6.880  0.000 ***  [0.141, 0.253]
-     indirect    0.219  0.017  12.656  0.000 ***  [0.185, 0.253]
-        total    0.416  0.023  18.444  0.000 ***  [0.372, 0.460]
+       direct    0.239  0.028   8.406  0.000 ***  [0.183, 0.295]
+     indirect    0.219  0.017  12.776  0.000 ***  [0.186, 0.253]
+        total    0.458  0.022  20.416  0.000 ***  [0.414, 0.502]
 ────────────────────────────────────────────────────────────────
 
 </span><span style="text-decoration: underline;">Regression Summary</span><span>
-────────────────────────────────────────────────────────────────────────────────────
-    Response  Operator    Predict  Est.Std     SE       z          p          95% CI
-────────────────────────────────────────────────────────────────────────────────────
-   Sweetness         ~      Crisp    0.558  0.018  30.893  0.000 ***  [0.523, 0.593]
-  Preference         ~  Sweetness    0.392  0.028  14.177  0.000 ***  [0.338, 0.446]
-  Preference         ~      Crisp    0.197  0.029   6.880  0.000 ***  [0.141, 0.253]
-────────────────────────────────────────────────────────────────────────────────────
+──────────────────────────────────────────────────────────────────────────────────────
+    Response  Operator    Predict  Est.Std     SE       z          p            95% CI
+──────────────────────────────────────────────────────────────────────────────────────
+   Sweetness         ~      Crisp    0.542  0.019  27.822  0.000 ***  [ 0.504,  0.580]
+   Sweetness         ~        Age   -0.001  0.028  -0.019  0.984      [-0.055,  0.054]
+   Sweetness         ~   Homesize    0.102  0.027   3.806  0.000 ***  [ 0.049,  0.154]
+   Sweetness         ~       Work    0.044  0.028   1.584  0.113      [-0.010,  0.098]
+   Sweetness         ~     Income   -0.108  0.026  -4.203  0.000 ***  [-0.158, -0.058]
+  Preference         ~  Sweetness    0.405  0.028  14.647  0.000 ***  [ 0.351,  0.459]
+  Preference         ~      Crisp    0.239  0.028   8.406  0.000 ***  [ 0.183,  0.295]
+  Preference         ~        Age    0.131  0.027   4.777  0.000 ***  [ 0.077,  0.185]
+  Preference         ~   Homesize   -0.133  0.027  -5.030  0.000 ***  [-0.185, -0.081]
+  Preference         ~       Work   -0.048  0.027  -1.754  0.079      [-0.102,  0.006]
+  Preference         ~     Income    0.015  0.026   0.572  0.567      [-0.036,  0.065]
+──────────────────────────────────────────────────────────────────────────────────────
 </span></code></pre>
 </div>
 </div>
