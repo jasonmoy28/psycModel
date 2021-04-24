@@ -86,6 +86,7 @@ cfa_summary <- function(data,
                         streamline = FALSE,
                         quite = FALSE,
                         return_result = FALSE) {
+  data = data_check(data)
   if (is.null(model)) { # construct model if explicit model is not passed
     items <- enquos(...)
     model <- ""
