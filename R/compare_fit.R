@@ -39,7 +39,7 @@ compare_fit <- function(...,
   # lavaan models
   if (class(list(...)[[1]]) == "lavaan") {
     models <- list(...)
-    blank_df <- tibble::tibble(chisq = "", df = "", pvalue = "", cfi = "", rmsea = "", srmr = "", tli = "", aic = "", bic = "", bic2 = "", rowname = ".") %>% tibble::column_to_rownames()
+    blank_df <- tibble::tibble(chisq = "", df = "", pvalue = "", cfi = "", rmsea = "", srmr = "", tli = "", aic = "", bic = "", bic2 = "", rowname = "") %>% tibble::column_to_rownames()
     return_df <- tibble::tibble(chisq = NULL, df = NULL, pvalue = NULL, cfi = NULL, rmsea = NULL, srmr = NULL, tli = NULL, aic = NULL, bic = NULL, bic2 = NULL)
     fit_indices_df <- tibble::tibble(chisq = NULL, df = NULL, pvalue = NULL, cfi = NULL, rmsea = NULL, srmr = NULL, tli = NULL, aic = NULL, bic = NULL, bic2 = NULL)
     model_name <- c("configural", "metric", "scalar")
@@ -74,8 +74,9 @@ compare_fit <- function(...,
 
     return_df <-
       rbind(fit_indices_df, blank_df, compare_fit_df) %>%
-      dplyr::rename("$chi$^2" = "chisq")
-
+      dplyr::rename("$chi$^2" = "chisq") %>% 
+      tibble::rownames_to_column('Type')
+    
     return(return_df)
 
     ## lme & glme models

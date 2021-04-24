@@ -11,9 +11,12 @@ knit_to_Rmd <- function() {
     cat("\n")
     super_print('Note: To knit Rmd to HTML, add the following line to the setup chunk of your Rmd file: \n \U00A0"old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)"')
     cat("\n")
-    super_print("Note: Recommending using adding 'fig.width=14,fig.height=8,out.width=700,out.height=400' if you requested assumption plot")
+    super_print('Note: Recommend adding "<style type="text/css"> .main-container {max-width: fit-content;} </style>" to the head of the Rmd file but below the YAML (below the ---). This make sure the 
+                output box looks good in HTML.')
     cat("\n")
-    super_print("Note: Recommending using html_to_pdf to convert it to PDF. See ?html_to_pdf for more info")
+    super_print("Note: Recommend using adding 'fig.width=14,fig.height=8,out.width=700,out.height=400' if you requested assumption plot")
+    cat("\n")
+    super_print("Note: Recommend using html_to_pdf to convert it to PDF. See ?html_to_pdf for more info")
   } else {
     prompt <- readline("Require fansi to knit Rmd. Install fansi? Y/N ")
     if (prompt == "Y" | prompt == "y") {
