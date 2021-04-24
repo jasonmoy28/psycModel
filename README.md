@@ -67,3 +67,6 @@ The current release is the [alpha version](https://en.wikipedia.org/wiki/Softwar
 
 ## Acknowledgement
 This package was built by standing on the shoulders of giants with special thanks to researchers and developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [`parameters`](https://easystats.github.io/parameters/), [`psych`](https://personality-project.org/r/psych/), and of course, all of the [`tidyverse`](https://tidyverse.tidyverse.org/) packages. I hope this package can help someone in the same way that these packages has helped me. 
+
+## Code of Conduct
+Please note that the psycModel project is released with a [Contributor Code of Conduct](https://jasonmoy28.github.io/psycModel/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.

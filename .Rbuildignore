@@ -13,3 +13,4 @@ version_checklist.md
 ^cran-comments\.md$
 ^revdep$
 ^CRAN-RELEASE$
+^CODE_OF_CONDUCT\.md$
