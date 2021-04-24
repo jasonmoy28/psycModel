@@ -191,7 +191,7 @@ measurement_invariance <- function(data,
 
   colnames(fit) <- stringr::str_to_upper(colnames(fit))
   fit <- fit %>%
-    dplyr::mutate(dplyr::across(tidyselect::everything(), ~ replace_na(data = ., replace = ''))) 
+    dplyr::mutate(dplyr::across(tidyselect::everything(), ~ tidyr::replace_na(data = ., replace = ''))) 
   ################################################ Output Start ################################################################
   if (quite == FALSE) {
     if (streamline == FALSE) {
