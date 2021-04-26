@@ -1,6 +1,8 @@
 # psycModel (development version)
 
+Bugs fixed: 
 
+* Fixed bugs that measurement invariance does not have row name.
 
 # psycModel 0.3.0 (first CRAN release)
 
