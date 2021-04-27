@@ -3,6 +3,7 @@ url: https://jasonmoy28.github.io/psycModel
 template:
   params:
     bootswatch: simplex
+    ganalytics: G-153GS740MZ
 navbar:
  right:
     - icon: fab fa-github fa-0.7x
