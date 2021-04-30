@@ -18,7 +18,7 @@ library(psycModel)
 ```
 # Why should you use this pacakge? 
 
-TLDR: 
+TLDR:  
 1) It is a beginner-friendly R package for statistical analysis in social science.  
 2) Tired of manually writing all variables in a model? You can use [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models  
 3) Fitting models, plotting, checking goodness of fit, and model assumption violations all in one place.  
