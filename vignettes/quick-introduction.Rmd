@@ -16,7 +16,29 @@ old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)
 ```{r setup}
 library(psycModel)
 ```
-A few words before we begin. If you don't know about `dplyr::select` syntax, I highly recommend learning it. It is very simple and intuitive, and you can take the most advantage out of this package.
+# Why should you use this pacakge? 
+
+TLDR: 
+1) It is a beginner-friendly R package for statistical analysis in social science. 
+2) Tired of manually writing all variables in a model? You can use [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models 
+3) Fitting models, plotting, checking goodness of fit, and model assumption violations all in one place. 
+4) Beautiful and easy-to-read output. Check out this [example](https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html) now. 
+
+Support models:  
+1. Linear regression (i.e., support ANOVA, ANCOVA), generalized linear regression.  
+2. Linear mixed effect model (or HLM to be more specific), generalized linear mixed effect model.  
+3. Confirmatory and exploratory factor analysis.  
+4. Simple mediation analysis.  
+5. Reliability analysis.  
+6. Correlation, descriptive statistics (e.g., mean, SD).  
+
+At its core, this package allows people to analyze their data with one simple function call. For example, when you are running a linear regression, you need to fit the model, check the goodness of fit (e.g., R2), check the model assumption, and plot the interaction (if the interaction is included). Without this package, you need several packages to do the above steps. Additionally, if you are an R beginner, you probably don't know where to find all these R packages. This package has done all that work for you, so you can just do everything with one simple function call. 
+
+Another good example is CFA. The most common (and probably the only) option to fit a CFA in R is using lavaan. Lavaan has its own unique set of syntax. It is very versatile and powerful, but you do need to spend some time learning it. It may not worth the time for people who just want to run a quick and simple CFA model. In my package, it's very intuitive with `cfa_summary(data, x1:x3)`, and you get the model summary, the fit measures, and a nice-looking path diagram. The same logic also applies to HLM since `lme4` / `nlme` also has its own set of syntax that you need to learn. 
+
+Moreover, I also made fitting the model even simpler by using the `dplyr::select` syntax. In short, traditionally, if you want to fit a linear regression model, the syntax looks like this `lm(y ~ x1 + x2 + x3 + x4 + ... + xn, data)`. Now, the syntax is much shorter and more intuitive: `lm_model(y, x1:xn, data)`. You can even replace `x1:xn` with `everything()`. I also wrote this very short [article](https://jasonmoy28.github.io/psycModel/articles/brief-introduction-to-select-syntax.html) that teaches people how to use the `dplyr::select()` syntax (it is not comprehensive, and it is not intended to be). 
+
+Finally, I made the output in R much more beautiful and easy to read. The default output from R, to be frank, look ugly. I spent a lot of time making sure it looks good in this package (see below for examples). I am sure that you will see how big the improvement is. 
 
 # Regression Models 
 ## Integrated Summary for Linear Regression 
