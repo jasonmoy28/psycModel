@@ -1,4 +1,5 @@
-# psycModel 
+# psycModel  <a href='https://jasonmoy28.github.io/psycModel'><img src='man/figures/logo.png' align="right" height="220" /></a>
+
 ## Integrated Toolkit for Psychological Analysis and Modeling in R
 
 <!-- badges: start -->
@@ -8,7 +9,7 @@
 [![download](https://cranlogs.r-pkg.org/badges/grand-total/psycModel)](https://cran.r-project.org/package=psycModel)
 <!-- badges: end -->
 
-# Installation <a href='https://jasonmoy28.github.io/psycModel'><img src='man/figures/logo.png' align="right" height="220" /></a>
+# Installation
 
 **CRAN Stable Version**
 ```R
