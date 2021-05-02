@@ -1,4 +1,4 @@
-# psycModel  <a href='https://jasonmoy28.github.io/psycModel'><img src='man/figures/logo.png' align="right" height="220" /></a>
+# psycModel  <a href='https://jasonmoy28.github.io/psycModel'><img src='man/figures/logo.png' align="right" height="220px" /></a>
 
 ## Integrated Toolkit for Psychological Analysis and Modeling in R
 
