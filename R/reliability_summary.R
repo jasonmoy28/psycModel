@@ -91,7 +91,7 @@ reliability_summary <- function(data,
     if (requireNamespace("GPArotation", quietly = TRUE)) {
       omega_fit <- data %>% psych::omega()
     } else {
-      stop("Please install.packages(GPArotation) first")
+      stop("Please install.packages('GPArotation') first")
     }
 
     composite_measure <- tibble::tibble(

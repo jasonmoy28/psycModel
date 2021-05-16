@@ -31,7 +31,7 @@ data frame with fit indices and change in fit indices
 Compare the fit indices of models (see below for model support)
 }
 \examples{
-# lme model
+# lm model
 
 fit1 <- lm_model(
   data = popular,

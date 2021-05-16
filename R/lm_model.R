@@ -96,17 +96,14 @@ lm_model <- function(data,
   }
 
   predictor_variable <- c(predictor_variable, two_way_interaction_terms, three_way_interaction_terms)
-  model <- paste(response_variable, "~", paste(predictor_variable, collapse = " + "))
+  model <- paste(response_variable, "~", paste(predictor_variable, collapse = "+"),sep = '')
 
   if (quite == FALSE) {
     cat(paste("Fitting Model with lm:\n Formula = ", model, "\n", sep = ""))
   }
   model <- stats::as.formula(model)
 
-  lm_model <- do.call(getfun("stats::lm"), list(
-    formula = model,
-    data = data
-  ))
+  lm_model <- stats::lm(formula = model, data = data)
 
   return(lm_model)
 }

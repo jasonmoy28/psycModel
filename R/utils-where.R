@@ -3,3 +3,4 @@
 #' @keywords internal
 #'
 utils::globalVariables("where")
+utils::globalVariables("<<-")

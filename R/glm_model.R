@@ -105,11 +105,7 @@ glm_model <- function(data,
   }
   model <- stats::as.formula(model)
 
-  glm_model <- do.call(getfun("stats::glm"), list(
-    formula = model,
-    data = data,
-    family = family
-  ))
+  glm_model = stats::glm(formula = model, data = data, family = family)
 
   return(glm_model)
 }

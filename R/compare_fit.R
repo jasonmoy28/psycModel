@@ -12,7 +12,7 @@
 #' @return data frame with fit indices and change in fit indices
 #' @export
 #' @examples
-#' # lme model
+#' # lm model
 #'
 #' fit1 <- lm_model(
 #'   data = popular,
