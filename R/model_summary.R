@@ -262,16 +262,17 @@ model_summary <- function(model,
     )
   }
   
-  tryCatch({
+  assumption_plot_error = tryCatch({
     performance_warning <-
       utils::capture.output(model_performance_df <-
                               performance::model_performance(model))},
     error = function(cond){ #potential incorrect error handling. Temp solution
-      performance_warning <<- 'Error: Unable to compute for model performance'
-      model_performance_df <<- NULL})
+      return('Error: Unable to compute for model performance')
+    })
   
-  if (length(performance_warning) > 0) {
-    warning(performance_warning)
+  if (length(assumption_plot_error) > 0) {
+    warning(assumption_plot_error)
+    model_performance_df = NULL
   } else{
     colnames(model_performance_df) <-
       stringr::str_replace_all(
@@ -438,14 +439,14 @@ model_summary <- function(model,
       c("gridExtra", "qqplotr", "see", 'ggrepel'),
       requireNamespace
     )))) {
-      tryCatch({
+      assumption_plot = tryCatch({
         assumption_plot <- suppressMessages(performance::check_model(model))
         if (quite == F) {
           print(assumption_plot)
         }
       },
       error = function(cond) {
-        assumption_plot <<- NULL
+        return(NULL)
         warning("Assumption_plot does not support this model type")
       })
     } else {

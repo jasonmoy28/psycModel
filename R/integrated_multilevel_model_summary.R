@@ -202,7 +202,7 @@ integrated_multilevel_model_summary <- function(data,
 
   ######################################### Output Result  #########################################
   if (model_summary == TRUE | return_result == TRUE) {
-    tryCatch({
+    model_summary_list = tryCatch({
       model_summary_list <- model_summary(
         model = model,
         streamline = streamline,
@@ -211,16 +211,17 @@ integrated_multilevel_model_summary <- function(data,
         assumption_plot = assumption_plot,
         quite = quite
       )
-    }, error = function() {
+    }, error = function(cond) {
       model_summary_list = model_summary(
         model = model,
         streamline = streamline,
         digits = digits,
         return_result = TRUE,
         assumption_plot = FALSE,
-        quite = quite
-      )}, error = function(){
-        model_summary_list = NULL
+        quite = quite,
+        return(model_summary_list)
+      )}, error = function(cond){
+        return(NULL)
       }
     )
   }

@@ -48,6 +48,7 @@ Suggests:
     qqplotr,
     rmarkdown,
     roxygen2,
+    statmod,
     sandwich,
     see,
     semPlot,
