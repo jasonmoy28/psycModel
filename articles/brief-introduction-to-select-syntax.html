@@ -225,14 +225,14 @@
          response_variable <span class="op">=</span> <span class="va">y</span>, 
          predictor_variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>Fitting Model with lm:
- Formula = y~x1+x2+x3+x4+x5</code></pre>
+ Formula = y ~ x1 + x2 + x3 + x4 + x5</code></pre>
 <p>This is already a step up from the basic <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function. We can still make is even simpler by just passing <code>everyhing()</code>. The function is designed to remove the response variable from predictor variables (if selected) automatically. The following <code>model3</code> is the same as <code>model2</code></p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model3</span> <span class="op">=</span> <span class="fu"><a href="../reference/lm_model.html">lm_model</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">test_data</span>,
          response_variable <span class="op">=</span> <span class="va">y</span>, 
          predictor_variable <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>Fitting Model with lm:
- Formula = y~x1+x2+x3+x4+x5</code></pre>
+ Formula = y ~ x1 + x2 + x3 + x4 + x5</code></pre>
 <p>The same logic is applied to all other functions in this package. Arguments that support <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select</a></code> syntax will ends with “support dplyr::select syntax” in the description of the argument.That’s it for this brief introduction. If you want to learn more about this package, I encourage you to check out this <a href="https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html">article</a> or use <code><a href="../articles/quick-introduction.html">vignette('quick-introduction')</a></code> if you are in R Studio.</p>
 </div>
   </div>

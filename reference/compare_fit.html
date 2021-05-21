@@ -194,7 +194,7 @@ Compare the fit indices of models (see below for model support)</p>
     <p>data frame with fit indices and change in fit indices</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># lm model</span>
+    <pre class="examples"><div class='input'><span class='co'># lme model</span>
 
 <span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lm_model.html'>lm_model</a></span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='va'>popular</span>,
@@ -202,7 +202,7 @@ Compare the fit indices of models (see below for model support)</p>
   predictor_var <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>sex</span>, <span class='va'>extrav</span><span class='op'>)</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Fitting Model with lm:
-#&gt;  Formula = popular~sex+extrav</div><div class='input'>
+#&gt;  Formula = popular ~ sex + extrav</div><div class='input'>
 <span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='lm_model.html'>lm_model</a></span><span class='op'>(</span>
   data <span class='op'>=</span> <span class='va'>popular</span>,
   response_variable <span class='op'>=</span> <span class='va'>popular</span>,
@@ -210,17 +210,16 @@ Compare the fit indices of models (see below for model support)</p>
   two_way_interaction_factor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>sex</span>, <span class='va'>extrav</span><span class='op'>)</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; Fitting Model with lm:
-#&gt;  Formula = popular~sex+extrav+sex*extrav</div><div class='input'>
+#&gt;  Formula = popular ~ sex + extrav + sex*extrav</div><div class='input'>
 <span class='fu'>compare_fit</span><span class='op'>(</span><span class='va'>fit1</span>, <span class='va'>fit2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
 #&gt; Model Type = Model Comparison
 #&gt; 
-#&gt; ─────────────────────────────────────────────────────────────
-#&gt;   Model       AIC       BIC     R2  R2_adjusted   RMSE  Sigma
-#&gt; ─────────────────────────────────────────────────────────────
-#&gt;      lm  5977.415  5999.819  0.394        0.393  1.076  1.077
-#&gt;      lm  5979.369  6007.374  0.394        0.393  1.076  1.077
-#&gt; ─────────────────────────────────────────────────────────────</div><div class='input'>
+#&gt; ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+#&gt;                                                                                                                                                                                  value
+#&gt; ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+#&gt;   compare_fit is temporialy disable due to unknown error caused by insight upgrade from 0.13.2 to 0.14.0. Follow instruction on the package load message to get back all the features.
+#&gt; ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</div><div class='input'>
 <span class='co'># see ?measurement_invariance for measurement invariance example</span>
 </div></span></pre>
   </div>
