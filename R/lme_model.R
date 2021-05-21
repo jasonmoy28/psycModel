@@ -1,7 +1,7 @@
 #' Linear Mixed Effect Model
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' Fit a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the `nlme::lme()`  or the `lmerTest::lmer()` function. 
+#' Fit a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the `nlme::lme()`  or the `lmerTest::lmer()` function.
 #' Linear mixed effect model is used to explore the effect of continuous / categorical variables in predicting a normally distributed continuous variable.
 #'
 #'
@@ -86,7 +86,7 @@ lme_model <- function(data,
     }
     if (method == "two_interaction_factor_check") {
       if (length(object) < 2) {
-        stop("two_way_interaction_factor must have two factors")
+        stop("two_way_interaction_factor must have three factors")
       }
     }
   }
@@ -250,20 +250,22 @@ lme_model <- function(data,
     }
     if (use_package == "lmerTest") {
       # run lmerTest model
-      model <- do.call(getfun("lmerTest::lmer"), list(
-        formula = lmerformula,
-        data = data,
-        na.action = na.action,
-        control = lmerCtr
-      ))
+      model <- lmerTest::lmer(formula = lmerformula, data = data, na.action = na.action, control = lmerCtr)
+      # model <- do.call(getfun("lmerTest::lmer"), list(
+      #   formula = lmerformula,
+      #   data = data,
+      #   na.action = na.action,
+      #   control = lmerCtr
+      # ))
     } else if (use_package == "lme4") {
       # run lme4 model
-      model <- do.call(getfun("lme4::lmer"), list(
-        formula = lmerformula,
-        data = data,
-        na.action = na.action,
-        control = lmerCtr
-      ))
+      model <- lme4::lmer(formula = lmerformula, data = data, na.action = na.action, control = lmerCtr)
+      # model <- do.call(getfun("lme4::lmer"), list(
+      #   formula = lmerformula,
+      #   data = data,
+      #   na.action = na.action,
+      #   control = lmerCtr
+      # ))
     }
   }
   return(model)

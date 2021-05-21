@@ -1,6 +1,6 @@
 #' Slope Estimate at Varying Level of Moderators
 #'
-#' The function uses the `interaction::sim_slopes()` to calculate the slope estimate at varying level of moderators (+/- 1 SD and mean). 
+#' The function uses the `interaction::sim_slopes()` to calculate the slope estimate at varying level of moderators (+/- 1 SD and mean).
 #' Additionally, it will produce a Johnson-Newman plot that shows when the slope estimate is not significant
 #'
 #' @param data data frame
@@ -8,7 +8,7 @@
 #' @param two_way_interaction_factor vector of character of the two_way_interaction_factor
 #' @param three_way_interaction_factor vector of character of the three_way_interaction_factor
 #'
-#' @return a list with the slope estimate data frame and a Johnson-Newman plot. 
+#' @return a list with the slope estimate data frame and a Johnson-Newman plot.
 #' @export
 #'
 #' @examples
@@ -28,6 +28,15 @@ simple_slope <- function(data,
                          model,
                          two_way_interaction_factor = NULL,
                          three_way_interaction_factor = NULL) {
+  ##################################### Custom function #####################################################
+  getfun <- function(x) {
+    if (length(grep("::", x)) > 0) {
+      parts <- strsplit(x, "::")[[1]]
+      getExportedValue(parts[1], parts[2])
+    } else {
+      x
+    }
+  }
   ##################################### Set up #####################################################
   if (!requireNamespace("interactions", quietly = TRUE)) {
     stop("Please install.packages(c('interactions','sandwich')) use simple_slope with three-way interaction")
@@ -36,7 +45,13 @@ simple_slope <- function(data,
   if (!requireNamespace("sandwich", quietly = TRUE)) {
     stop("Please install.packages('sandwich') use simple_slope with three-way interaction")
   }
+  if (class(model) == 'lmerMod' | class(model) == 'lmerModLmerTest') {
+    model = do.call(getfun('lmerTest::lmer'),list(formula = model, data = data))
+  }
+
   ##################################### two way interaction ####################################################
+  
+
   if (length(two_way_interaction_factor) == 2) {
     simple_slope_model <- interactions::sim_slopes(
       data = data,

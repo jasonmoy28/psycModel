@@ -1,8 +1,8 @@
 #' Two-way Interaction Plot
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below. 
-#' I recommend using concurrently with `lm_model` or `lme_model`. 
+#' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below.
+#' I recommend using concurrently with `lm_model` or `lme_model`.
 #'
 #'
 #' @param model object from `lm`, `nlme`, `lme4`, or `lmerTest`
@@ -11,7 +11,7 @@
 #' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
 #' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
 #' @param plot_color default if `FALSE`. Set to `TRUE` if you want to plot in color
-#' 
+#'
 #' @details It appears that ``predict` cannot handle categorical factors. All variables are converted to numeric before plotting.
 #' @return an object of class `ggplot`
 #' @export
@@ -71,14 +71,14 @@ two_way_interaction_plot <- function(model,
   # get attributes based on mdeol
   if (class(model) == "lme") {
     formula_attribute <- model$terms
-    model_data <- model$data
+    model_data <-insight::get_data(model)
     predict_var <- attributes(formula_attribute)$term.labels
     response_var <- as.character(attributes(formula_attribute)$variables)[2]
     interaction_term <- predict_var[stringr::str_detect(predict_var, ":")]
     interaction_term <- interaction_plot_check(interaction_term)
   } else if (any(class(model) %in% c("lmerMod", "lmerModLmerTest"))) {
-    formula_attribute <- stats::terms(model@call$formula)
-    model_data <- model@call$data
+    formula_attribute <- stats::terms(insight::find_formula(model)$conditional)
+    model_data <- insight::get_data(model)
     predict_var <- attributes(formula_attribute)$term.labels
     response_var <- as.character(attributes(formula_attribute)$variables)[2]
     interaction_term <- predict_var[stringr::str_detect(predict_var, ":")]

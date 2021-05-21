@@ -3,7 +3,7 @@
 #' `r lifecycle::badge("stable")` \cr
 #' Compare the fit indices of models (see below for model support)
 #'
-#' @param ... model. If it is a `lavaan` object, it will try to compute the measurement invariance. Other model types will be passed to `performance::compare_performance()`. 
+#' @param ... model. If it is a `lavaan` object, it will try to compute the measurement invariance. Other model types will be passed to `performance::compare_performance()`.
 #' @param digits number of digits to round to
 #' @param streamline print streamlined output
 #' @param quite suppress printing output
@@ -12,7 +12,7 @@
 #' @return data frame with fit indices and change in fit indices
 #' @export
 #' @examples
-#' # lm model
+#' # lme model
 #'
 #' fit1 <- lm_model(
 #'   data = popular,
@@ -39,7 +39,7 @@ compare_fit <- function(...,
   # lavaan models
   if (class(list(...)[[1]]) == "lavaan") {
     models <- list(...)
-    blank_df <- tibble::tibble(chisq = "", df = "", pvalue = "", cfi = "", rmsea = "", srmr = "", tli = "", aic = "", bic = "", bic2 = "", rowname = "") %>% tibble::column_to_rownames()
+    blank_df <- tibble::tibble(chisq = "", df = "", pvalue = "", cfi = "", rmsea = "", srmr = "", tli = "", aic = "", bic = "", bic2 = "", rowname = ".") %>% tibble::column_to_rownames()
     return_df <- tibble::tibble(chisq = NULL, df = NULL, pvalue = NULL, cfi = NULL, rmsea = NULL, srmr = NULL, tli = NULL, aic = NULL, bic = NULL, bic2 = NULL)
     fit_indices_df <- tibble::tibble(chisq = NULL, df = NULL, pvalue = NULL, cfi = NULL, rmsea = NULL, srmr = NULL, tli = NULL, aic = NULL, bic = NULL, bic2 = NULL)
     model_name <- c("configural", "metric", "scalar")
@@ -74,21 +74,20 @@ compare_fit <- function(...,
 
     return_df <-
       rbind(fit_indices_df, blank_df, compare_fit_df) %>%
-      dplyr::rename("$chi$^2" = "chisq") %>% 
-      tibble::rownames_to_column('Type')
-    
+      dplyr::rename("$chi$^2" = "chisq")
+
     return(return_df)
 
     ## lme & glme models
   } else {
-    output_table <- performance::compare_performance(...)
+    output_table <- "compare_fit is temporialy disable due to unknown error caused by insight upgrade from 0.13.2 to 0.14.0. Follow instruction on the package load message to get back all the features."
     if (quite == FALSE) {
       if (streamline == FALSE) {
         super_print("underline|Model Summary")
         super_print("Model Type = Model Comparison")
         cat("\n")
       }
-      output_table <- output_table %>% dplyr::select(-1)
+      # output_table <- output_table %>% dplyr::select(-1)
       print_table(output_table)
     }
     if (return_result == TRUE) {

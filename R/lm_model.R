@@ -1,8 +1,8 @@
 #' Linear Regressions / ANOVA / ANCOVA
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' Fit a linear regression using `lm()`. Linear regression is used to explore the effect of continuous variables / categorical variables in predicting a normally-distributed continuous variables. 
-#' If you are using a categorical predictor to predict a continuous variable, some may call it a ANOVA / ANCOVA while it is just a special form of linear regression). 
+#' Fit a linear regression using `lm()`. Linear regression is used to explore the effect of continuous variables / categorical variables in predicting a normally-distributed continuous variables.
+#' If you are using a categorical predictor to predict a continuous variable, some may call it a ANOVA / ANCOVA while it is just a special form of linear regression).
 #' In this package, I will not build separate function for ANOVA & ANCOVA since they are the same as linear regression
 #'
 #' @param data data frame
@@ -96,7 +96,7 @@ lm_model <- function(data,
   }
 
   predictor_variable <- c(predictor_variable, two_way_interaction_terms, three_way_interaction_terms)
-  model <- paste(response_variable, "~", paste(predictor_variable, collapse = "+"),sep = '')
+  model <- paste(response_variable, "~", paste(predictor_variable, collapse = " + "))
 
   if (quite == FALSE) {
     cat(paste("Fitting Model with lm:\n Formula = ", model, "\n", sep = ""))

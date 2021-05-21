@@ -13,7 +13,7 @@
 #' @param id the nesting variable (e.g. group, time). Length of 1. Support `dplyr::select()` syntax.
 #' @param estimation_method character. `ML` or `REML` default to `REML`.
 #' @param na.action default is `stats::na.omit`. Another common option is `na.exclude`
-#' @param opt_control character. default is `bobyqa`. See `?lme4::glmerControl` for more options. 
+#' @param opt_control character. default is `bobyqa`. See `?lme4::glmerControl` for more options.
 #' @param quite suppress printing output
 #' @param model `lme4` model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates. This is not tested. `r lifecycle::badge("experimental")`
 #'
@@ -167,13 +167,11 @@ glme_model <- function(data,
   if (any(family %in% "negbin")) {
     stop("Sorry, we do not support negative binomial distribution yet.") # do not support negative binomial now
   } else {
-    model <- do.call(getfun("lme4::glmer"), list(
-      formula = glmerformula,
-      data = data,
-      family = family,
-      na.action = na.action,
-      control = glmerCtr
-    ))
+    model <- lme4::glmer(formula = glmerformula, 
+                         data = data, 
+                         family = family, 
+                         na.action = na.action, 
+                         control = glmerCtr)
   }
 
   return(model)

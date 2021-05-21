@@ -2,7 +2,7 @@
 #'
 #' @param data data frame
 #' @keywords internal
-#' @return a data frame with all columns converted to numeric 
+#' @return a data frame with all columns converted to numeric
 
 data_check <- function(data) {
   datatype <- as.vector(sapply(data, class))

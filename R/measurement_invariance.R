@@ -89,7 +89,6 @@ measurement_invariance <- function(data,
                                    quite = FALSE,
                                    streamline = FALSE,
                                    return_result = FALSE) {
-  data = data_check(data)
   if (is.null(model)) { # construct model if explicit model is not passed
     items <- enquos(...)
     model <- ""
@@ -175,7 +174,6 @@ measurement_invariance <- function(data,
       ordered = ordered,
       group.partial = group_partial
     )
-
     fit <- compare_fit(config_model, metric_model, scalar_model, digits = digits)
   } else {
     print("Error: Invariance level must be either metric or scalar")
@@ -190,8 +188,6 @@ measurement_invariance <- function(data,
   fit <- fit %>% dplyr::rename(p = .data$pvalue)
 
   colnames(fit) <- stringr::str_to_upper(colnames(fit))
-  fit <- fit %>%
-    dplyr::mutate(dplyr::across(tidyselect::everything(), ~ tidyr::replace_na(data = ., replace = ''))) 
   ################################################ Output Start ################################################################
   if (quite == FALSE) {
     if (streamline == FALSE) {
@@ -207,10 +203,10 @@ measurement_invariance <- function(data,
     print_table(fit)
     cat("\n")
     super_print("Goodness of Fit:")
+    fit <- fit %>% dplyr::mutate(dplyr::across(tidyselect::everything(), as.numeric))
+    CFI <- fit["metric - config", "CFI"]
 
-
-   # metric invariance
-    CFI <- fit %>% dplyr::filter(.data$TYPE == 'metric - config') %>% dplyr::select('CFI') %>% as.numeric()
+    # metric invariance
     if (abs(CFI) <= 0.005) {
       super_print("green| OK. Excellent measurement metric-invariance based on $abs$$DELTA$CFI$abs$ < 0.005")
     } else if (abs(CFI) <= 0.01) {
@@ -221,7 +217,7 @@ measurement_invariance <- function(data,
       super_print("red| Warning. Unacceptable measurement metric-invariance based on $abs$$DELTA$CFI$abs$ > 0.01")
     }
 
-    RMSEA <- fit %>% dplyr::filter(.data$TYPE == 'metric - config') %>% dplyr::select('RMSEA') %>% as.numeric()
+    RMSEA <- fit["metric - config", "RMSEA"]
     if (all(abs(RMSEA) <= 0.01)) {
       super_print("green| OK. Excellent measurement metric-invariance based on $abs$$DELTA$RMSEA$abs$ < 0.01")
     } else if (abs(RMSEA) > 0.01 & abs(RMSEA) < 0.015) {
@@ -232,7 +228,7 @@ measurement_invariance <- function(data,
       super_print("red| Warning. Unacceptable measurement metric-invariance based on $abs$$DELTA$RMSEA$abs$ > 0.015")
     }
 
-    SRMR <- fit %>% dplyr::filter(.data$TYPE == 'metric - config') %>% dplyr::select('SRMR') %>% as.numeric()
+    SRMR <- fit["metric - config", "SRMR"]
     if (all(abs(SRMR) <= 0.03)) {
       super_print("green| OK. Good measurement metric-invariance based on $DELTA$SRMR < 0.03")
     } else if (any(abs(SRMR) > 0.03)) {
@@ -241,14 +237,14 @@ measurement_invariance <- function(data,
 
     # scalar invariance
     if (invariance_level == "scalar") {
-      CFI <- fit %>% dplyr::filter(.data$TYPE == "scalar - metric") %>% dplyr::select('CFI') %>% as.numeric()
+      CFI <- fit["scalar - metric", "CFI"]
       if (abs(CFI) <= 0.01) {
         super_print("green| OK. Good measurement scalar-invariance based on $abs$$DELTA$CFI$abs$ < 0.01")
       } else if (abs(CFI) > 0.01) {
         super_print("red| Warning. Unacceptable measurement scalar-invariance based on $abs$$DELTA$CFI$abs$ > 0.01")
       }
 
-      RMSEA <- fit %>% dplyr::filter(.data$TYPE == "scalar - metric") %>% dplyr::select('RMSEA') %>% as.numeric()
+      RMSEA <- fit["scalar - metric", "RMSEA"]
       if (abs(RMSEA) <= 0.01) {
         super_print("green| OK. Excellent measurement scalar-invariance based on $abs$$DELTA$RMSEA$abs$ < 0.015")
       } else if (abs(RMSEA) > 0.01 & abs(RMSEA) < 0.015) {
@@ -256,8 +252,8 @@ measurement_invariance <- function(data,
       } else if (abs(RMSEA) >= 0.015) {
         super_print("red| Warning. Unacceptable measurement scalar-invariance based on $abs$$DELTA$RMSEA$abs$ > 0.015.")
       }
-      
-      SRMR <- fit %>% dplyr::filter(.data$TYPE == "scalar - metric") %>% dplyr::select('SRMR') %>% as.numeric()
+
+      SRMR <- fit["scalar - metric", "SRMR"]
       if (abs(SRMR) <= 0.015) {
         super_print("green|OK. Good measurement scalar-invariance based on $DELTA$SRMR < 0.015")
       } else if (abs(SRMR) > 0.015) {
@@ -265,7 +261,7 @@ measurement_invariance <- function(data,
       }
     }
   } # end quite
-  
+
   if (return_result == TRUE) {
     return(fit)
   }

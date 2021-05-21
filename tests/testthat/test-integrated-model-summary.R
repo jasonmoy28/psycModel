@@ -41,6 +41,7 @@ testthat::test_that(desc = "test glm", {
     quite = TRUE,
     return_result = TRUE
   )))
+  expect_false(is.null(return_list$summary$assumption_plot))
   expect_equal(return_list$simple_slope$jn_plot, NULL)
   expect_equal(return_list$simple_slope$simple_slope_df, NULL)
   expect_equal(return_list$interaction_plot, NULL)

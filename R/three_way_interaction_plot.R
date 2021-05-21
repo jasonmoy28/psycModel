@@ -1,7 +1,7 @@
 #' Three-way Interaction Plot
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with `lm_model()`, `lme_model()`. 
+#' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with `lm_model()`, `lme_model()`.
 #'
 #' @param model object from `lme`, `lme4`, `lmerTest` object.
 #' @param data data frame. If the function is unable to extract data frame from the object, then you may need to pass it directly
@@ -52,14 +52,14 @@ three_way_interaction_plot <- function(model,
   # get attributes based on model
   if (class(model) == "lme") {
     formula_attribute <- model$terms
-    model_data <- model$data
+    model_data <- insight::get_data(model)
     predict_var <- attributes(formula_attribute)$term.labels
     response_var <- as.character(attributes(formula_attribute)$variables)[2]
     interaction_term <- predict_var[stringr::str_detect(predict_var, ":.+:")]
     interaction_term <- interaction_plot_check(interaction_term)
   } else if (any(class(model) %in% c("lmerMod", "lmerModLmerTest"))) {
-    formula_attribute <- stats::terms(model@call$formula)
-    model_data <- model@call$data
+    formula_attribute <- stats::terms(insight::find_formula(model)$conditional)
+    model_data <- insight::get_data(model)
     predict_var <- attributes(formula_attribute)$term.labels
     response_var <- as.character(attributes(formula_attribute)$variables)[2]
     interaction_term <- predict_var[stringr::str_detect(predict_var, ":.+:")]
