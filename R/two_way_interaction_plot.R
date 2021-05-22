@@ -68,38 +68,27 @@ two_way_interaction_plot <- function(model,
   }
 
   model_data <- NULL
-  # get attributes based on mdeol
-  if (class(model) == "lme") {
-    formula_attribute <- model$terms
-    model_data <-insight::get_data(model)
-    predict_var <- attributes(formula_attribute)$term.labels
-    response_var <- as.character(attributes(formula_attribute)$variables)[2]
-    interaction_term <- predict_var[stringr::str_detect(predict_var, ":")]
-    interaction_term <- interaction_plot_check(interaction_term)
-  } else if (any(class(model) %in% c("lmerMod", "lmerModLmerTest"))) {
-    formula_attribute <- stats::terms(insight::find_formula(model)$conditional)
+  if (any(class(model) %in% c("lmerMod", "lmerModLmerTest","lm","lme"))) {
     model_data <- insight::get_data(model)
-    predict_var <- attributes(formula_attribute)$term.labels
-    response_var <- as.character(attributes(formula_attribute)$variables)[2]
-    interaction_term <- predict_var[stringr::str_detect(predict_var, ":")]
-    interaction_term <- interaction_plot_check(interaction_term)
-  } else if (class(model) == "lm") {
-    tryCatch(model_data <- eval(stats::getCall(model)$data, environment(stats::formula(model))), error = function(cond) {
-      stop("Please fit your lm model using the data argument")
-    })
-    predict_var <- as.character(attributes(model$terms)$term.labels)
-    response_var <- predict_var[2]
-    interaction_term <- predict_var[stringr::str_detect(predict_var, ":")]
+    predict_var <- model %>% insight::find_predictors() %>% .$conditional #maybe problem with unconditional? 
+    response_var <- model %>% insight::find_response()
+    interaction_term <- model %>% insight::find_interactions() %>% .$conditional
     interaction_term <- interaction_plot_check(interaction_term)
   }
   else {
-    stop("It only support from lm, nlme, lme4, and lmerTest")
+    model_data <- insight::get_data(model)
+    predict_var <- model %>% insight::find_predictors() %>% .$conditional #maybe problem with unconditional? 
+    response_var <- model %>% insight::find_response()
+    interaction_term <- model %>% insight::find_interactions() %>% .$conditional
+    interaction_term <- interaction_plot_check(interaction_term)
+    warning("Only models from lm, nlme, lme4, and lmerTest are tested")
   }
 
   # get variable from model
   if (length(interaction_term) == 0) {
     stop("No two-way interaction term is found in the model")
   }
+  
   predict_var1 <- gsub(pattern = ":.+", "", x = interaction_term)
   predict_var2 <- gsub(pattern = ".+:", "", x = interaction_term)
 
@@ -111,7 +100,7 @@ two_way_interaction_plot <- function(model,
       stop("You need to pass the data directly")
     }
     if (!any(class(data) == "data.frame")) {
-      stop("Data must be dataframe like object")
+      stop("Data must be dataframe-like object")
     }
   }
 
