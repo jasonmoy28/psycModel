@@ -96,8 +96,8 @@ testthat::test_that('integrated_multilevel_model_summary:debug',{
   summary = suppressWarnings(integrated_multilevel_model_summary(
     data = popular,
     response_variable = popular,
-    random_effect_factors = c(extrav, sex),
-    non_random_effect_factors = texp,
+    random_effect_factors = extrav,
+    non_random_effect_factors = c(sex, texp),
     three_way_interaction_factor = c(extrav, sex, texp),
     graph_label_name = c("popular", "extraversion", "sex", "teacher experience"), # change interaction plot label
     id = class,
