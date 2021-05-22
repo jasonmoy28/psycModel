@@ -64,24 +64,16 @@ The model is considered an acceptable fit if CFI > 0.9 and RMSEA < 0.08. I need 
 }
 \examples{
 # REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT
-# Fitting a multiple factor CFA model
+# Fitting a multilevel single factor CFA model
 fit <- cfa_summary(
   data = lavaan::HolzingerSwineford1939,
   x1:x3,
   x4:x6,
   x7:x9,
-)
-
-# Fitting a multilevel single factor CFA model
-\donttest{
-fit <- cfa_summary(
-  data = lavaan::HolzingerSwineford1939,
-  x1:x3,
   group = "sex",
   model_variance = FALSE, # do not print the model_variance
   model_covariance = FALSE # do not print the model_covariance
 )
-}
 
 
 # Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)

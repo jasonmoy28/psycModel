@@ -110,7 +110,7 @@ cfa_summary(
    data = lavaan::HolzingerSwineford1939,
    x1:x3,
    x4:x6,
-   x7:x9,
+   x7:x9
  )
 ```
 
