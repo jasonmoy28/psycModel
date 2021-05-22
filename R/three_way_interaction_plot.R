@@ -39,13 +39,6 @@ three_way_interaction_plot <- function(model,
                                        graph_label_name = NULL,
                                        y_lim = NULL,
                                        plot_color = FALSE) {
-  interaction_plot_check <- function(interaction_term) {
-    if (length(interaction_term) > 1) {
-      interaction_term <- interaction_term[1]
-      warning(paste("Inputted > 2 interaction terms. Plotting the first interaction term:\n ", interaction_term))
-    }
-    return(interaction_term)
-  }
 
   model_data <- NULL
   if (any(class(model) %in% c("lmerMod", "lmerModLmerTest","lm","lme"))) {
@@ -53,23 +46,21 @@ three_way_interaction_plot <- function(model,
     predict_var <- model %>% insight::find_predictors() %>% .$conditional #maybe problem with unconditional? 
     response_var <- model %>% insight::find_response()
     interaction_term <- model %>% insight::find_interactions() %>% .$conditional
-    interaction_term <- interaction_plot_check(interaction_term)
   }
   else {
     model_data <- insight::get_data(model)
     predict_var <- model %>% insight::find_predictors() %>% .$conditional #maybe problem with unconditional? 
     response_var <- model %>% insight::find_response()
     interaction_term <- model %>% insight::find_interactions() %>% .$conditional
-    interaction_term <- interaction_plot_check(interaction_term)
     warning("Only models from lm, nlme, lme4, and lmerTest are tested")
   }
-
+  interaction_term = interaction_term[stringr::str_detect(':.+:',string = interaction_term)]
   predict_var1 <- gsub(pattern = ":.+", "", x = interaction_term)
   predict_var3 <- gsub(pattern = ".+:", "", x = interaction_term)
   remove1 <- stringr::str_remove(pattern = predict_var1, string = interaction_term)
   remove2 <- stringr::str_remove(pattern = predict_var3, string = remove1)
   predict_var2 <- gsub(pattern = ":", "", x = remove2)
-
+  
   if (length(interaction_term) == 0) {
     stop("No three-way interaction term is found in the model")
   }

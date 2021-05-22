@@ -66,7 +66,7 @@ simple_slope <- function(data,
         dplyr::case_when(
           x > mean(x) ~ "High",
           x == mean(x) ~ "Mean",
-          x < mean(x) ~ "Low "
+          x < mean(x) ~ "Low"
         )
       })) %>%
       dplyr::rename(ci.lower = "2.5%") %>%
@@ -96,11 +96,11 @@ simple_slope <- function(data,
           dplyr::case_when(
             x > mean(x) ~ "High",
             x == mean(x) ~ "Mean",
-            x < mean(x) ~ "Low "
+            x < mean(x) ~ "Low"
           )
         }))
       simple_slope_output <- simple_slope_output %>%
-        dplyr::mutate(Mod_1_Level = rep(c("Low ", "Mean", "High"), each = nrow(simple_slope_output) / 3)) %>%
+        dplyr::mutate(Mod_1_Level = rep(c("Low", "Mean", "High"), each = nrow(simple_slope_output) / 3)) %>%
         dplyr::select("Mod_1_Level", tidyselect::everything())
     } else if (length(simple_slope_model$slopes) == 2) { # if mod 2 is binary
       simple_slope_output <-
@@ -109,11 +109,11 @@ simple_slope <- function(data,
           dplyr::case_when(
             x > mean(x) ~ "High",
             x == mean(x) ~ "Mean",
-            x < mean(x) ~ "Low "
+            x < mean(x) ~ "Low"
           )
         }))
       simple_slope_output <- simple_slope_output %>%
-        dplyr::mutate(Mod_1_Level = rep(c("Low ", "High"), each = nrow(simple_slope_output) / 2)) %>%
+        dplyr::mutate(Mod_1_Level = rep(c("Low", "High"), each = nrow(simple_slope_output) / 2)) %>%
         dplyr::select("Mod_1_Level", tidyselect::everything())
     }
 

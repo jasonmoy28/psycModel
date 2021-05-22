@@ -1,5 +1,6 @@
-#' where() from tidyselect (internal use only)
+#' where() & dot from tidyselect (internal use only)
 #'
 #' @keywords internal
 #'
 utils::globalVariables("where")
+utils::globalVariables(".")
