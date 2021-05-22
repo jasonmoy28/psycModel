@@ -28,14 +28,7 @@ glm_model <- function(data,
                       three_way_interaction_factor = NULL,
                       family,
                       quite = FALSE) {
-  getfun <- function(x) {
-    if (length(grep("::", x)) > 0) {
-      parts <- strsplit(x, "::")[[1]]
-      getExportedValue(parts[1], parts[2])
-    } else {
-      x
-    }
-  }
+
 
   glm_model_check <- function(object, method) {
     if (method == "response_variableiable_check") {
