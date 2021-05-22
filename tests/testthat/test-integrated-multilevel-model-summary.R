@@ -92,3 +92,22 @@ testthat::test_that('integrated_multilevel_model_summary: nlme model',{
 }
 )
 
+testthat::test_that('integrated_multilevel_model_summary:debug',{
+  summary = suppressWarnings(integrated_multilevel_model_summary(
+    data = popular,
+    response_variable = popular,
+    random_effect_factors = c(extrav, sex),
+    non_random_effect_factors = texp,
+    three_way_interaction_factor = c(extrav, sex, texp),
+    graph_label_name = c("popular", "extraversion", "sex", "teacher experience"), # change interaction plot label
+    id = class,
+    quite = T,
+    model_summary = TRUE, 
+    interaction_plot = TRUE, 
+    assumption_plot = TRUE,
+    simple_slope = TRUE,
+    plot_color = TRUE
+  ))
+  expect_equal(summary, NULL)
+})
+
