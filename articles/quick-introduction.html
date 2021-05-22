@@ -199,7 +199,7 @@ Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.047).
 ────────────────────────────────────────────────────────────────────
   Petal.Width Level   Est.   S.E.  t val.          p          95% CI
 ────────────────────────────────────────────────────────────────────
-               Low   0.704  0.086   8.226  0.000 ***  [0.535, 0.874]
+                Low  0.704  0.086   8.226  0.000 ***  [0.535, 0.874]
                Mean  0.587  0.072   8.182  0.000 ***  [0.445, 0.729]
                High  0.470  0.124   3.786  0.000 ***  [0.225, 0.715]
 ────────────────────────────────────────────────────────────────────
@@ -220,74 +220,11 @@ Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.047).
    three_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">extrav</span>, <span class="va">sex</span>, <span class="va">texp</span><span class="op">)</span>,
    graph_label_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"popular"</span>, <span class="st">"extraversion"</span>, <span class="st">"sex"</span>, <span class="st">"teacher experience"</span><span class="op">)</span>, <span class="co"># change interaction plot label</span>
    id <span class="op">=</span> <span class="va">class</span>,
-   simple_slope <span class="op">=</span> <span class="cn">TRUE</span>, 
+   model_summary <span class="op">=</span> <span class="cn">FALSE</span>, 
    assumption_plot <span class="op">=</span> <span class="cn">TRUE</span>,
    plot_color <span class="op">=</span> <span class="cn">TRUE</span> 
  <span class="op">)</span></code></pre></div>
-<pre class="fansi fansi-output"><code>
- 
-<span style="text-decoration: underline;">Model Summary</span><span>
-Model Type = Linear Mixed Effect Model (fitted using lme4 or lmerTest)
-Outcome = popular
-Predictors = extrav, sex, texp, extrav:sex, extrav:texp, sex:texp, extrav:sex:texp
-
-</span><span style="text-decoration: underline;">Model Estimates</span><span>
-─────────────────────────────────────────────────────────────────────────────────────────
-        Parameter  Effects  Coefficient       t    df     SE          p            95% CI
-─────────────────────────────────────────────────────────────────────────────────────────
-      (Intercept)    fixed       -0.958  -2.882  1985  0.332  0.004 **   [-1.609, -0.306]
-           extrav    fixed        0.757  14.314  1985  0.053  0.000 ***  [ 0.653,  0.861]
-              sex    fixed        0.714   1.890  1985  0.378  0.059      [-0.026,  1.454]
-             texp    fixed        0.217  10.201  1985  0.021  0.000 ***  [ 0.175,  0.259]
-       extrav:sex    fixed        0.094   1.471  1985  0.064  0.141      [-0.031,  0.219]
-      extrav:texp    fixed       -0.023  -6.489  1985  0.004  0.000 ***  [-0.030, -0.016]
-         sex:texp    fixed        0.020   0.861  1985  0.024  0.389      [-0.026,  0.067]
-  extrav:sex:texp    fixed       -0.004  -0.829  1985  0.004  0.407      [-0.012,  0.005]
-─────────────────────────────────────────────────────────────────────────────────────────
-
-</span><span style="text-decoration: underline;">Goodness of Fit</span><span>
-───────────────────────────────────────────────────────────────
-       AIC       BIC  R²_conditional  R²_marginal   RMSE      σ
-───────────────────────────────────────────────────────────────
-  4827.902  4911.915             NaN        0.656  0.720  0.742
-───────────────────────────────────────────────────────────────
-
-</span><span style="text-decoration: underline;">Model Assumption Check</span><span>
-</span><span style="color: #00BB00;">OK: Model is converged</span><span>
-</span><span style="color: #BB0000;">Warning: Singularity is detected. See ?lme4::isSingular()</span><span>
-Warning: Autocorrelated residuals detected (p &lt; .001).
-OK: residuals appear as normally distributed (p = 0.487).
-</span><span style="color: #0000BB;">Unable to check autocorrelation. Try changing na.action to na.omit.</span><span>
-OK: Error variance appears to be homoscedastic (p = 0.752).
-</span><span style="color: #BB0000;">Warning: Severe multicolinearity detected (VIF &gt; 10). Please inspect the following table to identify high correlation factors.</span><span>
-</span><span style="text-decoration: underline;">Multicollinearity Table </span><span>
-─────────────────────────────────────
-             Term      VIF  SE_factor
-─────────────────────────────────────
-           extrav    9.167      3.028
-              sex  107.181     10.353
-             texp    6.325      2.515
-       extrav:sex   93.909      9.691
-      extrav:texp   14.154      3.762
-         sex:texp  107.690     10.377
-  extrav:sex:texp   95.252      9.760
-─────────────────────────────────────
-</span></code></pre>
-<img src="quick-introduction_files/figure-html/unnamed-chunk-3-1.png" width="700" height="400"><pre class="fansi fansi-output"><code>
-<span style="text-decoration: underline;">Slope Estimates at Each Level of Moderators</span><span>
-────────────────────────────────────────────────────────────────────────
-  texp Level  sex Level   Est.   S.E.  t val.          p          95% CI
-────────────────────────────────────────────────────────────────────────
-        Low        Low   0.579  0.031  18.596  0.000 ***  [0.518, 0.640]
-                   High  0.646  0.031  20.660  0.000 ***  [0.585, 0.708]
-        Mean       Low   0.429  0.024  17.555  0.000 ***  [0.381, 0.476]
-                   High  0.472  0.023  20.434  0.000 ***  [0.427, 0.518]
-        High       Low   0.278  0.036   7.697  0.000 ***  [0.207, 0.348]
-                   High  0.298  0.031   9.565  0.000 ***  [0.237, 0.360]
-────────────────────────────────────────────────────────────────────────
-</span><span style="font-style: italic;">Note: For continuous variable, low and high represent -1 and +1 SD from the mean, respectively.</span><span>
-</span></code></pre>
-<p><img src="quick-introduction_files/figure-html/unnamed-chunk-3-2.png" width="700" height="400"><img src="quick-introduction_files/figure-html/unnamed-chunk-3-3.png" width="700" height="400"></p>
+<p><img src="quick-introduction_files/figure-html/unnamed-chunk-3-1.png" width="700" height="400"></p>
 </div>
 <div id="model-comparison" class="section level2">
 <h2 class="hasAnchor">
