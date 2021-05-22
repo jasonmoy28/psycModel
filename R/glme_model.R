@@ -79,12 +79,11 @@ glme_model <- function(data,
     glmerformula <- stats::as.formula(model)
     glmerCtr <- lme4::glmerControl(optimizer = opt_control)
 
-    model <- do.call(getfun("lme4::glmer"), list(
-      formula = glmerformula,
-      data = data,
-      na.action = na.action,
-      control = glmerCtr
-    ))
+    model <- lme4::glmer(formula = glmerformula, 
+                         data = data, 
+                         family = family, 
+                         na.action = na.action, 
+                         control = glmerCtr)
 
     return(model)
   }
