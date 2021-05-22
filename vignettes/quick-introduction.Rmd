@@ -55,7 +55,8 @@ integrated_model_summary(
    model_summary = TRUE, 
    interaction_plot = TRUE, 
    assumption_plot = TRUE,
-   simple_slope = TRUE
+   simple_slope = TRUE,
+   plot_color = TRUE
  )
 ```
 
@@ -71,9 +72,11 @@ integrated_multilevel_model_summary(
    three_way_interaction_factor = c(extrav, sex, texp),
    graph_label_name = c("popular", "extraversion", "sex", "teacher experience"), # change interaction plot label
    id = class,
-   model_summary = FALSE, 
+   model_summary = TRUE, 
+   interaction_plot = TRUE, 
    assumption_plot = TRUE,
-   plot_color = TRUE 
+   simple_slope = TRUE,
+   plot_color = TRUE
  )
 ```
 
