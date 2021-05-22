@@ -1,4 +1,4 @@
-# psycModel (development version)
+# psycModel 0.3.1
 
 Bugs fixed: 
 
