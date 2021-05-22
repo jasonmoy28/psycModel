@@ -1,20 +1,21 @@
 
-testthat::test_that(desc = "check use_package = nlme", {
-  fit1 <- expect_warning(lme_model(
+testthat::test_that(desc = "lme_model: nlme", {
+  fit <- lme_model(
     data = popular,
     response_variable = popular,
     random_effect_factors = sex,
     non_random_effect_factors = c(extrav, sex, texp),
     id = class,
     use_package = "nlme",
+    opt_control = 'optim',
     quite = T
-  ), regexp = "optim")
-  expect_equal(class(fit1), "lme")
+  )
+  expect_equal(class(fit), "lme")
 })
 
 
-testthat::test_that(desc = "check use_package = lme4", {
-  fit1 <- lme_model(
+testthat::test_that(desc = "lme_model: lme4", {
+  fit <- lme_model(
     data = popular,
     response_variable = popular,
     non_random_effect_factors = c(extrav, sex),
@@ -22,5 +23,27 @@ testthat::test_that(desc = "check use_package = lme4", {
     use_package = "lme4",
     quite = T
   )
-  expect_equal(class(fit1)[1], "lmerMod")
+  expect_equal(class(fit)[1], "lmerMod")
 })
+
+testthat::test_that(desc = "lme_model: lmerTest", {
+  fit <- lme_model(
+    data = popular,
+    response_variable = popular,
+    non_random_effect_factors = c(extrav, sex),
+    id = class,
+    use_package = "lmerTest",
+    quite = T
+  )
+  expect_equal(class(fit)[1], "lmerModLmerTest")
+})
+
+testthat::test_that(desc = "lme_model: lmerTest (specify model)", {
+  fit <- lme_model(
+    data = popular,
+    model = 'popular ~ extrav + sex + (1 | class)',
+    use_package = "lmerTest"
+  )
+  expect_equal(class(fit)[1], "lmerModLmerTest")
+})
+
