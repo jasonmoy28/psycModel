@@ -124,15 +124,19 @@ lme_model <- function(data,
     lmerCtr <- lme4::lmerControl(optimizer = opt_control)
 
     if (use_package == "lmerTest") {
-      model <- lmerTest::lmer(formula = lmerformula,
-                              data = data, 
-                              na.action = na.action, 
-                              control = lmerCtr)
+      model <- lmerTest::lmer(
+        formula = lmerformula,
+        data = data,
+        na.action = na.action,
+        control = lmerCtr
+      )
     } else if (use_package == "lme4") {
-      model <- lme4::lmer(formula = lmerformula,
-                              data = data, 
-                              na.action = na.action, 
-                              control = lmerCtr)
+      model <- lme4::lmer(
+        formula = lmerformula,
+        data = data,
+        na.action = na.action,
+        control = lmerCtr
+      )
     }
     return(model)
   }
@@ -247,16 +251,20 @@ lme_model <- function(data,
     }
     if (use_package == "lmerTest") {
       # run lmerTest model
-      model <- lmerTest::lmer(formula = lmerformula,
-                              data = data, 
-                              na.action = na.action, 
-                              control = lmerCtr)
+      model <- lmerTest::lmer(
+        formula = lmerformula,
+        data = data,
+        na.action = na.action,
+        control = lmerCtr
+      )
     } else if (use_package == "lme4") {
       # run lme4 model
-      model <- lme4::lmer(formula = lmerformula, 
-                          data = data, 
-                          na.action = na.action, 
-                          control = lmerCtr)
+      model <- lme4::lmer(
+        formula = lmerformula,
+        data = data,
+        na.action = na.action,
+        control = lmerCtr
+      )
     }
   }
   return(model)

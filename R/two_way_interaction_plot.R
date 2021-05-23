@@ -68,18 +68,26 @@ two_way_interaction_plot <- function(model,
   }
 
   model_data <- NULL
-  if (any(class(model) %in% c("lmerMod", "lmerModLmerTest","lm","lme"))) {
+  if (any(class(model) %in% c("lmerMod", "lmerModLmerTest", "lm", "lme"))) {
     model_data <- insight::get_data(model)
-    predict_var <- model %>% insight::find_predictors() %>% .$conditional #maybe problem with unconditional? 
+    predict_var <- model %>%
+      insight::find_predictors() %>%
+      .$conditional # maybe problem with unconditional?
     response_var <- model %>% insight::find_response()
-    interaction_term <- model %>% insight::find_interactions() %>% .$conditional
+    interaction_term <- model %>%
+      insight::find_interactions() %>%
+      .$conditional
     interaction_term <- interaction_plot_check(interaction_term)
   }
   else {
     model_data <- insight::get_data(model)
-    predict_var <- model %>% insight::find_predictors() %>% .$conditional #maybe problem with unconditional? 
+    predict_var <- model %>%
+      insight::find_predictors() %>%
+      .$conditional # maybe problem with unconditional?
     response_var <- model %>% insight::find_response()
-    interaction_term <- model %>% insight::find_interactions() %>% .$conditional
+    interaction_term <- model %>%
+      insight::find_interactions() %>%
+      .$conditional
     interaction_term <- interaction_plot_check(interaction_term)
     warning("Only models from lm, nlme, lme4, and lmerTest are tested")
   }
@@ -88,7 +96,7 @@ two_way_interaction_plot <- function(model,
   if (length(interaction_term) == 0) {
     stop("No two-way interaction term is found in the model")
   }
-  
+
   predict_var1 <- gsub(pattern = ":.+", "", x = interaction_term)
   predict_var2 <- gsub(pattern = ".+:", "", x = interaction_term)
 

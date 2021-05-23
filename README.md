@@ -1,4 +1,4 @@
-# psycModel  <a href='https://jasonmoy28.github.io/psycModel'><img src='man/figures/logo.png' align="right" height="220px" /></a>
+# psycModel  <a href='https://jasonmoy28.github.io/psycModel/'><img src='man/figures/logo.png' align="right" height="220px" /></a>
 
 ## Integrated Toolkit for Psychological Analysis and Modeling in R
 
@@ -23,7 +23,7 @@ devtools::install_github('jasonmoy28/psycModel')
 <span style="color:#009900">✓</span> A beginner-friendly R package for statistical analysis in social science (intermediate & advanced R users should also find it useful) <br/>
 <span style="color:#009900">✓</span>  Tired of manually writing all variables in a model? You can use [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models <br/>
 <span style="color:#009900">✓</span> Fitting models, plotting, checking goodness of fit, and model assumption violations all in one place. <br/>
-<span style="color:#009900">✓</span> Beautiful and easy-to-read output. Check out this [example](https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html) now. <br/>
+<span style="color:#009900">✓</span> Beautiful and easy-to-read output. Check out this [example](https://jasonmoy28.github.io/psycModel//articles/quick-introduction.html) now. <br/>
 <span style="color:#009900">✓</span> In the backend, this package uses reliable R packages (e.g., `lavaan`, `lme4`, `psych`) to handle all statistical analysis. <br/>
 
 ## Supported Models
@@ -70,4 +70,4 @@ The current release is the [alpha version](https://en.wikipedia.org/wiki/Softwar
 This package was built by standing on the shoulders of giants with special thanks to researchers and developers of [`lavaan`](https://lavaan.ugent.be/), [`lme4`](https://github.com/lme4/lme4), [`lmerTest`](https://github.com/runehaubo/lmerTestR), [`nlme`](https://cran.r-project.org/package=nlme), [`performance`](https://easystats.github.io/performance/), [`parameters`](https://easystats.github.io/parameters/), [`psych`](https://personality-project.org/r/psych/), and of course, all of the [`tidyverse`](https://tidyverse.tidyverse.org/) packages. I hope this package can help someone in the same way that these packages has helped me. 
 
 ## Code of Conduct
-Please note that the psycModel project is released with a [Contributor Code of Conduct](https://jasonmoy28.github.io/psycModel/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+Please note that the psycModel project is released with a [Contributor Code of Conduct](https://jasonmoy28.github.io/psycModel//CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.

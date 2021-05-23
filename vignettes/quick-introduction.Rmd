@@ -65,11 +65,11 @@ This is the multilevel-variation of `integrated_model_summary`. It works exactly
 
 ```{r,fig.width=14,fig.height=8,out.width=700,out.height=400}
 integrated_multilevel_model_summary(
-   data = popular,
-   response_variable = popular,
-   random_effect_factors = c(extrav, sex),
-   non_random_effect_factors = texp,
-   three_way_interaction_factor = c(extrav, sex, texp),
+    data = popular,
+    response_variable = popular,
+    random_effect_factors = extrav,
+    non_random_effect_factors = c(sex, texp),
+    three_way_interaction_factor = c(extrav, sex, texp),
    graph_label_name = c("popular", "extraversion", "sex", "teacher experience"), # change interaction plot label
    id = class,
    model_summary = TRUE, 

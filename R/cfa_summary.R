@@ -78,7 +78,7 @@ cfa_summary <- function(data,
                         streamline = FALSE,
                         quite = FALSE,
                         return_result = FALSE) {
-  data = data_check(data)
+  data <- data_check(data)
   if (is.null(model)) { # construct model if explicit model is not passed
     items <- enquos(...)
     model <- ""
@@ -93,15 +93,15 @@ cfa_summary <- function(data,
       model <- paste(model, lavaan_loop_model)
     }
   }
-  
+
   group <- data %>%
     dplyr::select(!!enquo(group)) %>%
     names()
   if (length(group) == 0) {
     group <- NULL
   }
-  
-  
+
+
   cfa_model <- lavaan::cfa(
     model = model,
     data = data,
@@ -109,7 +109,7 @@ cfa_summary <- function(data,
     ordered = ordered,
     group.partial = group_partial
   )
-  
+
   ############################################### Get Output from Lavaan ###################################################################
   if (quite == FALSE) {
     fit_indices <- c("chisq", "df", "pvalue", "cfi", "rmsea", "srmr", "tli", "aic", "bic", "bic2")
@@ -117,7 +117,7 @@ cfa_summary <- function(data,
       fit_indices <- c("chisq", "df", "pvalue", "cfi", "rmsea", "tli")
       fit_indices <- paste(fit_indices, ".scaled", sep = "")
     }
-    
+
     fit_measure_df <- data.frame(
       variable = names(lavaan::fitMeasures(cfa_model)[fit_indices]),
       fit_measure = lavaan::fitmeasures(cfa_model)[fit_indices]
@@ -126,11 +126,11 @@ cfa_summary <- function(data,
       dplyr::rename(p = .data$pvalue) %>%
       dplyr::mutate(dplyr::across(tidyselect::everything(), ~ format_round(., digits = digits))) %>%
       dplyr::rename("$chi$^2" = .data$chisq)
-    
+
     colnames(fit_measure_df) <- stringr::str_to_upper(colnames(fit_measure_df))
-    
+
     standardized_df <- lavaan::standardizedsolution(cfa_model, output = "data.frame")
-    
+
     factors_loadings_df <- standardized_df %>%
       dplyr::filter(.data$op == "=~") %>%
       dplyr::select(-"op") %>%
@@ -141,7 +141,7 @@ cfa_summary <- function(data,
       dplyr::rename(Z = "z") %>%
       dplyr::rename(P = "pvalue") %>%
       dplyr::mutate(dplyr::across(where(is.numeric), ~ format_round(x = ., digits = 3)))
-    
+
     if (is.null(group)) { # no group variable
       factors_loadings_df <- factors_loadings_df %>%
         dplyr::mutate(dplyr::across(.data$Latent.Factor, ~ replace(., duplicated(.), "")))
@@ -153,7 +153,7 @@ cfa_summary <- function(data,
         dplyr::ungroup() %>%
         dplyr::mutate(dplyr::across(group, ~ replace(., duplicated(.), "")))
     }
-    
+
     covariance_df <- standardized_df %>%
       dplyr::filter(.data$op == "~~") %>%
       dplyr::filter(!.data$lhs == .data$rhs) %>%
@@ -164,7 +164,7 @@ cfa_summary <- function(data,
       dplyr::rename(SE = "se") %>%
       dplyr::rename(Z = "z") %>%
       dplyr::rename(P = "pvalue")
-    
+
     variance_df <- standardized_df %>%
       dplyr::filter(.data$op == "~~") %>%
       dplyr::filter(.data$lhs == .data$rhs) %>%
@@ -175,7 +175,7 @@ cfa_summary <- function(data,
       dplyr::rename(SE = "se") %>%
       dplyr::rename(Z = "z") %>%
       dplyr::rename(P = "pvalue")
-    
+
     ################################################## Model Output ###################################################################
     if (streamline == FALSE) {
       cat("\n \n")
@@ -188,18 +188,18 @@ cfa_summary <- function(data,
     }
     super_print("underline|Fit Measure")
     print_table(fit_measure_df)
-    
+
     cat("\n \n")
     super_print("underline|Factor Loadings")
     print_table(factors_loadings_df)
-    
+
     if (streamline == FALSE) {
       if (length(row.names(covariance_df)) != 0 & model_covariance == TRUE) {
         cat("\n \n")
         super_print("underline|Model Covariances")
         print_table(covariance_df)
       }
-      
+
       if (length(row.names(variance_df)) != 0 & model_variance == TRUE) {
         cat("\n \n")
         super_print("underline|Model Variance")
@@ -207,7 +207,7 @@ cfa_summary <- function(data,
       }
     }
     ########################################## Goodness of Fit ###################################################
-    n_observed_factor = factors_loadings_df %>% nrow() # do not print goodness of fit if n_observed_factor is 3
+    n_observed_factor <- factors_loadings_df %>% nrow() # do not print goodness of fit if n_observed_factor is 3
     if (n_observed_factor > 3) {
       if (ordered == FALSE) {
         cat("\n \n")
@@ -218,7 +218,7 @@ cfa_summary <- function(data,
         } else if (P < 0.05 & !is.na(P)) {
           super_print("yellow| Warning. Poor $chi$^2 fit (p < 0.05). It is common to get p < 0.05. Check other fit measure.")
         }
-        
+
         CFI <- fit_measure_df["CFI"]
         if (CFI >= 0.95) {
           super_print("green| OK. Excellent CFI fit (CFI > 0.95)")
@@ -227,7 +227,7 @@ cfa_summary <- function(data,
         } else if (CFI < 0.9) {
           super_print("red| Warning. Poor CFI fit (CFI < 0.90)")
         }
-        
+
         RMSEA <- fit_measure_df["RMSEA"]
         if (RMSEA <= 0.05) {
           super_print("green| OK. Excellent RMSEA fit (RMSEA < 0.05)")
@@ -236,14 +236,14 @@ cfa_summary <- function(data,
         } else if (RMSEA > 0.08) {
           super_print("red| Warning. Poor RMSEA fit (RMSEA > 0.08)")
         }
-        
+
         SRMR <- fit_measure_df["SRMR"]
         if (SRMR <= 0.08) {
           super_print("green| OK. Good SRMR fit (SRMR < 0.08)")
         } else if (SRMR > 0.08) {
           super_print("red| Warning. Poor SRMR fit (SRMR > 0.08)")
         }
-        
+
         TLI <- fit_measure_df["TLI"]
         if (TLI >= 0.95) {
           super_print("green| OK. Excellent TLI fit (TLI > 0.95)")
@@ -252,7 +252,7 @@ cfa_summary <- function(data,
         } else if (TLI < 0.9) {
           super_print("red| Warning. Poor TLI fit (TLI < 0.90)")
         }
-        
+
         if (all(factors_loadings_df$Std.Est >= 0.7)) {
           super_print("green| OK. Excellent factor loadings (all loadings > 0.7)")
         } else if (any(factors_loadings_df$Std.Est < 0.7) & all(factors_loadings_df$Std.Est >= 0.4)) {
@@ -268,14 +268,14 @@ cfa_summary <- function(data,
   if (plot == TRUE) {
     if (requireNamespace("semPlot", quietly = TRUE)) {
       semPlot::semPaths(cfa_model,
-                        what = "std",
-                        edge.color = "black",
-                        sizeMan = 5,
-                        sizeLat = 8,
-                        edge.label.cex = 1,
-                        nCharEdges = 5,
-                        esize = 1,
-                        trans = 1
+        what = "std",
+        edge.color = "black",
+        sizeMan = 5,
+        sizeLat = 8,
+        edge.label.cex = 1,
+        nCharEdges = 5,
+        esize = 1,
+        trans = 1
       )
     } else {
       message("Please install.packages('semPlot') for path diagram")

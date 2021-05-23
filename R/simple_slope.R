@@ -45,12 +45,12 @@ simple_slope <- function(data,
   if (!requireNamespace("sandwich", quietly = TRUE)) {
     stop("Please install.packages('sandwich') use simple_slope with three-way interaction")
   }
-  if (class(model) == 'lmerMod' | class(model) == 'lmerModLmerTest') {
-    model = do.call(getfun('lmerTest::lmer'),list(formula = model, data = data))
+  if (class(model) == "lmerMod" | class(model) == "lmerModLmerTest") {
+    model <- do.call(getfun("lmerTest::lmer"), list(formula = model, data = data))
   }
 
   ##################################### two way interaction ####################################################
-  
+
 
   if (length(two_way_interaction_factor) == 2) {
     simple_slope_model <- interactions::sim_slopes(

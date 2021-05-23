@@ -28,8 +28,6 @@ glm_model <- function(data,
                       three_way_interaction_factor = NULL,
                       family,
                       quite = FALSE) {
-
-
   glm_model_check <- function(object, method) {
     if (method == "response_variableiable_check") {
       if (length(object) != 1) {

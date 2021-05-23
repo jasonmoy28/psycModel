@@ -1,5 +1,5 @@
-test_that(desc = 'measurement invariance: metric', {
-  summary = measurement_invariance(
+test_that(desc = "measurement invariance: metric", {
+  summary <- measurement_invariance(
     model = "visual  =~ x1 + x2 + x3;
               textual =~ x4 + x5 + x6;
               speed   =~ x7 + x8 + x9",
@@ -12,8 +12,8 @@ test_that(desc = 'measurement invariance: metric', {
   expect_false(is.null(summary))
 })
 
-test_that(desc = 'measurement invariance: scalar', {
-  summary = measurement_invariance(
+test_that(desc = "measurement invariance: scalar", {
+  summary <- measurement_invariance(
     model = "visual  =~ x1 + x2 + x3;
               textual =~ x4 + x5 + x6;
               speed   =~ x7 + x8 + x9",
@@ -25,4 +25,3 @@ test_that(desc = 'measurement invariance: scalar', {
   )
   expect_false(is.null(summary))
 })
-

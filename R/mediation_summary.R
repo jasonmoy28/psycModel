@@ -1,7 +1,7 @@
 #' Mediation Analysis
 #'
 #' `r lifecycle::badge("experimental")` \cr
-#' It currently only support simple mediation analysis. 
+#' It currently only support simple mediation analysis.
 #' In the backend, it called the `lavaan::sem()` model. I am trying to implement multilevel mediation in `lavaan`.
 #' In the future, I will try supporting moderated mediation (through `lavaan` or `mediation`) and mediation with latent variable (through `lavaan`).
 #'
@@ -38,7 +38,7 @@ mediation_summary <- function(data,
                               quite = FALSE,
                               streamline = FALSE,
                               return_result = FALSE) {
-  data = data_check(data)
+  data <- data_check(data)
   response_variable <- data %>%
     dplyr::select(!!enquo(response_variable)) %>%
     names()

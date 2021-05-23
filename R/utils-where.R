@@ -4,3 +4,6 @@
 #'
 utils::globalVariables("where")
 utils::globalVariables(".")
+if (FALSE) {
+  lifecycle::is_present()
+}

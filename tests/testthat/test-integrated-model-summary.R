@@ -1,4 +1,4 @@
-testthat::test_that('integrated_model_summary: lm model',{
+testthat::test_that("integrated_model_summary: lm model", {
   expect_warning(summary <- integrated_model_summary(
     data = iris[1:4],
     response_variable = "Sepal.Length",
@@ -11,26 +11,25 @@ testthat::test_that('integrated_model_summary: lm model',{
   ))
   # model
   expect_false(is.null(summary$model))
-  
+
   # summary
   expect_false(is.null(summary$summary$model_summary))
   expect_false(is.null(summary$summary$model_performance_df))
   expect_false(is.null(summary$summary$assumption_plot))
-  
+
   # interaction plot
   expect_false(is.null(summary$interaction_plot))
-  
+
   # simple slope
   expect_false(is.null(summary$simple_slope$simple_slope_df))
   expect_false(is.null(summary$simple_slope$jn_plot))
-}
-)
+})
 
 testthat::test_that(desc = "integrated_model_summary: glm model", {
-expect_warning(expect_warning(summary <- integrated_model_summary(
+  expect_warning(expect_warning(summary <- integrated_model_summary(
     response_variable = incidence,
     predictor_variable = period,
-    family = "poisson", 
+    family = "poisson",
     data = lme4::cbpp,
     assumption_plot = TRUE,
     quite = TRUE,
@@ -38,15 +37,15 @@ expect_warning(expect_warning(summary <- integrated_model_summary(
   )))
   # model
   expect_false(is.null(summary$model))
-  
+
   # summary
   expect_false(is.null(summary$summary$model_summary))
   expect_false(is.null(summary$summary$model_performance_df))
   expect_false(is.null(summary$summary$assumption_plot))
-  
+
   # interaction plot
   expect_true(is.null(summary$interaction_plot)) # no interaction plot
-  
+
   # simple slope
   expect_true(is.null(summary$simple_slope$simple_slope_df))
   expect_true(is.null(summary$simple_slope$jn_plot))

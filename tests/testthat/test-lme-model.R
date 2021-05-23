@@ -7,7 +7,7 @@ testthat::test_that(desc = "lme_model: nlme", {
     non_random_effect_factors = c(extrav, sex, texp),
     id = class,
     use_package = "nlme",
-    opt_control = 'optim',
+    opt_control = "optim",
     quite = T
   )
   expect_equal(class(fit), "lme")
@@ -41,9 +41,8 @@ testthat::test_that(desc = "lme_model: lmerTest", {
 testthat::test_that(desc = "lme_model: lmerTest (specify model)", {
   fit <- lme_model(
     data = popular,
-    model = 'popular ~ extrav + sex + (1 | class)',
+    model = "popular ~ extrav + sex + (1 | class)",
     use_package = "lmerTest"
   )
   expect_equal(class(fit)[1], "lmerModLmerTest")
 })
-

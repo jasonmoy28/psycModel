@@ -1,4 +1,4 @@
-testthat::test_that('model_summary: lm model',{
+testthat::test_that("model_summary: lm model", {
   model <- lm_model(
     data = iris[1:4],
     response_variable = "Sepal.Length",
@@ -7,34 +7,32 @@ testthat::test_that('model_summary: lm model',{
     quite = T
   )
   summary <- model_summary(model,
-                           return_result = T,
-                           assumption_plot = T,
-                           quite = T
+    return_result = T,
+    assumption_plot = T,
+    quite = T
   )
   expect_false(is.null(summary$model_summary))
   expect_false(is.null(summary$model_performance_df))
   expect_false(is.null(summary$assumption_plot))
-}
-)
+})
 
-testthat::test_that('model_summary: glm model',{
+testthat::test_that("model_summary: glm model", {
   expect_warning(model <- glm_model(
     response_variable = incidence,
     predictor_variable = period,
-    family = "poisson", 
+    family = "poisson",
     data = lme4::cbpp,
     quite = TRUE,
   ))
   summary <- model_summary(model,
-                           return_result = T,
-                           assumption_plot = T,
-                           quite = T
+    return_result = T,
+    assumption_plot = T,
+    quite = T
   )
   expect_false(is.null(summary$model_summary))
   expect_false(is.null(summary$model_performance_df))
   expect_false(is.null(summary$assumption_plot))
-}
-)
+})
 
 testthat::test_that(desc = "model_summary: nlme model", {
   model <- lme_model(
@@ -43,14 +41,14 @@ testthat::test_that(desc = "model_summary: nlme model", {
     random_effect_factors = sex,
     non_random_effect_factors = c(extrav, sex, texp),
     id = class,
-    opt_control = 'optim',
+    opt_control = "optim",
     use_package = "nlme",
     quite = T
   )
   summary <- model_summary(model,
-                           return_result = T,
-                           assumption_plot = T,
-                           quite = T
+    return_result = T,
+    assumption_plot = T,
+    quite = T
   )
   expect_false(is.null(summary$model_summary))
   expect_false(is.null(summary$model_performance_df))
@@ -68,9 +66,9 @@ testthat::test_that(desc = "model_summary: lmerTest model", {
     quite = T
   )
   summary <- model_summary(model,
-                           return_result = T,
-                           assumption_plot = T,
-                           quite = T
+    return_result = T,
+    assumption_plot = T,
+    quite = T
   )
   expect_false(is.null(summary$model_summary))
   expect_false(is.null(summary$model_performance_df))
@@ -88,9 +86,9 @@ testthat::test_that(desc = "model_summary: lme4 model", {
     quite = T
   )
   summary <- model_summary(model,
-                           return_result = T,
-                           assumption_plot = T,
-                           quite = T
+    return_result = T,
+    assumption_plot = T,
+    quite = T
   )
   expect_false(is.null(summary$model_summary))
   expect_false(is.null(summary$model_performance_df))
@@ -116,4 +114,3 @@ testthat::test_that(desc = "model_summary: glme model", {
   expect_false(is.null(summary$model_performance_df))
   expect_false(is.null(summary$assumption_plot))
 })
-

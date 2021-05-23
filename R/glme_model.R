@@ -64,17 +64,19 @@ glme_model <- function(data,
       }
     }
   }
-  
+
   ###################################### Modeling with Explict Model #############################################
   if (!is.null(model)) {
     glmerformula <- stats::as.formula(model)
     glmerCtr <- lme4::glmerControl(optimizer = opt_control)
 
-    model <- lme4::glmer(formula = glmerformula, 
-                         data = data, 
-                         family = family, 
-                         na.action = na.action, 
-                         control = glmerCtr)
+    model <- lme4::glmer(
+      formula = glmerformula,
+      data = data,
+      family = family,
+      na.action = na.action,
+      control = glmerCtr
+    )
 
     return(model)
   }
@@ -157,11 +159,13 @@ glme_model <- function(data,
   if (any(family %in% "negbin")) {
     stop("Sorry, we do not support negative binomial distribution yet.") # do not support negative binomial now
   } else {
-    model <- lme4::glmer(formula = glmerformula, 
-                         data = data, 
-                         family = family, 
-                         na.action = na.action, 
-                         control = glmerCtr)
+    model <- lme4::glmer(
+      formula = glmerformula,
+      data = data,
+      family = family,
+      na.action = na.action,
+      control = glmerCtr
+    )
   }
 
   return(model)
