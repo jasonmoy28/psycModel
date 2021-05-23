@@ -186,10 +186,14 @@ cfa_summary <- function(data,
       }
       super_print("Model Formula = \n.{model}")
     }
-    super_print("underline|Fit Measure")
-    print_table(fit_measure_df)
+    if (nrow(factors_loadings_df) > 3) {
+      super_print("underline|Fit Measure")
+      print_table(fit_measure_df) 
+      cat("\n \n")
+    } else{
+      message('Fit measure is not printed due to factor <= 3 ')
+    }
 
-    cat("\n \n")
     super_print("underline|Factor Loadings")
     print_table(factors_loadings_df)
 
@@ -207,8 +211,7 @@ cfa_summary <- function(data,
       }
     }
     ########################################## Goodness of Fit ###################################################
-    n_observed_factor <- factors_loadings_df %>% nrow() # do not print goodness of fit if n_observed_factor is 3
-    if (n_observed_factor > 3) {
+    if (nrow(factors_loadings_df) > 3) {
       if (ordered == FALSE) {
         cat("\n \n")
         super_print("Goodness of Fit:")
