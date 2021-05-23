@@ -179,7 +179,7 @@ Predictors = Sepal.Width, Petal.Length, Petal.Width, Species
 ───────────────────────────────────────────────────
 
 </span><span style="text-decoration: underline;">Model Assumption Check</span><span>
-OK: Residuals appear to be independent and not autocorrelated (p = 0.988).
+OK: Residuals appear to be independent and not autocorrelated (p = 0.992).
 OK: residuals appear as normally distributed (p = 0.892).
 </span><span style="color: #0000BB;">Unable to check autocorrelation. Try changing na.action to na.omit.</span><span>
 Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.047).
@@ -214,11 +214,11 @@ Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.047).
 <p>This is the multilevel-variation of <code>integrated_model_summary</code>. It works exactly the same way as <code>integrated_model_summary</code> except you need to specify the non_random_effect_factors (i.e., level-2 factors) and the random_effect_factors (i.e., the level-1 factors) instead of <code>predictor_variable</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/integrated_multilevel_model_summary.html">integrated_multilevel_model_summary</a></span><span class="op">(</span>
-   data <span class="op">=</span> <span class="va">popular</span>,
-   response_variable <span class="op">=</span> <span class="va">popular</span>,
-   random_effect_factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">extrav</span>, <span class="va">sex</span><span class="op">)</span>,
-   non_random_effect_factors <span class="op">=</span> <span class="va">texp</span>,
-   three_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">extrav</span>, <span class="va">sex</span>, <span class="va">texp</span><span class="op">)</span>,
+    data <span class="op">=</span> <span class="va">popular</span>,
+    response_variable <span class="op">=</span> <span class="va">popular</span>,
+    random_effect_factors <span class="op">=</span> <span class="va">extrav</span>,
+    non_random_effect_factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">texp</span><span class="op">)</span>,
+    three_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">extrav</span>, <span class="va">sex</span>, <span class="va">texp</span><span class="op">)</span>,
    graph_label_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"popular"</span>, <span class="st">"extraversion"</span>, <span class="st">"sex"</span>, <span class="st">"teacher experience"</span><span class="op">)</span>, <span class="co"># change interaction plot label</span>
    id <span class="op">=</span> <span class="va">class</span>,
    model_summary <span class="op">=</span> <span class="cn">TRUE</span>, 
@@ -238,42 +238,42 @@ Predictors = extrav, sex, texp, extrav:sex, extrav:texp, sex:texp, extrav:sex:te
 ─────────────────────────────────────────────────────────────────────────────────────────
         Parameter  Effects  Coefficient       t    df     SE          p            95% CI
 ─────────────────────────────────────────────────────────────────────────────────────────
-      (Intercept)    fixed       -0.958  -2.882  1985  0.332  0.004 **   [-1.609, -0.306]
-           extrav    fixed        0.757  14.314  1985  0.053  0.000 ***  [ 0.653,  0.861]
-              sex    fixed        0.714   1.890  1985  0.378  0.059      [-0.026,  1.454]
-             texp    fixed        0.217  10.201  1985  0.021  0.000 ***  [ 0.175,  0.259]
-       extrav:sex    fixed        0.094   1.471  1985  0.064  0.141      [-0.031,  0.219]
-      extrav:texp    fixed       -0.023  -6.489  1985  0.004  0.000 ***  [-0.030, -0.016]
-         sex:texp    fixed        0.020   0.861  1985  0.024  0.389      [-0.026,  0.067]
-  extrav:sex:texp    fixed       -0.004  -0.829  1985  0.004  0.407      [-0.012,  0.005]
+      (Intercept)    fixed       -0.935  -2.839  1988  0.329  0.005 **   [-1.581, -0.290]
+           extrav    fixed        0.753  14.345  1988  0.052  0.000 ***  [ 0.650,  0.856]
+              sex    fixed        0.654   1.726  1988  0.379  0.084      [-0.089,  1.396]
+             texp    fixed        0.215  10.198  1988  0.021  0.000 ***  [ 0.174,  0.256]
+       extrav:sex    fixed        0.103   1.610  1988  0.064  0.107      [-0.022,  0.229]
+      extrav:texp    fixed       -0.023  -6.451  1988  0.004  0.000 ***  [-0.030, -0.016]
+         sex:texp    fixed        0.024   1.017  1988  0.024  0.309      [-0.022,  0.071]
+  extrav:sex:texp    fixed       -0.004  -0.961  1988  0.004  0.337      [-0.012,  0.004]
 ─────────────────────────────────────────────────────────────────────────────────────────
 
 </span><span style="text-decoration: underline;">Goodness of Fit</span><span>
-───────────────────────────────────────────────────────────────
-       AIC       BIC  R²_conditional  R²_marginal   RMSE      σ
-───────────────────────────────────────────────────────────────
-  4827.902  4911.915             NaN        0.656  0.720  0.742
-───────────────────────────────────────────────────────────────
+──────────────────────────────────────────────────────────────────────
+       AIC       BIC  R²_conditional  R²_marginal    ICC   RMSE      σ
+──────────────────────────────────────────────────────────────────────
+  4823.684  4890.894           0.709        0.554  0.349  0.721  0.743
+──────────────────────────────────────────────────────────────────────
 
 </span><span style="text-decoration: underline;">Model Assumption Check</span><span>
 </span><span style="color: #00BB00;">OK: Model is converged</span><span>
-</span><span style="color: #BB0000;">Warning: Singularity is detected. See ?lme4::isSingular()</span><span>
+</span><span style="color: #00BB00;">OK: No singularity is detected</span><span>
 Warning: Autocorrelated residuals detected (p &lt; .001).
-OK: residuals appear as normally distributed (p = 0.487).
+OK: residuals appear as normally distributed (p = 0.425).
 </span><span style="color: #0000BB;">Unable to check autocorrelation. Try changing na.action to na.omit.</span><span>
-OK: Error variance appears to be homoscedastic (p = 0.752).
+OK: Error variance appears to be homoscedastic (p = 0.758).
 </span><span style="color: #BB0000;">Warning: Severe multicolinearity detected (VIF &gt; 10). Please inspect the following table to identify high correlation factors.</span><span>
 </span><span style="text-decoration: underline;">Multicollinearity Table </span><span>
 ─────────────────────────────────────
              Term      VIF  SE_factor
 ─────────────────────────────────────
-           extrav    9.167      3.028
-              sex  107.181     10.353
-             texp    6.325      2.515
-       extrav:sex   93.909      9.691
-      extrav:texp   14.154      3.762
-         sex:texp  107.690     10.377
-  extrav:sex:texp   95.252      9.760
+           extrav    9.005      3.001
+              sex  110.249     10.500
+             texp    6.109      2.472
+       extrav:sex   95.403      9.767
+      extrav:texp   13.869      3.724
+         sex:texp  109.012     10.441
+  extrav:sex:texp   95.547      9.775
 ─────────────────────────────────────
 </span></code></pre>
 <img src="quick-introduction_files/figure-html/unnamed-chunk-3-1.png" width="700" height="400"><pre class="fansi fansi-output"><code>
@@ -281,12 +281,12 @@ OK: Error variance appears to be homoscedastic (p = 0.752).
 ────────────────────────────────────────────────────────────────────────
   texp Level  sex Level   Est.   S.E.  t val.          p          95% CI
 ────────────────────────────────────────────────────────────────────────
-         Low        Low  0.579  0.031  18.596  0.000 ***  [0.518, 0.640]
-                   High  0.646  0.031  20.660  0.000 ***  [0.585, 0.708]
-        Mean        Low  0.429  0.024  17.555  0.000 ***  [0.381, 0.476]
-                   High  0.472  0.023  20.434  0.000 ***  [0.427, 0.518]
-        High        Low  0.278  0.036   7.697  0.000 ***  [0.207, 0.348]
-                   High  0.298  0.031   9.565  0.000 ***  [0.237, 0.360]
+         Low        Low  0.578  0.031  18.659  0.000 ***  [0.517, 0.638]
+                   High  0.649  0.032  20.573  0.000 ***  [0.587, 0.711]
+        Mean        Low  0.429  0.024  17.604  0.000 ***  [0.381, 0.476]
+                   High  0.473  0.023  20.425  0.000 ***  [0.428, 0.519]
+        High        Low  0.280  0.036   7.769  0.000 ***  [0.209, 0.350]
+                   High  0.298  0.031   9.527  0.000 ***  [0.236, 0.359]
 ────────────────────────────────────────────────────────────────────────
 </span><span style="font-style: italic;">Note: For continuous variable, low and high represent -1 and +1 SD from the mean, respectively.</span><span>
 </span></code></pre>
