@@ -87,16 +87,16 @@ model_summary <- function(model,
     heteroscedasticity_check <- TRUE
     collinearity_check <- TRUE
     singular_check <- TRUE
-
-    lme_param <- parameters::model_parameters(model)
-    model_summary_df <- lme_param %>%
-      as.data.frame() %>%
-      dplyr::rename(df = .data$df_error) %>%
-      dplyr::rename(ci.lower = .data$CI_low) %>%
-      dplyr::rename(ci.upper = .data$CI_high) %>%
-      dplyr::select(-"CI") %>%
-      dplyr::select("Parameter", "Effects", "Coefficient", "t", "df", "SE", "p", "ci.lower", "ci.upper", "p", tidyselect::everything())
-
+#     lme_param <- parameters::model_parameters(model)
+#     model_summary_df <- lme_param %>%
+#       as.data.frame() %>%
+#       dplyr::rename(df = .data$df_error) %>%
+#       dplyr::rename(ci.lower = .data$CI_low) %>%
+#       dplyr::rename(ci.upper = .data$CI_high) %>%
+#       dplyr::select(-"CI") %>%
+#       dplyr::select("Parameter", "Effects", "Coefficient", "t", "df", "SE", "p", "ci.lower", "ci.upper", "p", tidyselect::everything())
+    model_summary_df = data.frame(Warning = 'Warning: Waiting for the parameters pacakge to update')
+    print('psycModel is based on the package parameters. The parameters pacakge v0.14.0 has some problem. We are waiting for them to fix. This package will update again once parameters is updated. Should not be a long time')
     ################################################ Generalized Linear Mixed Effect Model ################################################
     # glmer model
   } else if (class(model)[1] == "glmerMod") {
