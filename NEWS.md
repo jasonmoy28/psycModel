@@ -1,3 +1,5 @@
+# psycModel 0.3.2
+
 # psycModel 0.3.1
 
 Bugs fixed: 
