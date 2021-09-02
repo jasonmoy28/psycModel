@@ -174,7 +174,7 @@ measurement_invariance <- function(data,
       ordered = ordered,
       group.partial = group_partial
     )
-    fit <- compare_fit(config_model, metric_model, scalar_model, digits = digits)
+    fit <- compare_fit(config_model, metric_model, scalar_model, digits = digits) 
   } else {
     print("Error: Invariance level must be either metric or scalar")
     return()
@@ -200,7 +200,7 @@ measurement_invariance <- function(data,
     }
     super_print("\n \n")
     super_print("underline|Fit Measure Summary")
-    print_table(fit)
+    print_table(fit %>% tibble::rownames_to_column(var = 'Analysis Type'))
     cat("\n")
     super_print("Goodness of Fit:")
     fit <- fit %>% dplyr::mutate(dplyr::across(tidyselect::everything(), as.numeric))

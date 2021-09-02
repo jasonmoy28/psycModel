@@ -25,6 +25,7 @@ Imports:
     lifecycle,
     lme4,
     lmerTest,
+    patchwork,
     parameters,
     performance,
     psych,
