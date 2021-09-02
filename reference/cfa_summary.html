@@ -258,9 +258,9 @@ The model is considered an acceptable fit if CFI &gt; 0.9 and RMSEA &lt; 0.08. I
   model_variance <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='co'># do not print the model_variance</span>
   model_covariance <span class='op'>=</span> <span class='cn'>FALSE</span> <span class='co'># do not print the model_covariance</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: The following columns are coerced into numeric: school</span></div><div class='output co'>#&gt; 
+</div><div class='output co'>#&gt; 
 #&gt;  
-#&gt; <span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; <span style='text-decoration: underline;'>Model Summary</span>
 #&gt; Model Type = Confirmatory Factor Analysis
 #&gt; Group = sex
 #&gt; Model Formula = 
@@ -268,7 +268,7 @@ The model is considered an acceptable fit if CFI &gt; 0.9 and RMSEA &lt; 0.08. I
 #&gt;   DV2 =~ x4 + x5 + x6
 #&gt;   DV3 =~ x7 + x8 + x9
 #&gt;  
-#&gt; </span><span style='text-decoration: underline;'>Fit Measure</span><span>
+#&gt; <span style='text-decoration: underline;'>Fit Measure</span>
 #&gt; ──────────────────────────────────────────────────────────────────────────────────────
 #&gt;        Χ²      DF          P    CFI  RMSEA   SRMR    TLI       AIC       BIC      BIC2
 #&gt; ──────────────────────────────────────────────────────────────────────────────────────
@@ -276,7 +276,7 @@ The model is considered an acceptable fit if CFI &gt; 0.9 and RMSEA &lt; 0.08. I
 #&gt; ──────────────────────────────────────────────────────────────────────────────────────
 #&gt; 
 #&gt;  
-#&gt; </span><span style='text-decoration: underline;'>Factor Loadings</span><span>
+#&gt; <span style='text-decoration: underline;'>Factor Loadings</span>
 #&gt; ───────────────────────────────────────────────────────────────────────────────────────
 #&gt;   Latent.Factor  Observed.Var  group  Std.Est     SE       Z          P          95% CI
 #&gt; ───────────────────────────────────────────────────────────────────────────────────────
@@ -302,12 +302,12 @@ The model is considered an acceptable fit if CFI &gt; 0.9 and RMSEA &lt; 0.08. I
 #&gt; 
 #&gt;  
 #&gt; Goodness of Fit:
-#&gt; </span><span style='color: #BBBB00;'> Warning. Poor χ² fit (p &lt; 0.05). It is common to get p &lt; 0.05. Check other fit measure.</span><span>
-#&gt; </span><span style='color: #00BB00;'> OK. Acceptable CFI fit (CFI &gt; 0.90)</span><span>
-#&gt; </span><span style='color: #BB0000;'> Warning. Poor RMSEA fit (RMSEA &gt; 0.08)</span><span>
-#&gt; </span><span style='color: #00BB00;'> OK. Good SRMR fit (SRMR &lt; 0.08)</span><span>
-#&gt; </span><span style='color: #00BB00;'> OK. Acceptable TLI fit (TLI &gt; 0.90)</span><span>
-#&gt; </span><span style='color: #BB0000;'> Warning. Some poor factor loadings (some loadings &lt; 0.4)</span><span></div><div class='img'><img src='cfa_summary-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='cfa_summary-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; <span style='color: #BBBB00;'> Warning. Poor χ² fit (p &lt; 0.05). It is common to get p &lt; 0.05. Check other fit measure.</span>
+#&gt; <span style='color: #00BB00;'> OK. Acceptable CFI fit (CFI &gt; 0.90)</span>
+#&gt; <span style='color: #BB0000;'> Warning. Poor RMSEA fit (RMSEA &gt; 0.08)</span>
+#&gt; <span style='color: #00BB00;'> OK. Good SRMR fit (SRMR &lt; 0.08)</span>
+#&gt; <span style='color: #00BB00;'> OK. Acceptable TLI fit (TLI &gt; 0.90)</span>
+#&gt; <span style='color: #BB0000;'> Warning. Some poor factor loadings (some loadings &lt; 0.4)</span></div><div class='img'><img src='cfa_summary-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='cfa_summary-2.png' alt='' width='700' height='433' /></div><div class='input'>
 
 <span class='co'># Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)</span>
 <span class='co'># Note in the below function how I added `model = ` in front of the lavaan model.</span>
@@ -318,7 +318,7 @@ The model is considered an acceptable fit if CFI &gt; 0.9 and RMSEA &lt; 0.08. I
   data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>,
   quite <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='co'># silence all output</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: The following columns are coerced into numeric: school</span></div><div class='img'><img src='cfa_summary-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+</div><div class='img'><img src='cfa_summary-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># This will fail because I did not add `model = ` in front of the lavaan model.</span>
 <span class='co'># Therefore,you must add the tag in front of all arguments</span>
@@ -329,7 +329,7 @@ The model is considered an acceptable fit if CFI &gt; 0.9 and RMSEA &lt; 0.08. I
   data <span class='op'>=</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html'>HolzingerSwineford1939</a></span>
 <span class='op'>)</span>
 <span class='op'>}</span>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

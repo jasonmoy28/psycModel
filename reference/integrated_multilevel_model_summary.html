@@ -307,39 +307,36 @@ If you requested simple slope summary, it will uses the <code>interaction::sim_s
   graph_label_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"popular"</span>, <span class='st'>"extraversion"</span>, <span class='st'>"teacher experience"</span><span class='op'>)</span>,
   id <span class='op'>=</span> <span class='va'>class</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='warning'>Warning: <span style='color: #BB0000;'>Random effect variances not available. Returned R2 does not account for random effects.</span><span></span></div><div class='output co'>#&gt; 
+</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; [1] "psycModel is based on the package parameters. The parameters pacakge v0.14.0 has some problem. We are waiting for them to fix. This package will update again once parameters is updated. Should not be a long time"</div><div class='output co'>#&gt; <span class='warning'>Warning: <span style='color: #BB0000;'>Random effect variances not available. Returned R2 does not account for random effects.</span></span></div><div class='output co'>#&gt; 
 #&gt;  
-#&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; <span style='text-decoration: underline;'>Model Summary</span>
 #&gt; Model Type = Linear Mixed Effect Model (fitted using lme4 or lmerTest)
 #&gt; Outcome = popular
 #&gt; Predictors = extrav, texp, extrav:texp
 #&gt; 
-#&gt; </span><span style='text-decoration: underline;'>Model Estimates</span><span>
-#&gt; ─────────────────────────────────────────────────────────────────────────────────────
-#&gt;     Parameter  Effects  Coefficient       t    df     SE          p            95% CI
-#&gt; ─────────────────────────────────────────────────────────────────────────────────────
-#&gt;   (Intercept)    fixed       -1.211  -3.772  1992  0.321  0.000 ***  [-1.840, -0.582]
-#&gt;        extrav    fixed        0.891  19.822  1992  0.045  0.000 ***  [ 0.803,  0.979]
-#&gt;          texp    fixed        0.252  12.758  1992  0.020  0.000 ***  [ 0.213,  0.291]
-#&gt;   extrav:texp    fixed       -0.027  -9.563  1992  0.003  0.000 ***  [-0.033, -0.022]
-#&gt; ─────────────────────────────────────────────────────────────────────────────────────
+#&gt; <span style='text-decoration: underline;'>Model Estimates</span>
+#&gt; ───────────────────────────────────────────────────────
+#&gt;                                                 Warning
+#&gt; ───────────────────────────────────────────────────────
+#&gt;   Warning: Waiting for the parameters pacakge to update
+#&gt; ───────────────────────────────────────────────────────
 #&gt; 
-#&gt; </span><span style='text-decoration: underline;'>Goodness of Fit</span><span>
+#&gt; <span style='text-decoration: underline;'>Goodness of Fit</span>
 #&gt; ───────────────────────────────────────────────────────────────
 #&gt;        AIC       BIC  R²_conditional  R²_marginal   RMSE      σ
 #&gt; ───────────────────────────────────────────────────────────────
 #&gt;   5710.769  5755.576             NaN        0.415  0.921  0.943
 #&gt; ───────────────────────────────────────────────────────────────
 #&gt; 
-#&gt; </span><span style='text-decoration: underline;'>Model Assumption Check</span><span>
-#&gt; </span><span style='color: #00BB00;'>OK: Model is converged</span><span>
-#&gt; </span><span style='color: #BB0000;'>Warning: Singularity is detected. See ?lme4::isSingular()</span><span>
-#&gt; </span><span style='color: #BB0000;'>Warning: Autocorrelated residuals detected (p &lt; .001).</span><span>
-#&gt; </span><span style='color: #BB0000;'>Warning: Non-normality of residuals detected (p = 0.003).
-#&gt; </span><span style='color: #0000BB;'>Unable to check autocorrelation. Try changing na.action to na.omit.</span><span>
-#&gt; </span><span style='color: #00BB00;'>OK: Error variance appears to be homoscedastic (p = 0.846).
-#&gt; </span><span style='color: #BBBB00;'>Cautious: Moderate multicolinearity detected  (5 &lt; VIF &lt; 10). Please inspect the following table to identify high correlation factors.</span><span>
-#&gt; </span><span style='text-decoration: underline;'>Multicollinearity Table </span><span>
+#&gt; <span style='text-decoration: underline;'>Model Assumption Check</span>
+#&gt; <span style='color: #00BB00;'>OK: Model is converged</span>
+#&gt; <span style='color: #BB0000;'>Warning: Singularity is detected. See ?lme4::isSingular()</span>
+#&gt; <span style='color: #BB0000;'>Warning: Autocorrelated residuals detected (p &lt; .001).</span>
+#&gt; <span style='color: #BB0000;'>Warning: Non-normality of residuals detected (p = 0.003).
+#&gt; </span><span style='color: #0000BB;'>Unable to check autocorrelation. Try changing na.action to na.omit.</span>
+#&gt; <span style='color: #00BB00;'>OK: Error variance appears to be homoscedastic (p = 0.846).
+#&gt; </span><span style='color: #BBBB00;'>Cautious: Moderate multicolinearity detected  (5 &lt; VIF &lt; 10). Please inspect the following table to identify high correlation factors.</span>
+#&gt; <span style='text-decoration: underline;'>Multicollinearity Table </span>
 #&gt; ───────────────────────────────
 #&gt;          Term    VIF  SE_factor
 #&gt; ───────────────────────────────
@@ -360,44 +357,37 @@ If you requested simple slope summary, it will uses the <code>interaction::sim_s
   assumption_plot <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='co'># you can also request assumption plot</span>
   plot_color <span class='op'>=</span> <span class='cn'>TRUE</span> <span class='co'># you can also request the plot in color</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='warning'>Warning: </span><span style='color: #BB0000;'>Random effect variances not available. Returned R2 does not account for random effects.</span><span></span></div><div class='output co'>#&gt; 
+</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='output co'>#&gt; [1] "psycModel is based on the package parameters. The parameters pacakge v0.14.0 has some problem. We are waiting for them to fix. This package will update again once parameters is updated. Should not be a long time"</div><div class='output co'>#&gt; <span class='warning'>Warning: <span style='color: #BB0000;'>Random effect variances not available. Returned R2 does not account for random effects.</span></span></div><div class='output co'>#&gt; 
 #&gt;  
-#&gt; </span><span style='text-decoration: underline;'>Model Summary</span><span>
+#&gt; <span style='text-decoration: underline;'>Model Summary</span>
 #&gt; Model Type = Linear Mixed Effect Model (fitted using lme4 or lmerTest)
 #&gt; Outcome = popular
 #&gt; Predictors = extrav, sex, texp, extrav:sex, extrav:texp, sex:texp, extrav:sex:texp
 #&gt; 
-#&gt; </span><span style='text-decoration: underline;'>Model Estimates</span><span>
-#&gt; ─────────────────────────────────────────────────────────────────────────────────────────
-#&gt;         Parameter  Effects  Coefficient       t    df     SE          p            95% CI
-#&gt; ─────────────────────────────────────────────────────────────────────────────────────────
-#&gt;       (Intercept)    fixed       -0.958  -2.882  1985  0.332  0.004 **   [-1.609, -0.306]
-#&gt;            extrav    fixed        0.757  14.314  1985  0.053  0.000 ***  [ 0.653,  0.861]
-#&gt;               sex    fixed        0.714   1.890  1985  0.378  0.059      [-0.026,  1.454]
-#&gt;              texp    fixed        0.217  10.201  1985  0.021  0.000 ***  [ 0.175,  0.259]
-#&gt;        extrav:sex    fixed        0.094   1.471  1985  0.064  0.141      [-0.031,  0.219]
-#&gt;       extrav:texp    fixed       -0.023  -6.489  1985  0.004  0.000 ***  [-0.030, -0.016]
-#&gt;          sex:texp    fixed        0.020   0.861  1985  0.024  0.389      [-0.026,  0.067]
-#&gt;   extrav:sex:texp    fixed       -0.004  -0.829  1985  0.004  0.407      [-0.012,  0.005]
-#&gt; ─────────────────────────────────────────────────────────────────────────────────────────
+#&gt; <span style='text-decoration: underline;'>Model Estimates</span>
+#&gt; ───────────────────────────────────────────────────────
+#&gt;                                                 Warning
+#&gt; ───────────────────────────────────────────────────────
+#&gt;   Warning: Waiting for the parameters pacakge to update
+#&gt; ───────────────────────────────────────────────────────
 #&gt; 
-#&gt; </span><span style='text-decoration: underline;'>Goodness of Fit</span><span>
+#&gt; <span style='text-decoration: underline;'>Goodness of Fit</span>
 #&gt; ───────────────────────────────────────────────────────────────
 #&gt;        AIC       BIC  R²_conditional  R²_marginal   RMSE      σ
 #&gt; ───────────────────────────────────────────────────────────────
 #&gt;   4827.902  4911.915             NaN        0.656  0.720  0.742
 #&gt; ───────────────────────────────────────────────────────────────
 #&gt; 
-#&gt; </span><span style='text-decoration: underline;'>Model Assumption Check</span><span>
-#&gt; </span><span style='color: #00BB00;'>OK: Model is converged</span><span>
-#&gt; </span><span style='color: #BB0000;'>Warning: Singularity is detected. See ?lme4::isSingular()</span><span>
-#&gt; </span><span style='color: #BB0000;'>Warning: Autocorrelated residuals detected (p &lt; .001).</span><span>
-#&gt; </span><span style='color: #00BB00;'>OK: residuals appear as normally distributed (p = 0.487).
-#&gt; </span><span style='color: #0000BB;'>Unable to check autocorrelation. Try changing na.action to na.omit.</span><span>
-#&gt; </span><span style='color: #00BB00;'>OK: Error variance appears to be homoscedastic (p = 0.752).
-#&gt; </span><span></div><div class='output co'>#&gt; <span class='warning'>Warning: Model has interaction terms. VIFs might be inflated. You may check</span>
-#&gt; <span class='warning'>  multicollinearity among predictors of a model without interaction terms.</span></div><div class='output co'>#&gt; </span><span style='color: #BB0000;'>Warning: Severe multicolinearity detected (VIF &gt; 10). Please inspect the following table to identify high correlation factors.</span><span>
-#&gt; </span><span style='text-decoration: underline;'>Multicollinearity Table </span><span>
+#&gt; <span style='text-decoration: underline;'>Model Assumption Check</span>
+#&gt; <span style='color: #00BB00;'>OK: Model is converged</span>
+#&gt; <span style='color: #BB0000;'>Warning: Singularity is detected. See ?lme4::isSingular()</span>
+#&gt; <span style='color: #BB0000;'>Warning: Autocorrelated residuals detected (p &lt; .001).</span>
+#&gt; <span style='color: #00BB00;'>OK: residuals appear as normally distributed (p = 0.487).
+#&gt; </span><span style='color: #0000BB;'>Unable to check autocorrelation. Try changing na.action to na.omit.</span>
+#&gt; <span style='color: #00BB00;'>OK: Error variance appears to be homoscedastic (p = 0.752).
+#&gt; </span></div><div class='output co'>#&gt; <span class='warning'>Warning: Model has interaction terms. VIFs might be inflated. You may check</span>
+#&gt; <span class='warning'>  multicollinearity among predictors of a model without interaction terms.</span></div><div class='output co'>#&gt; <span style='color: #BB0000;'>Warning: Severe multicolinearity detected (VIF &gt; 10). Please inspect the following table to identify high correlation factors.</span>
+#&gt; <span style='text-decoration: underline;'>Multicollinearity Table </span>
 #&gt; ─────────────────────────────────────
 #&gt;              Term      VIF  SE_factor
 #&gt; ─────────────────────────────────────
@@ -409,7 +399,7 @@ If you requested simple slope summary, it will uses the <code>interaction::sim_s
 #&gt;          sex:texp  107.690     10.377
 #&gt;   extrav:sex:texp   95.252      9.760
 #&gt; ─────────────────────────────────────</div><div class='img'><img src='integrated_multilevel_model_summary-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; </span><span style='text-decoration: underline;'>Slope Estimates at Each Level of Moderators</span><span>
+#&gt; <span style='text-decoration: underline;'>Slope Estimates at Each Level of Moderators</span>
 #&gt; ────────────────────────────────────────────────────────────────────────
 #&gt;   texp Level  sex Level   Est.   S.E.  t val.          p          95% CI
 #&gt; ────────────────────────────────────────────────────────────────────────
@@ -420,9 +410,9 @@ If you requested simple slope summary, it will uses the <code>interaction::sim_s
 #&gt;         High        Low  0.278  0.036   7.697  0.000 ***  [0.207, 0.348]
 #&gt;                    High  0.298  0.031   9.565  0.000 ***  [0.237, 0.360]
 #&gt; ────────────────────────────────────────────────────────────────────────
-#&gt; </span><span style='font-style: italic;'>Note: For continuous variable, low and high represent -1 and +1 SD from the mean, respectively.</span><span></div><div class='img'><img src='integrated_multilevel_model_summary-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='warning'>Warning: You requested &gt; 2 plots. Since 1 plot can be displayed at a time, considering using Rmd for better viewing experience.</span></div><div class='img'><img src='integrated_multilevel_model_summary-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+#&gt; <span style='font-style: italic;'>Note: For continuous variable, low and high represent -1 and +1 SD from the mean, respectively.</span></div><div class='img'><img src='integrated_multilevel_model_summary-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='warning'>Warning: You requested &gt; 2 plots. Since 1 plot can be displayed at a time, considering using Rmd for better viewing experience.</span></div><div class='img'><img src='integrated_multilevel_model_summary-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
