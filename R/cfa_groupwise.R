@@ -54,7 +54,7 @@ cfa_groupwise <- function(data,
   return_df <- data.frame(group = NULL, cfi = NULL, rmsea = NULL, tli = NULL)
   for (i in groups) {
     cfa_data <- data %>%
-      dplyr::filter(dplyr::across(!!group) == i)
+      dplyr::filter(dplyr::across(!!group)[[1]] == i)
     cfa_model_summary <- lavaan::cfa(model = model, data = cfa_data, ordered = ordered)
     cfa_model_summary <- as.data.frame(lavaan::fitmeasures(cfa_model_summary))
     summary_df <- data.frame(group = i, cfi = cfa_model_summary["cfi", ], rmsea = cfa_model_summary["rmsea", ], tli = cfa_model_summary["tli", ])
