@@ -97,7 +97,7 @@ testthat::test_that(desc = "model_summary: lme4 model", {
 
 testthat::test_that(desc = "model_summary: glme model", {
   testthat::skip_on_cran()
-  model <- expect_warning(glme_model(
+  testthat::expect_warning(model <- glme_model(
     response_variable = incidence,
     random_effect_factors = period,
     family = "poisson", # or you can enter as poisson(link = 'log')
