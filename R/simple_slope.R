@@ -48,10 +48,6 @@ simple_slope <- function(data,
   if (class(model) == "lmerMod" | class(model) == "lmerModLmerTest") {
     model <- do.call(getfun("lmerTest::lmer"), list(formula = model, data = data))
   }
-  if(class(model) == 'lm'){
-    model = lm(insight::find_formula(model)$conditional,data = data)
-  }
-  
 
   ##################################### two way interaction ####################################################
 
@@ -64,13 +60,6 @@ simple_slope <- function(data,
       modx = !!two_way_interaction_factor[2],
       jnplot = TRUE,
     )
-    if(is.character(simple_slope_model$slopes[[1]])){
-      simple_slope_output <-
-        rbind(simple_slope_model$slopes) %>%
-        dplyr::rename(ci.lower = "2.5%") %>%
-        dplyr::rename(ci.upper = "97.5%")
-      
-    } else {
     simple_slope_output <-
       rbind(simple_slope_model$slopes) %>%
       dplyr::mutate(dplyr::across(1, function(x) {
@@ -82,7 +71,7 @@ simple_slope <- function(data,
       })) %>%
       dplyr::rename(ci.lower = "2.5%") %>%
       dplyr::rename(ci.upper = "97.5%")
-    }
+
     colnames(simple_slope_output)[1] <- c(paste(two_way_interaction_factor[2], "Level"))
     jn_plot <- simple_slope_model$jnplot
     ##################################### three way interaction #####################################################

@@ -77,6 +77,8 @@ integrated_model_summary <- function(data,
   three_way_interaction_factor <- data %>%
     dplyr::select(!!enquo(three_way_interaction_factor)) %>%
     names()
+  # coerced into numeric after selecting variables
+  data <- data_check(data)
 
   ##################################### Running Model #########################################
   if (is.null(family)) {
