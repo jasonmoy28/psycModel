@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://jasonmoy28.github.io/psycModel/404.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/articles/brief-introduction-to-select-syntax.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/authors.html</loc>
+  </url>
+  <url>
     <loc>https://jasonmoy28.github.io/psycModel/index.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/news/index.html</loc>
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/cfa_groupwise.html</loc>
@@ -35,6 +59,9 @@
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/html_to_pdf.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/index.html</loc>
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/integrated_model_summary.html</loc>
@@ -92,11 +119,5 @@
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/two_way_interaction_terms.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/articles/brief-introduction-to-select-syntax.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html</loc>
   </url>
 </urlset>

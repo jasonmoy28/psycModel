@@ -32,6 +32,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -44,18 +46,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psycModel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -80,7 +76,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/jasonmoy28/psycModel">
+  <a href="https://github.com/jasonmoy28/psycModel" class="external-link">
     <span class="fab fa-github fa-0.7x"></span>
      
     GitHub
@@ -111,13 +107,13 @@
     
 <p>Version Note: Up-to-date with v0.3.0</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jasonmoy28.github.io/psycModel/">psycModel</a></span><span class="op">)</span></code></pre></div>
-<div id="why-should-you-use-this-pacakge" class="section level1">
-<h1 class="hasAnchor">
-<a href="#why-should-you-use-this-pacakge" class="anchor"></a>Why should you use this pacakge?</h1>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jasonmoy28.github.io/psycModel/">psycModel</a></span><span class="op">)</span></code></pre></div>
+<div class="section level2">
+<h2 id="why-should-you-use-this-pacakge">Why should you use this pacakge?<a class="anchor" aria-label="anchor" href="#why-should-you-use-this-pacakge"></a>
+</h2>
 <p>TLDR:<br>
 1) It is a beginner-friendly R package for statistical analysis in social science.<br>
-2) Tired of manually writing all variables in a model? You can use <a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a> syntax for all models<br>
+2) Tired of manually writing all variables in a model? You can use <a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a> syntax for all models<br>
 3) Fitting models, plotting, checking goodness of fit, and model assumption violations all in one place.<br>
 4) Beautiful and easy-to-read output. Check out this <a href="https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html">example</a> now.</p>
 <p>Support models:<br>
@@ -128,24 +124,24 @@
 5. Reliability analysis.<br>
 6. Correlation, descriptive statistics (e.g., mean, SD).</p>
 <p>At its core, this package allows people to analyze their data with one simple function call. For example, when you are running a linear regression, you need to fit the model, check the goodness of fit (e.g., R2), check the model assumption, and plot the interaction (if the interaction is included). Without this package, you need several packages to do the above steps. Additionally, if you are an R beginner, you probably don’t know where to find all these R packages. This package has done all that work for you, so you can just do everything with one simple function call. </p>
-<p>Another good example is CFA. The most common (and probably the only) option to fit a CFA in R is using lavaan. Lavaan has its own unique set of syntax. It is very versatile and powerful, but you do need to spend some time learning it. It may not worth the time for people who just want to run a quick and simple CFA model. In my package, it’s very intuitive with <code><a href="../reference/cfa_summary.html">cfa_summary(data, x1:x3)</a></code>, and you get the model summary, the fit measures, and a nice-looking path diagram. The same logic also applies to HLM since <code>lme4</code> / <code>nlme</code> also has its own set of syntax that you need to learn. </p>
-<p>Moreover, I also made fitting the model even simpler by using the <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select</a></code> syntax. In short, traditionally, if you want to fit a linear regression model, the syntax looks like this <code><a href="https://rdrr.io/r/stats/lm.html">lm(y ~ x1 + x2 + x3 + x4 + ... + xn, data)</a></code>. Now, the syntax is much shorter and more intuitive: <code><a href="../reference/lm_model.html">lm_model(y, x1:xn, data)</a></code>. You can even replace <code>x1:xn</code> with <code><a href="https://tidyselect.r-lib.org/reference/everything.html">everything()</a></code>. I also wrote this very short <a href="https://jasonmoy28.github.io/psycModel/articles/brief-introduction-to-select-syntax.html">article</a> that teaches people how to use the <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> syntax (it is not comprehensive, and it is not intended to be).</p>
+<p>Another good example is CFA. The most common (and probably the only) option to fit a CFA in R is using lavaan. Lavaan has its own unique set of syntax. It is very versatile and powerful, but you do need to spend some time learning it. It may not worth the time for people who just want to run a quick and simple CFA model. In my package, it’s very intuitive with <code>cfa_summary(data, x1:x3)</code>, and you get the model summary, the fit measures, and a nice-looking path diagram. The same logic also applies to HLM since <code>lme4</code> / <code>nlme</code> also has its own set of syntax that you need to learn. </p>
+<p>Moreover, I also made fitting the model even simpler by using the <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select</a></code> syntax. In short, traditionally, if you want to fit a linear regression model, the syntax looks like this <code>lm(y ~ x1 + x2 + x3 + x4 + ... + xn, data)</code>. Now, the syntax is much shorter and more intuitive: <code>lm_model(y, x1:xn, data)</code>. You can even replace <code>x1:xn</code> with <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>. I also wrote this very short <a href="https://jasonmoy28.github.io/psycModel/articles/brief-introduction-to-select-syntax.html">article</a> that teaches people how to use the <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> syntax (it is not comprehensive, and it is not intended to be).</p>
 <p>Finally, I made the output in R much more beautiful and easy to read. The default output from R, to be frank, look ugly. I spent a lot of time making sure it looks good in this package (see below for examples). I am sure that you will see how big the improvement is. </p>
 </div>
-<div id="regression-models" class="section level1">
-<h1 class="hasAnchor">
-<a href="#regression-models" class="anchor"></a>Regression Models</h1>
-<div id="integrated-summary-for-linear-regression" class="section level2">
-<h2 class="hasAnchor">
-<a href="#integrated-summary-for-linear-regression" class="anchor"></a>Integrated Summary for Linear Regression</h2>
+<div class="section level2">
+<h2 id="regression-models">Regression Models<a class="anchor" aria-label="anchor" href="#regression-models"></a>
+</h2>
+<div class="section level3">
+<h3 id="integrated-summary-for-linear-regression">Integrated Summary for Linear Regression<a class="anchor" aria-label="anchor" href="#integrated-summary-for-linear-regression"></a>
+</h3>
 <p><code>integrated_model_summary</code> is the integrated function for linear regression and generalized linear regression. It will first fit the model using <code>lm_model</code> or <code>glm_model</code>, then it will pass the fitted model object to <code>model_summary</code> which produces model estimates and assumption checks. If interaction terms are included, they will be passed to the relevant interaction_plot function for plotting (the package currently does not support generalized linear regression interaction plotting).</p>
 <p>Additionally, you can request <code>assumption_plot</code> and <code>simple_slope</code> (default is <code>FALSE</code>). By requesting <code>assumption_plot</code>, it produces a panel of graphs that allow you to visually inspect the model assumption (in addition to testing it statistically). <code>simple_slope</code> is another powerful way to probe further into the interaction. It shows you the slope estimate at the mean and +1/-1 SD of the mean of the moderator. For example, you hypothesized that social-economic status (SES) moderates the effect of teacher experience on education quality. Then, simple_slope shows you the slope estimate of teacher experience on education quality at +1/-1 SD and the mean level of SES. Additionally, it produces a Johnson-Newman plot that shows you at what level of the moderator that the slope_estimate is predicted to be insignificant.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/integrated_model_summary.html">integrated_model_summary</a></span><span class="op">(</span>
    data <span class="op">=</span> <span class="va">iris</span>,
    response_variable <span class="op">=</span> <span class="va">Sepal.Length</span>,
-   predictor_variable <span class="op">=</span> <span class="fu">tidyselect</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>,
-   two_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">Sepal.Width</span>, <span class="va">Petal.Width</span><span class="op">)</span>, 
+   predictor_variable <span class="op">=</span> <span class="fu">tidyselect</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,
+   two_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Sepal.Width</span>, <span class="va">Petal.Width</span><span class="op">)</span>, 
    model_summary <span class="op">=</span> <span class="cn">TRUE</span>, 
    interaction_plot <span class="op">=</span> <span class="cn">TRUE</span>, 
    assumption_plot <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -179,7 +175,7 @@ Predictors = Sepal.Width, Petal.Length, Petal.Width, Species
 ───────────────────────────────────────────────────
 
 <span style="text-decoration: underline;">Model Assumption Check</span>
-OK: Residuals appear to be independent and not autocorrelated (p = 0.992).
+OK: Residuals appear to be independent and not autocorrelated (p = 0.916).
 OK: residuals appear as normally distributed (p = 0.892).
 <span style="color: #0000BB;">Unable to check autocorrelation. Try changing na.action to na.omit.</span>
 Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.047).
@@ -208,18 +204,18 @@ Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.047).
 </code></pre>
 <p><img src="quick-introduction_files/figure-html/unnamed-chunk-2-2.png" width="700" height="400"><img src="quick-introduction_files/figure-html/unnamed-chunk-2-3.png" width="700" height="400"></p>
 </div>
-<div id="integrated-summary-for-multilevel-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#integrated-summary-for-multilevel-model" class="anchor"></a>Integrated summary for Multilevel Model</h2>
+<div class="section level3">
+<h3 id="integrated-summary-for-multilevel-model">Integrated summary for Multilevel Model<a class="anchor" aria-label="anchor" href="#integrated-summary-for-multilevel-model"></a>
+</h3>
 <p>This is the multilevel-variation of <code>integrated_model_summary</code>. It works exactly the same way as <code>integrated_model_summary</code> except you need to specify the non_random_effect_factors (i.e., level-2 factors) and the random_effect_factors (i.e., the level-1 factors) instead of <code>predictor_variable</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/integrated_multilevel_model_summary.html">integrated_multilevel_model_summary</a></span><span class="op">(</span>
     data <span class="op">=</span> <span class="va">popular</span>,
     response_variable <span class="op">=</span> <span class="va">popular</span>,
     random_effect_factors <span class="op">=</span> <span class="va">extrav</span>,
-    non_random_effect_factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">texp</span><span class="op">)</span>,
-    three_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">extrav</span>, <span class="va">sex</span>, <span class="va">texp</span><span class="op">)</span>,
-   graph_label_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"popular"</span>, <span class="st">"extraversion"</span>, <span class="st">"sex"</span>, <span class="st">"teacher experience"</span><span class="op">)</span>, <span class="co"># change interaction plot label</span>
+    non_random_effect_factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">texp</span><span class="op">)</span>,
+    three_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">extrav</span>, <span class="va">sex</span>, <span class="va">texp</span><span class="op">)</span>,
+   graph_label_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"popular"</span>, <span class="st">"extraversion"</span>, <span class="st">"sex"</span>, <span class="st">"teacher experience"</span><span class="op">)</span>, <span class="co"># change interaction plot label</span>
    id <span class="op">=</span> <span class="va">class</span>,
    model_summary <span class="op">=</span> <span class="cn">TRUE</span>, 
    interaction_plot <span class="op">=</span> <span class="cn">TRUE</span>, 
@@ -227,8 +223,7 @@ Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.047).
    simple_slope <span class="op">=</span> <span class="cn">TRUE</span>,
    plot_color <span class="op">=</span> <span class="cn">TRUE</span>
  <span class="op">)</span></code></pre></div>
-<pre class="fansi fansi-output"><code>[1] "psycModel is based on the package parameters. The parameters pacakge v0.14.0 has some problem. We are waiting for them to fix. This package will update again once parameters is updated. Should not be a long time"
-
+<pre class="fansi fansi-output"><code>
  
 <span style="text-decoration: underline;">Model Summary</span>
 Model Type = Linear Mixed Effect Model (fitted using lme4 or lmerTest)
@@ -236,11 +231,22 @@ Outcome = popular
 Predictors = extrav, sex, texp, extrav:sex, extrav:texp, sex:texp, extrav:sex:texp
 
 <span style="text-decoration: underline;">Model Estimates</span>
-───────────────────────────────────────────────────────
-                                                Warning
-───────────────────────────────────────────────────────
-  Warning: Waiting for the parameters pacakge to update
-───────────────────────────────────────────────────────
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+                      Parameter  Effects  Coefficient       t    df     SE          p     Group            95% CI
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+                    (Intercept)    fixed       -0.935  -2.839  1988  0.329  0.005 **             [-1.581, -0.289]
+                         extrav    fixed        0.753  14.345  1988  0.052  0.000 ***            [ 0.650,  0.856]
+                            sex    fixed        0.654   1.726  1988  0.379  0.085                [-0.089,  1.397]
+                           texp    fixed        0.215  10.198  1988  0.021  0.000 ***            [ 0.174,  0.257]
+                     extrav:sex    fixed        0.103   1.610  1988  0.064  0.108                [-0.023,  0.229]
+                    extrav:texp    fixed       -0.023  -6.451  1988  0.004  0.000 ***            [-0.030, -0.016]
+                       sex:texp    fixed        0.024   1.017  1988  0.024  0.309                [-0.022,  0.071]
+                extrav:sex:texp    fixed       -0.004  -0.961  1988  0.004  0.337                [-0.012,  0.004]
+                 SD (Intercept)   random        0.721     NaN   NaN    NaN    NaN         class        [NaN, NaN]
+                    SD (extrav)   random        0.079     NaN   NaN    NaN    NaN         class        [NaN, NaN]
+  Cor (Intercept~extrav: class)   random       -0.679     NaN   NaN    NaN    NaN         class        [NaN, NaN]
+              SD (Observations)   random        0.743     NaN   NaN    NaN    NaN      Residual        [NaN, NaN]
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 <span style="text-decoration: underline;">Goodness of Fit</span>
 ──────────────────────────────────────────────────────────────────────
@@ -286,23 +292,23 @@ OK: Error variance appears to be homoscedastic (p = 0.758).
 </code></pre>
 <p><img src="quick-introduction_files/figure-html/unnamed-chunk-3-2.png" width="700" height="400"><img src="quick-introduction_files/figure-html/unnamed-chunk-3-3.png" width="700" height="400"></p>
 </div>
-<div id="model-comparison" class="section level2">
-<h2 class="hasAnchor">
-<a href="#model-comparison" class="anchor"></a>Model comparison</h2>
-<p>This can be used to compared model. All type of model comparison supported by <code><a href="https://easystats.github.io/performance/reference/compare_performance.html">performance::compare_performance()</a></code> are supported since this is just a wrapper for that function.</p>
+<div class="section level3">
+<h3 id="model-comparison">Model comparison<a class="anchor" aria-label="anchor" href="#model-comparison"></a>
+</h3>
+<p>This can be used to compared model. All type of model comparison supported by <code><a href="https://easystats.github.io/performance/reference/compare_performance.html" class="external-link">performance::compare_performance()</a></code> are supported since this is just a wrapper for that function.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"> <span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lm_model.html">lm_model</a></span><span class="op">(</span>
    data <span class="op">=</span> <span class="va">popular</span>,
    response_variable <span class="op">=</span> <span class="va">popular</span>,
-   predictor_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,
+   predictor_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,
    quite <span class="op">=</span> <span class="cn">TRUE</span>
  <span class="op">)</span>
 
  <span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lm_model.html">lm_model</a></span><span class="op">(</span>
    data <span class="op">=</span> <span class="va">popular</span>,
    response_variable <span class="op">=</span> <span class="va">popular</span>,
-   predictor_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,
-   two_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,
+   predictor_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,
+   two_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,
    quite <span class="op">=</span> <span class="cn">TRUE</span>
  <span class="op">)</span>
 
@@ -318,16 +324,16 @@ Model Type = Model Comparison
 </code></pre>
 </div>
 </div>
-<div id="structure-equation-modeling" class="section level1">
-<h1 class="hasAnchor">
-<a href="#structure-equation-modeling" class="anchor"></a>Structure Equation Modeling</h1>
-<div id="confirmatory-factor-analysis" class="section level2">
-<h2 class="hasAnchor">
-<a href="#confirmatory-factor-analysis" class="anchor"></a>Confirmatory Factor Analysis</h2>
-<p>CFA model is fitted using <code><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">lavaan::cfa()</a></code>. You can pass multiple factor (in the below example, x1, x2, x3 represent one factor, x4,x5,x6 represent another factor etc.). It will show you the fit measure, factor loading, and goodness of fit based on cut-off criteria (you should review literature for the cut-off criteria as the recommendations are subjected to changes). Additionally, it will show you a nice-looking path diagram.</p>
+<div class="section level2">
+<h2 id="structure-equation-modeling">Structure Equation Modeling<a class="anchor" aria-label="anchor" href="#structure-equation-modeling"></a>
+</h2>
+<div class="section level3">
+<h3 id="confirmatory-factor-analysis">Confirmatory Factor Analysis<a class="anchor" aria-label="anchor" href="#confirmatory-factor-analysis"></a>
+</h3>
+<p>CFA model is fitted using <code><a href="https://rdrr.io/pkg/lavaan/man/cfa.html" class="external-link">lavaan::cfa()</a></code>. You can pass multiple factor (in the below example, x1, x2, x3 represent one factor, x4,x5,x6 represent another factor etc.). It will show you the fit measure, factor loading, and goodness of fit based on cut-off criteria (you should review literature for the cut-off criteria as the recommendations are subjected to changes). Additionally, it will show you a nice-looking path diagram.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cfa_summary.html">cfa_summary</a></span><span class="op">(</span>
-   data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html">HolzingerSwineford1939</a></span>,
+   data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>,
    <span class="va">x1</span><span class="op">:</span><span class="va">x3</span>,
    <span class="va">x4</span><span class="op">:</span><span class="va">x6</span>,
    <span class="va">x7</span><span class="op">:</span><span class="va">x9</span>
@@ -404,13 +410,13 @@ Goodness of Fit:
 </code></pre>
 <p><img src="quick-introduction_files/figure-html/unnamed-chunk-5-1.png" width="700" height="400"></p>
 </div>
-<div id="exploratory-factor-analysis" class="section level2">
-<h2 class="hasAnchor">
-<a href="#exploratory-factor-analysis" class="anchor"></a>Exploratory Factor Analysis</h2>
-<p>EFA model is fitted using <code><a href="https://rdrr.io/pkg/psych/man/fa.html">psych::fa()</a></code>. It first find the optimal number of factor. Then, it will show you the factor loading, uniqueness, complexity of the latent factor (loading &lt; 0.4 are hided for better viewing experience). You can additionally request running a post-hoc CFA model based on the EFA model.</p>
+<div class="section level3">
+<h3 id="exploratory-factor-analysis">Exploratory Factor Analysis<a class="anchor" aria-label="anchor" href="#exploratory-factor-analysis"></a>
+</h3>
+<p>EFA model is fitted using <code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa()</a></code>. It first find the optimal number of factor. Then, it will show you the factor loading, uniqueness, complexity of the latent factor (loading &lt; 0.4 are hided for better viewing experience). You can additionally request running a post-hoc CFA model based on the EFA model.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/efa_summary.html">efa_summary</a></span><span class="op">(</span><span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html">HolzingerSwineford1939</a></span>, 
-            <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>, <span class="co"># x1, x2, x3 ... x9</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/efa_summary.html">efa_summary</a></span><span class="op">(</span><span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>, 
+            <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>, <span class="co"># x1, x2, x3 ... x9</span>
             post_hoc_cfa <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># run a post-hoc CFA </span></code></pre></div>
 <pre class="fansi fansi-output"><code>
  
@@ -504,16 +510,16 @@ Goodness of Fit:
 </code></pre>
 <p><img src="quick-introduction_files/figure-html/unnamed-chunk-6-2.png" width="700" height="400"></p>
 </div>
-<div id="measurement-invariance" class="section level2">
-<h2 class="hasAnchor">
-<a href="#measurement-invariance" class="anchor"></a>Measurement Invariance</h2>
-<p>Measurement invariance is fitted using <code><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">lavaan::cfa()</a></code>. It uses the multi-group confirmatory factor analysis approach. You can request metric or scalar invariance by specifying the <code>invariance_level</code> (mainly to save time. If you have a large model, it doesn’t make sense to fit a unnecessary scalar invariance model if you are only interested in metric invariance)</p>
+<div class="section level3">
+<h3 id="measurement-invariance">Measurement Invariance<a class="anchor" aria-label="anchor" href="#measurement-invariance"></a>
+</h3>
+<p>Measurement invariance is fitted using <code><a href="https://rdrr.io/pkg/lavaan/man/cfa.html" class="external-link">lavaan::cfa()</a></code>. It uses the multi-group confirmatory factor analysis approach. You can request metric or scalar invariance by specifying the <code>invariance_level</code> (mainly to save time. If you have a large model, it doesn’t make sense to fit a unnecessary scalar invariance model if you are only interested in metric invariance)</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"> <span class="fu"><a href="../reference/measurement_invariance.html">measurement_invariance</a></span><span class="op">(</span>
    <span class="va">x1</span><span class="op">:</span><span class="va">x3</span>,
    <span class="va">x4</span><span class="op">:</span><span class="va">x6</span>,
    <span class="va">x7</span><span class="op">:</span><span class="va">x9</span>,
-   data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html">HolzingerSwineford1939</a></span>,
+   data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>,
    group <span class="op">=</span> <span class="st">"school"</span>,
    invariance_level <span class="op">=</span> <span class="st">"scalar"</span> <span class="co"># you can change this to metric</span>
  <span class="op">)</span></code></pre></div>
@@ -524,8 +530,7 @@ Goodness of Fit:
  [1] "Computing for configural model"
 [1] "Computing for metric model"
 [1] "Computing for scalar model"
-
-
+ 
 <span style="text-decoration: underline;">Model Summary</span>
 Model Type = Measurement Invariance
 Comparsion Type = Configural-Metric-Scalar Comparsion
@@ -535,8 +540,7 @@ Model Formula =
   DV2 =~ x4 + x5 + x6
   DV3 =~ x7 + x8 + x9
  
-
-
+ 
 <span style="text-decoration: underline;">Fit Measure Summary</span>
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────
     Analysis Type       Χ²      DF          P     CFI   RMSEA   SRMR     TLI       AIC       BIC      BIC2
@@ -558,13 +562,13 @@ Goodness of Fit:
 <span style="color: #00BB00;">OK. Good measurement scalar-invariance based on ΔSRMR &lt; 0.015</span>
 </code></pre>
 </div>
-<div id="mediation-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#mediation-model" class="anchor"></a>Mediation Model</h2>
+<div class="section level3">
+<h3 id="mediation-model">Mediation Model<a class="anchor" aria-label="anchor" href="#mediation-model"></a>
+</h3>
 <p>Currently, the package only support simple mediation with covariate. You can try to fit a multi-group mediation by specifying the group argument. But, honestly, I don’t know that’s the correct approach to implement it. If you want more complicated mediation, I highly recommend using the <code>mediation</code> package. Eventually, I probably will switch to using that for this package.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mediation_summary.html">mediation_summary</a></span><span class="op">(</span>
-  data <span class="op">=</span> <span class="fu">lmerTest</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lmerTest/man/carrots.html">carrots</a></span>,
+  data <span class="op">=</span> <span class="fu">lmerTest</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lmerTest/man/carrots.html" class="external-link">carrots</a></span>,
   response_variable <span class="op">=</span> <span class="va">Preference</span>,
   mediator <span class="op">=</span> <span class="va">Sweetness</span>,
   predictor_variable <span class="op">=</span> <span class="va">Crisp</span>,
@@ -601,15 +605,15 @@ Model Type = Mediation Analysis (fitted using lavaan)
 </code></pre>
 </div>
 </div>
-<div id="other-model" class="section level1">
-<h1 class="hasAnchor">
-<a href="#other-model" class="anchor"></a>Other Model</h1>
-<div id="reliability-analysis" class="section level2">
-<h2 class="hasAnchor">
-<a href="#reliability-analysis" class="anchor"></a>Reliability Analysis</h2>
+<div class="section level2">
+<h2 id="other-model">Other Model<a class="anchor" aria-label="anchor" href="#other-model"></a>
+</h2>
+<div class="section level3">
+<h3 id="reliability-analysis">Reliability Analysis<a class="anchor" aria-label="anchor" href="#reliability-analysis"></a>
+</h3>
 <p>It will first determine whether your item is uni- or multidimensionality. If it is unidimensional, then it will compute the alpha and the single-factor CFA model. If it is multidimensional, then it will compute the alpha and the omega. It also provide descriptive statistics. Here is an example for unidimensional items:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/reliability_summary.html">reliability_summary</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html">HolzingerSwineford1939</a></span>, cols <span class="op">=</span> <span class="va">x1</span><span class="op">:</span><span class="va">x3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/reliability_summary.html">reliability_summary</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>, cols <span class="op">=</span> <span class="va">x1</span><span class="op">:</span><span class="va">x3</span><span class="op">)</span></code></pre></div>
 <pre class="fansi fansi-output"><code><span style="text-decoration: underline;">Model Summary</span>
 Model Type = Reliability Analysis
 Dimensionality = uni-dimensionality
@@ -652,7 +656,7 @@ CFA Model:
 </code></pre>
 <p>Here is an example for multidimensional items:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/reliability_summary.html">reliability_summary</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html">HolzingerSwineford1939</a></span>, cols <span class="op">=</span> <span class="va">x1</span><span class="op">:</span><span class="va">x9</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/reliability_summary.html">reliability_summary</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>, cols <span class="op">=</span> <span class="va">x1</span><span class="op">:</span><span class="va">x9</span><span class="op">)</span></code></pre></div>
 <img src="quick-introduction_files/figure-html/unnamed-chunk-10-1.png" width="700" height="400"><pre class="fansi fansi-output"><code><span style="text-decoration: underline;">Model Summary</span>
 Model Type = Reliability Analysis
 Dimensionality = multi-dimensionality
@@ -696,9 +700,9 @@ Dimensionality = multi-dimensionality
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 </code></pre>
 </div>
-<div id="correlation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#correlation" class="anchor"></a>Correlation</h2>
+<div class="section level3">
+<h3 id="correlation">Correlation<a class="anchor" aria-label="anchor" href="#correlation"></a>
+</h3>
 <p>There isn’t much to say about correlation except that you can request different type of correlation based on the data structure. In the backend, I use the <code>correlation</code> package for this.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cor_test.html">cor_test</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -717,9 +721,9 @@ Adjustment Method = holm
 ───────────────────────────────────────────────────────
 </code></pre>
 </div>
-<div id="descriptive-table" class="section level2">
-<h2 class="hasAnchor">
-<a href="#descriptive-table" class="anchor"></a>Descriptive Table</h2>
+<div class="section level3">
+<h3 id="descriptive-table">Descriptive Table<a class="anchor" aria-label="anchor" href="#descriptive-table"></a>
+</h3>
 <p>It put together a nice table of some descriptive statistics and the correlation. Nothing fancy.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/descriptive_table.html">descriptive_table</a></span><span class="op">(</span><span class="va">iris</span>, cols <span class="op">=</span> <span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span> <span class="co"># all numeric columns</span></code></pre></div>
@@ -737,9 +741,9 @@ Model Type = Descriptive Statistics
 ─────────────────────────────────────────────────────────────────────
 </code></pre>
 </div>
-<div id="knit-to-r-markdown" class="section level2">
-<h2 class="hasAnchor">
-<a href="#knit-to-r-markdown" class="anchor"></a>Knit to R Markdown</h2>
+<div class="section level3">
+<h3 id="knit-to-r-markdown">Knit to R Markdown<a class="anchor" aria-label="anchor" href="#knit-to-r-markdown"></a>
+</h3>
 <p>if you want to produce these beautiful output in R Markdown. Calls this function and see the most up-to-date advice.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/knit_to_Rmd.html">knit_to_Rmd</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -752,10 +756,10 @@ Note: Use html_to_pdf to convert it to PDF. See ?html_to_pdf for more info
 </code></pre>
 </div>
 </div>
-<div id="ending" class="section level1">
-<h1 class="hasAnchor">
-<a href="#ending" class="anchor"></a>Ending</h1>
-<p>This conclude my briefed discussion of this package. There are some more additionally functions (like <code>cfa_groupwise</code>) that probably have fewer use cases. You can check out what they do by enter <code><a href="../reference/cfa_groupwise.html">?cfa_groupwise</a></code>. Anyway, that’s it. I hope you enjoy the package, and please let me know if you have any feedback. If you like it, please considering giving a star on <a href="https://github.com/jasonmoy28/psycModel">GitHub</a>. Thank you.</p>
+<div class="section level2">
+<h2 id="ending">Ending<a class="anchor" aria-label="anchor" href="#ending"></a>
+</h2>
+<p>This conclude my briefed discussion of this package. There are some more additionally functions (like <code>cfa_groupwise</code>) that probably have fewer use cases. You can check out what they do by enter <code><a href="../reference/cfa_groupwise.html">?cfa_groupwise</a></code>. Anyway, that’s it. I hope you enjoy the package, and please let me know if you have any feedback. If you like it, please considering giving a star on <a href="https://github.com/jasonmoy28/psycModel" class="external-link">GitHub</a>. Thank you.</p>
 </div>
   </div>
 
@@ -770,11 +774,13 @@ Note: Use html_to_pdf to convert it to PDF. See ?html_to_pdf for more info
 
 
       <footer><div class="copyright">
-  <p>Developed by Jason Moy.</p>
+  <p></p>
+<p>Developed by Jason Moy.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -782,6 +788,8 @@ Note: Use html_to_pdf to convert it to PDF. See ?html_to_pdf for more info
 
   
 
+
+  
 
   </body>
 </html>

@@ -32,6 +32,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -44,18 +46,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psycModel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -80,7 +76,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/jasonmoy28/psycModel">
+  <a href="https://github.com/jasonmoy28/psycModel" class="external-link">
     <span class="fab fa-github fa-0.7x"></span>
      
     GitHub
@@ -111,19 +107,19 @@
     
 <p>Version Note: Up-to-date with v0.3.0</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jasonmoy28.github.io/psycModel/">psycModel</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></code></pre></div>
-<p>This article briefly introduces the usage of <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select</a></code>, and how it is applied to this package. In the first section, I will briefly describe <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select</a></code> syntax for R-beginners. If you are already familiar with <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select</a></code> syntax, then you can skip to the next section where I describe how to apply the syntax in this pacakge.</p>
-<div id="introduction-to-the-select-syntax" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction-to-the-select-syntax" class="anchor"></a>Introduction to the select syntax</h1>
-<p><code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select</a></code> (abbreviated as <code>select</code> hereafter) is an extremely power function for R. It allows you to subset columns with the a set of syntax that is also known as the <code>select</code> syntax / semantics in the R community. A side note here. With the new introduction of <code><a href="https://dplyr.tidyverse.org/reference/across.html">dplyr::across</a></code> function, the <code>select</code> syntax can be applied to <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter</a></code> where make these two already powerful function even more powerful. I will first introduce the usage of <code><a href="https://rdrr.io/r/base/Colon.html">:</a></code>, <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> and <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>. Then, I will discuss how to use <code>everything</code>, <code>starts_with</code>, <code>end_with</code>, <code>contains</code>, and <code>where</code>. This is not an exhaustive list of the <code>select</code> syntax, but there are the most relevant one. If you want to learn more, I encourage you to check the vignette of <code>dplyr</code> or just google it. There are tons of article that discuss this in detail.</p>
-<div id="basic-select-syntax" class="section level2">
-<h2 class="hasAnchor">
-<a href="#basic-select-syntax" class="anchor"></a>Basic select syntax</h2>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jasonmoy28.github.io/psycModel/">psycModel</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></code></pre></div>
+<p>This article briefly introduces the usage of <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select</a></code>, and how it is applied to this package. In the first section, I will briefly describe <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select</a></code> syntax for R-beginners. If you are already familiar with <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select</a></code> syntax, then you can skip to the next section where I describe how to apply the syntax in this pacakge.</p>
+<div class="section level2">
+<h2 id="introduction-to-the-select-syntax">Introduction to the select syntax<a class="anchor" aria-label="anchor" href="#introduction-to-the-select-syntax"></a>
+</h2>
+<p><code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select</a></code> (abbreviated as <code>select</code> hereafter) is an extremely power function for R. It allows you to subset columns with the a set of syntax that is also known as the <code>select</code> syntax / semantics in the R community. A side note here. With the new introduction of <code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">dplyr::across</a></code> function, the <code>select</code> syntax can be applied to <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">dplyr::mutate</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter</a></code> where make these two already powerful function even more powerful. I will first introduce the usage of <code>:</code>, <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> and <code>-</code>. Then, I will discuss how to use <code>everything</code>, <code>starts_with</code>, <code>end_with</code>, <code>contains</code>, and <code>where</code>. This is not an exhaustive list of the <code>select</code> syntax, but there are the most relevant one. If you want to learn more, I encourage you to check the vignette of <code>dplyr</code> or just google it. There are tons of article that discuss this in detail.</p>
+<div class="section level3">
+<h3 id="basic-select-syntax">Basic select syntax<a class="anchor" aria-label="anchor" href="#basic-select-syntax"></a>
+</h3>
 <p>I am going to use the <code>iris</code> dataset for the demonstration. Let’s take a quick peek of the dataset.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># head() show the first 5 rows of the data frame </span></code></pre></div>
+<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># head() show the first 5 rows of the data frame </span></code></pre></div>
 <pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 1          5.1         3.5          1.4         0.2  setosa
 2          4.9         3.0          1.4         0.2  setosa
@@ -131,109 +127,109 @@
 4          4.6         3.1          1.5         0.2  setosa
 5          5.0         3.6          1.4         0.2  setosa
 6          5.4         3.9          1.7         0.4  setosa</code></pre>
-<p>If I want to select the first 3 columns, you can use <code><a href="https://rdrr.io/r/base/Colon.html">:</a></code> to do that</p>
+<p>If I want to select the first 3 columns, you can use <code>:</code> to do that</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>  Sepal.Length Sepal.Width Petal.Length
 1          5.1         3.5          1.4</code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">:</span><span class="va">Petal.Length</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">:</span><span class="va">Petal.Length</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>  Sepal.Length Sepal.Width Petal.Length
 1          5.1         3.5          1.4</code></pre>
-<p>Next, if you want to combine selection then you can use <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>. For example, I want the 1st, 3rd and 4th columns. Then, you can do it like this</p>
+<p>Next, if you want to combine selection then you can use <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>. For example, I want the 1st, 3rd and 4th columns. Then, you can do it like this</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>  Sepal.Length Petal.Length Petal.Width
 1          5.1          1.4         0.2</code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Petal.Length</span><span class="op">:</span><span class="va">Petal.Width</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Petal.Length</span><span class="op">:</span><span class="va">Petal.Width</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>  Sepal.Length Petal.Length Petal.Width
 1          5.1          1.4         0.2</code></pre>
-<p>Finally, if you want to delete a column from selection, then you can use <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>. For example, you want to select all columns except the 3rd column, then you can do it like this</p>
+<p>Finally, if you want to delete a column from selection, then you can use <code>-</code>. For example, you want to select all columns except the 3rd column, then you can do it like this</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">-</span><span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">-</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>  Sepal.Length Sepal.Width Petal.Width Species
 1          5.1         3.5         0.2  setosa</code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">:</span><span class="va">Species</span>, <span class="op">-</span><span class="va">Petal.Length</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">:</span><span class="va">Species</span>, <span class="op">-</span><span class="va">Petal.Length</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>  Sepal.Length Sepal.Width Petal.Width Species
 1          5.1         3.5         0.2  setosa</code></pre>
 </div>
-<div id="tidyselect-helpers" class="section level2">
-<h2 class="hasAnchor">
-<a href="#tidyselect-helpers" class="anchor"></a>Tidyselect helpers</h2>
-<p>Ok. Now you understand the basic usage. Let’s get to something a little bit more advanced. First, let’s talk about my favorite which is <code>everything</code>. As the name entails, it select all the variables in the data frame. It is usually used in combination with <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> if you are using in <code>select</code> function. However, it is very powerful in other use cases like the one in this package. For example, you want to fit a linear regression with all the variables, then you can use <code>everything</code> (a more detailed discussion is presented in the next section).</p>
+<div class="section level3">
+<h3 id="tidyselect-helpers">Tidyselect helpers<a class="anchor" aria-label="anchor" href="#tidyselect-helpers"></a>
+</h3>
+<p>Ok. Now you understand the basic usage. Let’s get to something a little bit more advanced. First, let’s talk about my favorite which is <code>everything</code>. As the name entails, it select all the variables in the data frame. It is usually used in combination with <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> if you are using in <code>select</code> function. However, it is very powerful in other use cases like the one in this package. For example, you want to fit a linear regression with all the variables, then you can use <code>everything</code> (a more detailed discussion is presented in the next section).</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># select all columns</span>
-<span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 1          5.1         3.5          1.4         0.2  setosa</code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># select everything except Sepal.Width</span>
-<span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="va">Sepal.Width</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="va">Sepal.Width</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>  Sepal.Length Petal.Length Petal.Width Species
 1          5.1          1.4         0.2  setosa</code></pre>
 <p>Next, we can talk about <code>starts_with</code>. <code>starts_with</code> select all columns that is starts with a certain specified string. For example, we want to select all columns start with Sepal, then we can do something like this</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">'Sepal'</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">'Sepal'</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>  Sepal.Length Sepal.Width
 1          5.1         3.5</code></pre>
 <p>Similar to <code>starts_with</code>, <code>ends_with</code> select all columns that is ends with a certain specified string. For example, we want to select all columns ends with Width.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">'Width'</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">'Width'</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>  Sepal.Width Petal.Width
 1         3.5         0.2</code></pre>
 <p>Next, we are going talk about <code>contains</code>. As the name entails, it select all columns that contains a specified string.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">'Sepal'</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="co"># same as starts_with</span></code></pre></div>
+<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">'Sepal'</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="co"># same as starts_with</span></code></pre></div>
 <pre><code>  Sepal.Length Sepal.Width
 1          5.1         3.5</code></pre>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">'Width'</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="co"># same as ends_with</span></code></pre></div>
+<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">'Width'</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="co"># same as ends_with</span></code></pre></div>
 <pre><code>  Sepal.Width Petal.Width
 1         3.5         0.2</code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">'.'</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="co"># contains "." will be selected</span></code></pre></div>
+<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">'.'</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="co"># contains "." will be selected</span></code></pre></div>
 <pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width
 1          5.1         3.5          1.4         0.2</code></pre>
-<p>Finally, we are going to conclude this section with <code>where</code>. <code>where</code> is not used alone. It is usually pair with a function return <code>TRUE</code> or <code>FALSE</code>. I think the most common use case for this package is paired with <code>is.numeric</code>. <code>where(is.numeric)</code> will select all numeric variables. A little tip, you need to pass <code>is.numeric</code> instead of <code><a href="https://rdrr.io/r/base/numeric.html">is.numeric()</a></code>. I will not go into the detail of why because this is out of the scope of this article. It required a little bit more advanced understanding of how function work in R. If you have that, you wouldn’t reading this article anyway.</p>
+<p>Finally, we are going to conclude this section with <code>where</code>. <code>where</code> is not used alone. It is usually pair with a function return <code>TRUE</code> or <code>FALSE</code>. I think the most common use case for this package is paired with <code>is.numeric</code>. <code>where(is.numeric)</code> will select all numeric variables. A little tip, you need to pass <code>is.numeric</code> instead of <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric()</a></code>. I will not go into the detail of why because this is out of the scope of this article. It required a little bit more advanced understanding of how function work in R. If you have that, you wouldn’t reading this article anyway.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> </code></pre></div>
+<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> </code></pre></div>
 <pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width
 1          5.1         3.5          1.4         0.2</code></pre>
 </div>
 </div>
-<div id="applying-select-syntax-in-this-package" class="section level1">
-<h1 class="hasAnchor">
-<a href="#applying-select-syntax-in-this-package" class="anchor"></a>Applying select syntax in this package</h1>
+<div class="section level2">
+<h2 id="applying-select-syntax-in-this-package">Applying select syntax in this package<a class="anchor" aria-label="anchor" href="#applying-select-syntax-in-this-package"></a>
+</h2>
 <p>First, I will demonstrate the usage of linear regression. I will first create a data frame. You don’t need to know anything about how this data frame is created. Just know that it has 1 DV / outcome / response variable (i.e, y) and 5 IV / predictor variable (i.e, x1 to x5)</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-<span class="va">test_data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">100</span>,mean <span class="op">=</span> <span class="fl">2</span>,sd <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>, 
-           x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">100</span>,mean <span class="op">=</span> <span class="fl">1.5</span>, sd <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,
-           x2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">100</span>,mean <span class="op">=</span> <span class="fl">1.7</span>, sd <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, 
-           x3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">100</span>,mean <span class="op">=</span> <span class="fl">1.5</span>, sd <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,
-           x4 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">100</span>,mean <span class="op">=</span> <span class="fl">2</span>, sd <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,
-           x5 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">100</span>,mean <span class="op">=</span> <span class="fl">1.5</span>, sd <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+<span class="va">test_data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">100</span>,mean <span class="op">=</span> <span class="fl">2</span>,sd <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>, 
+           x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">100</span>,mean <span class="op">=</span> <span class="fl">1.5</span>, sd <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,
+           x2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">100</span>,mean <span class="op">=</span> <span class="fl">1.7</span>, sd <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, 
+           x3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">100</span>,mean <span class="op">=</span> <span class="fl">1.5</span>, sd <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,
+           x4 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">100</span>,mean <span class="op">=</span> <span class="fl">2</span>, sd <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,
+           x5 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">100</span>,mean <span class="op">=</span> <span class="fl">1.5</span>, sd <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Ok, let’s fit that linear regression now.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Without this package: </span>
-<span class="va">model1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">test_data</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">+</span> <span class="va">x2</span> <span class="op">+</span> <span class="va">x3</span> <span class="op">+</span> <span class="va">x4</span> <span class="op">+</span> <span class="va">x5</span><span class="op">)</span>
+<span class="va">model1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">test_data</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">+</span> <span class="va">x2</span> <span class="op">+</span> <span class="va">x3</span> <span class="op">+</span> <span class="va">x4</span> <span class="op">+</span> <span class="va">x5</span><span class="op">)</span>
 
 <span class="co"># With this package: </span>
 <span class="va">model2</span> <span class="op">=</span> <span class="fu"><a href="../reference/lm_model.html">lm_model</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">test_data</span>,
          response_variable <span class="op">=</span> <span class="va">y</span>, 
-         predictor_variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+         predictor_variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,<span class="op">-</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>Fitting Model with lm:
  Formula = y ~ x1 + x2 + x3 + x4 + x5</code></pre>
-<p>This is already a step up from the basic <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function. We can still make is even simpler by just passing <code>everyhing()</code>. The function is designed to remove the response variable from predictor variables (if selected) automatically. The following <code>model3</code> is the same as <code>model2</code></p>
+<p>This is already a step up from the basic <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> function. We can still make is even simpler by just passing <code>everyhing()</code>. The function is designed to remove the response variable from predictor variables (if selected) automatically. The following <code>model3</code> is the same as <code>model2</code></p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model3</span> <span class="op">=</span> <span class="fu"><a href="../reference/lm_model.html">lm_model</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">test_data</span>,
          response_variable <span class="op">=</span> <span class="va">y</span>, 
-         predictor_variable <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+         predictor_variable <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>Fitting Model with lm:
  Formula = y ~ x1 + x2 + x3 + x4 + x5</code></pre>
-<p>The same logic is applied to all other functions in this package. Arguments that support <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select</a></code> syntax will ends with “support dplyr::select syntax” in the description of the argument.That’s it for this brief introduction. If you want to learn more about this package, I encourage you to check out this <a href="https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html">article</a> or use <code><a href="../articles/quick-introduction.html">vignette('quick-introduction')</a></code> if you are in R Studio.</p>
+<p>The same logic is applied to all other functions in this package. Arguments that support <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select</a></code> syntax will ends with “support dplyr::select syntax” in the description of the argument.That’s it for this brief introduction. If you want to learn more about this package, I encourage you to check out this <a href="https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html">article</a> or use <code><a href="../articles/quick-introduction.html">vignette('quick-introduction')</a></code> if you are in R Studio.</p>
 </div>
   </div>
 
@@ -248,11 +244,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Jason Moy.</p>
+  <p></p>
+<p>Developed by Jason Moy.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -260,6 +258,8 @@
 
   
 
+
+  
 
   </body>
 </html>
