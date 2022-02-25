@@ -18,6 +18,6 @@ data_check <- function(data) {
     }
     return(data)
   } else {
-    return("All columns must be dummy coded or factored. Consider using as.factor() or as.numeric()")
+    stop("All columns must be dummy coded or factored. Consider using as.factor() or as.numeric()")
   }
 }
