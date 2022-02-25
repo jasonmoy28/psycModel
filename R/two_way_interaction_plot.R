@@ -8,7 +8,7 @@
 #' @param model object from `lm`, `nlme`, `lme4`, or `lmerTest`
 #' @param data data frame. If the function is unable to extract data frame from the object, then you may need to pass it directly
 #' @param graph_label_name vector of length 3 or function. Vector should be passed in the form of `c(response_var, predict_var1, predict_var2)`. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)
-#' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
+#' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = factor(c(upper_bound1, lower_bound1)),var_name2 = c(upper_bound2, lower_bound2))`. If it is a factor, you must add `factor()` around `c(upper_bound1,lower_bound1)`
 #' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
 #' @param plot_color default if `FALSE`. Set to `TRUE` if you want to plot in color
 #'
@@ -57,7 +57,7 @@ two_way_interaction_plot <- function(model,
                                      cateogrical_var = NULL,
                                      y_lim = NULL,
                                      plot_color = FALSE) {
-
+  
   # warning functions of more than two interaction
   interaction_plot_check <- function(interaction_term) {
     if (length(interaction_term) > 1) {
@@ -66,7 +66,7 @@ two_way_interaction_plot <- function(model,
     }
     return(interaction_term)
   }
-
+  
   model_data <- NULL
   if (any(class(model) %in% c("lmerMod", "lmerModLmerTest", "lm", "lme"))) {
     model_data <- insight::get_data(model)
@@ -91,16 +91,16 @@ two_way_interaction_plot <- function(model,
     interaction_term <- interaction_plot_check(interaction_term)
     warning("Only models from lm, nlme, lme4, and lmerTest are tested")
   }
-
+  
   # get variable from model
   if (length(interaction_term) == 0) {
     stop("No two-way interaction term is found in the model")
   }
-
+  
   predict_var1 <- gsub(pattern = ":.+", "", x = interaction_term)
   predict_var2 <- gsub(pattern = ".+:", "", x = interaction_term)
-
-
+  
+  
   if (any(class(model_data) == "data.frame")) {
     data <- model_data
   } else {
@@ -111,8 +111,14 @@ two_way_interaction_plot <- function(model,
       stop("Data must be dataframe-like object")
     }
   }
-
-  data <- data_check(data)
+  
+  if (class(data_check(data)) == 'character') {
+    return('Non-continuous variable is not supported')
+  } else {
+    data = data_check(data)
+  }
+  
+  
   mean_df <- dplyr::summarise_all(data, mean, na.rm = TRUE)
   upper_df <- dplyr::summarise_all(data, .funs = function(.) {
     mean(., na.rm = TRUE) + 1 * stats::sd(., na.rm = TRUE)
@@ -120,7 +126,7 @@ two_way_interaction_plot <- function(model,
   lower_df <- dplyr::summarise_all(data, .funs = function(.) {
     mean(., na.rm = TRUE) - 1 * stats::sd(., na.rm = TRUE)
   })
-
+  
   # Specify the categorical variable upper and lower bound directly
   if (!is.null(cateogrical_var)) {
     for (name in names(cateogrical_var)) {
@@ -129,24 +135,23 @@ two_way_interaction_plot <- function(model,
     }
   }
 
-
   # Update values in the new_data_df to the values in predicted_df & get the predicted value
   upper_upper_df <- mean_df
   upper_upper_df[predict_var1] <- upper_df[predict_var1]
   upper_upper_df[predict_var2] <- upper_df[predict_var2]
-
+  
   upper_lower_df <- mean_df
   upper_lower_df[predict_var1] <- upper_df[predict_var1]
   upper_lower_df[predict_var2] <- lower_df[predict_var2]
-
+  
   lower_upper_df <- mean_df
   lower_upper_df[predict_var1] <- lower_df[predict_var1]
   lower_upper_df[predict_var2] <- upper_df[predict_var2]
-
+  
   lower_lower_df <- mean_df
   lower_lower_df[predict_var1] <- lower_df[predict_var1]
   lower_lower_df[predict_var2] <- lower_df[predict_var2]
-
+  
   if (class(model) == "lme") {
     upper_upper_predicted_value <- stats::predict(model, newdata = upper_upper_df, level = 0)
     upper_lower_predicted_value <- stats::predict(model, newdata = upper_lower_df, level = 0)
@@ -163,13 +168,25 @@ two_way_interaction_plot <- function(model,
     lower_upper_predicted_value <- stats::predict(model, newdata = lower_upper_df)
     lower_lower_predicted_value <- stats::predict(model, newdata = lower_lower_df)
   }
-
+  
   final_df <- data.frame(
     value = c(upper_upper_predicted_value, upper_lower_predicted_value, lower_upper_predicted_value, lower_lower_predicted_value),
     var1_category = factor(c("High", "High", "Low", "Low"), levels = c("Low", "High")),
-    var2_category = c("High", "Low", "High", "Low")
+    var2_category = factor(c("High", "Low", "High", "Low"), levels = c('Low','High'))
   )
 
+  if (!is.null(cateogrical_var)) {
+    for (name in names(cateogrical_var)) {
+      if(name == predict_var1){
+        final_df = final_df %>% dplyr::mutate(var1_category = dplyr::if_else(var1_category == 'High',as.character(cateogrical_var[[name]][1]),as.character(cateogrical_var[[name]][2])))
+      }
+      if(name == predict_var2){
+        final_df = final_df %>% dplyr::mutate(var2_category = dplyr::if_else(var2_category == 'High',as.character(cateogrical_var[[name]][1]),as.character(cateogrical_var[[name]][2])))
+      }
+    }
+  }
+  
+  
   # Get the correct label for the plot
   if (!is.null(graph_label_name)) {
     # If a vector of string is passed as argument, slice the vector
@@ -194,12 +211,12 @@ two_way_interaction_plot <- function(model,
     predict_var1_plot_label <- predict_var1
     predict_var2_plot_label <- predict_var2
   }
-
-
+  
+  
   if (is.null(y_lim)) {
     y_lim <- c(floor(min(final_df$value)) - 0.5, ceiling(max(final_df$value)) + 0.5)
   }
-
+  
   if (plot_color) {
     plot <-
       ggplot2::ggplot(final_df, ggplot2::aes(y = .data$value, x = .data$var1_category, color = .data$var2_category)) +
@@ -233,6 +250,6 @@ two_way_interaction_plot <- function(model,
       ) +
       ggplot2::ylim(y_lim[1], y_lim[2])
   }
-
+  
   return(plot)
 }
