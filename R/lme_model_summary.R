@@ -1,4 +1,4 @@
-#' Integrated Function for Mixed Effect Model
+#' Model Summary for Mixed Effect Model
 #'
 #' `r lifecycle::badge("stable")` \cr
 #' It will first compute the mixed effect model. It will use either the `nlme::lme` or the `lmerTest::lmer` for linear mixed effect model. It will use `lme4::glmer` for generalized linear mixed effect model.
@@ -35,7 +35,7 @@
 #' @export
 #'
 #' @examples
-#' fit <- integrated_multilevel_model_summary(
+#' fit <- lme_multilevel_model_summary(
 #'   data = popular,
 #'   response_variable = popular,
 #'   random_effect_factors = c(extrav),
@@ -45,7 +45,7 @@
 #'   id = class
 #' )
 #' \donttest{
-#' fit <- integrated_multilevel_model_summary(
+#' fit <- lme_multilevel_model_summary(
 #'   data = popular,
 #'   response_variable = popular,
 #'   random_effect_factors = c(extrav, sex),
@@ -59,7 +59,7 @@
 #' )
 #' }
 #'
-integrated_multilevel_model_summary <- function(data,
+lme_multilevel_model_summary <- function(data,
                                                 model = NULL,
                                                 response_variable = NULL,
                                                 random_effect_factors = NULL,

@@ -1,4 +1,4 @@
-#' Integrated Function for Linear Regression
+#' Model Summary for Linear Regression
 #'
 #' `r lifecycle::badge("stable")` \cr
 #' It will first compute the linear regression. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function.
@@ -27,14 +27,14 @@
 #' @export
 #'
 #' @examples
-#' fit <- integrated_model_summary(
+#' fit <- lm_model_summary(
 #'   data = iris,
 #'   response_variable = "Sepal.Length",
 #'   predictor_variable = tidyselect::everything(),
 #'   two_way_interaction_factor = c(Sepal.Width, Species)
 #' )
 #' \donttest{
-#' fit <- integrated_model_summary(
+#' fit <- lm_model_summary(
 #'   data = iris,
 #'   response_variable = "Sepal.Length",
 #'   predictor_variable = tidyselect::everything(),
@@ -44,7 +44,7 @@
 #'   plot_color = TRUE # you can also request the plot in color
 #' )
 #' }
-integrated_model_summary <- function(data,
+lm_model_summary <- function(data,
                                      response_variable = NULL,
                                      predictor_variable = NULL,
                                      two_way_interaction_factor = NULL,
