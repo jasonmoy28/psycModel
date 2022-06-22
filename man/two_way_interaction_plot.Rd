@@ -10,7 +10,9 @@ two_way_interaction_plot(
   graph_label_name = NULL,
   cateogrical_var = NULL,
   y_lim = NULL,
-  plot_color = FALSE
+  plot_color = FALSE,
+  polynomial = FALSE,
+  predictor = NULL
 )
 }
 \arguments{
@@ -30,9 +32,9 @@ two_way_interaction_plot(
 an object of class \code{ggplot}
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \cr
+This function is deprecated. Please see \code{psycPlot::two_way_interaction_plot()} instead
 The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below.
-I recommend using concurrently with \code{lm_model} or \code{lme_model}.
 }
 \details{
 It appears that ``predict` cannot handle categorical factors. All variables are converted to numeric before plotting.

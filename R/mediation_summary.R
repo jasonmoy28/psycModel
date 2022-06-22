@@ -1,8 +1,7 @@
 #' Mediation Analysis
 #'
 #' `r lifecycle::badge("experimental")` \cr
-#' It currently only support simple mediation analysis.
-#' In the backend, it called the `lavaan::sem()` model. I am trying to implement multilevel mediation in `lavaan`.
+#' It currently only support simple mediation analysis using the path analysis approach with the `lavaan` package. I am trying to implement multilevel mediation in `lavaan`.
 #' In the future, I will try supporting moderated mediation (through `lavaan` or `mediation`) and mediation with latent variable (through `lavaan`).
 #'
 #' @param data data frame
@@ -54,16 +53,15 @@ mediation_summary <- function(data,
   group <- data %>%
     dplyr::select(!!enquo(group)) %>%
     names()
-
-  med_reg_formula <- paste(c(paste0(mediator, " ~ ", "a*", predictor_variable), control_variable), collapse = " + ")
+  
+  med_reg_formula <- paste0(mediator, " ~ ", "a*", predictor_variable)
   response_reg_formula <- paste(c(paste0(response_variable, " ~ ", "b*", mediator, " + ", "c*", predictor_variable), control_variable), collapse = " + ")
   lavaan_effect <- "direct := c\nindirect := a*b\ntotal := c + (a*b)"
-
-
   mediation_model <- paste(med_reg_formula, response_reg_formula, lavaan_effect, sep = "\n")
+  
   mediation_result <- lavaan::sem(model = mediation_model, data = data, group = group)
   mediation_param <- parameters::model_parameters(mediation_result, standardize = standardize)
-
+  
   # Cleaning up the output from parameters::model_parameters
   mediation_output <- mediation_param %>%
     tibble::as_tibble() %>%
@@ -72,22 +70,22 @@ mediation_summary <- function(data,
     dplyr::rename(ci.lower = .data$CI_low) %>%
     dplyr::rename(ci.upper = .data$CI_high) %>%
     dplyr::select(-c("Label"))
-
+  
   if (standardize == TRUE) {
     mediation_output <- mediation_output %>% dplyr::rename(Est.Std = .data$Est)
   }
-
+  
   mediation_effect_output <- mediation_output %>%
     dplyr::filter(.data$Component == "Defined") %>%
     dplyr::rename(`Effect Type` = .data$To) %>%
     dplyr::select(-c("From", "Component", "Operator"))
-
+  
   mediation_reg_output <- mediation_output %>%
     dplyr::filter(.data$Component == "Regression") %>%
     dplyr::rename("Response" = .data$To) %>%
     dplyr::rename("Predict" = .data$From) %>%
     dplyr::select(-"Component")
-
+  
   ########################################## Output ###############################################
   if (quite == FALSE) {
     if (streamline == FALSE) {
@@ -101,7 +99,7 @@ mediation_summary <- function(data,
     super_print("underline|Regression Summary")
     print_table(mediation_reg_output, digits = digits)
   }
-
+  
   if (return_result == TRUE) {
     return(mediation_result)
   }
