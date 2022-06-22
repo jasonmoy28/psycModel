@@ -1,5 +1,5 @@
-testthat::test_that("integrated_multilevel_model_summary: lme4 model", {
-  expect_warning(summary <- integrated_multilevel_model_summary(
+testthat::test_that("lme_multilevel_model_summary: lme4 model", {
+  expect_warning(summary <- lme_multilevel_model_summary(
     data = popular,
     response_variable = popular,
     random_effect_factors = extrav,
@@ -28,8 +28,8 @@ testthat::test_that("integrated_multilevel_model_summary: lme4 model", {
   expect_false(is.null(summary$simple_slope$jn_plot))
 })
 
-testthat::test_that("integrated_multilevel_model_summary: lmerTest model", {
-  expect_warning(summary <- integrated_multilevel_model_summary(
+testthat::test_that("lme_multilevel_model_summary: lmerTest model", {
+  expect_warning(summary <- lme_multilevel_model_summary(
     data = popular,
     response_variable = popular,
     random_effect_factors = extrav,
@@ -59,8 +59,8 @@ testthat::test_that("integrated_multilevel_model_summary: lmerTest model", {
 })
 
 
-testthat::test_that("integrated_multilevel_model_summary: nlme model", {
-  expect_warning(summary <- integrated_multilevel_model_summary(
+testthat::test_that("lme_multilevel_model_summary: nlme model", {
+  expect_warning(summary <- lme_multilevel_model_summary(
     data = popular,
     response_variable = popular,
     random_effect_factors = extrav,
@@ -89,8 +89,8 @@ testthat::test_that("integrated_multilevel_model_summary: nlme model", {
   expect_true(is.null(summary$simple_slope$jn_plot))
 })
 
-testthat::test_that("integrated_multilevel_model_summary:debug", {
-  summary <- suppressWarnings(integrated_multilevel_model_summary(
+testthat::test_that("lme_multilevel_model_summary:debug", {
+  summary <- suppressWarnings(lme_multilevel_model_summary(
     data = popular,
     response_variable = popular,
     random_effect_factors = extrav,

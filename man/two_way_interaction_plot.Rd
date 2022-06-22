@@ -10,9 +10,7 @@ two_way_interaction_plot(
   graph_label_name = NULL,
   cateogrical_var = NULL,
   y_lim = NULL,
-  plot_color = FALSE,
-  polynomial = FALSE,
-  predictor = NULL
+  plot_color = FALSE
 )
 }
 \arguments{
@@ -44,16 +42,6 @@ It appears that ``predict` cannot handle categorical factors. All variables are 
 # Therefore, for now, you must pass the data frame to the function.
 # You don't need pass the data if you use `lm_model` or `lme_model`.
 
-# lme example
-lme_fit <- lme4::lmer("popular ~ extrav*texp + (1 + extrav | class)",
-  data = popular
-)
-
-two_way_interaction_plot(lme_fit,
-  graph_label_name = c("popular", "extraversion", "teacher experience"),
-  data = popular
-)
-
 lm_fit <- lm(Sepal.Length ~ Sepal.Width * Petal.Width,
   data = iris
 )
@@ -73,5 +61,4 @@ label_name <- function(var_name) {
   return(var_name_processed)
 }
 
-two_way_interaction_plot(lme_fit, data = popular, graph_label_name = label_name)
 }

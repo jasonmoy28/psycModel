@@ -47,7 +47,7 @@ Finally, I made the output in R much more beautiful and easy to read. The defau
 Additionally, you can request `assumption_plot` and `simple_slope` (default is `FALSE`). By requesting `assumption_plot`, it produces a panel of graphs that allow you to visually inspect the model assumption (in addition to testing it statistically). `simple_slope` is another powerful way to probe further into the interaction. It shows you the slope estimate at the mean and +1/-1 SD of the mean of the moderator. For example, you hypothesized that social-economic status (SES) moderates the effect of teacher experience on education quality. Then, simple_slope shows you the slope estimate of teacher experience on education quality at +1/-1 SD and the mean level of SES. Additionally, it produces a Johnson-Newman plot that shows you at what level of the moderator that the slope_estimate is predicted to be insignificant. 
 
 ```{r,fig.width=14, fig.height=8,out.width=700,out.height=400}
-integrated_model_summary(
+lm_model_summary(
    data = iris,
    response_variable = Sepal.Length,
    predictor_variable = tidyselect::everything(),
@@ -64,7 +64,7 @@ integrated_model_summary(
 This is the multilevel-variation of `integrated_model_summary`. It works exactly the same way as `integrated_model_summary` except you need to specify the non_random_effect_factors (i.e., level-2 factors) and the random_effect_factors (i.e., the level-1 factors) instead of `predictor_variable`. 
 
 ```{r,fig.width=14,fig.height=8,out.width=700,out.height=400}
-integrated_multilevel_model_summary(
+lme_multilevel_model_summary(
     data = popular,
     response_variable = popular,
     random_effect_factors = extrav,

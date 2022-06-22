@@ -21,16 +21,6 @@
 #' # Therefore, for now, you must pass the data frame to the function.
 #' # You don't need pass the data if you use `lm_model` or `lme_model`.
 #'
-#' # lme example
-#' lme_fit <- lme4::lmer("popular ~ extrav*texp + (1 + extrav | class)",
-#'   data = popular
-#' )
-#'
-#' two_way_interaction_plot(lme_fit,
-#'   graph_label_name = c("popular", "extraversion", "teacher experience"),
-#'   data = popular
-#' )
-#'
 #' lm_fit <- lm(Sepal.Length ~ Sepal.Width * Petal.Width,
 #'   data = iris
 #' )
@@ -50,15 +40,12 @@
 #'   return(var_name_processed)
 #' }
 #'
-#' two_way_interaction_plot(lme_fit, data = popular, graph_label_name = label_name)
 two_way_interaction_plot <- function(model,
                                      data = NULL,
                                      graph_label_name = NULL,
                                      cateogrical_var = NULL,
                                      y_lim = NULL,
-                                     plot_color = FALSE,
-                                     polynomial = FALSE, 
-                                     predictor = NULL) {
+                                     plot_color = FALSE) {
   # warning functions of more than two interaction
   interaction_plot_check <- function(interaction_term) {
     if (length(interaction_term) > 1) {
@@ -139,81 +126,7 @@ two_way_interaction_plot <- function(model,
       lower_df[name] <- cateogrical_var[[name]][2]
     }
   }
-  
-  if (polynomial == TRUE) {
-    if (is.null(predictor)) {
-      print('You must specify predictor if polynomial == TRUE')
-      stop()
-    }
-    predict_var1 = predictor
-    high_df = mean_df
-    high_df[predict_var2] <- upper_df[predict_var2]
-    
-    low_df = mean_df
-    low_df[predict_var2] <- lower_df[predict_var2]
-    plot_df = data.frame()
-    for (i in seq(min(model_data[[predict_var1]]),
-                  max(model_data[[predict_var1]]),
-                  stats::sd(model_data[[predict_var1]] / 10))) {
-      upper_df[predict_var1] = i
-      lower_df[predict_var1] = i
-      
-      upper_value = stats::predict(object = model, newdata = upper_df)
-      
-      lower_value = stats::predict(object = model, newdata = lower_df)
-      
-      in_loop_df = data.frame(
-        x = c(i, i),
-        y = c(upper_value, lower_value),
-        condition = c('High', 'Low')
-      )
-      plot_df = rbind(plot_df, in_loop_df)
-    }
-    
-    # Get the correct label for the plot
-    if (!is.null(graph_label_name)) {
-      # If a vector of string is passed as argument, slice the vector
-      if (class(graph_label_name) == "character") {
-        response_var_plot_label <- graph_label_name[1]
-        predict_var1_plot_label <- graph_label_name[2]
-        predict_var2_plot_label <- graph_label_name[3]
-        # if a function of switch_case is passed as an argument, use the function
-      } else if (class(graph_label_name) == "function") {
-        response_var_plot_label <- graph_label_name(response_var)
-        predict_var1_plot_label <- graph_label_name(predict_var1)
-        predict_var2_plot_label <- graph_label_name(predict_var2)
-        # All other case use the original label
-      } else {
-        response_var_plot_label <- response_var
-        predict_var1_plot_label <- predict_var1
-        predict_var2_plot_label <- predict_var2
-      }
-      # All other case use the original label
-    } else {
-      response_var_plot_label <- response_var
-      predict_var1_plot_label <- predict_var1
-      predict_var2_plot_label <- predict_var2
-    }
-    
-    plot = ggplot2::ggplot(data = plot_df, ggplot2::aes(
-      x = x,
-      y = y,
-      group = .data$condition
-    )) +
-      ggplot2::geom_line(ggplot2::aes(linetype = .data$condition)) +
-      ggplot2::labs(y = response_var_plot_label,
-                    x = predict_var1_plot_label,
-                    linetype = predict_var2_plot_label) +
-      ggplot2::theme_minimal() +
-      ggplot2::theme(
-        panel.grid.major = ggplot2::element_blank(),
-        panel.grid.minor = ggplot2::element_blank(),
-        panel.background = ggplot2::element_blank(),
-        axis.line = ggplot2::element_line(colour = "black")
-      )
-    return(plot)
-  }
-  
+
   
   # Update values in the new_data_df to the values in predicted_df & get the predicted value
   upper_upper_df <- mean_df

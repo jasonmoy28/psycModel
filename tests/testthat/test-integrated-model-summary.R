@@ -1,5 +1,5 @@
-testthat::test_that("integrated_model_summary: lm model", {
-  expect_warning(summary <- integrated_model_summary(
+testthat::test_that("lm_model_summary: lm model", {
+  expect_warning(summary <- lm_model_summary(
     data = iris[1:4],
     response_variable = "Sepal.Length",
     predictor_variable = c(Sepal.Width, Petal.Width),
@@ -25,8 +25,8 @@ testthat::test_that("integrated_model_summary: lm model", {
   expect_false(is.null(summary$simple_slope$jn_plot))
 })
 
-testthat::test_that(desc = "integrated_model_summary: glm model", {
-  expect_warning(expect_warning(summary <- integrated_model_summary(
+testthat::test_that(desc = "lm_model_summary: glm model", {
+  expect_warning(expect_warning(summary <- lm_model_summary(
     response_variable = incidence,
     predictor_variable = period,
     family = "poisson",
