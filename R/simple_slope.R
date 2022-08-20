@@ -49,8 +49,7 @@ simple_slope <- function(model,
   
   interaction_factor = unlist(get_interaction_term(model), use.names = FALSE)
   
-  if (class(model) == "lmerMod" |
-      class(model) == "lmerModLmerTest") {
+  if (inherits(model,'lmerMod')) {
     model <- do.call(getfun("lmerTest::lmer"), list(formula = model, data = data))
   }
   

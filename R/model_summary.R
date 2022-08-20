@@ -155,7 +155,7 @@ model_summary <- function(model,
       dplyr::select(-"CI") %>%
       dplyr::select(-'p',tidyselect::everything(),"p")
     
-    } else if (class(model)[1] == "glm") { # glm
+    } else if (inherits(model,"glm")) { # glm
     model_type <- "Generazlied Linear regression"
     predict_var <- as.character(attributes(model$terms)$predvars)
     DV <- predict_var[2]
