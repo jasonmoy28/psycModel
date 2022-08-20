@@ -39,12 +39,13 @@ model_summary <- function(model,
                           digits = 3,
                           assumption_plot = FALSE,
                           quite = FALSE,
-                          streamline = FALSE,
-                          return_result = FALSE) {
+                          streamline = TRUE,
+                          return_result = FALSE,
+                          standardize = 'basic') {
 
   ################################################ Linear Mixed Effect Model ################################################
   ## lme package
-  if (class(model)[1] == "lme") {
+  if (inherits(model,'lme')) {
     model_type <- "Linear Mixed Effect Model (fitted using nlme)"
     predict_var <- as.character(attributes(model$terms)$variables)
     DV <- predict_var[2]
@@ -61,17 +62,17 @@ model_summary <- function(model,
     collinearity_check <- TRUE
     singular_check <- TRUE
 
-    lme_param <- parameters::model_parameters(model)
+    lme_param <- parameters::model_parameters(model,standardize = standardize)
     model_summary_df <- lme_param %>%
       as.data.frame() %>%
       dplyr::rename(df = .data$df_error) %>%
       dplyr::rename(ci.lower = .data$CI_low) %>%
       dplyr::rename(ci.upper = .data$CI_high) %>%
       dplyr::select(-"CI") %>%
-      dplyr::select("Parameter", "Effects", "Coefficient", "t", "df", "SE", "p", "ci.lower", "ci.upper", "p", tidyselect::everything())
-
+      dplyr::select(-'p',tidyselect::everything(),"p")
+    
     ## lmer package
-  } else if (class(model)[1] == "lmerModLmerTest" | class(model)[1] == "lmerMod") {
+  } else if (inherits(model,'lmerMod')) {
     model_type <- "Linear Mixed Effect Model (fitted using lme4 or lmerTest)"
     formula_attribute <- stats::terms(insight::find_formula(model)$conditional)
     DV <- as.character(attributes(formula_attribute)$variables)[2]
@@ -87,18 +88,18 @@ model_summary <- function(model,
     heteroscedasticity_check <- TRUE
     collinearity_check <- TRUE
     singular_check <- TRUE
-    
-    lme_param <- parameters::model_parameters(model)
+    lme_param <- parameters::model_parameters(model,standardize = standardize)
     model_summary_df <- lme_param %>%
       as.data.frame() %>%
       dplyr::rename(df = .data$df_error) %>%
       dplyr::rename(ci.lower = .data$CI_low) %>%
       dplyr::rename(ci.upper = .data$CI_high) %>%
       dplyr::select(-"CI") %>%
-      dplyr::select("Parameter", "Effects", "Coefficient", "t", "df", "SE", "p", "ci.lower", "ci.upper", "p", tidyselect::everything())
-    ################################################ Generalized Linear Mixed Effect Model ################################################
+      dplyr::select(-'p',tidyselect::everything(),"p")
+
+################################################ Generalized Linear Mixed Effect Model ################################################
     # glmer model
-  } else if (class(model)[1] == "glmerMod") {
+  } else if (inherits(model,'glmerMod')) {
     model_type <- "Generalized Linear Mixed Effect Model"
     formula_attribute <- stats::terms(model@call$formula)
     DV <- as.character(attributes(formula_attribute)$variables)[2]
@@ -123,10 +124,10 @@ model_summary <- function(model,
       dplyr::rename(ci.lower = .data$CI_low) %>%
       dplyr::rename(ci.upper = .data$CI_high) %>%
       dplyr::select(-"CI") %>%
-      dplyr::select("Parameter", "Effects", "Coefficient", "z", "df", "SE", "p", "ci.lower", "ci.upper", "p", tidyselect::everything())
-
+      dplyr::select(tidyselect::everything(),"p")
+    
     ################################################ Linear Regression  ################################################
-  } else if (class(model)[1] == "lm") { # linear regression
+  } else if (inherits(model,'lm')) { # linear regression
     # Parameters for output table use
     model_type <- "Linear regression"
     predict_var <- as.character(attributes(model$terms)$predvars)
@@ -152,7 +153,8 @@ model_summary <- function(model,
       dplyr::rename(ci.upper = .data$CI_high) %>%
       dplyr::select(-"CI") %>%
       dplyr::select("Parameter", "Coefficient", "t", "df", "SE", "p", "ci.lower", "ci.upper", "p", tidyselect::everything())
-  } else if (class(model)[1] == "glm") { # glm
+  
+    } else if (class(model)[1] == "glm") { # glm
     model_type <- "Generazlied Linear regression"
     predict_var <- as.character(attributes(model$terms)$predvars)
     DV <- predict_var[2]
@@ -201,16 +203,15 @@ model_summary <- function(model,
 
     warning("This model is not formally supported. Please proceed with cautious. The model is passed to parameters::parameters() to extract relevant parameters")
   }
-
-  performance_warning <- utils::capture.output(model_performance_df <- performance::model_performance(model))
-  if (length(performance_warning) > 0) {
-    warning(performance_warning)
-  }
-  colnames(model_performance_df) <- stringr::str_replace_all(pattern = "R2", replacement = "R^2", string = colnames(model_performance_df))
-  colnames(model_performance_df) <- stringr::str_replace_all(pattern = "Sigma", replacement = "$sigma$", string = colnames(model_performance_df))
+  
+    performance_warning <- utils::capture.output(model_performance_df <- performance::model_performance(model))
+    if (length(performance_warning) > 0) {
+      warning(performance_warning)
+    }
+    colnames(model_performance_df) <- stringr::str_replace_all(pattern = "R2", replacement = "R^2", string = colnames(model_performance_df))
+    colnames(model_performance_df) <- stringr::str_replace_all(pattern = "Sigma", replacement = "$sigma$", string = colnames(model_performance_df)) 
   ################################################  Output Table  ################################################
   if (quite == FALSE) { # check whether quite the entire output table
-    if (streamline == FALSE) {
       cat("\n \n")
       super_print("underline|Model Summary")
       super_print("Model Type = {model_type}")
@@ -220,7 +221,6 @@ model_summary <- function(model,
         super_print("Family = {family}")
       }
       super_print("\n")
-    }
 
     # super_print model estimates table
     super_print("underline|Model Estimates")
@@ -228,7 +228,7 @@ model_summary <- function(model,
     super_print("\n")
     # super_print model performance table
     super_print("underline|Goodness of Fit")
-    print_table(model_performance_df)
+    print_table(model_performance_df) 
     if (streamline == FALSE) {
       # Check assumption
       super_print("\n")

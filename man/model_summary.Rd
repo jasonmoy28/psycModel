@@ -9,8 +9,9 @@ model_summary(
   digits = 3,
   assumption_plot = FALSE,
   quite = FALSE,
-  streamline = FALSE,
-  return_result = FALSE
+  streamline = TRUE,
+  return_result = FALSE,
+  standardize = "basic"
 )
 }
 \arguments{
