@@ -30,28 +30,16 @@ three_way_interaction_plot(
 a \code{ggplot} object
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \cr
-This function is deprecated. Please see \code{psycPlot::three_way_interaction_plot()} instead
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with \code{lm_model()}, \code{lme_model()}.
 }
 \details{
 It appears that ``predict` cannot handle categorical factors. All variables are converted to numeric before plotting.
 }
 \examples{
-# I am going to show the more generic usage of this function
-# You can also use this package's built in function to fit the models
-# I recommend using the integrated_multilevel_model_summary to get everything
-
-# lme example
-lme_fit <- lme4::lmer("popular ~ extrav + sex + texp + extrav:sex:texp +
-(1 + extrav + sex | class)", data = popular)
-
-three_way_interaction_plot(lme_fit, data = popular)
-
-# lm example
-
 lm_fit <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width +
   Sepal.Width:Petal.Length:Petal.Width, data = iris)
 
 three_way_interaction_plot(lm_fit, data = iris)
+
 }

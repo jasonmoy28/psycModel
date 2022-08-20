@@ -1,8 +1,8 @@
 #' Two-way Interaction Plot
 #'
-#' `r lifecycle::badge("deprecated")` \cr
-#' This function is deprecated. Please see `psycPlot::two_way_interaction_plot()` instead 
-#' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below. 
+#' `r lifecycle::badge("stable")` \cr
+#' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below.
+#' I recommend using concurrently with `lm_model` or `lme_model`.
 #'
 #'
 #' @param model object from `lm`, `nlme`, `lme4`, or `lmerTest`
@@ -17,28 +17,10 @@
 #' @export
 #'
 #' @examples
-#' # If you pass the model directly, it can't extract the data-frame from fit object
-#' # Therefore, for now, you must pass the data frame to the function.
-#' # You don't need pass the data if you use `lm_model` or `lme_model`.
-#'
 #' lm_fit <- lm(Sepal.Length ~ Sepal.Width * Petal.Width,
 #'   data = iris
 #' )
-#'
 #' two_way_interaction_plot(lm_fit, data = iris)
-#'
-#' # For more advanced users
-#' label_name <- function(var_name) {
-#'   var_name_processed <- switch(var_name,
-#'     "extrav" = "Extroversion",
-#'     "texp" = "Teacher Experience",
-#'     "popular" = "popular"
-#'   )
-#'   if (is.null(var_name_processed)) {
-#'     var_name_processed <- var_name
-#'   }
-#'   return(var_name_processed)
-#' }
 #'
 two_way_interaction_plot <- function(model,
                                      data = NULL,
@@ -46,20 +28,6 @@ two_way_interaction_plot <- function(model,
                                      cateogrical_var = NULL,
                                      y_lim = NULL,
                                      plot_color = FALSE) {
-  # warning functions of more than two interaction
-  interaction_plot_check <- function(interaction_term) {
-    if (length(interaction_term) > 1) {
-      interaction_term <- interaction_term[1]
-      warning(
-        paste(
-          "Inputted > 2 interaction terms. Plotting the first interaction term:\n ",
-          interaction_term
-        )
-      )
-    }
-    return(interaction_term)
-  }
-  
   model_data <- NULL
   if (any(class(model) %in% c("lmerMod", "lmerModLmerTest", "lm", "lme"))) {
     model_data <- insight::get_data(model)
@@ -70,18 +38,23 @@ two_way_interaction_plot <- function(model,
     interaction_term <- model %>%
       insight::find_interactions() %>%
       .$conditional
-    interaction_term <- interaction_plot_check(interaction_term)
+    interaction_term <- interaction_check(interaction_term)
   } else {
+    
     model_data <- insight::get_data(model)
+    
     predict_var <- model %>%
       insight::find_predictors() %>%
       .$conditional # maybe problem with unconditional?
+    
     response_var <- model %>% insight::find_response()
+    
     interaction_term <- model %>%
       insight::find_interactions() %>%
       .$conditional
-    interaction_term <- interaction_plot_check(interaction_term)
-    warning("Only models from lm, nlme, lme4, and lmerTest are tested")
+    
+    interaction_term <- interaction_check(interaction_term)
+    warning("Only models from lm, nlme, lme4, and lmerTest are ")
   }
   
   # get variable from model
@@ -104,20 +77,9 @@ two_way_interaction_plot <- function(model,
     }
   }
   
-  data <- data_check(data)
-  mean_df <- dplyr::summarise_all(data, mean, na.rm = TRUE)
-  upper_df <- dplyr::summarise_all(
-    data,
-    .funs = function(.) {
-      mean(., na.rm = TRUE) + 1 * stats::sd(., na.rm = TRUE)
-    }
-  )
-  lower_df <- dplyr::summarise_all(
-    data,
-    .funs = function(.) {
-      mean(., na.rm = TRUE) - 1 * stats::sd(., na.rm = TRUE)
-    }
-  )
+  mean_df = get_predict_df(data = model_data)$mean_df
+  upper_df = get_predict_df(data = model_data)$upper_df
+  lower_df = get_predict_df(data = model_data)$lower_df
   
   # Specify the categorical variable upper and lower bound directly
   if (!is.null(cateogrical_var)) {
@@ -126,7 +88,6 @@ two_way_interaction_plot <- function(model,
       lower_df[name] <- cateogrical_var[[name]][2]
     }
   }
-
   
   # Update values in the new_data_df to the values in predicted_df & get the predicted value
   upper_upper_df <- mean_df
@@ -186,35 +147,19 @@ two_way_interaction_plot <- function(model,
     var2_category = c("High", "Low", "High", "Low")
   )
   
-  # Get the correct label for the plot
-  if (!is.null(graph_label_name)) {
-    # If a vector of string is passed as argument, slice the vector
-    if (class(graph_label_name) == "character") {
-      response_var_plot_label <- graph_label_name[1]
-      predict_var1_plot_label <- graph_label_name[2]
-      predict_var2_plot_label <- graph_label_name[3]
-      # if a function of switch_case is passed as an argument, use the function
-    } else if (class(graph_label_name) == "function") {
-      response_var_plot_label <- graph_label_name(response_var)
-      predict_var1_plot_label <- graph_label_name(predict_var1)
-      predict_var2_plot_label <- graph_label_name(predict_var2)
-      # All other case use the original label
-    } else {
-      response_var_plot_label <- response_var
-      predict_var1_plot_label <- predict_var1
-      predict_var2_plot_label <- predict_var2
-    }
-    # All other case use the original label
-  } else {
-    response_var_plot_label <- response_var
-    predict_var1_plot_label <- predict_var1
-    predict_var2_plot_label <- predict_var2
-  }
   
+  
+  # Get the correct label for the plot
+  label_name = label_name(
+    graph_label_name = graph_label_name,
+    response_var_name = response_var,
+    predict_var1_name = predict_var1,
+    predict_var2_name = predict_var2,
+    predict_var3_name = NULL
+  )
   
   if (is.null(y_lim)) {
-    y_lim <-
-      c(floor(min(final_df$value)) - 0.5, ceiling(max(final_df$value)) + 0.5)
+    y_lim <- c(floor(min(final_df$value)) - 0.5, ceiling(max(final_df$value)) + 0.5)
   }
   
   if (plot_color) {
@@ -229,9 +174,9 @@ two_way_interaction_plot <- function(model,
       ) +
       ggplot2::geom_point() +
       ggplot2::geom_line(ggplot2::aes(group = .data$var2_category)) +
-      ggplot2::labs(y = response_var_plot_label,
-                    x = predict_var1_plot_label,
-                    color = predict_var2_plot_label) +
+      ggplot2::labs(y = label_name[1],
+                    x = label_name[2],
+                    color = label_name[3]) +
       ggplot2::theme_minimal() +
       ggplot2::theme(
         panel.grid.major = ggplot2::element_blank(),
@@ -252,9 +197,9 @@ two_way_interaction_plot <- function(model,
       ) +
       ggplot2::geom_point() +
       ggplot2::geom_line(ggplot2::aes(linetype = .data$var2_category)) +
-      ggplot2::labs(y = response_var_plot_label,
-                    x = predict_var1_plot_label,
-                    linetype = predict_var2_plot_label) +
+      ggplot2::labs(y = label_name[1],
+                    x = label_name[2],
+                    linetype = label_name[3]) +
       ggplot2::theme_minimal() +
       ggplot2::theme(
         panel.grid.major = ggplot2::element_blank(),

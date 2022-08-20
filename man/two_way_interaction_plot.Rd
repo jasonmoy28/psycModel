@@ -30,35 +30,17 @@ two_way_interaction_plot(
 an object of class \code{ggplot}
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \cr
-This function is deprecated. Please see \code{psycPlot::two_way_interaction_plot()} instead
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below.
+I recommend using concurrently with \code{lm_model} or \code{lme_model}.
 }
 \details{
 It appears that ``predict` cannot handle categorical factors. All variables are converted to numeric before plotting.
 }
 \examples{
-# If you pass the model directly, it can't extract the data-frame from fit object
-# Therefore, for now, you must pass the data frame to the function.
-# You don't need pass the data if you use `lm_model` or `lme_model`.
-
 lm_fit <- lm(Sepal.Length ~ Sepal.Width * Petal.Width,
   data = iris
 )
-
 two_way_interaction_plot(lm_fit, data = iris)
-
-# For more advanced users
-label_name <- function(var_name) {
-  var_name_processed <- switch(var_name,
-    "extrav" = "Extroversion",
-    "texp" = "Teacher Experience",
-    "popular" = "popular"
-  )
-  if (is.null(var_name_processed)) {
-    var_name_processed <- var_name
-  }
-  return(var_name_processed)
-}
 
 }
