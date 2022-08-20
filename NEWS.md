@@ -1,5 +1,3 @@
-# psycModel 0.3.4
-
 # psycModel 0.3.3
 * Bug fixes only 
 
