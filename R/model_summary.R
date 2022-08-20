@@ -9,6 +9,7 @@
 #' @param return_result It set to `TRUE`, it return the model estimates data frame.
 #' @param assumption_plot Generate an panel of plots that check major assumptions. It is usually recommended to inspect model assumption violation visually. In the background, it calls `performance::check_model()`.
 #' @param quite suppress printing output
+#' @param standardize The method used for standardizing the parameters. Can be NULL (default; no standardization), "refit" (for re-fitting the model on standardized data) or one of "basic", "posthoc", "smart", "pseudo". See 'Details' in parameters::standardize_parameters()
 #'
 #' @references
 #' Nakagawa, S., & Schielzeth, H. (2013). A general and simple method for obtaining R2 from generalized linear mixed-effects models. Methods in Ecology and Evolution, 4(2), 133–142. https://doi.org/10.1111/j.2041-210x.2012.00261.x
@@ -62,7 +63,7 @@ model_summary <- function(model,
     collinearity_check <- TRUE
     singular_check <- TRUE
 
-    lme_param <- parameters::model_parameters(model,standardize = standardize)
+    lme_param <- parameters::model_parameters(model)
     model_summary_df <- lme_param %>%
       as.data.frame() %>%
       dplyr::rename(df = .data$df_error) %>%
@@ -124,7 +125,7 @@ model_summary <- function(model,
       dplyr::rename(ci.lower = .data$CI_low) %>%
       dplyr::rename(ci.upper = .data$CI_high) %>%
       dplyr::select(-"CI") %>%
-      dplyr::select(tidyselect::everything(),"p")
+      dplyr::select(-'p',tidyselect::everything(),"p")
     
     ################################################ Linear Regression  ################################################
   } else if (inherits(model,'lm')) { # linear regression
@@ -152,8 +153,8 @@ model_summary <- function(model,
       dplyr::rename(ci.lower = .data$CI_low) %>%
       dplyr::rename(ci.upper = .data$CI_high) %>%
       dplyr::select(-"CI") %>%
-      dplyr::select("Parameter", "Coefficient", "t", "df", "SE", "p", "ci.lower", "ci.upper", "p", tidyselect::everything())
-  
+      dplyr::select(-'p',tidyselect::everything(),"p")
+    
     } else if (class(model)[1] == "glm") { # glm
     model_type <- "Generazlied Linear regression"
     predict_var <- as.character(attributes(model$terms)$predvars)
@@ -178,8 +179,8 @@ model_summary <- function(model,
       dplyr::rename(ci.lower = .data$CI_low) %>%
       dplyr::rename(ci.upper = .data$CI_high) %>%
       dplyr::select(-"CI") %>%
-      dplyr::select("Parameter", "Coefficient", "z", "SE", "df", tidyselect::everything())
-  } else {
+      dplyr::select(-'p',tidyselect::everything(),"p")
+    } else {
     model_type <- "Unable to Determined for Unknown Model"
     DV <- "Unable to Determined for Unknown Model"
     IV <- "Unable to Determined for Unknown Model"

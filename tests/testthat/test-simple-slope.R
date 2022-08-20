@@ -8,10 +8,7 @@ testthat::test_that(desc = "simple_slope: two-way-interaction", {
   )
 
   summary <- simple_slope(
-    data = iris[1:4],
-    model = model,
-    two_way_interaction_factor = c("Sepal.Width", "Petal.Width")
-  )
+    model = model)
 
   expect_equal(c(summary$simple_slope_df[1])[[1]], c("Low", "Mean", "High"))
 })
@@ -26,9 +23,7 @@ testthat::test_that(desc = "simple_slope: three-way-interaction", {
   )
 
   summary <- simple_slope(
-    data = iris[1:4],
     model = model,
-    three_way_interaction_factor = c("Sepal.Width", "Petal.Width", "Petal.Length")
   )
 
   expect_equal(c(summary$simple_slope_df[1])[[1]], c("Low", "", "", "Mean", "", "", "High", "", ""))

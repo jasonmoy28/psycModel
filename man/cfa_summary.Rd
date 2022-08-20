@@ -81,7 +81,7 @@ fit <- cfa_summary(
 # Similarly, the same rule apply for all arguments (e.g., `ordered = FALSE` instead of just `FALSE`)
 \donttest{
 fit <- cfa_summary(
-  model = "visual  =~ x1 + x2 + x3; textual =~ x4 + x5 + x6;",
+  model = "visual  =~ x1 + x2 + x3",
   data = lavaan::HolzingerSwineford1939,
   quite = TRUE # silence all output
 )

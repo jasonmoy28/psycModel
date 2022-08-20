@@ -17,13 +17,13 @@ label_name = function(graph_label_name,
   #
   if (!is.null(graph_label_name)) {
     # If a vector of string is passed as argument, slice the vector
-    if (class(graph_label_name) == "character") {
+    if (inherits(graph_label_name,"character")) {
       response_var_plot_label <- graph_label_name[1]
       predict_var1_plot_label <- graph_label_name[2]
       if (!is.null(predict_var2_name)) {predict_var2_plot_label <- graph_label_name[3]}
       if (!is.null(predict_var3_name)) {predict_var3_plot_label <- graph_label_name[4]}
       # if a function of switch_case is passed as an argument, use the function
-    } else if (class(graph_label_name) == "function") {
+    } else if (inherits(graph_label_name,"function")) {
       response_var_plot_label <- graph_label_name(response_var_name)
       predict_var1_plot_label <- graph_label_name(predict_var1_name)
       if (!is.null(predict_var2_name)) {predict_var2_plot_label <- graph_label_name(predict_var2_name)}

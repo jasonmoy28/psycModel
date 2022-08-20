@@ -1,5 +1,6 @@
 testthat::test_that("lme_multilevel_model_summary: lme4 model", {
-  expect_warning(summary <- lme_multilevel_model_summary(
+  suppressWarnings(
+    summary <- lme_multilevel_model_summary(
     data = popular,
     response_variable = popular,
     random_effect_factors = extrav,
@@ -29,7 +30,7 @@ testthat::test_that("lme_multilevel_model_summary: lme4 model", {
 })
 
 testthat::test_that("lme_multilevel_model_summary: lmerTest model", {
-  expect_warning(summary <- lme_multilevel_model_summary(
+  suppressWarnings(summary <- lme_multilevel_model_summary(
     data = popular,
     response_variable = popular,
     random_effect_factors = extrav,
@@ -60,7 +61,7 @@ testthat::test_that("lme_multilevel_model_summary: lmerTest model", {
 
 
 testthat::test_that("lme_multilevel_model_summary: nlme model", {
-  expect_warning(summary <- lme_multilevel_model_summary(
+  suppressWarnings(summary <- lme_multilevel_model_summary(
     data = popular,
     response_variable = popular,
     random_effect_factors = extrav,
@@ -87,23 +88,4 @@ testthat::test_that("lme_multilevel_model_summary: nlme model", {
   # simple slope
   expect_true(is.null(summary$simple_slope$simple_slope_df)) # unable to compute simple slope
   expect_true(is.null(summary$simple_slope$jn_plot))
-})
-
-testthat::test_that("lme_multilevel_model_summary:debug", {
-  summary <- suppressWarnings(lme_multilevel_model_summary(
-    data = popular,
-    response_variable = popular,
-    random_effect_factors = extrav,
-    non_random_effect_factors = c(sex, texp),
-    three_way_interaction_factor = c(extrav, sex, texp),
-    graph_label_name = c("popular", "extraversion", "sex", "teacher experience"), # change interaction plot label
-    id = class,
-    quite = T,
-    model_summary = TRUE,
-    interaction_plot = TRUE,
-    assumption_plot = TRUE,
-    simple_slope = TRUE,
-    plot_color = TRUE
-  ))
-  expect_equal(summary, NULL)
 })

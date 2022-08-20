@@ -37,7 +37,7 @@ compare_fit <- function(...,
                         return_result = FALSE) {
 
   # lavaan models
-  if (class(list(...)[[1]]) == "lavaan") {
+  if (inherits(list(...)[[1]],"lavaan")) {
     models <- list(...)
     blank_df <- tibble::tibble(chisq = "", df = "", pvalue = "", cfi = "", rmsea = "", srmr = "", tli = "", aic = "", bic = "", bic2 = "", rowname = ".") %>% tibble::column_to_rownames()
     return_df <- tibble::tibble(chisq = NULL, df = NULL, pvalue = NULL, cfi = NULL, rmsea = NULL, srmr = NULL, tli = NULL, aic = NULL, bic = NULL, bic2 = NULL)

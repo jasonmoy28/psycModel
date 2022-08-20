@@ -54,12 +54,3 @@ An object of class \code{glmerMod} representing the linear mixed-effects model f
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
 Fit a generalized linear mixed effect model using \code{lme4::glmer()}. This function is still in early development stage.
 }
-\examples{
-fit <- glme_model(
-  response_variable = incidence,
-  random_effect_factors = period,
-  family = "poisson", # or you can enter as poisson(link = 'log')
-  id = herd,
-  data = lme4::cbpp
-)
-}

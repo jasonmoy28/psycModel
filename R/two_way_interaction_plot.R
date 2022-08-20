@@ -106,7 +106,7 @@ two_way_interaction_plot <- function(model,
   lower_lower_df[predict_var1] <- lower_df[predict_var1]
   lower_lower_df[predict_var2] <- lower_df[predict_var2]
   
-  if (class(model) == "lme") {
+  if (inherits(model,'lme')) {
     upper_upper_predicted_value <-
       stats::predict(model, newdata = upper_upper_df, level = 0)
     upper_lower_predicted_value <-
@@ -115,8 +115,7 @@ two_way_interaction_plot <- function(model,
       stats::predict(model, newdata = lower_upper_df, level = 0)
     lower_lower_predicted_value <-
       stats::predict(model, newdata = lower_lower_df, level = 0)
-  } else if (class(model) == "lmerModLmerTest" |
-             class(model) == "glmerMod" | class(model) == "lmerMod") {
+  } else if (inherits(model,'lmerMod') | inherits(model,'glmerMod')) {
     upper_upper_predicted_value <-
       stats::predict(model, newdata = upper_upper_df, allow.new.levels = TRUE)
     upper_lower_predicted_value <-
@@ -125,7 +124,7 @@ two_way_interaction_plot <- function(model,
       stats::predict(model, newdata = lower_upper_df, allow.new.levels = TRUE)
     lower_lower_predicted_value <-
       stats::predict(model, newdata = lower_lower_df, allow.new.levels = TRUE)
-  } else if (class(model) == "lm") {
+  } else if (inherits(model,'lm')) {
     upper_upper_predicted_value <-
       stats::predict(model, newdata = upper_upper_df)
     upper_lower_predicted_value <-

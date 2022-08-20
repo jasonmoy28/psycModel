@@ -26,6 +26,8 @@ model_summary(
 \item{streamline}{print streamlined output. Only print model estimate and performance.}
 
 \item{return_result}{It set to \code{TRUE}, it return the model estimates data frame.}
+
+\item{standardize}{The method used for standardizing the parameters. Can be NULL (default; no standardization), "refit" (for re-fitting the model on standardized data) or one of "basic", "posthoc", "smart", "pseudo". See 'Details' in parameters::standardize_parameters()}
 }
 \value{
 a list of model estimate data frame, model performance data frame, and the assumption plot (an \code{ggplot} object)

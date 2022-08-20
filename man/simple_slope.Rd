@@ -27,8 +27,6 @@ fit <- lm_model(
 )
 
 simple_slope_fit <- simple_slope(
-  data = iris,
   model = fit,
-  interaction_factor = c("Sepal.Width", "Petal.Width", "Petal.Length")
 )
 }
