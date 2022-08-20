@@ -4,21 +4,12 @@
 \alias{simple_slope}
 \title{Slope Estimate at Varying Level of Moderators}
 \usage{
-simple_slope(
-  data,
-  model,
-  two_way_interaction_factor = NULL,
-  three_way_interaction_factor = NULL
-)
+simple_slope(model, data = NULL)
 }
 \arguments{
-\item{data}{data frame}
-
 \item{model}{model object from \code{lm}, \code{lme},\code{lmer}}
 
-\item{two_way_interaction_factor}{vector of character of the two_way_interaction_factor}
-
-\item{three_way_interaction_factor}{vector of character of the three_way_interaction_factor}
+\item{data}{data frame}
 }
 \value{
 a list with the slope estimate data frame and a Johnson-Newman plot.
@@ -38,6 +29,6 @@ fit <- lm_model(
 simple_slope_fit <- simple_slope(
   data = iris,
   model = fit,
-  three_way_interaction_factor = c("Sepal.Width", "Petal.Width", "Petal.Length")
+  interaction_factor = c("Sepal.Width", "Petal.Width", "Petal.Length")
 )
 }
