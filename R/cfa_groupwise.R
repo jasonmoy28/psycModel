@@ -10,7 +10,6 @@
 #' @param ordered logical. default is `FALSE`. If it is set to `TRUE`, lavaan will treat it as a ordinal variable and use `DWLS` instead of `ML`
 #' @param ... CFA items. Support `dplyr::select()` syntax.
 #'
-#'
 #' @details
 #' All argument must be explicitly specified. If not, all arguments will be treated as CFA items
 #'
