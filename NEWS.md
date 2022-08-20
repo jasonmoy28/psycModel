@@ -1,6 +1,5 @@
 # psycModel 0.3.3
-**Major Feature:** <br/>
-* Added polynomial regression plot
+* Bug fixes only 
 
 # psycModel 0.3.2
 * Bug fixes only 
