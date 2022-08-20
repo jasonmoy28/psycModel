@@ -41,7 +41,6 @@ glme_model <- function(data,
                        na.action = stats::na.omit,
                        quite = FALSE) {
   ########################################## Set up #############################################
-  data <- data_check(data) # check data and coerced into numeric
   glme_model_check <- function(object, method) {
     if (method == "response_variable_check") {
       if (length(object) != 1) {

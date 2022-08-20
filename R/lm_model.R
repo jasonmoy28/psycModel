@@ -28,7 +28,6 @@ lm_model <- function(data,
                      two_way_interaction_factor = NULL,
                      three_way_interaction_factor = NULL,
                      quite = FALSE) {
-  data <- data_check(data)
 
   getfun <- function(x) {
     if (length(grep("::", x)) > 0) {

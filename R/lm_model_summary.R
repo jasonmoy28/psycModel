@@ -45,24 +45,23 @@
 #' )
 #' }
 lm_model_summary <- function(data,
-                                     response_variable = NULL,
-                                     predictor_variable = NULL,
-                                     two_way_interaction_factor = NULL,
-                                     three_way_interaction_factor = NULL,
-                                     family = NULL,
-                                     cateogrical_var = NULL,
-                                     graph_label_name = NULL,
-                                     model_summary = TRUE,
-                                     interaction_plot = TRUE,
-                                     y_lim = NULL,
-                                     plot_color = FALSE,
-                                     digits = 3,
-                                     simple_slope = FALSE,
-                                     assumption_plot = FALSE,
-                                     quite = FALSE,
-                                     streamline = FALSE,
-                                     return_result = FALSE) {
-
+                             response_variable = NULL,
+                             predictor_variable = NULL,
+                             two_way_interaction_factor = NULL,
+                             three_way_interaction_factor = NULL,
+                             family = NULL,
+                             cateogrical_var = NULL,
+                             graph_label_name = NULL,
+                             model_summary = TRUE,
+                             interaction_plot = TRUE,
+                             y_lim = NULL,
+                             plot_color = FALSE,
+                             digits = 3,
+                             simple_slope = FALSE,
+                             assumption_plot = FALSE,
+                             quite = FALSE,
+                             streamline = FALSE,
+                             return_result = FALSE) {
   ##################################### Set up #########################################
   # parse select syntax
   response_variable <- data %>%
@@ -77,9 +76,7 @@ lm_model_summary <- function(data,
   three_way_interaction_factor <- data %>%
     dplyr::select(!!enquo(three_way_interaction_factor)) %>%
     names()
-  # coerced into numeric after selecting variables
-  data <- data_check(data)
-
+  
   ##################################### Running Model #########################################
   if (is.null(family)) {
     model <- lm_model(
@@ -106,8 +103,8 @@ lm_model_summary <- function(data,
       quite = TRUE
     )
   }
-
-
+  
+  
   ############################### Generate Interaction Plots ###############################
   two_way_interaction_factor <- data %>%
     dplyr::select(!!enquo(two_way_interaction_factor)) %>%
@@ -116,7 +113,8 @@ lm_model_summary <- function(data,
     dplyr::select(!!enquo(three_way_interaction_factor)) %>%
     names()
   interaction_plot_object <- NULL
-  if (length(two_way_interaction_factor) != 0 & (interaction_plot == TRUE | return_result == TRUE)) {
+  if (length(two_way_interaction_factor) != 0 &
+      (interaction_plot == TRUE | return_result == TRUE)) {
     interaction_plot_object <- two_way_interaction_plot(
       model = model,
       cateogrical_var = cateogrical_var,
@@ -124,7 +122,8 @@ lm_model_summary <- function(data,
       y_lim = y_lim,
       plot_color = plot_color
     )
-  } else if (length(three_way_interaction_factor) != 0 & (interaction_plot == TRUE | return_result == TRUE)) {
+  } else if (length(three_way_interaction_factor) != 0 &
+             (interaction_plot == TRUE | return_result == TRUE)) {
     interaction_plot_object <- three_way_interaction_plot(
       model = model,
       cateogrical_var = cateogrical_var,
@@ -136,23 +135,17 @@ lm_model_summary <- function(data,
     interaction_plot_object <- NULL
     interaction_plot <- FALSE
   }
-
-
+  
+  
   ############################### Generate Simple Slope Output ###############################
   if (simple_slope == TRUE) {
-    simple_slope_list <- simple_slope(
-      data = data,
-      model = model,
-      two_way_interaction_factor = two_way_interaction_factor,
-      three_way_interaction_factor = three_way_interaction_factor
-    )
+    simple_slope_list <- simple_slope(data = data,
+                                      model = model)
   } else {
-    simple_slope_list <- list(
-      simple_slope_df = NULL,
-      jn_plot = NULL
-    )
+    simple_slope_list <- list(simple_slope_df = NULL,
+                              jn_plot = NULL)
   }
-
+  
   ######################################### Output Result  #########################################
   if (model_summary == TRUE | return_result == TRUE) {
     model_summary_list <- model_summary(
@@ -164,25 +157,29 @@ lm_model_summary <- function(data,
       quite = quite
     )
   }
-
+  
   if (simple_slope == TRUE & quite == FALSE) {
     super_print("underline|Slope Estimates at Each Level of Moderators")
     print_table(simple_slope_list$simple_slope_df)
-    super_print("italic|Note: For continuous variable, low and high represent -1 and +1 SD from the mean, respectively.")
+    super_print(
+      "italic|Note: For continuous variable, low and high represent -1 and +1 SD from the mean, respectively."
+    )
     print(simple_slope_list$jn_plot)
   }
-
+  
   if (interaction_plot == TRUE) {
     try(print(interaction_plot_object))
   }
-
+  
   # warning message
   plot_logical <- c(interaction_plot, simple_slope, assumption_plot)
   number_of_plot_requested <- length(plot_logical[plot_logical])
   if (number_of_plot_requested > 1) {
-    warning("You requested > 2 plots. Since 1 plot can be displayed at a time, considering using Rmd for better viewing experience.")
+    warning(
+      "You requested > 2 plots. Since 1 plot can be displayed at a time, considering using Rmd for better viewing experience."
+    )
   }
-
+  
   # Return Result
   if (return_result == TRUE) {
     return_list <- list(

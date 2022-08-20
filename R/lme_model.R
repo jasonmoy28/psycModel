@@ -66,8 +66,6 @@ lme_model <- function(data,
                       use_package = "lmerTest",
                       quite = FALSE) {
   ########################################### Set up #############################################
-  # check data type and covert all variable to numeric
-  data <- data_check(data)
   lme_model_check <- function(object, method) {
     if (method == "response_variable_check") {
       if (length(object) != 1) {
