@@ -8,7 +8,7 @@ testthat::test_that(desc = "lme_model: nlme", {
     id = class,
     use_package = "nlme",
     opt_control = "optim",
-    quite = T
+    quite = TRUE
   )
   expect_equal(class(fit), "lme")
 })
@@ -21,7 +21,7 @@ testthat::test_that(desc = "lme_model: lme4", {
     non_random_effect_factors = c(extrav, sex),
     id = class,
     use_package = "lme4",
-    quite = T
+    quite = TRUE
   )
   expect_equal(class(fit)[1], "lmerMod")
 })
@@ -33,7 +33,7 @@ testthat::test_that(desc = "lme_model: lmerTest", {
     non_random_effect_factors = c(extrav, sex),
     id = class,
     use_package = "lmerTest",
-    quite = T
+    quite = TRUE
   )
   expect_equal(class(fit)[1], "lmerModLmerTest")
 })

@@ -5,7 +5,7 @@
 #' @return factor_df
 #'
 get_predict_df <- function(data) {
-  mean_df <- dplyr::summarise(data, dplyr::across(!where(is.factor), ~ mean(., na.rm = T)))
+  mean_df <- dplyr::summarise(data, dplyr::across(!where(is.factor), ~ mean(., na.rm = TRUE)))
   factors = data %>% dplyr::select(where(is.factor)) %>% colnames(.)
   if (length(factors) != 0) {
     factor_df = dplyr::tibble(var = NA)
@@ -18,13 +18,13 @@ get_predict_df <- function(data) {
     mean_df = cbind(mean_df,factor_df) %>% dplyr::mutate(dplyr::across(where(is.character), as.factor))
   }
   
-  upper_df <- dplyr::summarise(data, dplyr::across(!where(is.factor), ~ mean(., na.rm = T) + stats::sd(., na.rm = T)))
+  upper_df <- dplyr::summarise(data, dplyr::across(!where(is.factor), ~ mean(., na.rm = TRUE) + stats::sd(., na.rm = TRUE)))
   factors = data %>% dplyr::select(where(is.factor)) %>% colnames(.)
   if (length(factors) != 0) {
     upper_df = cbind(upper_df,factor_df) %>% dplyr::mutate(dplyr::across(where(is.character), as.factor))
   }
   
-  lower_df <- dplyr::summarise(data, dplyr::across(!where(is.factor), ~ mean(., na.rm = T) - stats::sd(., na.rm = T)))
+  lower_df <- dplyr::summarise(data, dplyr::across(!where(is.factor), ~ mean(., na.rm = TRUE) - stats::sd(., na.rm = TRUE)))
   factors = data %>% dplyr::select(where(is.factor)) %>% colnames(.)
   if (length(factors) != 0) {
     lower_df = cbind(lower_df,factor_df) %>% dplyr::mutate(dplyr::across(where(is.character), as.factor))

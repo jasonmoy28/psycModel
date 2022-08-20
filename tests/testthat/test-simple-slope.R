@@ -4,7 +4,7 @@ testthat::test_that(desc = "simple_slope: two-way-interaction", {
     response_variable = "Sepal.Length",
     predictor_variable = c(Sepal.Width, Petal.Width),
     two_way_interaction_factor = c(Sepal.Width, Petal.Width),
-    quite = T
+    quite = TRUE
   )
 
   summary <- simple_slope(
@@ -19,7 +19,7 @@ testthat::test_that(desc = "simple_slope: three-way-interaction", {
     response_variable = "Sepal.Length",
     predictor_variable = c(Sepal.Width, Petal.Width),
     three_way_interaction_factor = c(Sepal.Width, Petal.Width, Petal.Length),
-    quite = T
+    quite = TRUE
   )
 
   summary <- simple_slope(

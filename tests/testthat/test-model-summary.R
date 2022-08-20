@@ -4,12 +4,12 @@ testthat::test_that("model_summary: lm model", {
     response_variable = "Sepal.Length",
     predictor_variable = c(Sepal.Width, Petal.Width),
     two_way_interaction_factor = c(Sepal.Width, Petal.Width),
-    quite = T
+    quite = TRUE
   )
   summary <- model_summary(model,
-    return_result = T,
-    assumption_plot = T,
-    quite = T
+    return_result = TRUE,
+    assumption_plot = TRUE,
+    quite = TRUE
   )
   expect_false(is.null(summary$model_summary))
   expect_false(is.null(summary$model_performance_df))
@@ -25,9 +25,9 @@ testthat::test_that("model_summary: lm model", {
 #     quite = TRUE,
 #   ))
 #   summary <- model_summary(model,
-#     return_result = T,
-#     assumption_plot = T,
-#     quite = T
+#     return_result = TRUE,
+#     assumption_plot = TRUE,
+#     quite = TRUE
 #   )
 #   expect_false(is.null(summary$model_summary))
 #   expect_false(is.null(summary$model_performance_df))
@@ -43,12 +43,12 @@ testthat::test_that(desc = "model_summary: nlme model", {
     id = class,
     opt_control = "optim",
     use_package = "nlme",
-    quite = T
+    quite = TRUE
   )
   summary <- model_summary(model,
-    return_result = T,
-    assumption_plot = T,
-    quite = T
+    return_result = TRUE,
+    assumption_plot = TRUE,
+    quite = TRUE
   )
   expect_false(is.null(summary$model_summary))
   expect_false(is.null(summary$model_performance_df))
@@ -63,12 +63,12 @@ testthat::test_that(desc = "model_summary: lmerTest model", {
     non_random_effect_factors = c(texp),
     id = class,
     use_package = "lmerTest",
-    quite = T
+    quite = TRUE
   )
   summary <- suppressWarnings(model_summary(model,
-    return_result = T,
-    assumption_plot = T,
-    quite = T
+    return_result = TRUE,
+    assumption_plot = TRUE,
+    quite = TRUE
   ))
   expect_false(is.null(summary$model_summary))
   expect_false(is.null(summary$model_performance_df))
@@ -83,12 +83,12 @@ testthat::test_that(desc = "model_summary: lme4 model", {
     non_random_effect_factors = c(texp),
     id = class,
     use_package = "lme4",
-    quite = T
+    quite = TRUE
   )
   summary <- suppressWarnings(model_summary(model,
-    return_result = T,
-    assumption_plot = T,
-    quite = T
+    return_result = TRUE,
+    assumption_plot = TRUE,
+    quite = TRUE
   ))
   expect_false(is.null(summary$model_summary))
   expect_false(is.null(summary$model_performance_df))
@@ -103,12 +103,12 @@ testthat::test_that(desc = "model_summary: lme4 model", {
 #     family = "poisson", # or you can enter as poisson(link = 'log')
 #     id = herd,
 #     data = lme4::cbpp,
-#     quite = T
+#     quite = TRUE
 #   ))
 #   summary <- model_summary(model,
-#     return_result = T,
-#     assumption_plot = T,
-#     quite = T
+#     return_result = TRUE,
+#     assumption_plot = TRUE,
+#     quite = TRUE
 #   )
 #   expect_false(is.null(summary$model_summary))
 #   expect_false(is.null(summary$model_performance_df))
