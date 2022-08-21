@@ -38,26 +38,16 @@
 #' fit <- lme_multilevel_model_summary(
 #'   data = popular,
 #'   response_variable = popular,
-#'   random_effect_factors = c(extrav),
-#'   non_random_effect_factors = texp,
-#'   two_way_interaction_factor = c(extrav, texp),
-#'   graph_label_name = c("popular", "extraversion", "teacher experience"),
-#'   id = class
-#' )
-#' \donttest{
-#' fit <- lme_multilevel_model_summary(
-#'   data = popular,
-#'   response_variable = popular,
-#'   random_effect_factors = c(extrav, sex),
-#'   non_random_effect_factors = texp,
-#'   three_way_interaction_factor = c(extrav, sex, texp), # three-way interaction
-#'   graph_label_name = c("popular", "extraversion", "sex", "teacher experience"),
+#'   random_effect_factors = NULL, # you can add random effect predictors here 
+#'   non_random_effect_factors = c(extrav,texp),
+#'   two_way_interaction_factor = NULL, # you can add two-way interaction plot here 
+#'   graph_label_name = NULL, #you can also change graph lable name here
 #'   id = class,
-#'   simple_slope = TRUE, # you can request simple slope
-#'   assumption_plot = TRUE, # you can also request assumption plot
-#'   plot_color = TRUE # you can also request the plot in color
+#'   simple_slope = FALSE, # you can also request simple slope estimated with Johnson-Newman Region of Significance
+#'   assumption_plot = FALSE, # you can also request assumption plot
+#'   plot_color = FALSE # you can also request the plot in color
+#'   streamline = FALSE # you can change this to get the least amount of info
 #' )
-#' }
 #'
 lme_multilevel_model_summary <- function(data,
                                          model = NULL,

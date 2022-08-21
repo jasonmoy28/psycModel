@@ -48,7 +48,7 @@ cfa_summary(
 \item{return_result}{If it is set to \code{TRUE}, it will return the \code{lavaan} model}
 }
 \value{
-a \code{lavaan} object
+a \code{lavaan} object if return_result is \code{TRUE}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr

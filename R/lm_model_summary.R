@@ -31,19 +31,12 @@
 #'   data = iris,
 #'   response_variable = "Sepal.Length",
 #'   predictor_variable = tidyselect::everything(),
-#'   two_way_interaction_factor = c(Sepal.Width, Species)
-#' )
-#' \donttest{
-#' fit <- lm_model_summary(
-#'   data = iris,
-#'   response_variable = "Sepal.Length",
-#'   predictor_variable = tidyselect::everything(),
 #'   two_way_interaction_factor = c(Sepal.Width, Species),
-#'   simple_slope = TRUE, # you can request simple slope
-#'   assumption_plot = TRUE, # you can also request assumption plot
-#'   plot_color = TRUE # you can also request the plot in color
+#'   interaction_plot = FALSE, # you can also request the interaction plot
+#'   simple_slope = FALSE, # you can also request simple slope estimated with Johnson-Newman Region of Significance
+#'   assumption_plot = FALSE, # you can also request assumption plot
+#'   streamline = FALSE #you can change this to get the least amount of info
 #' )
-#' }
 lm_model_summary <- function(data,
                              response_variable = NULL,
                              predictor_variable = NULL,

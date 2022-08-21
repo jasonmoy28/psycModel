@@ -19,7 +19,7 @@
 #' @param streamline print streamlined output
 #' @param plot print a path diagram. Default is `TRUE`
 #'
-#' @return a `lavaan` object
+#' @return a `lavaan` object if return_result is `TRUE`
 #' @details
 #' First, just like researchers have argued against p value of 0.05 is not a good cut-of, researchers have also argue against that fit indicies (more importantly, the cut-off criteria) are not completely representative of the goodness of fit.
 #' Nonetheless, you are required to report them if you are publishing an article anyway. I will summarize the general recommended cut-off criteria for CFA model below.
