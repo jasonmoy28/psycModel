@@ -1,7 +1,6 @@
-title: psycModel
-url: https://jasonmoy28.github.io/psycModel
+url: https://jasonmoy28.github.io/psycModel/
 template:
-  params:
+    params:
     bootswatch: simplex
     ganalytics: UA-195379146-1
 navbar:
@@ -9,3 +8,4 @@ navbar:
     - icon: fab fa-github fa-0.7x
       text: "GitHub"
       href: https://github.com/jasonmoy28/psycModel
+
