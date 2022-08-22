@@ -74,8 +74,8 @@ lme_multilevel_model_summary(
    id = class,
    model_summary = TRUE, 
    interaction_plot = TRUE, 
-   assumption_plot = TRUE,
-   simple_slope = TRUE,
+   assumption_plot = FALSE, # you can try set to TRUE
+   simple_slope = FALSE, # you can try set to TRUE
    plot_color = TRUE
  )
 ```
