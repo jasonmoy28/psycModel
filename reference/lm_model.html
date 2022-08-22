@@ -26,7 +26,7 @@ In this package, I will not build separate function for ANOVA &amp;amp; ANCOVA s
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psycModel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
       </span>
     </div>
 
@@ -35,7 +35,7 @@ In this package, I will not build separate function for ANOVA &amp;amp; ANCOVA s
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,45 +79,57 @@ In this package, I will not build separate function for ANOVA &amp; ANCOVA since
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">lm_model</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">response_variable</span>,
-  <span class="va">predictor_variable</span>,
-  two_way_interaction_factor <span class="op">=</span> <span class="cn">NULL</span>,
-  three_way_interaction_factor <span class="op">=</span> <span class="cn">NULL</span>,
-  quite <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lm_model</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">response_variable</span>,</span>
+<span>  <span class="va">predictor_variable</span>,</span>
+<span>  two_way_interaction_factor <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  three_way_interaction_factor <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  quite <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>data frame</p></dd>
+
+
 <dt>response_variable</dt>
 <dd><p>response variable. Support <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> syntax.</p></dd>
+
+
 <dt>predictor_variable</dt>
 <dd><p>predictor variable. Support <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> syntax. It will automatically remove the response variable from predictor variable, so you can use <code>contains()</code> or <code>start_with()</code> safely.</p></dd>
+
+
 <dt>two_way_interaction_factor</dt>
 <dd><p>two-way interaction factors. You need to pass 2+ factor. Support <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> syntax.</p></dd>
+
+
 <dt>three_way_interaction_factor</dt>
 <dd><p>three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> syntax.</p></dd>
+
+
 <dt>quite</dt>
 <dd><p>suppress printing output</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>an object class of <code>lm</code> representing the linear regression fit</p>
+    
+
+<p>an object class of <code>lm</code> representing the linear regression fit</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">lm_model</span><span class="op">(</span></span>
-<span class="r-in">  data <span class="op">=</span> <span class="va">iris</span>,</span>
-<span class="r-in">  response_variable <span class="op">=</span> <span class="st">"Sepal.Length"</span>,</span>
-<span class="r-in">  predictor_variable <span class="op">=</span> <span class="fu">tidyselect</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span class="r-in">  two_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Sepal.Width</span>, <span class="va">Species</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The following columns are coerced into numeric: Species</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">lm_model</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">iris</span>,</span></span>
+<span class="r-in"><span>  response_variable <span class="op">=</span> <span class="st">"Sepal.Length"</span>,</span></span>
+<span class="r-in"><span>  predictor_variable <span class="op">=</span> <span class="fu">tidyselect</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  two_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Sepal.Width</span>, <span class="va">Species</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitting Model with lm:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Formula = Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species + Sepal.Width*Species</span>
 </code></pre></div>
@@ -134,7 +146,7 @@ In this package, I will not build separate function for ANOVA &amp; ANCOVA since
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

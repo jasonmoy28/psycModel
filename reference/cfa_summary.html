@@ -26,7 +26,7 @@ All arguments (except the CFA items) must be explicitly named (e.g., model = you
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psycModel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
       </span>
     </div>
 
@@ -35,7 +35,7 @@ All arguments (except the CFA items) must be explicitly named (e.g., model = you
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,55 +79,84 @@ All arguments (except the CFA items) must be explicitly named (e.g., model = you
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cfa_summary</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">...</span>,
-  model <span class="op">=</span> <span class="cn">NULL</span>,
-  group <span class="op">=</span> <span class="cn">NULL</span>,
-  ordered <span class="op">=</span> <span class="cn">FALSE</span>,
-  digits <span class="op">=</span> <span class="fl">3</span>,
-  model_covariance <span class="op">=</span> <span class="cn">TRUE</span>,
-  model_variance <span class="op">=</span> <span class="cn">TRUE</span>,
-  plot <span class="op">=</span> <span class="cn">TRUE</span>,
-  group_partial <span class="op">=</span> <span class="cn">NULL</span>,
-  streamline <span class="op">=</span> <span class="cn">FALSE</span>,
-  quite <span class="op">=</span> <span class="cn">FALSE</span>,
-  return_result <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cfa_summary</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  model <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  group <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ordered <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  model_covariance <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  model_variance <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  group_partial <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  streamline <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  quite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  return_result <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>data frame</p></dd>
+
+
 <dt>...</dt>
 <dd><p>CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for examples. Support <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> syntax.</p></dd>
+
+
 <dt>model</dt>
 <dd><p>explicit <code>lavaan</code> model. Must be specify with <code>model = lavaan_model_syntax</code>. <a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="figures/lifecycle-experimental.svg" alt="[Experimental]"></a></p></dd>
+
+
 <dt>group</dt>
 <dd><p>optional character. used for multi-level CFA. the nested variable for multilevel dataset (e.g., Country). Support <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> syntax.</p></dd>
+
+
 <dt>ordered</dt>
 <dd><p>Default is <code>FALSE</code>. If it is set to <code>TRUE</code>, <code>lavaan</code> will treat it as a ordinal variable and use <code>DWLS</code> instead of <code>ML</code></p></dd>
+
+
 <dt>digits</dt>
 <dd><p>number of digits to round to</p></dd>
+
+
 <dt>model_covariance</dt>
 <dd><p>print model covariance. Default is <code>TRUE</code></p></dd>
+
+
 <dt>model_variance</dt>
 <dd><p>print model variance. Default is <code>TRUE</code></p></dd>
+
+
 <dt>plot</dt>
 <dd><p>print a path diagram. Default is <code>TRUE</code></p></dd>
+
+
 <dt>group_partial</dt>
 <dd><p>Items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2').</p></dd>
+
+
 <dt>streamline</dt>
 <dd><p>print streamlined output</p></dd>
+
+
 <dt>quite</dt>
 <dd><p>suppress printing output</p></dd>
+
+
 <dt>return_result</dt>
 <dd><p>If it is set to <code>TRUE</code>, it will return the <code>lavaan</code> model</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a <code>lavaan</code> object</p>
+    
+
+<p>a <code>lavaan</code> object if return_result is <code>TRUE</code></p>
+
+
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -143,17 +172,17 @@ The model is considered an acceptable fit if CFI &gt; 0.9 and RMSEA &lt; 0.08. I
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT</span></span>
-<span class="r-in"><span class="co"># Fitting a multilevel single factor CFA model</span></span>
-<span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">cfa_summary</span><span class="op">(</span></span>
-<span class="r-in">  data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>,</span>
-<span class="r-in">  <span class="va">x1</span><span class="op">:</span><span class="va">x3</span>,</span>
-<span class="r-in">  <span class="va">x4</span><span class="op">:</span><span class="va">x6</span>,</span>
-<span class="r-in">  <span class="va">x7</span><span class="op">:</span><span class="va">x9</span>,</span>
-<span class="r-in">  group <span class="op">=</span> <span class="st">"sex"</span>,</span>
-<span class="r-in">  model_variance <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># do not print the model_variance</span></span>
-<span class="r-in">  model_covariance <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># do not print the model_covariance</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT</span></span></span>
+<span class="r-in"><span><span class="co"># Fitting a multilevel single factor CFA model</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">cfa_summary</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>,</span></span>
+<span class="r-in"><span>  <span class="va">x1</span><span class="op">:</span><span class="va">x3</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x4</span><span class="op">:</span><span class="va">x6</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x7</span><span class="op">:</span><span class="va">x9</span>,</span></span>
+<span class="r-in"><span>  group <span class="op">=</span> <span class="st">"sex"</span>,</span></span>
+<span class="r-in"><span>  model_variance <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># do not print the model_variance</span></span></span>
+<span class="r-in"><span>  model_covariance <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># do not print the model_covariance</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Summary</span></span>
@@ -206,29 +235,29 @@ The model is considered an acceptable fit if CFI &gt; 0.9 and RMSEA &lt; 0.08. I
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;"> Warning. Some poor factor loadings (some loadings &lt; 0.4)</span></span>
 <span class="r-plt img"><img src="cfa_summary-1.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="cfa_summary-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)</span></span>
-<span class="r-in"><span class="co"># Note in the below function how I added `model = ` in front of the lavaan model.</span></span>
-<span class="r-in"><span class="co"># Similarly, the same rule apply for all arguments (e.g., `ordered = FALSE` instead of just `FALSE`)</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">cfa_summary</span><span class="op">(</span></span>
-<span class="r-in">  model <span class="op">=</span> <span class="st">"visual  =~ x1 + x2 + x3; textual =~ x4 + x5 + x6;"</span>,</span>
-<span class="r-in">  data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>,</span>
-<span class="r-in">  quite <span class="op">=</span> <span class="cn">TRUE</span> <span class="co"># silence all output</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Fitting a CFA model by passing explicit lavaan model (equivalent to the above model)</span></span></span>
+<span class="r-in"><span><span class="co"># Note in the below function how I added `model = ` in front of the lavaan model.</span></span></span>
+<span class="r-in"><span><span class="co"># Similarly, the same rule apply for all arguments (e.g., `ordered = FALSE` instead of just `FALSE`)</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">cfa_summary</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  model <span class="op">=</span> <span class="st">"visual  =~ x1 + x2 + x3"</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>,</span></span>
+<span class="r-in"><span>  quite <span class="op">=</span> <span class="cn">TRUE</span> <span class="co"># silence all output</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="cfa_summary-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># This will fail because I did not add `model = ` in front of the lavaan model.</span></span>
-<span class="r-in"><span class="co"># Therefore,you must add the tag in front of all arguments</span></span>
-<span class="r-in"><span class="co"># For example, `return_result = 'model'` instaed of `model`</span></span>
-<span class="r-in"><span class="fu">cfa_summary</span><span class="op">(</span><span class="st">"visual  =~ x1 + x2 + x3</span>
-<span class="r-in">             textual =~ x4 + x5 + x6</span>
-<span class="r-in">             speed   =~ x7 + x8 + x9 "</span>,</span>
-<span class="r-in">  data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># This will fail because I did not add `model = ` in front of the lavaan model.</span></span></span>
+<span class="r-in"><span><span class="co"># Therefore,you must add the tag in front of all arguments</span></span></span>
+<span class="r-in"><span><span class="co"># For example, `return_result = 'model'` instaed of `model`</span></span></span>
+<span class="r-in"><span><span class="fu">cfa_summary</span><span class="op">(</span><span class="st">"visual  =~ x1 + x2 + x3</span></span></span>
+<span class="r-in"><span><span class="st">             textual =~ x4 + x5 + x6</span></span></span>
+<span class="r-in"><span><span class="st">             speed   =~ x7 + x8 + x9 "</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -243,7 +272,7 @@ The model is considered an acceptable fit if CFI &gt; 0.9 and RMSEA &lt; 0.08. I
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

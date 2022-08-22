@@ -24,7 +24,7 @@ Compare the fit indices of models (see below for model support)"><meta property=
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psycModel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
       </span>
     </div>
 
@@ -33,7 +33,7 @@ Compare the fit indices of models (see below for model support)"><meta property=
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -75,55 +75,66 @@ Compare the fit indices of models (see below for model support)</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">compare_fit</span><span class="op">(</span>
-  <span class="va">...</span>,
-  digits <span class="op">=</span> <span class="fl">3</span>,
-  quite <span class="op">=</span> <span class="cn">FALSE</span>,
-  streamline <span class="op">=</span> <span class="cn">FALSE</span>,
-  return_result <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">compare_fit</span><span class="op">(</span></span>
+<span>  <span class="va">...</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  quite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  streamline <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  return_result <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>...</dt>
 <dd><p>model. If it is a <code>lavaan</code> object, it will try to compute the measurement invariance. Other model types will be passed to <code><a href="https://easystats.github.io/performance/reference/compare_performance.html" class="external-link">performance::compare_performance()</a></code>.</p></dd>
+
+
 <dt>digits</dt>
 <dd><p>number of digits to round to</p></dd>
+
+
 <dt>quite</dt>
 <dd><p>suppress printing output</p></dd>
+
+
 <dt>streamline</dt>
 <dd><p>print streamlined output</p></dd>
+
+
 <dt>return_result</dt>
 <dd><p>If it is set to <code>TRUE</code>, it will return the the compare fit data frame.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>data frame with fit indices and change in fit indices</p>
+    
+
+<p>data frame with fit indices and change in fit indices</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># lme model</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="lm_model.html">lm_model</a></span><span class="op">(</span></span>
-<span class="r-in">  data <span class="op">=</span> <span class="va">popular</span>,</span>
-<span class="r-in">  response_variable <span class="op">=</span> <span class="va">popular</span>,</span>
-<span class="r-in">  predictor_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># lme model</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="lm_model.html">lm_model</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">popular</span>,</span></span>
+<span class="r-in"><span>  response_variable <span class="op">=</span> <span class="va">popular</span>,</span></span>
+<span class="r-in"><span>  predictor_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitting Model with lm:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Formula = popular ~ sex + extrav</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="lm_model.html">lm_model</a></span><span class="op">(</span></span>
-<span class="r-in">  data <span class="op">=</span> <span class="va">popular</span>,</span>
-<span class="r-in">  response_variable <span class="op">=</span> <span class="va">popular</span>,</span>
-<span class="r-in">  predictor_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,</span>
-<span class="r-in">  two_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="lm_model.html">lm_model</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">popular</span>,</span></span>
+<span class="r-in"><span>  response_variable <span class="op">=</span> <span class="va">popular</span>,</span></span>
+<span class="r-in"><span>  predictor_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  two_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitting Model with lm:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Formula = popular ~ sex + extrav + sex*extrav</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">compare_fit</span><span class="op">(</span><span class="va">fit1</span>, <span class="va">fit2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">compare_fit</span><span class="op">(</span><span class="va">fit1</span>, <span class="va">fit2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Summary</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Type = Model Comparison</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -132,8 +143,8 @@ Compare the fit indices of models (see below for model support)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   compare_fit is temporialy disable due to unknown error caused by insight upgrade from 0.13.2 to 0.14.0. Follow instruction on the package load message to get back all the features.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># see ?measurement_invariance for measurement invariance example</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># see ?measurement_invariance for measurement invariance example</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -148,7 +159,7 @@ Compare the fit indices of models (see below for model support)</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

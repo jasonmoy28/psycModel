@@ -24,7 +24,7 @@ The function will extract the relevant coefficients from the regression models (
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psycModel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
       </span>
     </div>
 
@@ -33,7 +33,7 @@ The function will extract the relevant coefficients from the regression models (
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -75,34 +75,52 @@ The function will extract the relevant coefficients from the regression models (
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">model_summary</span><span class="op">(</span>
-  <span class="va">model</span>,
-  digits <span class="op">=</span> <span class="fl">3</span>,
-  assumption_plot <span class="op">=</span> <span class="cn">FALSE</span>,
-  quite <span class="op">=</span> <span class="cn">FALSE</span>,
-  streamline <span class="op">=</span> <span class="cn">FALSE</span>,
-  return_result <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">model_summary</span><span class="op">(</span></span>
+<span>  <span class="va">model</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  assumption_plot <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  quite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  streamline <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  return_result <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  standardize <span class="op">=</span> <span class="st">"basic"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>model</dt>
 <dd><p>an model object. The following model are tested for accuracy: <code>lm</code>, <code>glm</code>, <code>lme</code>, <code>lmer</code>, <code>glmer</code>. Other model object may work if it work with parameters::model_parameters()</p></dd>
+
+
 <dt>digits</dt>
 <dd><p>number of digits to round to</p></dd>
+
+
 <dt>assumption_plot</dt>
 <dd><p>Generate an panel of plots that check major assumptions. It is usually recommended to inspect model assumption violation visually. In the background, it calls <code><a href="https://easystats.github.io/performance/reference/check_model.html" class="external-link">performance::check_model()</a></code>.</p></dd>
+
+
 <dt>quite</dt>
 <dd><p>suppress printing output</p></dd>
+
+
 <dt>streamline</dt>
 <dd><p>print streamlined output. Only print model estimate and performance.</p></dd>
+
+
 <dt>return_result</dt>
 <dd><p>It set to <code>TRUE</code>, it return the model estimates data frame.</p></dd>
+
+
+<dt>standardize</dt>
+<dd><p>The method used for standardizing the parameters. Can be NULL (default; no standardization), "refit" (for re-fitting the model on standardized data) or one of "basic", "posthoc", "smart", "pseudo". See 'Details' in parameters::standardize_parameters()</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a list of model estimate data frame, model performance data frame, and the assumption plot (an <code>ggplot</code> object)</p>
+    
+
+<p>a list of model estimate data frame, model performance data frame, and the assumption plot (an <code>ggplot</code> object)</p>
     </div>
     <div id="references">
     <h2>References</h2>
@@ -111,16 +129,18 @@ The function will extract the relevant coefficients from the regression models (
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># I am going to show the more generic usage of this function</span></span>
-<span class="r-in"><span class="co"># You can also use this package's built in function to fit the models</span></span>
-<span class="r-in"><span class="co"># I recommend using the integrated_multilevel_model_summary to get everything</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># lme example</span></span>
-<span class="r-in"><span class="va">lme_fit</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="st">"popular ~ texp  + (1 | class)"</span>,</span>
-<span class="r-in">  data <span class="op">=</span> <span class="va">popular</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">model_summary</span><span class="op">(</span><span class="va">lme_fit</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># I am going to show the more generic usage of this function</span></span></span>
+<span class="r-in"><span><span class="co"># You can also use this package's built in function to fit the models</span></span></span>
+<span class="r-in"><span><span class="co"># I recommend using the integrated_multilevel_model_summary to get everything</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># lme example</span></span></span>
+<span class="r-in"><span><span class="va">lme_fit</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="st">"popular ~ texp  + (1 | class)"</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">popular</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">model_summary</span><span class="op">(</span><span class="va">lme_fit</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Standardizing coefficients only works for fixed effects of the mixed</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   model.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Summary</span></span>
@@ -129,42 +149,28 @@ The function will extract the relevant coefficients from the regression models (
 <span class="r-out co"><span class="r-pr">#&gt;</span> Predictors = texp</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Estimates</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           Parameter  Effects  Coefficient       t    df     SE          p     Group          95% CI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         (Intercept)    fixed        4.197  22.552  1996  0.186  0.000 ***            [3.832, 4.562]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                texp    fixed        0.062   5.212  1996  0.012  0.000 ***            [0.038, 0.085]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      SD (Intercept)   random        0.737     NaN   NaN    NaN    NaN         class      [NaN, NaN]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   SD (Observations)   random        1.105     NaN   NaN    NaN    NaN      Residual      [NaN, NaN]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Parameter  Std_Coefficient     SE       t    df  Effects          p          95% CI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept)            0.000  0.000  22.552  1996    fixed  0.000 ***  [0.000, 0.000]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          texp            0.292  0.056   5.212  1996    fixed  0.000 ***  [0.182, 0.402]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Goodness of Fit</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        AIC       BIC  R²_conditional  R²_marginal    ICC   RMSE      σ</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   6321.320  6343.724           0.366        0.085  0.308  1.080  1.105</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        AIC      AICc       BIC  R²_conditional  R²_marginal    ICC   RMSE      σ</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   6321.320  6321.340  6343.724           0.366        0.085  0.308  1.080  1.105</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Assumption Check</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">OK: Model is converged</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">OK: No singularity is detected</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">Warning: Autocorrelated residuals detected (p &lt; .001).</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">OK: residuals appear as normally distributed (p = 0.236).</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Unable to check autocorrelation. Try changing na.action to na.omit.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">OK: Error variance appears to be homoscedastic (p = 0.198).</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Not enough model terms in the conditional part of the model to check for</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   multicollinearity.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">OK: No multicolinearity detected (VIF &lt; 5)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># lm example</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">lm_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">+</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="va">Petal.Width</span>,</span>
-<span class="r-in">  data <span class="op">=</span> <span class="va">iris</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">model_summary</span><span class="op">(</span><span class="va">lm_fit</span>, assumption_plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># lm example</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lm_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">+</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="va">Petal.Width</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">iris</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">model_summary</span><span class="op">(</span><span class="va">lm_fit</span>, assumption_plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Summary</span></span>
@@ -174,12 +180,12 @@ The function will extract the relevant coefficients from the regression models (
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Estimates</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Parameter  Coefficient       t   df     SE          p            95% CI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Parameter  Coefficient     SE       t   df          p            95% CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    (Intercept)        1.856   7.401  146  0.251  0.000 ***  [ 1.360,  2.352]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Sepal.Width        0.651   9.765  146  0.067  0.000 ***  [ 0.519,  0.783]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length        0.709  12.502  146  0.057  0.000 ***  [ 0.597,  0.821]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Petal.Width       -0.556  -4.363  146  0.128  0.000 ***  [-0.809, -0.304]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    (Intercept)        1.856  0.251   7.401  146  0.000 ***  [ 1.360,  2.352]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Sepal.Width        0.651  0.067   9.765  146  0.000 ***  [ 0.519,  0.783]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length        0.709  0.057  12.502  146  0.000 ***  [ 0.597,  0.821]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Petal.Width       -0.556  0.128  -4.363  146  0.000 ***  [-0.809, -0.304]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Goodness of Fit</span></span>
@@ -188,21 +194,8 @@ The function will extract the relevant coefficients from the regression models (
 <span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   84.643  99.696  0.859        0.856  0.310  0.315</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Assumption Check</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">OK: Residuals appear to be independent and not autocorrelated (p = 0.808).</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">OK: residuals appear as normally distributed (p = 0.943).</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Unable to check autocorrelation. Try changing na.action to na.omit.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.035).</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">Warning: Severe multicolinearity detected (VIF &gt; 10). Please inspect the following table to identify high correlation factors.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Multicollinearity Table </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ─────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           Term     VIF  SE_factor</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ─────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Sepal.Width   1.271      1.127</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length  15.098      3.886</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Petal.Width  14.234      3.773</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ─────────────────────────────────</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: qqplotr</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: see</span>
 <span class="r-plt img"><img src="model_summary-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
@@ -219,7 +212,7 @@ The function will extract the relevant coefficients from the regression models (
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

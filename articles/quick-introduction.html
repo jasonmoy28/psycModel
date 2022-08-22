@@ -46,7 +46,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psycModel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
       </span>
     </div>
 
@@ -56,7 +56,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -92,7 +92,7 @@
 
       
 
-      </header><script src="quick-introduction_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>quick-introduction</h1>
@@ -107,7 +107,7 @@
     
 <p>Version Note: Up-to-date with v0.3.0</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jasonmoy28.github.io/psycModel/">psycModel</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jasonmoy28.github.io/psycModel/">psycModel</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="why-should-you-use-this-pacakge">Why should you use this pacakge?<a class="anchor" aria-label="anchor" href="#why-should-you-use-this-pacakge"></a>
 </h2>
@@ -137,17 +137,17 @@
 <p><code>integrated_model_summary</code> is the integrated function for linear regression and generalized linear regression. It will first fit the model using <code>lm_model</code> or <code>glm_model</code>, then it will pass the fitted model object to <code>model_summary</code> which produces model estimates and assumption checks. If interaction terms are included, they will be passed to the relevant interaction_plot function for plotting (the package currently does not support generalized linear regression interaction plotting).</p>
 <p>Additionally, you can request <code>assumption_plot</code> and <code>simple_slope</code> (default is <code>FALSE</code>). By requesting <code>assumption_plot</code>, it produces a panel of graphs that allow you to visually inspect the model assumption (in addition to testing it statistically). <code>simple_slope</code> is another powerful way to probe further into the interaction. It shows you the slope estimate at the mean and +1/-1 SD of the mean of the moderator. For example, you hypothesized that social-economic status (SES) moderates the effect of teacher experience on education quality. Then, simple_slope shows you the slope estimate of teacher experience on education quality at +1/-1 SD and the mean level of SES. Additionally, it produces a Johnson-Newman plot that shows you at what level of the moderator that the slope_estimate is predicted to be insignificant.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/integrated_model_summary.html">integrated_model_summary</a></span><span class="op">(</span>
-   data <span class="op">=</span> <span class="va">iris</span>,
-   response_variable <span class="op">=</span> <span class="va">Sepal.Length</span>,
-   predictor_variable <span class="op">=</span> <span class="fu">tidyselect</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,
-   two_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Sepal.Width</span>, <span class="va">Petal.Width</span><span class="op">)</span>, 
-   model_summary <span class="op">=</span> <span class="cn">TRUE</span>, 
-   interaction_plot <span class="op">=</span> <span class="cn">TRUE</span>, 
-   assumption_plot <span class="op">=</span> <span class="cn">TRUE</span>,
-   simple_slope <span class="op">=</span> <span class="cn">TRUE</span>,
-   plot_color <span class="op">=</span> <span class="cn">TRUE</span>
- <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/lm_model_summary.html">lm_model_summary</a></span><span class="op">(</span></span>
+<span>   data <span class="op">=</span> <span class="va">iris</span>,</span>
+<span>   response_variable <span class="op">=</span> <span class="va">Sepal.Length</span>,</span>
+<span>   predictor_variable <span class="op">=</span> <span class="fu">tidyselect</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>   two_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Sepal.Width</span>, <span class="va">Petal.Width</span><span class="op">)</span>, </span>
+<span>   model_summary <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>   interaction_plot <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>   assumption_plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>   simple_slope <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>   plot_color <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span> <span class="op">)</span></span></code></pre></div>
 <pre class="fansi fansi-output"><code>
  
 <span style="text-decoration: underline;">Model Summary</span>
@@ -157,48 +157,47 @@ Predictors = Sepal.Width, Petal.Length, Petal.Width, Species
 
 <span style="text-decoration: underline;">Model Estimates</span>
 ───────────────────────────────────────────────────────────────────────────────────────
-                Parameter  Coefficient       t   df     SE          p            95% CI
+                Parameter  Coefficient     SE       t   df          p            95% CI
 ───────────────────────────────────────────────────────────────────────────────────────
-              (Intercept)        1.609   3.858  144  0.417  0.000 ***  [ 0.785,  2.433]
-              Sepal.Width        0.772   6.475  144  0.119  0.000 ***  [ 0.536,  1.007]
-             Petal.Length        0.749  12.754  144  0.059  0.000 ***  [ 0.633,  0.865]
-              Petal.Width        0.112   0.297  144  0.378  0.767      [-0.635,  0.860]
-                  Species       -0.264  -2.222  144  0.119  0.028 *    [-0.499, -0.029]
-  Sepal.Width:Petal.Width       -0.154  -1.485  144  0.103  0.140      [-0.358,  0.051]
+              (Intercept)        1.652  0.434   3.807  143  0.000 ***  [ 0.794,  2.510]
+              Sepal.Width        0.645  0.128   5.023  143  0.000 ***  [ 0.391,  0.899]
+             Petal.Length        0.837  0.068  12.240  143  0.000 ***  [ 0.702,  0.972]
+              Petal.Width        0.220  0.375   0.588  143  0.558      [-0.520,  0.961]
+        Speciesversicolor       -0.770  0.241  -3.196  143  0.002 **   [-1.246, -0.294]
+         Speciesvirginica       -1.110  0.337  -3.296  143  0.001 ***  [-1.775, -0.444]
+  Sepal.Width:Petal.Width       -0.159  0.102  -1.560  143  0.121      [-0.360,  0.042]
 ───────────────────────────────────────────────────────────────────────────────────────
 
 <span style="text-decoration: underline;">Goodness of Fit</span>
 ───────────────────────────────────────────────────
      AIC      BIC     R²  R²_adjusted   RMSE      σ
 ───────────────────────────────────────────────────
-  82.514  103.588  0.864        0.860  0.304  0.310
+  78.584  102.669  0.870        0.864  0.298  0.305
 ───────────────────────────────────────────────────
 
 <span style="text-decoration: underline;">Model Assumption Check</span>
-OK: Residuals appear to be independent and not autocorrelated (p = 0.980).
-OK: residuals appear as normally distributed (p = 0.892).
+
 <span style="color: #0000BB;">Unable to check autocorrelation. Try changing na.action to na.omit.</span>
-Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.047).
 <span style="color: #BB0000;">Warning: Severe multicolinearity detected (VIF &gt; 10). Please inspect the following table to identify high correlation factors.</span>
 <span style="text-decoration: underline;">Multicollinearity Table </span>
-─────────────────────────────────────────────
-                     Term      VIF  SE_factor
-─────────────────────────────────────────────
-              Sepal.Width    4.174      2.043
-             Petal.Length   16.625      4.077
-              Petal.Width  128.506     11.336
-                  Species   14.673      3.831
-  Sepal.Width:Petal.Width   90.119      9.493
-─────────────────────────────────────────────
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+                     Term      VIF  VIF_CI_low  VIF_CI_high  SE_factor  Tolerance  Tolerance_CI_low  Tolerance_CI_high
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+              Sepal.Width    5.013       3.864        6.624      2.239      0.199             0.151              0.259
+             Petal.Length   23.273      17.389       31.269      4.824      0.043             0.032              0.058
+              Petal.Width  130.386      96.739      175.857     11.419      0.008             0.006              0.010
+                  Species   41.975      31.243       56.513      6.479      0.024             0.018              0.032
+  Sepal.Width:Petal.Width   90.160      66.939      121.557      9.495      0.011             0.008              0.015
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 </code></pre>
 <img src="quick-introduction_files/figure-html/unnamed-chunk-2-1.png" width="700" height="400"><pre class="fansi fansi-output"><code>
 <span style="text-decoration: underline;">Slope Estimates at Each Level of Moderators</span>
 ────────────────────────────────────────────────────────────────────
   Petal.Width Level   Est.   S.E.  t val.          p          95% CI
 ────────────────────────────────────────────────────────────────────
-                Low  0.704  0.086   8.226  0.000 ***  [0.535, 0.874]
-               Mean  0.587  0.072   8.182  0.000 ***  [0.445, 0.729]
-               High  0.470  0.124   3.786  0.000 ***  [0.225, 0.715]
+                Low  0.576  0.100   5.770  0.000 ***  [0.379, 0.773]
+               Mean  0.455  0.090   5.075  0.000 ***  [0.278, 0.632]
+               High  0.334  0.135   2.476  0.014 *    [0.067, 0.600]
 ────────────────────────────────────────────────────────────────────
 <span style="font-style: italic;">Note: For continuous variable, low and high represent -1 and +1 SD from the mean, respectively.</span>
 </code></pre>
@@ -209,20 +208,20 @@ Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.047).
 </h3>
 <p>This is the multilevel-variation of <code>integrated_model_summary</code>. It works exactly the same way as <code>integrated_model_summary</code> except you need to specify the non_random_effect_factors (i.e., level-2 factors) and the random_effect_factors (i.e., the level-1 factors) instead of <code>predictor_variable</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/integrated_multilevel_model_summary.html">integrated_multilevel_model_summary</a></span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">popular</span>,
-    response_variable <span class="op">=</span> <span class="va">popular</span>,
-    random_effect_factors <span class="op">=</span> <span class="va">extrav</span>,
-    non_random_effect_factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">texp</span><span class="op">)</span>,
-    three_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">extrav</span>, <span class="va">sex</span>, <span class="va">texp</span><span class="op">)</span>,
-   graph_label_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"popular"</span>, <span class="st">"extraversion"</span>, <span class="st">"sex"</span>, <span class="st">"teacher experience"</span><span class="op">)</span>, <span class="co"># change interaction plot label</span>
-   id <span class="op">=</span> <span class="va">class</span>,
-   model_summary <span class="op">=</span> <span class="cn">TRUE</span>, 
-   interaction_plot <span class="op">=</span> <span class="cn">TRUE</span>, 
-   assumption_plot <span class="op">=</span> <span class="cn">TRUE</span>,
-   simple_slope <span class="op">=</span> <span class="cn">TRUE</span>,
-   plot_color <span class="op">=</span> <span class="cn">TRUE</span>
- <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/lme_multilevel_model_summary.html">lme_multilevel_model_summary</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">popular</span>,</span>
+<span>    response_variable <span class="op">=</span> <span class="va">popular</span>,</span>
+<span>    random_effect_factors <span class="op">=</span> <span class="va">extrav</span>,</span>
+<span>    non_random_effect_factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">texp</span><span class="op">)</span>,</span>
+<span>    three_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">extrav</span>, <span class="va">sex</span>, <span class="va">texp</span><span class="op">)</span>,</span>
+<span>   graph_label_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"popular"</span>, <span class="st">"extraversion"</span>, <span class="st">"sex"</span>, <span class="st">"teacher experience"</span><span class="op">)</span>, <span class="co"># change interaction plot label</span></span>
+<span>   id <span class="op">=</span> <span class="va">class</span>,</span>
+<span>   model_summary <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>   interaction_plot <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>   assumption_plot <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># you can try set to TRUE</span></span>
+<span>   simple_slope <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># you can try set to TRUE</span></span>
+<span>   plot_color <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span> <span class="op">)</span></span></code></pre></div>
 <pre class="fansi fansi-output"><code>
  
 <span style="text-decoration: underline;">Model Summary</span>
@@ -231,88 +230,68 @@ Outcome = popular
 Predictors = extrav, sex, texp, extrav:sex, extrav:texp, sex:texp, extrav:sex:texp
 
 <span style="text-decoration: underline;">Model Estimates</span>
-─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-                      Parameter  Effects  Coefficient       t    df     SE          p     Group            95% CI
-─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-                    (Intercept)    fixed       -0.935  -2.839  1988  0.329  0.005 **             [-1.581, -0.289]
-                         extrav    fixed        0.753  14.345  1988  0.052  0.000 ***            [ 0.650,  0.856]
-                            sex    fixed        0.654   1.726  1988  0.379  0.085                [-0.089,  1.397]
-                           texp    fixed        0.215  10.198  1988  0.021  0.000 ***            [ 0.174,  0.257]
-                     extrav:sex    fixed        0.103   1.610  1988  0.064  0.108                [-0.023,  0.229]
-                    extrav:texp    fixed       -0.023  -6.451  1988  0.004  0.000 ***            [-0.030, -0.016]
-                       sex:texp    fixed        0.024   1.017  1988  0.024  0.309                [-0.022,  0.071]
-                extrav:sex:texp    fixed       -0.004  -0.961  1988  0.004  0.337                [-0.012,  0.004]
-                 SD (Intercept)   random        0.721     NaN   NaN    NaN    NaN         class        [NaN, NaN]
-                    SD (extrav)   random        0.079     NaN   NaN    NaN    NaN         class        [NaN, NaN]
-  Cor (Intercept~extrav: class)   random       -0.679     NaN   NaN    NaN    NaN         class        [NaN, NaN]
-              SD (Observations)   random        0.743     NaN   NaN    NaN    NaN      Residual        [NaN, NaN]
-─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+─────────────────────────────────────────────────────────────────────────────────────────────
+        Parameter  Std_Coefficient     SE       t    df  Effects          p            95% CI
+─────────────────────────────────────────────────────────────────────────────────────────────
+      (Intercept)            0.000  0.000  -2.839  1988    fixed  0.005 **   [ 0.000,  0.000]
+           extrav            0.688  0.048  14.345  1988    fixed  0.000 ***  [ 0.594,  0.781]
+              sex            0.236  0.137   1.726  1988    fixed  0.085      [-0.032,  0.505]
+             texp            1.020  0.100  10.198  1988    fixed  0.000 ***  [ 0.823,  1.216]
+       extrav:sex            0.211  0.131   1.610  1988    fixed  0.108      [-0.046,  0.468]
+      extrav:texp           -0.563  0.087  -6.451  1988    fixed  0.000 ***  [-0.734, -0.392]
+         sex:texp            0.154  0.151   1.017  1988    fixed  0.309      [-0.143,  0.450]
+  extrav:sex:texp           -0.133  0.138  -0.961  1988    fixed  0.337      [-0.404,  0.138]
+─────────────────────────────────────────────────────────────────────────────────────────────
 
 <span style="text-decoration: underline;">Goodness of Fit</span>
-──────────────────────────────────────────────────────────────────────
-       AIC       BIC  R²_conditional  R²_marginal    ICC   RMSE      σ
-──────────────────────────────────────────────────────────────────────
-  4823.684  4890.894           0.709        0.554  0.349  0.721  0.743
-──────────────────────────────────────────────────────────────────────
+────────────────────────────────────────────────────────────────────────────────
+       AIC      AICc       BIC  R²_conditional  R²_marginal    ICC   RMSE      σ
+────────────────────────────────────────────────────────────────────────────────
+  4823.684  4823.841  4890.894           0.709        0.554  0.349  0.721  0.743
+────────────────────────────────────────────────────────────────────────────────
 
 <span style="text-decoration: underline;">Model Assumption Check</span>
 <span style="color: #00BB00;">OK: Model is converged</span>
 <span style="color: #00BB00;">OK: No singularity is detected</span>
-Warning: Autocorrelated residuals detected (p &lt; .001).
-OK: residuals appear as normally distributed (p = 0.425).
+
 <span style="color: #0000BB;">Unable to check autocorrelation. Try changing na.action to na.omit.</span>
-OK: Error variance appears to be homoscedastic (p = 0.758).
 <span style="color: #BB0000;">Warning: Severe multicolinearity detected (VIF &gt; 10). Please inspect the following table to identify high correlation factors.</span>
 <span style="text-decoration: underline;">Multicollinearity Table </span>
-─────────────────────────────────────
-             Term      VIF  SE_factor
-─────────────────────────────────────
-           extrav    9.005      3.001
-              sex  110.249     10.500
-             texp    6.109      2.472
-       extrav:sex   95.403      9.767
-      extrav:texp   13.869      3.724
-         sex:texp  109.012     10.441
-  extrav:sex:texp   95.547      9.775
-─────────────────────────────────────
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+             Term      VIF  VIF_CI_low  VIF_CI_high  SE_factor  Tolerance  Tolerance_CI_low  Tolerance_CI_high
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+           extrav    9.005       8.297        9.783      3.001      0.111             0.102              0.121
+              sex  110.249     101.087      120.250     10.500      0.009             0.008              0.010
+             texp    6.109       5.643        6.622      2.472      0.164             0.151              0.177
+       extrav:sex   95.403      87.481      104.051      9.767      0.010             0.010              0.011
+      extrav:texp   13.869      12.755       15.089      3.724      0.072             0.066              0.078
+         sex:texp  109.012      99.953      118.900     10.441      0.009             0.008              0.010
+  extrav:sex:texp   95.547      87.612      104.208      9.775      0.010             0.010              0.011
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────
 </code></pre>
-<img src="quick-introduction_files/figure-html/unnamed-chunk-3-1.png" width="700" height="400"><pre class="fansi fansi-output"><code>
-<span style="text-decoration: underline;">Slope Estimates at Each Level of Moderators</span>
-────────────────────────────────────────────────────────────────────────
-  texp Level  sex Level   Est.   S.E.  t val.          p          95% CI
-────────────────────────────────────────────────────────────────────────
-         Low        Low  0.578  0.031  18.659  0.000 ***  [0.517, 0.638]
-                   High  0.649  0.032  20.573  0.000 ***  [0.587, 0.711]
-        Mean        Low  0.429  0.024  17.604  0.000 ***  [0.381, 0.476]
-                   High  0.473  0.023  20.425  0.000 ***  [0.428, 0.519]
-        High        Low  0.280  0.036   7.769  0.000 ***  [0.209, 0.350]
-                   High  0.298  0.031   9.527  0.000 ***  [0.236, 0.359]
-────────────────────────────────────────────────────────────────────────
-<span style="font-style: italic;">Note: For continuous variable, low and high represent -1 and +1 SD from the mean, respectively.</span>
-</code></pre>
-<p><img src="quick-introduction_files/figure-html/unnamed-chunk-3-2.png" width="700" height="400"><img src="quick-introduction_files/figure-html/unnamed-chunk-3-3.png" width="700" height="400"></p>
+<p><img src="quick-introduction_files/figure-html/unnamed-chunk-3-1.png" width="700" height="400"></p>
 </div>
 <div class="section level3">
 <h3 id="model-comparison">Model comparison<a class="anchor" aria-label="anchor" href="#model-comparison"></a>
 </h3>
 <p>This can be used to compared model. All type of model comparison supported by <code><a href="https://easystats.github.io/performance/reference/compare_performance.html" class="external-link">performance::compare_performance()</a></code> are supported since this is just a wrapper for that function.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lm_model.html">lm_model</a></span><span class="op">(</span>
-   data <span class="op">=</span> <span class="va">popular</span>,
-   response_variable <span class="op">=</span> <span class="va">popular</span>,
-   predictor_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,
-   quite <span class="op">=</span> <span class="cn">TRUE</span>
- <span class="op">)</span>
-
- <span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lm_model.html">lm_model</a></span><span class="op">(</span>
-   data <span class="op">=</span> <span class="va">popular</span>,
-   response_variable <span class="op">=</span> <span class="va">popular</span>,
-   predictor_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,
-   two_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,
-   quite <span class="op">=</span> <span class="cn">TRUE</span>
- <span class="op">)</span>
-
- <span class="fu"><a href="../reference/compare_fit.html">compare_fit</a></span><span class="op">(</span><span class="va">fit1</span>, <span class="va">fit2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lm_model.html">lm_model</a></span><span class="op">(</span></span>
+<span>   data <span class="op">=</span> <span class="va">popular</span>,</span>
+<span>   response_variable <span class="op">=</span> <span class="va">popular</span>,</span>
+<span>   predictor_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,</span>
+<span>   quite <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span> <span class="op">)</span></span>
+<span></span>
+<span> <span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lm_model.html">lm_model</a></span><span class="op">(</span></span>
+<span>   data <span class="op">=</span> <span class="va">popular</span>,</span>
+<span>   response_variable <span class="op">=</span> <span class="va">popular</span>,</span>
+<span>   predictor_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,</span>
+<span>   two_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,</span>
+<span>   quite <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span> <span class="op">)</span></span>
+<span></span>
+<span> <span class="fu"><a href="../reference/compare_fit.html">compare_fit</a></span><span class="op">(</span><span class="va">fit1</span>, <span class="va">fit2</span><span class="op">)</span></span></code></pre></div>
 <pre class="fansi fansi-output"><code><span style="text-decoration: underline;">Model Summary</span>
 Model Type = Model Comparison
 
@@ -332,12 +311,12 @@ Model Type = Model Comparison
 </h3>
 <p>CFA model is fitted using <code><a href="https://rdrr.io/pkg/lavaan/man/cfa.html" class="external-link">lavaan::cfa()</a></code>. You can pass multiple factor (in the below example, x1, x2, x3 represent one factor, x4,x5,x6 represent another factor etc.). It will show you the fit measure, factor loading, and goodness of fit based on cut-off criteria (you should review literature for the cut-off criteria as the recommendations are subjected to changes). Additionally, it will show you a nice-looking path diagram.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cfa_summary.html">cfa_summary</a></span><span class="op">(</span>
-   data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>,
-   <span class="va">x1</span><span class="op">:</span><span class="va">x3</span>,
-   <span class="va">x4</span><span class="op">:</span><span class="va">x6</span>,
-   <span class="va">x7</span><span class="op">:</span><span class="va">x9</span>
- <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/cfa_summary.html">cfa_summary</a></span><span class="op">(</span></span>
+<span>   data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>,</span>
+<span>   <span class="va">x1</span><span class="op">:</span><span class="va">x3</span>,</span>
+<span>   <span class="va">x4</span><span class="op">:</span><span class="va">x6</span>,</span>
+<span>   <span class="va">x7</span><span class="op">:</span><span class="va">x9</span></span>
+<span> <span class="op">)</span></span></code></pre></div>
 <pre class="fansi fansi-output"><code>
  
 <span style="text-decoration: underline;">Model Summary</span>
@@ -415,9 +394,9 @@ Goodness of Fit:
 </h3>
 <p>EFA model is fitted using <code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa()</a></code>. It first find the optimal number of factor. Then, it will show you the factor loading, uniqueness, complexity of the latent factor (loading &lt; 0.4 are hided for better viewing experience). You can additionally request running a post-hoc CFA model based on the EFA model.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/efa_summary.html">efa_summary</a></span><span class="op">(</span><span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>, 
-            <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>, <span class="co"># x1, x2, x3 ... x9</span>
-            post_hoc_cfa <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># run a post-hoc CFA </span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/efa_summary.html">efa_summary</a></span><span class="op">(</span><span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>, </span>
+<span>            <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>, <span class="co"># x1, x2, x3 ... x9</span></span>
+<span>            post_hoc_cfa <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># run a post-hoc CFA </span></span></code></pre></div>
 <pre class="fansi fansi-output"><code>
  
  
@@ -515,14 +494,14 @@ Goodness of Fit:
 </h3>
 <p>Measurement invariance is fitted using <code><a href="https://rdrr.io/pkg/lavaan/man/cfa.html" class="external-link">lavaan::cfa()</a></code>. It uses the multi-group confirmatory factor analysis approach. You can request metric or scalar invariance by specifying the <code>invariance_level</code> (mainly to save time. If you have a large model, it doesn’t make sense to fit a unnecessary scalar invariance model if you are only interested in metric invariance)</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="../reference/measurement_invariance.html">measurement_invariance</a></span><span class="op">(</span>
-   <span class="va">x1</span><span class="op">:</span><span class="va">x3</span>,
-   <span class="va">x4</span><span class="op">:</span><span class="va">x6</span>,
-   <span class="va">x7</span><span class="op">:</span><span class="va">x9</span>,
-   data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>,
-   group <span class="op">=</span> <span class="st">"school"</span>,
-   invariance_level <span class="op">=</span> <span class="st">"scalar"</span> <span class="co"># you can change this to metric</span>
- <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="../reference/measurement_invariance.html">measurement_invariance</a></span><span class="op">(</span></span>
+<span>   <span class="va">x1</span><span class="op">:</span><span class="va">x3</span>,</span>
+<span>   <span class="va">x4</span><span class="op">:</span><span class="va">x6</span>,</span>
+<span>   <span class="va">x7</span><span class="op">:</span><span class="va">x9</span>,</span>
+<span>   data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>,</span>
+<span>   group <span class="op">=</span> <span class="st">"school"</span>,</span>
+<span>   invariance_level <span class="op">=</span> <span class="st">"scalar"</span> <span class="co"># you can change this to metric</span></span>
+<span> <span class="op">)</span></span></code></pre></div>
 <pre class="fansi fansi-output"><code>Computing CFA using:
   DV1 =~ x1 + x2 + x3
   DV2 =~ x4 + x5 + x6
@@ -567,13 +546,13 @@ Goodness of Fit:
 </h3>
 <p>Currently, the package only support simple mediation with covariate. You can try to fit a multi-group mediation by specifying the group argument. But, honestly, I don’t know that’s the correct approach to implement it. If you want more complicated mediation, I highly recommend using the <code>mediation</code> package. Eventually, I probably will switch to using that for this package.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/mediation_summary.html">mediation_summary</a></span><span class="op">(</span>
-  data <span class="op">=</span> <span class="fu">lmerTest</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lmerTest/man/carrots.html" class="external-link">carrots</a></span>,
-  response_variable <span class="op">=</span> <span class="va">Preference</span>,
-  mediator <span class="op">=</span> <span class="va">Sweetness</span>,
-  predictor_variable <span class="op">=</span> <span class="va">Crisp</span>,
-  control_variable <span class="op">=</span> <span class="va">Age</span><span class="op">:</span><span class="va">Income</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/mediation_summary.html">mediation_summary</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="fu">lmerTest</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lmerTest/man/carrots.html" class="external-link">carrots</a></span>,</span>
+<span>  response_variable <span class="op">=</span> <span class="va">Preference</span>,</span>
+<span>  mediator <span class="op">=</span> <span class="va">Sweetness</span>,</span>
+<span>  predictor_variable <span class="op">=</span> <span class="va">Crisp</span>,</span>
+<span>  control_variable <span class="op">=</span> <span class="va">Age</span><span class="op">:</span><span class="va">Income</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <pre class="fansi fansi-output"><code><span style="text-decoration: underline;">Model Summary</span>
 Model Type = Mediation Analysis (fitted using lavaan)
 
@@ -581,26 +560,22 @@ Model Type = Mediation Analysis (fitted using lavaan)
 ────────────────────────────────────────────────────────────────
   Effect Type  Est.Std     SE       z          p          95% CI
 ────────────────────────────────────────────────────────────────
-       direct    0.239  0.028   8.406  0.000 ***  [0.183, 0.295]
-     indirect    0.219  0.017  12.776  0.000 ***  [0.186, 0.253]
-        total    0.458  0.022  20.416  0.000 ***  [0.414, 0.502]
+       direct    0.238  0.028   8.400  0.000 ***  [0.182, 0.293]
+     indirect    0.222  0.017  12.987  0.000 ***  [0.188, 0.255]
+        total    0.459  0.022  20.583  0.000 ***  [0.416, 0.503]
 ────────────────────────────────────────────────────────────────
 
 <span style="text-decoration: underline;">Regression Summary</span>
 ──────────────────────────────────────────────────────────────────────────────────────
     Response  Operator    Predict  Est.Std     SE       z          p            95% CI
 ──────────────────────────────────────────────────────────────────────────────────────
-   Sweetness         ~      Crisp    0.542  0.019  27.822  0.000 ***  [ 0.504,  0.580]
-   Sweetness         ~        Age   -0.001  0.028  -0.019  0.984      [-0.055,  0.054]
-   Sweetness         ~   Homesize    0.102  0.027   3.806  0.000 ***  [ 0.049,  0.154]
-   Sweetness         ~       Work    0.044  0.028   1.584  0.113      [-0.010,  0.098]
-   Sweetness         ~     Income   -0.108  0.026  -4.203  0.000 ***  [-0.158, -0.058]
-  Preference         ~  Sweetness    0.405  0.028  14.647  0.000 ***  [ 0.351,  0.459]
-  Preference         ~      Crisp    0.239  0.028   8.406  0.000 ***  [ 0.183,  0.295]
-  Preference         ~        Age    0.131  0.027   4.777  0.000 ***  [ 0.077,  0.185]
-  Preference         ~   Homesize   -0.133  0.027  -5.030  0.000 ***  [-0.185, -0.081]
-  Preference         ~       Work   -0.048  0.027  -1.754  0.079      [-0.102,  0.006]
-  Preference         ~     Income    0.015  0.026   0.572  0.567      [-0.036,  0.065]
+   Sweetness         ~      Crisp    0.550  0.019  29.119  0.000 ***  [ 0.513,  0.587]
+  Preference         ~  Sweetness    0.403  0.027  14.862  0.000 ***  [ 0.350,  0.456]
+  Preference         ~      Crisp    0.238  0.028   8.400  0.000 ***  [ 0.182,  0.293]
+  Preference         ~        Age    0.130  0.027   4.776  0.000 ***  [ 0.077,  0.184]
+  Preference         ~   Homesize   -0.133  0.026  -5.061  0.000 ***  [-0.184, -0.081]
+  Preference         ~       Work   -0.048  0.027  -1.756  0.079      [-0.101,  0.006]
+  Preference         ~     Income    0.015  0.026   0.577  0.564      [-0.035,  0.065]
 ──────────────────────────────────────────────────────────────────────────────────────
 </code></pre>
 </div>
@@ -613,7 +588,7 @@ Model Type = Mediation Analysis (fitted using lavaan)
 </h3>
 <p>It will first determine whether your item is uni- or multidimensionality. If it is unidimensional, then it will compute the alpha and the single-factor CFA model. If it is multidimensional, then it will compute the alpha and the omega. It also provide descriptive statistics. Here is an example for unidimensional items:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/reliability_summary.html">reliability_summary</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>, cols <span class="op">=</span> <span class="va">x1</span><span class="op">:</span><span class="va">x3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/reliability_summary.html">reliability_summary</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>, cols <span class="op">=</span> <span class="va">x1</span><span class="op">:</span><span class="va">x3</span><span class="op">)</span></span></code></pre></div>
 <pre class="fansi fansi-output"><code><span style="text-decoration: underline;">Model Summary</span>
 Model Type = Reliability Analysis
 Dimensionality = uni-dimensionality
@@ -656,7 +631,7 @@ CFA Model:
 </code></pre>
 <p>Here is an example for multidimensional items:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/reliability_summary.html">reliability_summary</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>, cols <span class="op">=</span> <span class="va">x1</span><span class="op">:</span><span class="va">x9</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/reliability_summary.html">reliability_summary</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>, cols <span class="op">=</span> <span class="va">x1</span><span class="op">:</span><span class="va">x9</span><span class="op">)</span></span></code></pre></div>
 <img src="quick-introduction_files/figure-html/unnamed-chunk-10-1.png" width="700" height="400"><pre class="fansi fansi-output"><code><span style="text-decoration: underline;">Model Summary</span>
 Model Type = Reliability Analysis
 Dimensionality = multi-dimensionality
@@ -705,7 +680,7 @@ Dimensionality = multi-dimensionality
 </h3>
 <p>There isn’t much to say about correlation except that you can request different type of correlation based on the data structure. In the backend, I use the <code>correlation</code> package for this.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cor_test.html">cor_test</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/cor_test.html">cor_test</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre class="fansi fansi-output"><code><span style="text-decoration: underline;">Model Summary</span>
 Model Type = Correlation
 Model Method = pearson
@@ -726,7 +701,7 @@ Adjustment Method = holm
 </h3>
 <p>It put together a nice table of some descriptive statistics and the correlation. Nothing fancy.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/descriptive_table.html">descriptive_table</a></span><span class="op">(</span><span class="va">iris</span>, cols <span class="op">=</span> <span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span> <span class="co"># all numeric columns</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/descriptive_table.html">descriptive_table</a></span><span class="op">(</span><span class="va">iris</span>, cols <span class="op">=</span> <span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span> <span class="co"># all numeric columns</span></span></code></pre></div>
 <pre class="fansi fansi-output"><code>
 <span style="text-decoration: underline;">Model Summary</span>
 Model Type = Descriptive Statistics
@@ -746,7 +721,7 @@ Model Type = Descriptive Statistics
 </h3>
 <p>if you want to produce these beautiful output in R Markdown. Calls this function and see the most up-to-date advice.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/knit_to_Rmd.html">knit_to_Rmd</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/knit_to_Rmd.html">knit_to_Rmd</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="fansi fansi-output"><code><span style="color: #00BB00;">OK. Required package "fansi" is installed</span>
 
 Note: To knit Rmd to HTML, add the following line to the setup chunk of your Rmd file: 
@@ -780,7 +755,7 @@ Note: Use html_to_pdf to convert it to PDF. See ?html_to_pdf for more info
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

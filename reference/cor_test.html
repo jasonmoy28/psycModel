@@ -24,7 +24,7 @@ This function uses the correlation::correlation() to generate the correlation ta
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psycModel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
       </span>
     </div>
 
@@ -33,7 +33,7 @@ This function uses the correlation::correlation() to generate the correlation ta
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -75,48 +75,67 @@ This function uses the <code><a href="https://easystats.github.io/correlation/re
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cor_test</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">cols</span>,
-  <span class="va">...</span>,
-  digits <span class="op">=</span> <span class="fl">3</span>,
-  method <span class="op">=</span> <span class="st">"pearson"</span>,
-  p_adjust <span class="op">=</span> <span class="st">"holm"</span>,
-  streamline <span class="op">=</span> <span class="cn">FALSE</span>,
-  quite <span class="op">=</span> <span class="cn">FALSE</span>,
-  return_result <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cor_test</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">cols</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"pearson"</span>,</span>
+<span>  p_adjust <span class="op">=</span> <span class="st">"holm"</span>,</span>
+<span>  streamline <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  quite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  return_result <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>data frame</p></dd>
+
+
 <dt>cols</dt>
 <dd><p>correlation items. Support <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> syntax.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>additional arguments passed to correlation::correlation(). See ?correlation::correlation. Note that the return data.frame from correlation::correlation() must contains <code>r</code> and <code>p</code> (e.g., passing <code>baysesian = TRUE</code> will not work)</p></dd>
+
+
 <dt>digits</dt>
 <dd><p>number of digits to round to</p></dd>
+
+
 <dt>method</dt>
 <dd><p>Default is "pearson". Options are "kendall", "spearman","biserial", "polychoric", "tetrachoric", "biweight", "distance", "percentage", "blomqvist", "hoeffding", "gamma", "gaussian","shepherd", or "auto". See ?correlation::correlation for detail</p></dd>
+
+
 <dt>p_adjust</dt>
 <dd><p>Default is "holm". Options are "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "somers" or "none". See ?stats::p.adjust for more detail</p></dd>
+
+
 <dt>streamline</dt>
 <dd><p>print streamlined output.</p></dd>
+
+
 <dt>quite</dt>
 <dd><p>suppress printing output</p></dd>
+
+
 <dt>return_result</dt>
 <dd><p>If it is set to <code>TRUE</code>, it will return the data frame of the correlation table</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>data frame of the correlation table</p>
+    
+
+<p>data frame of the correlation table</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">cor_test</span><span class="op">(</span><span class="va">iris</span>, <span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">cor_test</span><span class="op">(</span><span class="va">iris</span>, <span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Summary</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Type = Correlation</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Method = pearson</span>
@@ -144,7 +163,7 @@ This function uses the <code><a href="https://easystats.github.io/correlation/re
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

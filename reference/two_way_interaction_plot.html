@@ -25,7 +25,7 @@ I recommend using concurrently with lm_model or lme_model."><meta property="og:i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psycModel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
       </span>
     </div>
 
@@ -34,7 +34,7 @@ I recommend using concurrently with lm_model or lme_model."><meta property="og:i
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -77,34 +77,49 @@ I recommend using concurrently with <code>lm_model</code> or <code>lme_model</co
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">two_way_interaction_plot</span><span class="op">(</span>
-  <span class="va">model</span>,
-  data <span class="op">=</span> <span class="cn">NULL</span>,
-  graph_label_name <span class="op">=</span> <span class="cn">NULL</span>,
-  cateogrical_var <span class="op">=</span> <span class="cn">NULL</span>,
-  y_lim <span class="op">=</span> <span class="cn">NULL</span>,
-  plot_color <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">two_way_interaction_plot</span><span class="op">(</span></span>
+<span>  <span class="va">model</span>,</span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  graph_label_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  cateogrical_var <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y_lim <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  plot_color <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>model</dt>
 <dd><p>object from <code>lm</code>, <code>nlme</code>, <code>lme4</code>, or <code>lmerTest</code></p></dd>
+
+
 <dt>data</dt>
 <dd><p>data frame. If the function is unable to extract data frame from the object, then you may need to pass it directly</p></dd>
+
+
 <dt>graph_label_name</dt>
 <dd><p>vector of length 3 or function. Vector should be passed in the form of <code>c(response_var, predict_var1, predict_var2)</code>. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)</p></dd>
+
+
 <dt>cateogrical_var</dt>
 <dd><p>list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of <code>list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))</code></p></dd>
+
+
 <dt>y_lim</dt>
 <dd><p>the plot's upper and lower limit for the y-axis. Length of 2. Example: <code>c(lower_limit, upper_limit)</code></p></dd>
+
+
 <dt>plot_color</dt>
 <dd><p>default if <code>FALSE</code>. Set to <code>TRUE</code> if you want to plot in color</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>an object of class <code>ggplot</code></p>
+    
+
+<p>an object of class <code>ggplot</code></p>
+
+
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -113,44 +128,12 @@ I recommend using concurrently with <code>lm_model</code> or <code>lme_model</co
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># If you pass the model directly, it can't extract the data-frame from fit object</span></span>
-<span class="r-in"><span class="co"># Therefore, for now, you must pass the data frame to the function.</span></span>
-<span class="r-in"><span class="co"># You don't need pass the data if you use `lm_model` or `lme_model`.</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># lme example</span></span>
-<span class="r-in"><span class="va">lme_fit</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="st">"popular ~ extrav*texp + (1 + extrav | class)"</span>,</span>
-<span class="r-in">  data <span class="op">=</span> <span class="va">popular</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> boundary (singular) fit: see help('isSingular')</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">two_way_interaction_plot</span><span class="op">(</span><span class="va">lme_fit</span>,</span>
-<span class="r-in">  graph_label_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"popular"</span>, <span class="st">"extraversion"</span>, <span class="st">"teacher experience"</span><span class="op">)</span>,</span>
-<span class="r-in">  data <span class="op">=</span> <span class="va">popular</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">lm_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">*</span> <span class="va">Petal.Width</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">iris</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">two_way_interaction_plot</span><span class="op">(</span><span class="va">lm_fit</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="two_way_interaction_plot-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">lm_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">*</span> <span class="va">Petal.Width</span>,</span>
-<span class="r-in">  data <span class="op">=</span> <span class="va">iris</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">two_way_interaction_plot</span><span class="op">(</span><span class="va">lm_fit</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="two_way_interaction_plot-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># For more advanced users</span></span>
-<span class="r-in"><span class="va">label_name</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">var_name</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">var_name_processed</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/switch.html" class="external-link">switch</a></span><span class="op">(</span><span class="va">var_name</span>,</span>
-<span class="r-in">    <span class="st">"extrav"</span> <span class="op">=</span> <span class="st">"Extroversion"</span>,</span>
-<span class="r-in">    <span class="st">"texp"</span> <span class="op">=</span> <span class="st">"Teacher Experience"</span>,</span>
-<span class="r-in">    <span class="st">"popular"</span> <span class="op">=</span> <span class="st">"popular"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in">  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">var_name_processed</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    <span class="va">var_name_processed</span> <span class="op">&lt;-</span> <span class="va">var_name</span></span>
-<span class="r-in">  <span class="op">}</span></span>
-<span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">var_name_processed</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">two_way_interaction_plot</span><span class="op">(</span><span class="va">lme_fit</span>, data <span class="op">=</span> <span class="va">popular</span>, graph_label_name <span class="op">=</span> <span class="va">label_name</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="two_way_interaction_plot-3.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -165,7 +148,7 @@ I recommend using concurrently with <code>lm_model</code> or <code>lme_model</co
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

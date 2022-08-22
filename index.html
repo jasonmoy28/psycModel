@@ -49,7 +49,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">psycModel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
       </span>
     </div>
 
@@ -59,7 +59,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -106,7 +106,6 @@
 <h2 id="integrated-toolkit-for-psychological-analysis-and-modeling-in-r">Integrated Toolkit for Psychological Analysis and Modeling in R<a class="anchor" aria-label="anchor" href="#integrated-toolkit-for-psychological-analysis-and-modeling-in-r"></a>
 </h2>
 <!-- badges: start -->
-
 </div>
 </div>
 <div class="section level1">
@@ -114,10 +113,10 @@
 </h1>
 <p><strong>CRAN Stable Version</strong></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'psycModel'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'psycModel'</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Dev Version (newest feature)</strong></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'jasonmoy28/psycModel'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'jasonmoy28/psycModel'</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="key-features">Key Features<a class="anchor" aria-label="anchor" href="#key-features"></a>
 </h2>
@@ -160,7 +159,7 @@
 <div class="section level2">
 <h2 id="acknowledgement">Acknowledgement<a class="anchor" aria-label="anchor" href="#acknowledgement"></a>
 </h2>
-<p>This package was built by standing on the shoulders of giants with special thanks to researchers and developers of <a href="https://lavaan.ugent.be/" class="external-link"><code>lavaan</code></a>, <a href="https://github.com/lme4/lme4" class="external-link"><code>lme4</code></a>, <a href="https://github.com/runehaubo/lmerTestR" class="external-link"><code>lmerTest</code></a>, <a href="https://cran.r-project.org/package=nlme" class="external-link"><code>nlme</code></a>, <a href="https://easystats.github.io/performance/" class="external-link"><code>performance</code></a>, <a href="https://easystats.github.io/parameters/" class="external-link"><code>parameters</code></a>, <a href="https://personality-project.org/r/psych/" class="external-link"><code>psych</code></a>, and of course, all of the <a href="https://tidyverse.tidyverse.org/" class="external-link"><code>tidyverse</code></a> packages. I hope this package can help someone in the same way that these packages has helped me.</p>
+<p>This package was built by standing on the shoulders of giants with special thanks to researchers and developers of <a href="https://lavaan.ugent.be/" class="external-link"><code>lavaan</code></a>, <a href="https://github.com/lme4/lme4" class="external-link"><code>lme4</code></a>, <a href="https://github.com/runehaubo/lmerTestR" class="external-link"><code>lmerTest</code></a>, <a href="https://cran.r-project.org/package=nlme" class="external-link"><code>nlme</code></a>, <a href="https://easystats.github.io/performance/" class="external-link"><code>performance</code></a>, <a href="https://easystats.github.io/parameters/" class="external-link"><code>parameters</code></a>, <a href="https://personality-project.org/r/psych/" class="external-link"><code>psych</code></a>, and of course, all of the <a href="https://www.tidyverse.org" class="external-link"><code>tidyverse</code></a> packages. I hope this package can help someone in the same way that these packages has helped me.</p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
@@ -213,8 +212,9 @@
 <ul class="list-unstyled">
 <li><a href="https://cran.r-project.org/package=psycModel" class="external-link"><img src="https://img.shields.io/cran/v/psycModel" alt="CRAN version"></a></li>
 <li><a href="https://github.com/jasonmoy28/psycModel/actions" class="external-link"><img src="https://github.com/jasonmoy28/psycModel/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://codecov.io/gh/jasonmoy28/psycModel?branch=master" class="external-link"><img src="https://codecov.io/gh/jasonmoy28/psycModel/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://app.codecov.io/gh/jasonmoy28/psycModel?branch=master" class="external-link"><img src="https://codecov.io/gh/jasonmoy28/psycModel/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://cran.r-project.org/package=psycModel" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/psycModel" alt="download"></a></li>
+<li><a href="https://github.com/jasonmoy28/psycModel/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/jasonmoy28/psycModel/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 
@@ -229,7 +229,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

@@ -25,7 +25,7 @@ bypass this by specifying the dimensionality argument."><meta property="og:image
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psycModel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
       </span>
     </div>
 
@@ -34,7 +34,7 @@ bypass this by specifying the dimensionality argument."><meta property="og:image
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -77,46 +77,63 @@ bypass this by specifying the dimensionality argument.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">reliability_summary</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">cols</span>,
-  dimensionality <span class="op">=</span> <span class="cn">NULL</span>,
-  digits <span class="op">=</span> <span class="fl">3</span>,
-  descriptive_table <span class="op">=</span> <span class="cn">TRUE</span>,
-  quite <span class="op">=</span> <span class="cn">FALSE</span>,
-  streamline <span class="op">=</span> <span class="cn">FALSE</span>,
-  return_result <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">reliability_summary</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">cols</span>,</span>
+<span>  dimensionality <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  descriptive_table <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  quite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  streamline <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  return_result <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>data frame</p></dd>
+
+
 <dt>cols</dt>
 <dd><p>items for reliability analysis.  Support <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> syntax.</p></dd>
+
+
 <dt>dimensionality</dt>
 <dd><p>Specify the dimensionality. Either <code>uni</code> (uni-dimensionality) or <code>multi</code> (multi-dimensionality). Default is <code>NULL</code> that determines the dimensionality using EFA.</p></dd>
+
+
 <dt>digits</dt>
 <dd><p>number of digits to round to</p></dd>
+
+
 <dt>descriptive_table</dt>
 <dd><p>Get descriptive statistics. Default is <code>TRUE</code></p></dd>
+
+
 <dt>quite</dt>
 <dd><p>suppress printing output</p></dd>
+
+
 <dt>streamline</dt>
 <dd><p>print streamlined output</p></dd>
+
+
 <dt>return_result</dt>
 <dd><p>If it is set to <code>TRUE</code> (default is <code>FALSE</code>), it will return <code><a href="https://rdrr.io/pkg/psych/man/alpha.html" class="external-link">psych::alpha</a></code> for unidimensional scale, and <code><a href="https://rdrr.io/pkg/psych/man/omega.html" class="external-link">psych::omega</a></code> for multidimensional scale.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a <code><a href="https://rdrr.io/pkg/psych/man/alpha.html" class="external-link">psych::alpha</a></code> object for unidimensional scale, and a <code><a href="https://rdrr.io/pkg/psych/man/omega.html" class="external-link">psych::omega</a></code> object for multidimensional scale.</p>
+    
+
+<p>a <code><a href="https://rdrr.io/pkg/psych/man/alpha.html" class="external-link">psych::alpha</a></code> object for unidimensional scale, and a <code><a href="https://rdrr.io/pkg/psych/man/omega.html" class="external-link">psych::omega</a></code> object for multidimensional scale.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">reliability_summary</span><span class="op">(</span>data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>, cols <span class="op">=</span> <span class="va">x1</span><span class="op">:</span><span class="va">x3</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">reliability_summary</span><span class="op">(</span>data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>, cols <span class="op">=</span> <span class="va">x1</span><span class="op">:</span><span class="va">x3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Summary</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Type = Reliability Analysis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimensionality = uni-dimensionality</span>
@@ -158,7 +175,7 @@ bypass this by specifying the dimensionality argument.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    x3  2.250  1.131  0.441 ***  0.340 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ─────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">reliability_summary</span><span class="op">(</span>data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>, cols <span class="op">=</span> <span class="va">x1</span><span class="op">:</span><span class="va">x9</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">reliability_summary</span><span class="op">(</span>data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>, cols <span class="op">=</span> <span class="va">x1</span><span class="op">:</span><span class="va">x9</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="reliability_summary-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Summary</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Type = Reliability Analysis</span>
@@ -216,7 +233,7 @@ bypass this by specifying the dimensionality argument.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

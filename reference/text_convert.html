@@ -24,7 +24,7 @@ Greek letter options are alpha, beta, gamma, delta, epsilon, eta, theta, lamda, 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psycModel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
       </span>
     </div>
 
@@ -33,7 +33,7 @@ Greek letter options are alpha, beta, gamma, delta, epsilon, eta, theta, lamda, 
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -75,19 +75,24 @@ Greek letter options are alpha, beta, gamma, delta, epsilon, eta, theta, lamda, 
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">text_convert</span><span class="op">(</span><span class="va">text</span>, <span class="va">type</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">text_convert</span><span class="op">(</span><span class="va">text</span>, <span class="va">type</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>text</dt>
 <dd><p>character. inputted text</p></dd>
+
+
 <dt>type</dt>
 <dd><p>either "greek" (convert greek character) or "command" (convert color text and font style command). Command options are bold, italic, underline, red, green, yellow, blue, silver.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>converted unicode-based character for greek letter, color, font style</p>
+    
+
+<p>converted unicode-based character for greek letter, color, font style</p>
     </div>
 
   </div>
@@ -102,7 +107,7 @@ Greek letter options are alpha, beta, gamma, delta, epsilon, eta, theta, lamda, 
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -25,7 +25,7 @@ The function is intended to help you get a better understanding of which group h
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">psycModel</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
       </span>
     </div>
 
@@ -34,7 +34,7 @@ The function is intended to help you get a better understanding of which group h
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -77,25 +77,36 @@ The function is intended to help you get a better understanding of which group h
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cfa_groupwise</span><span class="op">(</span><span class="va">data</span>, <span class="va">...</span>, <span class="va">group</span>, model <span class="op">=</span> <span class="cn">NULL</span>, ordered <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cfa_groupwise</span><span class="op">(</span><span class="va">data</span>, <span class="va">...</span>, <span class="va">group</span>, model <span class="op">=</span> <span class="cn">NULL</span>, ordered <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>data frame</p></dd>
+
+
 <dt>...</dt>
 <dd><p>CFA items. Support <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> syntax.</p></dd>
+
+
 <dt>group</dt>
 <dd><p>character. group variable. Support <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> syntax.</p></dd>
+
+
 <dt>model</dt>
 <dd><p>explicit <code>lavaan</code> model. Must be specify with <code>model = lavaan_model_syntax</code>. <a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="figures/lifecycle-experimental.svg" alt="[Experimental]"></a></p></dd>
+
+
 <dt>ordered</dt>
 <dd><p>logical. default is <code>FALSE</code>. If it is set to <code>TRUE</code>, lavaan will treat it as a ordinal variable and use <code>DWLS</code> instead of <code>ML</code></p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>data frame with group-wise CFA result</p>
+    
+
+<p>data frame with group-wise CFA result</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -104,15 +115,15 @@ The function is intended to help you get a better understanding of which group h
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># The example is used as the illustration of the function output only.</span></span>
-<span class="r-in"><span class="co"># It does not imply the data is appropriate for the analysis.</span></span>
-<span class="r-in"><span class="fu">cfa_groupwise</span><span class="op">(</span></span>
-<span class="r-in">  data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>,</span>
-<span class="r-in">  group <span class="op">=</span> <span class="st">"school"</span>,</span>
-<span class="r-in">  <span class="va">x1</span><span class="op">:</span><span class="va">x3</span>,</span>
-<span class="r-in">  <span class="va">x4</span><span class="op">:</span><span class="va">x6</span>,</span>
-<span class="r-in">  <span class="va">x7</span><span class="op">:</span><span class="va">x9</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># The example is used as the illustration of the function output only.</span></span></span>
+<span class="r-in"><span><span class="co"># It does not imply the data is appropriate for the analysis.</span></span></span>
+<span class="r-in"><span><span class="fu">cfa_groupwise</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>,</span></span>
+<span class="r-in"><span>  group <span class="op">=</span> <span class="st">"school"</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x1</span><span class="op">:</span><span class="va">x3</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x4</span><span class="op">:</span><span class="va">x6</span>,</span></span>
+<span class="r-in"><span>  <span class="va">x7</span><span class="op">:</span><span class="va">x9</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         group       cfi      rmsea       tli</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     Pasteur 0.9031037 0.10376088 0.8546555</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 Grant-White 0.9413704 0.08896312 0.9120556</span>
@@ -130,7 +141,7 @@ The function is intended to help you get a better understanding of which group h
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

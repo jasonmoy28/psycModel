@@ -40,6 +40,9 @@
     <loc>https://jasonmoy28.github.io/psycModel/reference/cor_test.html</loc>
   </url>
   <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/cronbach_alpha.html</loc>
+  </url>
+  <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/data_check.html</loc>
   </url>
   <url>
@@ -50,6 +53,12 @@
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/format_round.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/get_interaction_term.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/get_predict_df.html</loc>
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/glm_model.html</loc>
@@ -64,19 +73,25 @@
     <loc>https://jasonmoy28.github.io/psycModel/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/integrated_model_summary.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/integrated_multilevel_model_summary.html</loc>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/interaction_check.html</loc>
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/knit_to_Rmd.html</loc>
   </url>
   <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/label_name.html</loc>
+  </url>
+  <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/lm_model.html</loc>
   </url>
   <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/lm_model_summary.html</loc>
+  </url>
+  <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/lme_model.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/lme_multilevel_model_summary.html</loc>
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/measurement_invariance.html</loc>
