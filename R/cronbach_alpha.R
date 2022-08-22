@@ -34,7 +34,7 @@ cronbach_alpha = function(...,
     return_df = data.frame()
     item_print = '\n '
     for (i in 1:length(items)) {
-      in_loop_data = data %>% select(!!items[[i]])
+      in_loop_data = data %>% dplyr::select(!!items[[i]])
       raw_alpha = psych::alpha(in_loop_data)[['total']][['raw_alpha']]
       std_alpha = psych::alpha(in_loop_data)[['total']][['std.alpha']]
       return_df = rbind(return_df,data.frame(Var = var_name[i],raw_alpha = raw_alpha,std_alpha = std_alpha))
@@ -42,7 +42,7 @@ cronbach_alpha = function(...,
     }
     #################################### Alpha estimation group-wise ####################################
   } else{
-    try({if(!rlang::is_symbol(group)) {group <- dplyr::sym(group)}},silent = T)
+    try({if(!rlang::is_symbol(group)) {group <- dplyr::sym(group)}},silent = TRUE)
     group = dplyr::enquo(group)
     
     groups <- data %>% dplyr::select(!!group) %>% dplyr::distinct() %>% dplyr::pull()
@@ -50,7 +50,7 @@ cronbach_alpha = function(...,
     item_print = '\n '
     for (i in 1:length(items)) {
       for (j in 1:length(groups)) {
-        in_loop_data = data %>% filter(!!group == groups[j]) %>% select(!!items[[i]])
+        in_loop_data = data %>% dplyr::filter(!!group == groups[j]) %>% dplyr::select(!!items[[i]])
         raw_alpha = psych::alpha(in_loop_data)[['total']][['raw_alpha']]
         std_alpha = psych::alpha(in_loop_data)[['total']][['std.alpha']]
         return_df = rbind(return_df,
@@ -61,7 +61,7 @@ cronbach_alpha = function(...,
       }
       item_print = paste(item_print,var_name[i],'=',paste(colnames(in_loop_data),collapse = ' + '),'\n ')
     }
-    return_df = return_df %>% rename(!!group := group)
+    return_df = return_df %>% dplyr::rename(!!group := group)
   }
   cat("\n \n")
   super_print("underline|Model Summary")

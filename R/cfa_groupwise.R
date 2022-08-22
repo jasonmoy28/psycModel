@@ -31,7 +31,7 @@ cfa_groupwise <- function(data,
                           group,
                           model = NULL,
                           ordered = FALSE) {
-  try({if(!rlang::is_symbol(group)) {group <- dplyr::sym(group)}},silent = T)
+  try({if(!rlang::is_symbol(group)) {group <- dplyr::sym(group)}},silent = TRUE)
   group = dplyr::enquo(group)
   
   items <- dplyr::enquos(...)

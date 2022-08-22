@@ -101,9 +101,9 @@ fit <- lme_multilevel_model_summary(
   two_way_interaction_factor = NULL, # you can add two-way interaction plot here 
   graph_label_name = NULL, #you can also change graph lable name here
   id = class,
-  simple_slope = FALSE, # you can also request simple slope estimated with Johnson-Newman Region of Significance
+  simple_slope = FALSE, # you can also request simple slope estimate 
   assumption_plot = FALSE, # you can also request assumption plot
-  plot_color = FALSE # you can also request the plot in color
+  plot_color = FALSE, # you can also request the plot in color
   streamline = FALSE # you can change this to get the least amount of info
 )
 

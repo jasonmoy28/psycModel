@@ -33,7 +33,7 @@
 #'   predictor_variable = tidyselect::everything(),
 #'   two_way_interaction_factor = c(Sepal.Width, Species),
 #'   interaction_plot = FALSE, # you can also request the interaction plot
-#'   simple_slope = FALSE, # you can also request simple slope estimated with Johnson-Newman Region of Significance
+#'   simple_slope = FALSE, # you can also request simple slope estimate 
 #'   assumption_plot = FALSE, # you can also request assumption plot
 #'   streamline = FALSE #you can change this to get the least amount of info
 #' )
