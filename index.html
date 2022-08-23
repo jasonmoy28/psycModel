@@ -113,7 +113,11 @@
 </h1>
 <p><strong>CRAN Stable Version</strong></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'psycModel'</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Install the standard version </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'psycModel'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Install all of the suggested dependencies for full functionality </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'psycModel'</span>,dependencies <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Depends"</span>, <span class="st">"Imports"</span>,<span class="st">"Suggests"</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
 <p><strong>Dev Version (newest feature)</strong></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'jasonmoy28/psycModel'</span><span class="op">)</span></span></code></pre></div>
@@ -127,7 +131,7 @@
 </h2>
 <p>Regression models: <br> * Linear regression (i.e., support ANOVA, ANCOVA) &amp; generalized linear regression <br> * Linear mixed effect model (i.e., HLM, MLM) &amp; generalized linear mixed effect model. <br></p>
 <p>Structure Equation Modeling: <br> * Exploratory &amp; confirmatory factor analysis <br> * Measurement invariance (MGCFA approach) <br> * Mediation analysis (SEM approach) <br></p>
-<p>Other: <br> * Descriptive statistics * Correlation (e.g., pearson, polychoric, tetrachoric, spearman), * Reliability analysis <br></p>
+<p>Other: <br> * Descriptive statistics <br> * Correlation <br> * Reliability analysis <br></p>
 <p><br></p>
 <p><em>Note:</em> If you like this package, please considering give it a star on <a href="https://github.com/jasonmoy28/psycModel" class="external-link">GitHub</a>. I would really appreciate that.</p>
 </div>
@@ -137,6 +141,11 @@
 <p><strong>Authors:</strong> <a href="https://jasonmoy.us" class="external-link">Jason Moy</a></p>
 <p><strong>Citation:</strong> Moy, J. H. (2021). psycModel: Integrated Toolkit for Psychological Analysis and Modeling in R. <em>CRAN</em>. <a href="https://cran.r-project.org/package=psycModel" class="external-link uri">https://cran.r-project.org/package=psycModel</a>.</p>
 <p><strong>Logo Design:</strong> Danlin Liu</p>
+</div>
+<div class="section level2">
+<h2 id="disclaimer">Disclaimer:<a class="anchor" aria-label="anchor" href="#disclaimer"></a>
+</h2>
+<p>The current release is the <a href="https://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha" class="external-link">alpha version</a> of the package since I plan to add more features and support more models in the future (read more about planned updates <a href="https://github.com/jasonmoy28/psycModel/issues/3" class="external-link">here</a>). If you are interested in help building this package, please feel free to submit a <a href="https://github.com/jasonmoy28/psycModel/pulls" class="external-link">pull request</a> / <a href="https://github.com/jasonmoy28/psycModel/issues" class="external-link">GitHub issue</a>. Although I tried my best to fix any bugs, the package is not guarantee to be bug-free. If you find any bugs, please submit them in the <a href="https://github.com/jasonmoy28/psycModel/issues" class="external-link">GitHub issue</a>. This package is licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0.en.html" class="external-link">GPLv3 liscense</a>. You may use, re-distribute, and modified the package. Additionally, this package does provide any kind of warranty, either expressed or implied based on the GPLv3 liscense. Finally, you should expect many changes that are not backward compatible until the package’s first major release (i.e., v1.0.0).</p>
 </div>
 <div class="section level2">
 <h2 id="upcoming-features">Upcoming Features<a class="anchor" aria-label="anchor" href="#upcoming-features"></a>
@@ -150,21 +159,6 @@
 <li>Support outputting table to MS word (don’t know how to implement yet)</li>
 </ol>
 <p><em>Note:</em> A more exhaustive list is available <a href="https://github.com/jasonmoy28/psycModel/issues/3" class="external-link">here</a>. If you have any feature request, please feel free to let me know by writing a new GitHub issue.</p>
-</div>
-<div class="section level2">
-<h2 id="disclaimer">Disclaimer:<a class="anchor" aria-label="anchor" href="#disclaimer"></a>
-</h2>
-<p>The current release is the <a href="https://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha" class="external-link">alpha version</a> of the package since I plan to add more features and support more models in the future (read more about planned updates <a href="https://github.com/jasonmoy28/psycModel/issues/3" class="external-link">here</a>). If you are interested in help building this package, please feel free to submit a <a href="https://github.com/jasonmoy28/psycModel/pulls" class="external-link">pull request</a> / <a href="https://github.com/jasonmoy28/psycModel/issues" class="external-link">GitHub issue</a>. Although I tried my best to fix any bugs, the package is not guarantee to be bug-free. If you find any bugs, please submit them in the <a href="https://github.com/jasonmoy28/psycModel/issues" class="external-link">GitHub issue</a>. Although the package is depended on reliable R packages for all statistical analysis, I still encourage validating the output of this package with another statistical software (e.g., SPSS, MPlus, Python). This package is licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0.en.html" class="external-link">GPLv3 liscense</a>. You may use, re-distribute, and modified the package. Additionally, this package does provide any kind of warranty, either expressed or implied based on the GPLv3 liscense. Finally, you should expect many changes that are not backward compatible until the package’s first major release (i.e., v1.0.0).</p>
-</div>
-<div class="section level2">
-<h2 id="acknowledgement">Acknowledgement<a class="anchor" aria-label="anchor" href="#acknowledgement"></a>
-</h2>
-<p>This package was built by standing on the shoulders of giants with special thanks to researchers and developers of <a href="https://lavaan.ugent.be/" class="external-link"><code>lavaan</code></a>, <a href="https://github.com/lme4/lme4" class="external-link"><code>lme4</code></a>, <a href="https://github.com/runehaubo/lmerTestR" class="external-link"><code>lmerTest</code></a>, <a href="https://cran.r-project.org/package=nlme" class="external-link"><code>nlme</code></a>, <a href="https://easystats.github.io/performance/" class="external-link"><code>performance</code></a>, <a href="https://easystats.github.io/parameters/" class="external-link"><code>parameters</code></a>, <a href="https://personality-project.org/r/psych/" class="external-link"><code>psych</code></a>, and of course, all of the <a href="https://www.tidyverse.org" class="external-link"><code>tidyverse</code></a> packages. I hope this package can help someone in the same way that these packages has helped me.</p>
-</div>
-<div class="section level2">
-<h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
-</h2>
-<p>Please note that the psycModel project is released with a <a href="https://jasonmoy28.github.io/psycModel//CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
 
