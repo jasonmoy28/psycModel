@@ -259,8 +259,7 @@ model_summary <- function(model,
 
       if (autocorrelation_check == TRUE) {
         tryCatch(
-          {
-            performance::check_autocorrelation(model)
+          {print(performance::check_autocorrelation(model))
             super_print("\n")
           },
           error = function(cond) {
@@ -270,7 +269,7 @@ model_summary <- function(model,
       }
 
       if (normality_check == TRUE) { # first check_normality, if failed, fallback to check_distribution, if failed, super_print failed message
-        tryCatch(suppressMessages(performance::check_normality(model)),
+        tryCatch(suppressMessages(print(performance::check_normality(model))),
           error = function(cond) {
             tryCatch(
               {
@@ -304,7 +303,7 @@ model_summary <- function(model,
 
 
       if (outlier_check == TRUE) {
-        tryCatch(super_print(performance::check_outliers(model)),
+        tryCatch(print(performance::check_outliers(model)),
           error = function(cond) {
             super_print("blue|Unable to check autocorrelation. Try changing na.action to na.omit.")
           }
@@ -312,22 +311,27 @@ model_summary <- function(model,
       }
 
       if (heteroscedasticity_check == TRUE) {
-        try(performance::check_heteroscedasticity(model))
+        try(print(performance::check_heteroscedasticity(model)))
       }
 
       if (collinearity_check == TRUE) {
         try({
-          collinearity_df <- performance::check_collinearity(model)
-          if (all(collinearity_df$VIF < 5)) {
-            super_print("green|OK: No multicolinearity detected (VIF < 5)")
-          } else if (any(collinearity_df$VIF >= 5) & all(collinearity_df$VIF < 10)) {
-            super_print("yellow|Cautious: Moderate multicolinearity detected  (5 < VIF < 10). Please inspect the following table to identify high correlation factors.")
-            super_print("underline|Multicollinearity Table ")
-            print_table(collinearity_df)
-          } else if (any(collinearity_df$VIF > 10)) {
-            super_print("red|Warning: Severe multicolinearity detected (VIF > 10). Please inspect the following table to identify high correlation factors.")
-            super_print("underline|Multicollinearity Table ")
-            print_table(collinearity_df)
+          is_interaction = insight::find_interactions(model)
+          if (is.null(is_interaction)) {
+            collinearity_df <- performance::check_collinearity(model)
+            if (all(collinearity_df$VIF < 5)) {
+              super_print("green|OK: No multicolinearity detected (VIF < 5)")
+            } else if (any(collinearity_df$VIF >= 5) & all(collinearity_df$VIF < 10)) {
+              super_print("yellow|Cautious: Moderate multicolinearity detected  (5 < VIF < 10). Please inspect the following table to identify high correlation factors.")
+              super_print("underline|Multicollinearity Table ")
+              print_table(collinearity_df)
+            } else if (any(collinearity_df$VIF > 10)) {
+              super_print("red|Warning: Severe multicolinearity detected (VIF > 10). Please inspect the following table to identify high correlation factors.")
+              super_print("underline|Multicollinearity Table ")
+              print_table(collinearity_df)
+            }
+          } else{
+            super_print('Multicollinearity is not checked for models with interaction terms. You may check multicollinearity among predictors of a model without interaction terms')
           }
         })
       }
