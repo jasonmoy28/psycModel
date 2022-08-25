@@ -1,40 +1,47 @@
+# psycModel 0.4.0
+**Major Feature:**  
+* Added support for ANOVA plots  
+* Added support for polynomial (incl. curvilinear plots)  
+
 # psycModel 0.3.3
-* Bug fixes only 
+**Fixes:**   
+* Fixed control variables must be numeric variables in interaction plots (i.e., added support for factor variables)
+* Simple slope no longer need to pass in the `interaction_terms` and `data` arguments  
+* Support multilevel modeling again after fixes introduced in `insight` package.  
 
 # psycModel 0.3.2
-* Bug fixes only 
+**Fixes:**  
+* Drop support for multilevel modeling temporaily due to `insight` package recent non-backward compatible changes  
 
 # psycModel 0.3.1
-
-Bugs fixed: 
-
-* Fixed bugs that measurement invariance does not have row name.
+**Fixes**  
+* Fixed bugs that measurement invariance does not have row name.  
 
 # psycModel 0.3.0 (first CRAN release)
 
 **Major Feature:** <br/>
-* Support reliability measure summary
-* Support mediation
-* Support generalized linear regression (`glm` and `glmer` without plot)
+* Added support reliability measure summary  
+* Added support mediation models  
+* Added support generalized linear regression (`glm` and `glmer` without plot)  
 
 **Minor Feature:** <br/>
-* `cfa_summary`  support path diagram
-* `efa_summary` rewrite using functions from `parameters` and support post-hoc CFA test
-* `cfa_summary` support factor loading is hidden for same latent factor (only when group = `NULL`)
+* `cfa_summary`  support path diagram  
+* `efa_summary` rewrite using functions from `parameters` and support post-hoc CFA test  
+* `cfa_summary` support factor loading is hidden for same latent factor (only when group = `NULL`)  
 * `cor_test` and `descriptive_table` support rich-text formatted table output
-* `model_summary` rewrite using `parameters::model_parameters` 
+* `model_summary` rewrite using `parameters::model_parameters`  
 *  integrate summary with plot for `lm_summary` to `integrated_model_summary`
-* `cor_test` re-write using the correlation package, so it supports more methods and robust standard errors
-* `quite` and `streamline` support in all models that print output
-* Give instruction on how to use R Markdown (see `knit_to_Rmd`)
+* `cor_test` re-write using the correlation package, so it supports more methods and robust standard errors  
+* `quite` and `streamline` support in all models that print output  
+* Give instruction on how to use R Markdown (see `knit_to_Rmd`)  
 
 
 
 # psycModel 0.2.1
 
 **Major Feature:**  
-* Support linear regression <br/>
-* Support exploratory factor analysis <br/>
+* Added support linear regression <br/>
+* Added support exploratory factor analysis <br/>
 * Complete overhaul to produce rich-text formatted summary output <br/>
 
 **Minor Feature:**  
@@ -45,7 +52,7 @@ Bugs fixed:
 * `model_performance` support a wider array of model performance measure <br/>
 * `cfa_summary` and `measurement_invariance` support checking goodness of fit <br/>
 
-**Bugs fixed**  
+**Fixes**
 * Critical bug fix for `model_summary_with_plot`. You can no request `simple_slope` and `check_assumption` correctly. <br/>
 * Critical bug fix that `cor_test` is not exported <br/>
 * remove some packages from import and switch to `requireNamespace()` <br/>
@@ -63,7 +70,7 @@ Bugs fixed:
 * `model_summary_with_plot` `lme_model` support passing explicit model <br/>
 * `compare_fit` support more model comparison (e.g., lme, glme) <br/>
 
-**Bugs fixed:**  
+**Fixes** 
 * the current version build pass CMD check <br/>
 * `measurement_invariance` stop using `semTools::compareFit`. Added a self-created `compare_fit` function for the package <br/>
 * remove `papaja::apa_theme()` dependency. <br/>
@@ -75,7 +82,7 @@ Bugs fixed:
 **New Feature:**
 * `descriptive_table` support wider array of descriptive indicator (e.g., median, range) and missing & non_missing values count <br/>
 
-**Bugs fixed:**
+**Fixes**
 * Fixed the `cor_test` bug that the function return a correlation matrix with blank cells if the correlation is too high between the two items (rounded to 1).<br/>
 * Add a `data_check` function that warns the users if non-numeric variables are coerced into numeric. <br/>
 

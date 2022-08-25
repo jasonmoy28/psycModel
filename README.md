@@ -48,7 +48,7 @@ Other:  <br/>
 
 <br/>
 
-*Note:* If you like this package, please considering give it a star on [GitHub](https://github.com/jasonmoy28/psycModel). I would really appreciate that.
+*Note:* If you like this package, please considering give it a star on [GitHub](https://github.com/jasonmoy28/psycModel). I would really appreciate that. If you experience any problem, please feel free to open a new issue [here]((https://github.com/jasonmoy28/psycModel/issues))
 
 ## Credit
 **Authors:** [Jason Moy](https://jasonmoy.us)
