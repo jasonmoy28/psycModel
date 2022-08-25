@@ -34,9 +34,11 @@ descriptive_table <- function(data,
                               streamline = FALSE,
                               quite = FALSE,
                               return_result = FALSE) {
+  
   if (!requireNamespace("correlation", quietly = TRUE)) {
     stop("please install.packages('correlation')")
   }
+  
   if (!requireNamespace("psych", quietly = TRUE)) {
     stop("please install.packages('psych')")
   }
