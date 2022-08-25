@@ -4,7 +4,7 @@
 * Added support for polynomial (incl. curvilinear plots)  
 
 # psycModel 0.3.3
-**Fixes:**   
+**Fixes:**  
 * Fixed control variables must be numeric variables in interaction plots (i.e., added support for factor variables)
 * Simple slope no longer need to pass in the `interaction_terms` and `data` arguments  
 * Support multilevel modeling again after fixes introduced in `insight` package.  
@@ -52,7 +52,7 @@
 * `model_performance` support a wider array of model performance measure <br/>
 * `cfa_summary` and `measurement_invariance` support checking goodness of fit <br/>
 
-**Fixes**
+**Fixes**  
 * Critical bug fix for `model_summary_with_plot`. You can no request `simple_slope` and `check_assumption` correctly. <br/>
 * Critical bug fix that `cor_test` is not exported <br/>
 * remove some packages from import and switch to `requireNamespace()` <br/>
@@ -70,19 +70,19 @@
 * `model_summary_with_plot` `lme_model` support passing explicit model <br/>
 * `compare_fit` support more model comparison (e.g., lme, glme) <br/>
 
-**Fixes** 
-* the current version build pass CMD check <br/>
+**Fixes**  
+* This current version build pass CMD check <br/>
 * `measurement_invariance` stop using `semTools::compareFit`. Added a self-created `compare_fit` function for the package <br/>
-* remove `papaja::apa_theme()` dependency. <br/>
-* use `.data` from `rlang` for `mutate` function <br/>
+* Remove `papaja::apa_theme()` dependency. <br/>
+* Use `.data` from `rlang` for `mutate` function <br/>
 * `model_summary_with_plot` always return list and changed to logical (set to T to return result_list) <br/>
 * `model_summary_with_plot` return a named list object <br/>
 
 # psycModel 0.1.1
-**New Feature:**
+**New Feature:**  
 * `descriptive_table` support wider array of descriptive indicator (e.g., median, range) and missing & non_missing values count <br/>
 
-**Fixes**
+**Fixes**  
 * Fixed the `cor_test` bug that the function return a correlation matrix with blank cells if the correlation is too high between the two items (rounded to 1).<br/>
 * Add a `data_check` function that warns the users if non-numeric variables are coerced into numeric. <br/>
 
