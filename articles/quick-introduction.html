@@ -176,19 +176,11 @@ Predictors = Sepal.Width, Petal.Length, Petal.Width, Species
 ───────────────────────────────────────────────────
 
 <span style="text-decoration: underline;">Model Assumption Check</span>
-
-<span style="color: #0000BB;">Unable to check autocorrelation. Try changing na.action to na.omit.</span>
-<span style="color: #BB0000;">Warning: Severe multicolinearity detected (VIF &gt; 10). Please inspect the following table to identify high correlation factors.</span>
-<span style="text-decoration: underline;">Multicollinearity Table </span>
-──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-                     Term      VIF  VIF_CI_low  VIF_CI_high  SE_factor  Tolerance  Tolerance_CI_low  Tolerance_CI_high
-──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-              Sepal.Width    5.013       3.864        6.624      2.239      0.199             0.151              0.259
-             Petal.Length   23.273      17.389       31.269      4.824      0.043             0.032              0.058
-              Petal.Width  130.386      96.739      175.857     11.419      0.008             0.006              0.010
-                  Species   41.975      31.243       56.513      6.479      0.024             0.018              0.032
-  Sepal.Width:Petal.Width   90.160      66.939      121.557      9.495      0.011             0.008              0.015
-──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+OK: Residuals appear to be independent and not autocorrelated (p = 0.814).
+OK: residuals appear as normally distributed (p = 0.813).
+OK: No outliers detected.
+OK: Error variance appears to be homoscedastic (p = 0.109).
+Multicollinearity is not checked for models with interaction terms. You may check multicollinearity among predictors of a model without interaction terms
 </code></pre>
 <img src="quick-introduction_files/figure-html/unnamed-chunk-2-1.png" width="700" height="400"><pre class="fansi fansi-output"><code>
 <span style="text-decoration: underline;">Slope Estimates at Each Level of Moderators</span>
@@ -253,21 +245,11 @@ Predictors = extrav, sex, texp, extrav:sex, extrav:texp, sex:texp, extrav:sex:te
 <span style="text-decoration: underline;">Model Assumption Check</span>
 <span style="color: #00BB00;">OK: Model is converged</span>
 <span style="color: #00BB00;">OK: No singularity is detected</span>
-
-<span style="color: #0000BB;">Unable to check autocorrelation. Try changing na.action to na.omit.</span>
-<span style="color: #BB0000;">Warning: Severe multicolinearity detected (VIF &gt; 10). Please inspect the following table to identify high correlation factors.</span>
-<span style="text-decoration: underline;">Multicollinearity Table </span>
-──────────────────────────────────────────────────────────────────────────────────────────────────────────────
-             Term      VIF  VIF_CI_low  VIF_CI_high  SE_factor  Tolerance  Tolerance_CI_low  Tolerance_CI_high
-──────────────────────────────────────────────────────────────────────────────────────────────────────────────
-           extrav    9.005       8.297        9.783      3.001      0.111             0.102              0.121
-              sex  110.249     101.087      120.250     10.500      0.009             0.008              0.010
-             texp    6.109       5.643        6.622      2.472      0.164             0.151              0.177
-       extrav:sex   95.403      87.481      104.051      9.767      0.010             0.010              0.011
-      extrav:texp   13.869      12.755       15.089      3.724      0.072             0.066              0.078
-         sex:texp  109.012      99.953      118.900     10.441      0.009             0.008              0.010
-  extrav:sex:texp   95.547      87.612      104.208      9.775      0.010             0.010              0.011
-──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Warning: Autocorrelated residuals detected (p &lt; .001).
+OK: residuals appear as normally distributed (p = 0.425).
+OK: No outliers detected.
+OK: Error variance appears to be homoscedastic (p = 0.758).
+Multicollinearity is not checked for models with interaction terms. You may check multicollinearity among predictors of a model without interaction terms
 </code></pre>
 <p><img src="quick-introduction_files/figure-html/unnamed-chunk-3-1.png" width="700" height="400"></p>
 </div>
