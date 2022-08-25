@@ -108,7 +108,8 @@
 * Added support linear regression <br> * Added support exploratory factor analysis <br> * Complete overhaul to produce rich-text formatted summary output <br></p>
 <p><strong>Minor Feature:</strong><br>
 * <code>measurement_invariance</code> support multiple-factor model with tidyselect syntax <br> * <code>model_summary_with_plot</code> support outlier detection <br> * Changed data from EWCS_2015_shorten to popular (a data-set that is easier to understand) <br> * Added a new function that allow convert HTML to PDF function for knitting Rmd <br> * <code>model_performance</code> support a wider array of model performance measure <br> * <code>cfa_summary</code> and <code>measurement_invariance</code> support checking goodness of fit <br></p>
-<p><strong>Fixes</strong> * Critical bug fix for <code>model_summary_with_plot</code>. You can no request <code>simple_slope</code> and <code>check_assumption</code> correctly. <br> * Critical bug fix that <code>cor_test</code> is not exported <br> * remove some packages from import and switch to <code><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace()</a></code> <br> * added fallback for normality check <br></p>
+<p><strong>Fixes</strong><br>
+* Critical bug fix for <code>model_summary_with_plot</code>. You can no request <code>simple_slope</code> and <code>check_assumption</code> correctly. <br> * Critical bug fix that <code>cor_test</code> is not exported <br> * remove some packages from import and switch to <code><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace()</a></code> <br> * added fallback for normality check <br></p>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.0" id="psycmodel-020">psycModel 0.2.0<a class="anchor" aria-label="anchor" href="#psycmodel-020"></a></h2>
@@ -116,12 +117,15 @@
 * <code>lme_model</code>, <code>model_summary_with_plot</code> support tidyselect syntax <br> * <code>cfa_summary</code> support multi-factor CFA with tidyselect syntax <br></p>
 <p><strong>Minor Feature:</strong><br>
 * Added <code>assumption_plot</code> to visually inspect assumptions for mixed effect models in <code>model_summary_with_plot</code> <br> * <code>two_way_interaction_plot</code>, <code>three_way_interaction_plot</code> only require the model object to produce the plot. <br> * <code>lme_model</code>, <code>model_summary_with_plot</code> support using <code>lme4</code> package. <br> * <code>model_summary_with_plot</code> <code>lme_model</code> support passing explicit model <br> * <code>compare_fit</code> support more model comparison (e.g., lme, glme) <br></p>
-<p><strong>Fixes</strong> * the current version build pass CMD check <br> * <code>measurement_invariance</code> stop using <code>semTools::compareFit</code>. Added a self-created <code>compare_fit</code> function for the package <br> * remove <code>papaja::apa_theme()</code> dependency. <br> * use <code>.data</code> from <code>rlang</code> for <code>mutate</code> function <br> * <code>model_summary_with_plot</code> always return list and changed to logical (set to T to return result_list) <br> * <code>model_summary_with_plot</code> return a named list object <br></p>
+<p><strong>Fixes</strong><br>
+* This current version build pass CMD check <br> * <code>measurement_invariance</code> stop using <code>semTools::compareFit</code>. Added a self-created <code>compare_fit</code> function for the package <br> * Remove <code>papaja::apa_theme()</code> dependency. <br> * Use <code>.data</code> from <code>rlang</code> for <code>mutate</code> function <br> * <code>model_summary_with_plot</code> always return list and changed to logical (set to T to return result_list) <br> * <code>model_summary_with_plot</code> return a named list object <br></p>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.1" id="psycmodel-011">psycModel 0.1.1<a class="anchor" aria-label="anchor" href="#psycmodel-011"></a></h2>
-<p><strong>New Feature:</strong> * <code>descriptive_table</code> support wider array of descriptive indicator (e.g., median, range) and missing &amp; non_missing values count <br></p>
-<p><strong>Fixes</strong> * Fixed the <code>cor_test</code> bug that the function return a correlation matrix with blank cells if the correlation is too high between the two items (rounded to 1).<br> * Add a <code>data_check</code> function that warns the users if non-numeric variables are coerced into numeric. <br></p>
+<p><strong>New Feature:</strong><br>
+* <code>descriptive_table</code> support wider array of descriptive indicator (e.g., median, range) and missing &amp; non_missing values count <br></p>
+<p><strong>Fixes</strong><br>
+* Fixed the <code>cor_test</code> bug that the function return a correlation matrix with blank cells if the correlation is too high between the two items (rounded to 1).<br> * Add a <code>data_check</code> function that warns the users if non-numeric variables are coerced into numeric. <br></p>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.0" id="psycmodel-010">psycModel 0.1.0<a class="anchor" aria-label="anchor" href="#psycmodel-010"></a></h2>
