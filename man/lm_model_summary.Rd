@@ -67,8 +67,7 @@ a list of all requested items in the order of model, model_summary, interaction_
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-It will first compute the linear regression. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function.
-If you requested simple slope summary, it will calls the \code{interaction::sim_slopes()}
+An integrated function for fitting a linear regression model.
 }
 \examples{
 fit <- lm_model_summary(

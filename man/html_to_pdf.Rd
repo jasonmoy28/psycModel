@@ -20,9 +20,8 @@ no return value
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
-This is a helper function for knitting Rmd. Due to technological limitation, the output cannot knit to PDF in Rmd directly. It uses the pagedown::chrome_print() in the backend.
-You must first knit to HTML, then you can use this function to covert them to PDF if you wish. I know this is a workaround to the issue,
-but the problem is with the latex engine printing unicode character. If you happen to know how to fix it, please let me know.
+This is a helper function for knitting Rmd. Due to technological limitation, the output cannot knit to PDF in Rmd directly (the problem is with the latex engine printing unicode character).
+Therefore, to bypass this problem, you will first need to knit to html file first, then use this function to convert it to a PDF file.
 }
 \examples{
 \dontrun{

@@ -88,9 +88,7 @@ a list of all requested items in the order of model, model_summary, interaction_
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
-It will first compute the mixed effect model. It will use either the \code{nlme::lme} or the \code{lmerTest::lmer} for linear mixed effect model. It will use \code{lme4::glmer} for generalized linear mixed effect model.
-Then, it will print the model summary and the panel of the plots that are useful for checking assumption (default is \code{FALSE}). If you requested the interaction plot (default is \code{TRUE}), it will graph the interaction (Currently only support \code{lme} model but not \code{glme})
-If you requested simple slope summary, it will uses the \code{interaction::sim_slopes()} to generate the slope estimate at varying level of the moderator (see \code{?simple_slope} for more detail)
+An integrated function for fitting a multilevel linear regression (also known as hierarchical linear regression).
 }
 \examples{
 fit <- lme_multilevel_model_summary(

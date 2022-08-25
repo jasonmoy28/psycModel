@@ -1,10 +1,8 @@
 #' Model Summary for Mixed Effect Model
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' It will first compute the mixed effect model. It will use either the `nlme::lme` or the `lmerTest::lmer` for linear mixed effect model. It will use `lme4::glmer` for generalized linear mixed effect model.
-#' Then, it will print the model summary and the panel of the plots that are useful for checking assumption (default is `FALSE`). If you requested the interaction plot (default is `TRUE`), it will graph the interaction (Currently only support `lme` model but not `glme`)
-#' If you requested simple slope summary, it will uses the `interaction::sim_slopes()` to generate the slope estimate at varying level of the moderator (see `?simple_slope` for more detail)
-#'
+#' An integrated function for fitting a multilevel linear regression (also known as hierarchical linear regression).
+#' 
 #' @param data data frame
 #' @param model `lme4` model syntax. Support more complicated model structure from `lme4`. It is not well-tested to ensure accuracy `r lifecycle::badge("experimental")`
 #' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select()` syntax.

@@ -1,8 +1,7 @@
 #' Model Summary for Linear Regression
 #'
 #' `r lifecycle::badge("stable")` \cr
-#' It will first compute the linear regression. Then, it will graph the interaction using the two_way_interaction_plot or the three_way_interaction_plot function.
-#' If you requested simple slope summary, it will calls the `interaction::sim_slopes()`
+#' An integrated function for fitting a linear regression model.
 #'
 #' @param data data frame
 #' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select()` syntax.
