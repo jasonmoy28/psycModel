@@ -3,7 +3,7 @@
 #' `r lifecycle::badge("stable")` \cr
 #' Fit a linear regression using `lm()`. Linear regression is used to explore the effect of continuous variables / categorical variables in predicting a normally-distributed continuous variables.
 #'
-#' @param data data frame
+#' @param data `data.frame`
 #' @param response_variable response variable. Support `dplyr::select()` syntax.
 #' @param predictor_variable predictor variable. Support `dplyr::select()` syntax. It will automatically remove the response variable from predictor variable, so you can use `contains()` or `start_with()` safely.
 #' @param quite suppress printing output

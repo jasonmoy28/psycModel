@@ -26,7 +26,7 @@ lm_model_summary(
 )
 }
 \arguments{
-\item{data}{data frame}
+\item{data}{\code{data.frame}}
 
 \item{response_variable}{DV (i.e., outcome variable / response variable). Length of 1. Support \code{dplyr::select()} syntax.}
 

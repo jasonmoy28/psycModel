@@ -5,7 +5,7 @@
 #' Users can run the configural-metric or the configural-metric-scalar comparisons (see below for detail instruction).
 #' All arguments (except the CFA items) must be explicitly named (like model = your-model; see example for inappropriate behavior).
 #'
-#' @param data data frame
+#' @param data `data.frame`
 #' @param ... CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for examples. Support `dplyr::select()` syntax.
 #' @param model explicit `lavaan` model. Must be specify with `model = lavaan_model_syntax`. `r lifecycle::badge("experimental")`
 #' @param group the nested variable for multilevel dataset (e.g., Country). Support `dplyr::select()` syntax.

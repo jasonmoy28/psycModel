@@ -3,7 +3,7 @@
 #' The function uses the `interaction::sim_slopes()` to calculate the slope estimate at varying level of moderators (+/- 1 SD and mean).
 #' Additionally, it will produce a Johnson-Newman plot that shows when the slope estimate is not significant
 #'
-#' @param data data frame
+#' @param data `data.frame`
 #' @param model model object from `lm`, `lme`,`lmer`
 #'
 #' @return a list with the slope estimate data frame and a Johnson-Newman plot.

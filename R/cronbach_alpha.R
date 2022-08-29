@@ -1,7 +1,10 @@
 #' Cronbach alpha 
-#' Useful for computing the Cronbach alphas for multiple factors. 
+#' `r lifecycle::badge("stable")` \cr
+#' 
+#' Computing the Cronbach alphas for multiple factors.  
+#' 
 #' @param ... Items. Group each latent factors using c() with when computing Cronbach alpha for 2+ factors (see example below) 
-#' @param data dataframe. Must specify
+#' @param data `data.frame`. Must specify
 #' @param var_name character or a vector of characters. The order of `var_name` must be same as the order of the `...`
 #' @param return_result  If it is set to `TRUE`, it will return a `dataframe` object
 #' @param group optional character. Specify this argument for computing Cronbach alpha for group separetely  

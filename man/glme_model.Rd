@@ -21,7 +21,7 @@ glme_model(
 )
 }
 \arguments{
-\item{data}{data frame}
+\item{data}{\code{data.frame}}
 
 \item{model}{\code{lme4} model syntax. Support more complicated model. Note that model_summary will only return fixed effect estimates. This is not tested. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
 

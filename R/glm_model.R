@@ -3,7 +3,7 @@
 #' `r lifecycle::badge("experimental")` \cr
 #' Fit a generalized linear regression using `glm()`. This function is still in early development stage.
 #'
-#' @param data data frame
+#' @param data `data.frame`
 #' @param response_variable response variable. Support `dplyr::select()` syntax.
 #' @param predictor_variable predictor variable. Support `dplyr::select()` syntax.
 #' @param quite suppress printing output

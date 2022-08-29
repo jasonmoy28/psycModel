@@ -3,7 +3,7 @@
 #' `r lifecycle::badge("experimental")` \cr
 #' Fit a generalized linear mixed effect model using `lme4::glmer()`. This function is still in early development stage.
 #'
-#' @param data data frame
+#' @param data `data.frame`
 #' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select()` syntax.
 #' @param random_effect_factors random effect factors (level-1 variable for HLM people) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support `dplyr::select()` syntax.
 #' @param non_random_effect_factors non-random effect factors (level-2 variable for HLM people). Factors only need to estimate fixed effect. Support `dplyr::select()` syntax.

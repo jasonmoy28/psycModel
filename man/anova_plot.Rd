@@ -17,7 +17,8 @@ anova_plot(model, predictor = NULL, graph_label_name = NULL)
 plot object
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
+Plot categorical variable with barplot. Continuous moderator are plotted at ± 1 SD from the mean.
 }
 \examples{
 fit = iris \%>\% lm(data = ., Sepal.Length ~ Species)

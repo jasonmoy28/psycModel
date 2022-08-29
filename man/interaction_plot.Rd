@@ -3,6 +3,7 @@
 \name{interaction_plot}
 \alias{interaction_plot}
 \title{Interaction plot
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 The function creates a two-way or three-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with \code{lm_model()}, \code{lme_model()}.}
 \usage{
 interaction_plot(
@@ -32,6 +33,7 @@ a \code{ggplot} object
 }
 \description{
 Interaction plot
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 The function creates a two-way or three-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with \code{lm_model()}, \code{lme_model()}.
 }
 \examples{

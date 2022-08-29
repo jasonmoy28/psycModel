@@ -19,7 +19,7 @@ measurement_invariance(
 )
 }
 \arguments{
-\item{data}{data frame}
+\item{data}{\code{data.frame}}
 
 \item{...}{CFA items. Multi-factor CFA items should be separated by comma (as different argument). See below for examples. Support \code{dplyr::select()} syntax.}
 

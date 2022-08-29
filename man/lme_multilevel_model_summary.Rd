@@ -33,7 +33,7 @@ lme_multilevel_model_summary(
 )
 }
 \arguments{
-\item{data}{data frame}
+\item{data}{\code{data.frame}}
 
 \item{model}{\code{lme4} model syntax. Support more complicated model structure from \code{lme4}. It is not well-tested to ensure accuracy \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
 

@@ -3,7 +3,7 @@
 #' `r lifecycle::badge("stable")` \cr
 #' An integrated function for fitting a linear regression model.
 #'
-#' @param data data frame
+#' @param data `data.frame`
 #' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select()` syntax.
 #' @param predictor_variable IV. Support `dplyr::select()` syntax.
 #' @param three_way_interaction_factor three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support `dplyr::select()` syntax.

@@ -3,7 +3,7 @@
 #' `r lifecycle::badge("stable")` \cr
 #' An integrated function for fitting a multilevel linear regression (also known as hierarchical linear regression).
 #' 
-#' @param data data frame
+#' @param data `data.frame`
 #' @param model `lme4` model syntax. Support more complicated model structure from `lme4`. It is not well-tested to ensure accuracy `r lifecycle::badge("experimental")`
 #' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select()` syntax.
 #' @param random_effect_factors random effect factors (level-1 variable for HLM from a HLM perspective) Factors that need to estimate fixed effect and random effect (i.e., random slope / varying slope based on the id). Support `dplyr::select()` syntax.

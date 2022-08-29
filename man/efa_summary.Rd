@@ -19,7 +19,7 @@ efa_summary(
 )
 }
 \arguments{
-\item{data}{data frame}
+\item{data}{\code{data.frame}}
 
 \item{cols}{columns. Support \code{dplyr::select()} syntax.}
 

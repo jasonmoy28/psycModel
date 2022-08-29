@@ -3,14 +3,14 @@
 \name{cronbach_alpha}
 \alias{cronbach_alpha}
 \title{Cronbach alpha
-Useful for computing the Cronbach alphas for multiple factors.}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr}
 \usage{
 cronbach_alpha(..., data, var_name, return_result = FALSE, group = NULL)
 }
 \arguments{
 \item{...}{Items. Group each latent factors using c() with when computing Cronbach alpha for 2+ factors (see example below)}
 
-\item{data}{dataframe. Must specify}
+\item{data}{\code{data.frame}. Must specify}
 
 \item{var_name}{character or a vector of characters. The order of \code{var_name} must be same as the order of the \code{...}}
 
@@ -22,8 +22,7 @@ cronbach_alpha(..., data, var_name, return_result = FALSE, group = NULL)
 a \code{data.frame} object if return_result is \code{TRUE}
 }
 \description{
-Cronbach alpha
-Useful for computing the Cronbach alphas for multiple factors.
+Computing the Cronbach alphas for multiple factors.
 }
 \examples{
 cronbach_alpha(

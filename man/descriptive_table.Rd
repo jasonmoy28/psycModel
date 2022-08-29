@@ -17,7 +17,7 @@ descriptive_table(
 )
 }
 \arguments{
-\item{data}{data frame}
+\item{data}{\code{data.frame}}
 
 \item{cols}{column(s) need to be included in the table. Support \code{dplyr::select()} syntax.}
 

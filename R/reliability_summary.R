@@ -4,7 +4,7 @@
 #' consists of alpha, G6, single-factor CFA, and descriptive statistics result. If it is multi-dimensional, it will print a summary consist of alpha, G6, omega result. You can
 #' bypass this by specifying the dimensionality argument.
 #'
-#' @param data data frame
+#' @param data `data.frame`
 #' @param cols items for reliability analysis.  Support `dplyr::select()` syntax.
 #' @param descriptive_table Get descriptive statistics. Default is `TRUE`
 #' @param digits number of digits to round to

@@ -16,7 +16,7 @@ three_way_interaction_plot(
 \arguments{
 \item{model}{object from \code{lme}, \code{lme4}, \code{lmerTest} object.}
 
-\item{data}{data frame. If the function is unable to extract data frame from the object, then you may need to pass it directly}
+\item{data}{\code{data.frame}. If the function is unable to extract data frame from the object, then you may need to pass it directly}
 
 \item{cateogrical_var}{list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of \code{list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))}}
 
@@ -30,7 +30,7 @@ three_way_interaction_plot(
 a \code{ggplot} object
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \cr
 The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with \code{lm_model()}, \code{lme_model()}.
 }
 \details{

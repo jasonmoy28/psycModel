@@ -15,7 +15,7 @@ glm_model(
 )
 }
 \arguments{
-\item{data}{data frame}
+\item{data}{\code{data.frame}}
 
 \item{response_variable}{response variable. Support \code{dplyr::select()} syntax.}
 

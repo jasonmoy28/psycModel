@@ -16,7 +16,7 @@ two_way_interaction_plot(
 \arguments{
 \item{model}{object from \code{lm}, \code{nlme}, \code{lme4}, or \code{lmerTest}}
 
-\item{data}{data frame. If the function is unable to extract data frame from the object, then you may need to pass it directly}
+\item{data}{\code{data.frame}. If the function is unable to extract data frame from the object, then you may need to pass it directly}
 
 \item{graph_label_name}{vector of length 3 or function. Vector should be passed in the form of \code{c(response_var, predict_var1, predict_var2)}. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)}
 
@@ -30,7 +30,7 @@ two_way_interaction_plot(
 an object of class \code{ggplot}
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \cr
 The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See supported model below.
 I recommend using concurrently with \code{lm_model} or \code{lme_model}.
 }

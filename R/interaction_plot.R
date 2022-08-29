@@ -1,4 +1,5 @@
 #' Interaction plot 
+#' `r lifecycle::badge("stable")` \cr
 #' The function creates a two-way or three-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with `lm_model()`, `lme_model()`.
 #'
 #' @param model object from `lme`, `lme4`, `lmerTest` object.

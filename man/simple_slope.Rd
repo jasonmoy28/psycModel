@@ -9,7 +9,7 @@ simple_slope(model, data = NULL)
 \arguments{
 \item{model}{model object from \code{lm}, \code{lme},\code{lmer}}
 
-\item{data}{data frame}
+\item{data}{\code{data.frame}}
 }
 \value{
 a list with the slope estimate data frame and a Johnson-Newman plot.

@@ -3,7 +3,7 @@
 #' `r lifecycle::badge("stable")` \cr
 #' This function generates a table of descriptive statistics (mainly using `psych::describe()`) and or a correlation table. User can export this to a csv file (optionally, using the file_path argument). Users can open the csv file with MS Excel then copy and paste the table into MS Word table.
 #'
-#' @param data data frame
+#' @param data `data.frame`
 #' @param cols  column(s) need to be included in the table. Support `dplyr::select()` syntax.
 #' @param descriptive_indicator Default is mean, sd, cor. Options are missing (missing value count), non_missing (non-missing value count), cor (correlation table), n, mean, sd, median, trimmed (trimmed mean), median, mad (median absolute deviation from the median), min, max, range, skew, kurtosis, se (standard error)
 #' @param digits number of digit for the descriptive table

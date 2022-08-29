@@ -1,6 +1,8 @@
 #' ANOVA Plot
 #'
-#' `r lifecycle::badge("stable")` \cr
+#' `r lifecycle::badge("experimental")` \cr
+#' Plot categorical variable with barplot. Continuous moderator are plotted at ± 1 SD from the mean. 
+#' 
 #' @param model fitted model (usually `lm` or `aov` object)
 #' @param predictor predictor variable. Must specified for non-interaction plot and must not specify for interaction plot. 
 #' @param graph_label_name vector or function. Vector should be passed in the form of `c(response_var, predict_var1, predict_var2, ...)`. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)

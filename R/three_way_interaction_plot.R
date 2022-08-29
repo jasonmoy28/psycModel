@@ -1,10 +1,10 @@
 #' Three-way Interaction Plot
 #'
-#' `r lifecycle::badge("stable")` \cr
+#' `r lifecycle::badge("deprecated")` \cr
 #' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with `lm_model()`, `lme_model()`.
 #'
 #' @param model object from `lme`, `lme4`, `lmerTest` object.
-#' @param data data frame. If the function is unable to extract data frame from the object, then you may need to pass it directly
+#' @param data `data.frame`. If the function is unable to extract data frame from the object, then you may need to pass it directly
 #' @param graph_label_name vector of length 4 or a switch function (see ?two_way_interaction_plot example). Vector should be passed in the form of c(response_var, predict_var1, predict_var2, predict_var3).
 #' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
 #' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
@@ -13,7 +13,7 @@
 #'
 #' @details It appears that ``predict` cannot handle categorical factors. All variables are converted to numeric before plotting.
 #' @return a `ggplot` object
-#'
+#' @export
 #' 
 #'
 #' @examples

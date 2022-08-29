@@ -16,7 +16,7 @@ reliability_summary(
 )
 }
 \arguments{
-\item{data}{data frame}
+\item{data}{\code{data.frame}}
 
 \item{cols}{items for reliability analysis.  Support \code{dplyr::select()} syntax.}
 

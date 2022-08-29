@@ -4,7 +4,7 @@
 #' It currently only support simple mediation analysis using the path analysis approach with the `lavaan` package. I am trying to implement multilevel mediation in `lavaan`.
 #' In the future, I will try supporting moderated mediation (through `lavaan` or `mediation`) and mediation with latent variable (through `lavaan`).
 #'
-#' @param data data frame
+#' @param data `data.frame`
 #' @param response_variable response variable. Support `dplyr::select()` syntax.
 #' @param mediator mediator. Support `dplyr::select()` syntax.
 #' @param predictor_variable predictor variable. Support `dplyr::select()` syntax.
