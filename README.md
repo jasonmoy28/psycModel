@@ -29,12 +29,11 @@ devtools::install_github('jasonmoy28/psycModel')
 <span style="color:#009900">✓</span> Produce publication-ready tables and figures (e.g., descriptive table)  <br/>
 <span style="color:#009900">✓</span> Fitting models, plotting, checking goodness of fit, and model assumption violations all in one place.  <br/>
 <span style="color:#009900">✓</span> Beautiful and easy-to-read output. Check out this [example](https://jasonmoy28.github.io/psycModel//articles/quick-introduction.html) now.  <br/>
-<span style="color:#009900">✓</span> In the backend, this package uses reliable R packages (e.g., `lavaan`, `lme4`, `psych`) to handle all statistical analysis.  <br/>
 
 ## Supported Models
 Regression models:  <br/>
-* Linear regression (i.e., support ANOVA, ANCOVA) & generalized linear regression  <br/>
-* Linear mixed effect model (i.e., HLM, MLM) & generalized linear mixed effect model.  <br/>
+* Linear regression (i.e., support ANOVA, ANCOVA) & curvilinear regression  <br/>
+* Linear mixed effect model (i.e., HLM, MLM).  <br/>
 
 Structure Equation Modeling:  <br/>
 * Exploratory & confirmatory factor analysis  <br/>
@@ -65,7 +64,6 @@ The current release is the [alpha version](https://en.wikipedia.org/wiki/Softwar
 2. Support moderated mediation analysis and multilevel mediation analysis (currently support multilevel with level-1 variable only)
 3. Support latent class and profile analysis (possible latent transition analysis)
 4. Support generalized linear regression
-5. Support polynomial regression
-6. Support outputting table to MS word (don't know how to implement yet)  
+5. Support outputting table to MS word (don't know how to implement yet)  
 
 *Note:* A more exhaustive list is available [here](https://github.com/jasonmoy28/psycModel/issues/3). If you have any feature request, please feel free to let me know by writing a new GitHub issue. 
