@@ -1,7 +1,7 @@
 #' get label name
 #'
 #' @param graph_label_name label name
-#' @param response_var_name outome variable  name
+#' @param response_var_name outcome variable  name
 #' @param predict_var1_name predictor 1 name
 #' @param predict_var2_name predictor 2 name
 #' @param predict_var3_name predictor 3 name

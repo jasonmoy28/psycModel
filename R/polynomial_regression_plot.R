@@ -5,7 +5,7 @@
 #'
 #'
 #' @param model object from `lm`
-#' @param model_data optional dataframe (in case data cannot be retrive from the model)
+#' @param model_data optional dataframe (in case data cannot be retrieved from the model)
 #' @param predictor predictor variable name (must be character)
 #' @param graph_label_name vector of length 3 or function. Vector should be passed in the form of `c(response_var, predict_var1, predict_var2)`. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)
 #' @param x_lim the plot's upper and lower limit for the x-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
