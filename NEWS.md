@@ -4,6 +4,9 @@
 * Added support for polynomial plot (incl. curvilinear plots)   
 * Added support for Cronbach alpha computation (useful to combine with `descriptive_table`)  
 
+**Minor Feature**  
+* Integrate two-way and three-way interaction plot into one function  
+
 **Fixes**  
 * Fixed the issue that some model assumption checks were not printed  
 * Fixed the issue that `compare_fit` function not able to for comparing `lm` models  
