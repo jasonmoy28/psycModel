@@ -69,20 +69,24 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.0" id="psycmodel-040">psycModel 0.4.0<a class="anchor" aria-label="anchor" href="#psycmodel-040"></a></h2>
-<p><strong>Major Feature:</strong><br>
-* Added support for ANOVA plots<br>
-* Added support for polynomial (incl. curvilinear plots)</p>
+<p><strong>Major Feature</strong><br>
+* Added support for ANOVA plots (with continuous variable as moderator)<br>
+* Added support for polynomial plot (incl. curvilinear plots)<br>
+* Added support for Cronbach alpha computation (useful to combine with <code>descriptive_table</code>)</p>
+<p><strong>Fixes</strong><br>
+* Fixed the issue that some model assumption checks were not printed<br>
+* Fixed the issue that <code>compare_fit</code> function not able to for comparing <code>lm</code> models</p>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.3" id="psycmodel-033">psycModel 0.3.3<small>2022-08-20</small><a class="anchor" aria-label="anchor" href="#psycmodel-033"></a></h2>
-<p><strong>Fixes:</strong><br>
+<p><strong>Fixes</strong><br>
 * Fixed control variables must be numeric variables in interaction plots (i.e., added support for factor variables) * Simple slope no longer need to pass in the <code>interaction_terms</code> and <code>data</code> arguments<br>
 * Support multilevel modeling again after fixes introduced in <code>insight</code> package.</p>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.2" id="psycmodel-032">psycModel 0.3.2<small>2021-09-05</small><a class="anchor" aria-label="anchor" href="#psycmodel-032"></a></h2>
-<p><strong>Fixes:</strong><br>
-* Drop support for multilevel modeling temporaily due to <code>insight</code> package recent non-backward compatible changes</p>
+<p><strong>Fixes</strong><br>
+* Drop support for multilevel modeling temporarily due to <code>insight</code> package recent non-backward compatible changes</p>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.1" id="psycmodel-031">psycModel 0.3.1<small>2021-05-21</small><a class="anchor" aria-label="anchor" href="#psycmodel-031"></a></h2>
@@ -91,10 +95,10 @@
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.0" id="psycmodel-030-first-cran-release">psycModel 0.3.0 (first CRAN release)<small>2021-04-21</small><a class="anchor" aria-label="anchor" href="#psycmodel-030-first-cran-release"></a></h2>
-<p><strong>Major Feature:</strong> <br> * Added support reliability measure summary<br>
+<p><strong>Major Feature</strong> <br> * Added support reliability measure summary<br>
 * Added support mediation models<br>
 * Added support generalized linear regression (<code>glm</code> and <code>glmer</code> without plot)</p>
-<p><strong>Minor Feature:</strong> <br> * <code>cfa_summary</code> support path diagram<br>
+<p><strong>Minor Feature</strong> <br> * <code>cfa_summary</code> support path diagram<br>
 * <code>efa_summary</code> rewrite using functions from <code>parameters</code> and support post-hoc CFA test<br>
 * <code>cfa_summary</code> support factor loading is hidden for same latent factor (only when group = <code>NULL</code>)<br>
 * <code>cor_test</code> and <code>descriptive_table</code> support rich-text formatted table output * <code>model_summary</code> rewrite using <code><a href="https://easystats.github.io/parameters/reference/model_parameters.html" class="external-link">parameters::model_parameters</a></code><br>
@@ -104,25 +108,25 @@
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.1" id="psycmodel-021">psycModel 0.2.1<a class="anchor" aria-label="anchor" href="#psycmodel-021"></a></h2>
-<p><strong>Major Feature:</strong><br>
+<p><strong>Major Feature</strong><br>
 * Added support linear regression <br> * Added support exploratory factor analysis <br> * Complete overhaul to produce rich-text formatted summary output <br></p>
-<p><strong>Minor Feature:</strong><br>
+<p><strong>Minor Feature</strong><br>
 * <code>measurement_invariance</code> support multiple-factor model with tidyselect syntax <br> * <code>model_summary_with_plot</code> support outlier detection <br> * Changed data from EWCS_2015_shorten to popular (a data-set that is easier to understand) <br> * Added a new function that allow convert HTML to PDF function for knitting Rmd <br> * <code>model_performance</code> support a wider array of model performance measure <br> * <code>cfa_summary</code> and <code>measurement_invariance</code> support checking goodness of fit <br></p>
 <p><strong>Fixes</strong><br>
 * Critical bug fix for <code>model_summary_with_plot</code>. You can no request <code>simple_slope</code> and <code>check_assumption</code> correctly. <br> * Critical bug fix that <code>cor_test</code> is not exported <br> * remove some packages from import and switch to <code><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace()</a></code> <br> * added fallback for normality check <br></p>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.0" id="psycmodel-020">psycModel 0.2.0<a class="anchor" aria-label="anchor" href="#psycmodel-020"></a></h2>
-<p><strong>Major Feature:</strong><br>
+<p><strong>Major Feature</strong><br>
 * <code>lme_model</code>, <code>model_summary_with_plot</code> support tidyselect syntax <br> * <code>cfa_summary</code> support multi-factor CFA with tidyselect syntax <br></p>
-<p><strong>Minor Feature:</strong><br>
+<p><strong>Minor Feature</strong><br>
 * Added <code>assumption_plot</code> to visually inspect assumptions for mixed effect models in <code>model_summary_with_plot</code> <br> * <code>two_way_interaction_plot</code>, <code>three_way_interaction_plot</code> only require the model object to produce the plot. <br> * <code>lme_model</code>, <code>model_summary_with_plot</code> support using <code>lme4</code> package. <br> * <code>model_summary_with_plot</code> <code>lme_model</code> support passing explicit model <br> * <code>compare_fit</code> support more model comparison (e.g., lme, glme) <br></p>
 <p><strong>Fixes</strong><br>
 * This current version build pass CMD check <br> * <code>measurement_invariance</code> stop using <code>semTools::compareFit</code>. Added a self-created <code>compare_fit</code> function for the package <br> * Remove <code>papaja::apa_theme()</code> dependency. <br> * Use <code>.data</code> from <code>rlang</code> for <code>mutate</code> function <br> * <code>model_summary_with_plot</code> always return list and changed to logical (set to T to return result_list) <br> * <code>model_summary_with_plot</code> return a named list object <br></p>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.1" id="psycmodel-011">psycModel 0.1.1<a class="anchor" aria-label="anchor" href="#psycmodel-011"></a></h2>
-<p><strong>New Feature:</strong><br>
+<p><strong>New Feature</strong><br>
 * <code>descriptive_table</code> support wider array of descriptive indicator (e.g., median, range) and missing &amp; non_missing values count <br></p>
 <p><strong>Fixes</strong><br>
 * Fixed the <code>cor_test</code> bug that the function return a correlation matrix with blank cells if the correlation is too high between the two items (rounded to 1).<br> * Add a <code>data_check</code> function that warns the users if non-numeric variables are coerced into numeric. <br></p>
