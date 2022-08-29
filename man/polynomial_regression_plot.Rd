@@ -17,7 +17,7 @@ polynomial_regression_plot(
 \arguments{
 \item{model}{object from \code{lm}}
 
-\item{model_data}{optional dataframe (in case data cannot be retrive from the model)}
+\item{model_data}{optional dataframe (in case data cannot be retrieved from the model)}
 
 \item{predictor}{predictor variable name (must be character)}
 

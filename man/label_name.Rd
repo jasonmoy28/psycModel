@@ -15,7 +15,7 @@ label_name(
 \arguments{
 \item{graph_label_name}{label name}
 
-\item{response_var_name}{outome variable  name}
+\item{response_var_name}{outcome variable  name}
 
 \item{predict_var1_name}{predictor 1 name}
 

@@ -30,7 +30,7 @@ reliability_summary(
 
 \item{streamline}{print streamlined output}
 
-\item{return_result}{If it is set to \code{TRUE} (default is \code{FALSE}), it will return \code{psych::alpha} for unidimensional scale, and \code{psych::omega} for multidimensional scale.}
+\item{return_result}{If it is set to \code{TRUE} (default is \code{FALSE}), it will return \code{psych::alpha} for uni-dimensional scale, and \code{psych::omega} for multidimensional scale.}
 }
 \value{
 a \code{psych::alpha} object for unidimensional scale, and a \code{psych::omega} object for multidimensional scale.
