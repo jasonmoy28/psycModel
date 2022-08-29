@@ -1,17 +1,22 @@
 # psycModel 0.4.0
-**Major Feature:**  
-* Added support for ANOVA plots  
-* Added support for polynomial (incl. curvilinear plots)  
+**Major Feature**  
+* Added support for ANOVA plots (with continuous variable as moderator)  
+* Added support for polynomial plot (incl. curvilinear plots)   
+* Added support for Cronbach alpha computation (useful to combine with `descriptive_table`)  
+
+**Fixes**  
+* Fixed the issue that some model assumption checks were not printed  
+* Fixed the issue that `compare_fit` function not able to for comparing `lm` models  
 
 # psycModel 0.3.3
-**Fixes:**  
+**Fixes**  
 * Fixed control variables must be numeric variables in interaction plots (i.e., added support for factor variables)
 * Simple slope no longer need to pass in the `interaction_terms` and `data` arguments  
 * Support multilevel modeling again after fixes introduced in `insight` package.  
 
 # psycModel 0.3.2
-**Fixes:**  
-* Drop support for multilevel modeling temporaily due to `insight` package recent non-backward compatible changes  
+**Fixes**  
+* Drop support for multilevel modeling temporarily due to `insight` package recent non-backward compatible changes  
 
 # psycModel 0.3.1
 **Fixes**  
@@ -19,12 +24,12 @@
 
 # psycModel 0.3.0 (first CRAN release)
 
-**Major Feature:** <br/>
+**Major Feature** <br/>
 * Added support reliability measure summary  
 * Added support mediation models  
 * Added support generalized linear regression (`glm` and `glmer` without plot)  
 
-**Minor Feature:** <br/>
+**Minor Feature** <br/>
 * `cfa_summary`  support path diagram  
 * `efa_summary` rewrite using functions from `parameters` and support post-hoc CFA test  
 * `cfa_summary` support factor loading is hidden for same latent factor (only when group = `NULL`)  
@@ -39,12 +44,12 @@
 
 # psycModel 0.2.1
 
-**Major Feature:**  
+**Major Feature**  
 * Added support linear regression <br/>
 * Added support exploratory factor analysis <br/>
 * Complete overhaul to produce rich-text formatted summary output <br/>
 
-**Minor Feature:**  
+**Minor Feature**  
 * `measurement_invariance` support multiple-factor model with tidyselect syntax <br/>
 * `model_summary_with_plot` support outlier detection <br/>
 * Changed data from EWCS_2015_shorten to popular (a data-set that is easier to understand) <br/>
@@ -59,11 +64,11 @@
 * added fallback for normality check <br/>
 
 # psycModel 0.2.0
-**Major Feature:**  
+**Major Feature**  
 * `lme_model`, `model_summary_with_plot` support tidyselect syntax <br/>
 * `cfa_summary` support multi-factor CFA with tidyselect syntax <br/>
 
-**Minor Feature:**  
+**Minor Feature**  
 * Added `assumption_plot` to visually inspect assumptions for mixed effect models in `model_summary_with_plot` <br/>
 * `two_way_interaction_plot`, `three_way_interaction_plot` only require the model object to produce the plot. <br/>
 * `lme_model`, `model_summary_with_plot` support using `lme4` package. <br/>
@@ -79,7 +84,7 @@
 * `model_summary_with_plot` return a named list object <br/>
 
 # psycModel 0.1.1
-**New Feature:**  
+**New Feature**  
 * `descriptive_table` support wider array of descriptive indicator (e.g., median, range) and missing & non_missing values count <br/>
 
 **Fixes**  
