@@ -32,7 +32,7 @@ anova_plot <- function(model,
     
     mean = data %>%
       dplyr::group_by(!!predictor) %>%
-      dplyr::summarise(dplyr::across(!!response_var, ~ mean(., na.rm = T))) %>%
+      dplyr::summarise(dplyr::across(!!response_var, ~ mean(., na.rm = TRUE))) %>%
       dplyr::rename(mean = !!response_var)
     
     se = data %>%
@@ -120,8 +120,8 @@ anova_plot <- function(model,
           lower_new_data[cat_var_name] = level
           lower_new_data[num_var_name] = lower_df[num_var_name]
           if (inherits(model,'lm')) {
-            upper_predicted = stats::predict(model, newdata = upper_new_data, se.fit = T)
-            lower_predicted = stats::predict(model, newdata = lower_new_data, se.fit = T)
+            upper_predicted = stats::predict(model, newdata = upper_new_data, se.fit = TRUE)
+            lower_predicted = stats::predict(model, newdata = lower_new_data, se.fit = TRUE)
             
             plot_df = rbind(plot_df, data.frame(cat_var_name = level,
                                                 num_var_name = 'high',
@@ -161,7 +161,7 @@ anova_plot <- function(model,
       } else if(numeric_var_count == 0){
         mean = data %>%
           dplyr::group_by(dplyr::across(!!!predict_vars)) %>%
-          dplyr::summarise(dplyr::across(!!response_var, ~ mean(., na.rm = T))) %>%
+          dplyr::summarise(dplyr::across(!!response_var, ~ mean(., na.rm = TRUE))) %>%
           dplyr::rename(mean = !!response_var)
         
         se = data %>%
@@ -258,10 +258,10 @@ anova_plot <- function(model,
           lower_lower_new_data[cat_var_name] = level
           
           if (inherits(model,'lm')) {
-            upper_upper_predicted = stats::predict(model, newdata = upper_upper_new_data, se.fit = T)
-            upper_lower_predicted = stats::predict(model, newdata = upper_lower_new_data, se.fit = T)
-            lower_upper_predicted = stats::predict(model, newdata = lower_upper_new_data, se.fit = T)
-            lower_lower_predicted = stats::predict(model, newdata = lower_lower_new_data, se.fit = T)
+            upper_upper_predicted = stats::predict(model, newdata = upper_upper_new_data, se.fit = TRUE)
+            upper_lower_predicted = stats::predict(model, newdata = upper_lower_new_data, se.fit = TRUE)
+            lower_upper_predicted = stats::predict(model, newdata = lower_upper_new_data, se.fit = TRUE)
+            lower_lower_predicted = stats::predict(model, newdata = lower_lower_new_data, se.fit = TRUE)
             
             plot_df = rbind(plot_df,data.frame(cat_var_name = rep(level,4),
                                                numeric_var1 = c('high','high','low','low'),
@@ -314,8 +314,8 @@ anova_plot <- function(model,
             lower_new_data[cat_var_name[1]] = cat_var1_level
             lower_new_data[cat_var_name[2]] = cat_var2_level
             if (inherits(model,'lm')) {
-              upper_predicted = stats::predict(model, newdata = upper_new_data, se.fit = T)
-              lower_predicted = stats::predict(model, newdata = lower_new_data, se.fit = T)
+              upper_predicted = stats::predict(model, newdata = upper_new_data, se.fit = TRUE)
+              lower_predicted = stats::predict(model, newdata = lower_new_data, se.fit = TRUE)
               
               plot_df = rbind(plot_df,data.frame(cat_var1_name = rep(cat_var1_level,2),
                                                  cat_var2_name = rep(cat_var2_level,2),
@@ -350,7 +350,7 @@ anova_plot <- function(model,
       } else if(numeric_var_count == 0){
         mean = data %>%
           dplyr::group_by(dplyr::across(!!!predict_vars)) %>%
-          dplyr::summarise(dplyr::across(!!response_var, ~ mean(., na.rm = T))) %>%
+          dplyr::summarise(dplyr::across(!!response_var, ~ mean(., na.rm = TRUE))) %>%
           dplyr::rename(mean = !!response_var)
         
         se = data %>%
