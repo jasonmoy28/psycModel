@@ -13,7 +13,7 @@
 #' @param p_adjust Default is "holm". Options are "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "somers" or "none". See ?stats::p.adjust for more detail
 #' @param streamline print streamlined output.
 #'
-#' @return data frame of the correlation table
+#' @return a `data.frame` of the correlation table
 #'
 #' @export
 #'

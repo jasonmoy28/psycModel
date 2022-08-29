@@ -14,7 +14,7 @@
 #' @details It appears that ``predict` cannot handle categorical factors. All variables are converted to numeric before plotting.
 #' @return a `ggplot` object
 #'
-#' @export
+#' 
 #'
 #' @examples
 #' lm_fit <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width +

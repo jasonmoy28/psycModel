@@ -13,7 +13,7 @@
 #' @details
 #' All argument must be explicitly specified. If not, all arguments will be treated as CFA items
 #'
-#' @return data frame with group-wise CFA result
+#' @return a `data.frame` with group-wise CFA result
 #'
 #' @export
 #' @examples

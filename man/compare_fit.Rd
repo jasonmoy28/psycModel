@@ -24,7 +24,7 @@ compare_fit(
 \item{return_result}{If it is set to \code{TRUE}, it will return the the compare fit data frame.}
 }
 \value{
-data frame with fit indices and change in fit indices
+a \code{dataframe} with fit indices and change in fit indices
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr

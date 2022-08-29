@@ -39,7 +39,7 @@
 #'
 #'
 #' @export
-#' @return a data frame of the fit measure summary
+#' @return a `data.frame` of the fit measure summary
 #'
 #' @examples
 #' # REMEMBER, YOU MUST NAMED ALL ARGUMENT EXCEPT THE CFA ITEMS ARGUMENT

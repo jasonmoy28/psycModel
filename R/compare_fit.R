@@ -9,7 +9,7 @@
 #' @param quite suppress printing output
 #' @param return_result  If it is set to `TRUE`, it will return the the compare fit data frame.
 #'
-#' @return data frame with fit indices and change in fit indices
+#' @return a `dataframe` with fit indices and change in fit indices
 #' @export
 #' @examples
 #' # lme model

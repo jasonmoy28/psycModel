@@ -18,7 +18,7 @@ cfa_groupwise(data, ..., group, model = NULL, ordered = FALSE)
 \item{ordered}{logical. default is \code{FALSE}. If it is set to \code{TRUE}, lavaan will treat it as a ordinal variable and use \code{DWLS} instead of \code{ML}}
 }
 \value{
-data frame with group-wise CFA result
+a \code{data.frame} with group-wise CFA result
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr

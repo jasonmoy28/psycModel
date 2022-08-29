@@ -36,7 +36,7 @@ cor_test(
 \item{return_result}{If it is set to \code{TRUE}, it will return the data frame of the correlation table}
 }
 \value{
-data frame of the correlation table
+a \code{data.frame} of the correlation table
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr

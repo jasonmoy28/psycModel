@@ -13,7 +13,7 @@
 #' @param streamline print streamlined output
 #' @param ... additional arguments passed to cor_test. See ?cor_test.
 #'
-#' @return data frame of the descriptive table
+#' @return a `data.frame` of the descriptive table
 #'
 #' @export
 #'

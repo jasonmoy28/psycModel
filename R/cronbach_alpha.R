@@ -6,11 +6,10 @@
 #' @param return_result  If it is set to `TRUE`, it will return a `dataframe` object
 #' @param group optional character. Specify this argument for computing Cronbach alpha for group separetely  
 #'
-#' @return a `dataframe` object if return_result is `TRUE`
+#' @return a `data.frame` object if return_result is `TRUE`
 #' @export
 #'
 #' @examples
-#' 
 #' cronbach_alpha(
 #'   data = lavaan::HolzingerSwineford1939,
 #'   var_name = c('Visual','Textual','Speed'),

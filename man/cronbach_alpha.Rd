@@ -19,14 +19,13 @@ cronbach_alpha(..., data, var_name, return_result = FALSE, group = NULL)
 \item{group}{optional character. Specify this argument for computing Cronbach alpha for group separetely}
 }
 \value{
-a \code{dataframe} object if return_result is \code{TRUE}
+a \code{data.frame} object if return_result is \code{TRUE}
 }
 \description{
 Cronbach alpha
 Useful for computing the Cronbach alphas for multiple factors.
 }
 \examples{
-
 cronbach_alpha(
   data = lavaan::HolzingerSwineford1939,
   var_name = c('Visual','Textual','Speed'),
