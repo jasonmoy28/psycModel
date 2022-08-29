@@ -1,3 +1,5 @@
+# psycModel (development version)
+
 # psycModel 0.4.0
 **Major Feature**  
 * Added support for ANOVA plots (with continuous variable as moderator)  
