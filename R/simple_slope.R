@@ -1,5 +1,6 @@
 #' Slope Estimate at Varying Level of Moderators
 #'
+#' `r lifecycle::badge("stable")` \cr
 #' The function uses the `interaction::sim_slopes()` to calculate the slope estimate at varying level of moderators (+/- 1 SD and mean).
 #' Additionally, it will produce a Johnson-Newman plot that shows when the slope estimate is not significant
 #'

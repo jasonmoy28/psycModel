@@ -1,6 +1,6 @@
-#' Cronbach alpha 
-#' `r lifecycle::badge("stable")` \cr
+#' Cronbach alpha  
 #' 
+#' `r lifecycle::badge("stable")` \cr
 #' Computing the Cronbach alphas for multiple factors.  
 #' 
 #' @param ... Items. Group each latent factors using c() with when computing Cronbach alpha for 2+ factors (see example below) 

@@ -15,6 +15,7 @@ simple_slope(model, data = NULL)
 a list with the slope estimate data frame and a Johnson-Newman plot.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 The function uses the \code{interaction::sim_slopes()} to calculate the slope estimate at varying level of moderators (+/- 1 SD and mean).
 Additionally, it will produce a Johnson-Newman plot that shows when the slope estimate is not significant
 }

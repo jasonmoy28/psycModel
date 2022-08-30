@@ -1,4 +1,4 @@
-#' ANOVA Plot
+#' ANOVA Plot  
 #'
 #' `r lifecycle::badge("experimental")` \cr
 #' Plot categorical variable with barplot. Continuous moderator are plotted at ± 1 SD from the mean. 

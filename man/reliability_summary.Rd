@@ -36,6 +36,7 @@ reliability_summary(
 a \code{psych::alpha} object for unidimensional scale, and a \code{psych::omega} object for multidimensional scale.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 First, it will determine whether the data is uni-dimensional or multi-dimensional using \code{parameters::n_factors()}. If the data is uni-dimensional, then it will print a summary
 consists of alpha, G6, single-factor CFA, and descriptive statistics result. If it is multi-dimensional, it will print a summary consist of alpha, G6, omega result. You can
 bypass this by specifying the dimensionality argument.

@@ -2,8 +2,7 @@
 % Please edit documentation in R/cronbach_alpha.R
 \name{cronbach_alpha}
 \alias{cronbach_alpha}
-\title{Cronbach alpha
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr}
+\title{Cronbach alpha}
 \usage{
 cronbach_alpha(..., data, var_name, return_result = FALSE, group = NULL)
 }
@@ -22,6 +21,7 @@ cronbach_alpha(..., data, var_name, return_result = FALSE, group = NULL)
 a \code{data.frame} object if return_result is \code{TRUE}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
 Computing the Cronbach alphas for multiple factors.
 }
 \examples{
