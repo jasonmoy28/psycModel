@@ -4,7 +4,14 @@
 \alias{cronbach_alpha}
 \title{Cronbach alpha}
 \usage{
-cronbach_alpha(..., data, var_name, return_result = FALSE, group = NULL)
+cronbach_alpha(
+  ...,
+  data,
+  var_name,
+  return_result = FALSE,
+  group = NULL,
+  quite = FALSE
+)
 }
 \arguments{
 \item{...}{Items. Group each latent factors using c() with when computing Cronbach alpha for 2+ factors (see example below)}
