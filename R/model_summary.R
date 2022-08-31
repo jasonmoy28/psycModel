@@ -99,7 +99,6 @@ model_summary <- function(model,
       dplyr::select(-'p',tidyselect::everything(),"p")
 
 ################################################ Generalized Linear Mixed Effect Model ################################################
-    # glmer model
   } else if (inherits(model,'glmerMod')) {
     model_type <- "Generalized Linear Mixed Effect Model"
     formula_attribute <- stats::terms(model@call$formula)
@@ -127,8 +126,35 @@ model_summary <- function(model,
       dplyr::select(-"CI") %>%
       dplyr::select(-'p',tidyselect::everything(),"p")
     
+    ################################################ Generalized Linear Regression  ################################################
+  } else if (inherits(model,"glm")) { 
+    model_type <- "Generazlied Linear regression"
+    predict_var <- as.character(attributes(model$terms)$predvars)
+    DV <- predict_var[2]
+    IV <- predict_var[c(3:length(predict_var))]
+    IV <- paste0(IV, collapse = ", ")
+    family <- as.character(model$family)[1]
+    
+    convergence_check <- FALSE
+    normality_check <- FALSE
+    outlier_check <- FALSE
+    autocorrelation_check <- TRUE
+    heteroscedasticity_check <- TRUE
+    collinearity_check <- TRUE
+    singular_check <- FALSE
+    
+    
+    glm_param <- parameters::parameters(model)
+    model_summary_df <- glm_param %>%
+      as.data.frame() %>%
+      dplyr::rename(df = .data$df_error) %>%
+      dplyr::rename(ci.lower = .data$CI_low) %>%
+      dplyr::rename(ci.upper = .data$CI_high) %>%
+      dplyr::select(-"CI") %>%
+      dplyr::select(-'p',tidyselect::everything(),"p")
+    
     ################################################ Linear Regression  ################################################
-  } else if (inherits(model,'lm')) { # linear regression
+  } else if (inherits(model,'lm')) {
     # Parameters for output table use
     model_type <- "Linear regression"
     predict_var <- as.character(attributes(model$terms)$predvars)
@@ -155,31 +181,7 @@ model_summary <- function(model,
       dplyr::select(-"CI") %>%
       dplyr::select(-'p',tidyselect::everything(),"p")
     
-    } else if (inherits(model,"glm")) { # glm
-    model_type <- "Generazlied Linear regression"
-    predict_var <- as.character(attributes(model$terms)$predvars)
-    DV <- predict_var[2]
-    IV <- predict_var[c(3:length(predict_var))]
-    IV <- paste0(IV, collapse = ", ")
-    family <- as.character(model$family)[1]
-
-    convergence_check <- FALSE
-    normality_check <- FALSE
-    outlier_check <- FALSE
-    autocorrelation_check <- TRUE
-    heteroscedasticity_check <- TRUE
-    collinearity_check <- TRUE
-    singular_check <- FALSE
-
-
-    glm_param <- parameters::parameters(model)
-    model_summary_df <- glm_param %>%
-      as.data.frame() %>%
-      dplyr::rename(df = .data$df_error) %>%
-      dplyr::rename(ci.lower = .data$CI_low) %>%
-      dplyr::rename(ci.upper = .data$CI_high) %>%
-      dplyr::select(-"CI") %>%
-      dplyr::select(-'p',tidyselect::everything(),"p")
+    ################################################ Non-tested situations  ################################################
     } else {
     model_type <- "Unable to Determined for Unknown Model"
     DV <- "Unable to Determined for Unknown Model"
