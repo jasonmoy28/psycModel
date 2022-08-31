@@ -23,7 +23,8 @@ cronbach_alpha = function(...,
                           data,
                           var_name,
                           return_result = FALSE,
-                          group = NULL) {
+                          group = NULL,
+                          quite = FALSE) {
   items = enquos(...)
   group <- data %>%
     dplyr::select(!!enquo(group)) %>%
@@ -65,14 +66,16 @@ cronbach_alpha = function(...,
     }
     return_df = return_df %>% dplyr::rename(!!group := group)
   }
-  cat("\n \n")
-  super_print("underline|Model Summary")
-  super_print("Model Type = Cronbach Alpha Reliability Analysis")
-  super_print("Model Specification: ")
-  super_print(item_print)
-  cat("\n")
-  print_table(return_df)
-  cat("\n")
+  if (isFALSE(quite)) {
+    cat("\n \n")
+    super_print("underline|Model Summary")
+    super_print("Model Type = Cronbach Alpha Reliability Analysis")
+    super_print("Model Specification: ")
+    super_print(item_print)
+    cat("\n")
+    print_table(return_df)
+    cat("\n") 
+  }
   if (return_result) {
     return(return_df)
   }

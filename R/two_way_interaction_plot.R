@@ -29,34 +29,20 @@ two_way_interaction_plot <- function(model,
                                      y_lim = NULL,
                                      plot_color = FALSE) {
   model_data <- NULL
+  model_data <- insight::get_data(model)
+  predict_var <- model %>%
+    insight::find_predictors() %>%
+    .$conditional # maybe problem with unconditional?
+  response_var <- model %>% insight::find_response()
+  interaction_term <- model %>%
+    insight::find_interactions() %>%
+    .$conditional
   if (any(class(model) %in% c("lmerMod", "lmerModLmerTest", "lm", "lme"))) {
-    model_data <- insight::get_data(model)
-    predict_var <- model %>%
-      insight::find_predictors() %>%
-      .$conditional # maybe problem with unconditional?
-    response_var <- model %>% insight::find_response()
-    interaction_term <- model %>%
-      insight::find_interactions() %>%
-      .$conditional
     interaction_term <- interaction_check(interaction_term)
   } else {
-    
-    model_data <- insight::get_data(model)
-    
-    predict_var <- model %>%
-      insight::find_predictors() %>%
-      .$conditional # maybe problem with unconditional?
-    
-    response_var <- model %>% insight::find_response()
-    
-    interaction_term <- model %>%
-      insight::find_interactions() %>%
-      .$conditional
-    
-    interaction_term <- interaction_check(interaction_term)
-    warning("Only models from lm, nlme, lme4, and lmerTest are ")
+    warning("Only models from lm, nlme, lme4, and lmerTest are supported")
   }
-  
+
   # get variable from model
   if (length(interaction_term) == 0) {
     stop("No two-way interaction term is found in the model")

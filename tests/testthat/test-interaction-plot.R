@@ -113,3 +113,17 @@ testthat::test_that("interaction_plot: nlme model", {
   testthat::expect_false(is.null(plot))
 })
 
+testthat::test_that("interaction_plot: nlme model", {
+  model <- lme_model(
+    data = popular,
+    response_variable = popular,
+    random_effect_factors = sex,
+    non_random_effect_factors = c(extrav, texp),
+    two_way_interaction_factor = c(sex, extrav, texp),
+    id = class,
+    quite = TRUE
+  )
+  plot <- testthat::expect_warning(interaction_plot(model))
+  testthat::expect_false(is.null(plot))
+})
+
