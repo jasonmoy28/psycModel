@@ -13,20 +13,20 @@
 #' @examples
 #' # Main effect plot with 1 categorical variable
 #' fit_1 = lavaan::HolzingerSwineford1939 %>% 
-#'   mutate(school = as.factor(school)) %>% 
+#'   dplyr::mutate(school = as.factor(school)) %>% 
 #'   lm(data = ., grade ~ school)
-#' anova_plot(fit_1)
+#' anova_plot(fit_1,predictor = school)
 #'
 #' # Interaction effect plot with 2 categorical variables 
 #' fit_2 = lavaan::HolzingerSwineford1939 %>% 
-#'   mutate(across(c(school,sex),as.factor)) %>% 
+#'   dplyr::mutate(dplyr::across(c(school,sex),as.factor)) %>% 
 #'   lm(data = ., grade ~ school*sex)
 #' anova_plot(fit_2)
 #' 
 #' # Interaction effect plot with 1 categorical variable and 1 continuous variable
 #' fit_3 = lavaan::HolzingerSwineford1939 %>% 
-#'   mutate(school = as.factor(school)) %>% 
-#'   mutate(ageyr = as.numeric(ageyr)) %>% 
+#'   dplyr::mutate(school = as.factor(school)) %>% 
+#'   dplyr::mutate(ageyr = as.numeric(ageyr)) %>% 
 #'   lm(data = ., grade ~ ageyr*school)
 #' anova_plot(fit_3)
 #' 
@@ -38,7 +38,7 @@ anova_plot <- function(model,
   response_var_name = insight::find_response(model)
   response_var = dplyr::enquo(response_var_name)
   
-  data = insight::get_data(x = model) %>% dplyr::mutate(across(where(is.integer),as.numeric)) # temporary solution for treating integer as numeric
+  data = insight::get_data(x = model) %>% dplyr::mutate(dplyr::across(where(is.integer),as.numeric)) # temporary solution for treating integer as numeric
   
   interaction_term = get_interaction_term(model)
   
