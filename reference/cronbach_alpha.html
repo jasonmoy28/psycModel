@@ -79,9 +79,9 @@ Computing the Cronbach alphas for multiple factors.</p>
 <span>  <span class="va">...</span>,</span>
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">var_name</span>,</span>
-<span>  return_result <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  group <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  quite <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  quite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  return_result <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -99,12 +99,16 @@ Computing the Cronbach alphas for multiple factors.</p>
 <dd><p>character or a vector of characters. The order of <code>var_name</code> must be same as the order of the <code>...</code></p></dd>
 
 
-<dt>return_result</dt>
-<dd><p>If it is set to <code>TRUE</code>, it will return a <code>dataframe</code> object</p></dd>
-
-
 <dt>group</dt>
 <dd><p>optional character. Specify this argument for computing Cronbach alpha for group separetely</p></dd>
+
+
+<dt>quite</dt>
+<dd><p>suppress printing output</p></dd>
+
+
+<dt>return_result</dt>
+<dd><p>If it is set to <code>TRUE</code>, it will return a <code>dataframe</code> object</p></dd>
 
 </dl></div>
     <div id="value">
