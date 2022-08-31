@@ -39,3 +39,7 @@ The function create a simple regression plot (no interaction). Can be used to vi
 \details{
 It appears that \code{predict} cannot handle categorical factors. All variables are converted to numeric before plotting.
 }
+\examples{
+fit = lm(data = iris, Sepal.Length ~ poly(Petal.Length,2))
+polynomial_regression_plot(model = fit,predictor = 'Petal.Length')
+}
