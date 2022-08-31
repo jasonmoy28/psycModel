@@ -16,23 +16,23 @@ testthat::test_that("model_summary: lm model", {
   expect_false(is.null(summary$assumption_plot))
 })
 
-# testthat::test_that("model_summary: glm model", {
-#   expect_warning(model <- glm_model(
-#     response_variable = incidence,
-#     predictor_variable = period,
-#     family = "poisson",
-#     data = lme4::cbpp,
-#     quite = TRUE,
-#   ))
-#   summary <- model_summary(model,
-#     return_result = TRUE,
-#     assumption_plot = TRUE,
-#     quite = TRUE
-#   )
-#   expect_false(is.null(summary$model_summary))
-#   expect_false(is.null(summary$model_performance_df))
-#   expect_false(is.null(summary$assumption_plot))
-# })
+testthat::test_that("model_summary: glm model", {
+  model <- glm_model(
+    response_variable = incidence,
+    predictor_variable = period,
+    family = "poisson",
+    data = lme4::cbpp,
+    quite = TRUE,
+  )
+  summary <- model_summary(model,
+    return_result = TRUE,
+    assumption_plot = TRUE,
+    quite = TRUE
+  )
+  expect_false(is.null(summary$model_summary))
+  expect_false(is.null(summary$model_performance_df))
+  expect_false(is.null(summary$assumption_plot))
+})
 
 testthat::test_that(desc = "model_summary: nlme model", {
   model <- lme_model(
@@ -93,21 +93,4 @@ testthat::test_that(desc = "model_summary: lme4 model", {
   expect_false(is.null(summary$model_summary))
   expect_false(is.null(summary$model_performance_df))
   expect_false(is.null(summary$assumption_plot))
-})
-
-testthat::test_that(desc = "model_summary: glm model", {
-  testthat::expect_warning(model <- glm_model(
-    response_variable = incidence,
-    predictor_variable = period,
-    family = "poisson", # or you can enter as poisson(link = 'log')
-    data = lme4::cbpp,
-    quite = TRUE
-  ))
-  summary <- model_summary(model,
-    return_result = TRUE,
-    assumption_plot = TRUE,
-    quite = TRUE
-  )
-  testthat::expect_true(inherits(summary$model_summary,'data.frame'))
-  testthat::expect_true(inherits(summary$model_performance_df,'data.frame'))
 })
