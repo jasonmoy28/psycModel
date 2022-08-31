@@ -96,7 +96,6 @@ testthat::test_that(desc = "model_summary: lme4 model", {
 })
 
 testthat::test_that(desc = "model_summary: glm model", {
-  testthat::skip_on_cran()
   testthat::expect_warning(model <- glm_model(
     response_variable = incidence,
     predictor_variable = period,
