@@ -7,7 +7,7 @@
 anova_plot(model, predictor = NULL, graph_label_name = NULL)
 }
 \arguments{
-\item{model}{fitted model (usually \code{lm} or \code{aov} object)}
+\item{model}{fitted model (usually \code{lm} or \code{aov} object). Variables must be converted to correct data type before fitting the model. Specifically,  continuous variables must be converted to type \code{numeric} and categorical variables to type \code{factor}.}
 
 \item{predictor}{predictor variable. Must specified for non-interaction plot and must not specify for interaction plot.}
 
@@ -21,7 +21,21 @@ plot object
 Plot categorical variable with barplot. Continuous moderator are plotted at ± 1 SD from the mean.
 }
 \examples{
-fit = iris \%>\% lm(data = ., Sepal.Length ~ Species)
+# Main effect plot with 1 categorical variable
+fit_1 = iris \%>\% lm(data = ., Sepal.Length ~ Species)
 anova_plot(fit,predictor = Species)
+
+# Interaction effect plot with 2 categorical variables 
+fit_2 = lavaan::HolzingerSwineford1939 \%>\% 
+  mutate(sex = as.factor(sex)) \%>\% 
+  lm(data = ., grade ~ school*sex)
+anova_plot(fit_2)
+
+# Interaction effect plot with 1 categorical variable and 1 continuous variable
+fit_3 = lavaan::HolzingerSwineford1939 \%>\% 
+  mutate(ageyr = as.numeric(ageyr)) \%>\% 
+  lm(data = ., grade ~ ageyr*school)
+anova_plot(fit_3)
+
 
 }
