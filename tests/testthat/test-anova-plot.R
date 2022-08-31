@@ -15,5 +15,4 @@ testthat::test_that("anova plot: three-way interaction", {
   plot = anova_plot(fit)
   testthat::expect_true(!is.null(plot))
 })
-s
 
