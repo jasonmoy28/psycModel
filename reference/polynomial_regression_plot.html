@@ -129,6 +129,13 @@ The function create a simple regression plot (no interaction). Can be used to vi
     <p>It appears that <code>predict</code> cannot handle categorical factors. All variables are converted to numeric before plotting.</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fit</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">Petal.Length</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">polynomial_regression_plot</span><span class="op">(</span>model <span class="op">=</span> <span class="va">fit</span>,predictor <span class="op">=</span> <span class="st">'Petal.Length'</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="polynomial_regression_plot-1.png" alt="" width="700" height="433"></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
