@@ -6,9 +6,10 @@
 #' @param ... Items. Group each latent factors using c() with when computing Cronbach alpha for 2+ factors (see example below) 
 #' @param data `data.frame`. Must specify
 #' @param var_name character or a vector of characters. The order of `var_name` must be same as the order of the `...`
-#' @param return_result  If it is set to `TRUE`, it will return a `dataframe` object
 #' @param group optional character. Specify this argument for computing Cronbach alpha for group separetely  
-#'
+#' @param quite suppress printing output
+#' @param return_result  If it is set to `TRUE`, it will return a `dataframe` object
+#' 
 #' @return a `data.frame` object if return_result is `TRUE`
 #' @export
 #'
@@ -22,9 +23,9 @@
 cronbach_alpha = function(...,
                           data,
                           var_name,
-                          return_result = FALSE,
                           group = NULL,
-                          quite = FALSE) {
+                          quite = FALSE,
+                          return_result = FALSE) {
   items = enquos(...)
   group <- data %>%
     dplyr::select(!!enquo(group)) %>%
