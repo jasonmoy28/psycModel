@@ -7,22 +7,25 @@
 #' @param predictor predictor variable. Must specified for non-interaction plot and must not specify for interaction plot. 
 #' @param graph_label_name vector or function. Vector should be passed in the form of `c(response_var, predict_var1, predict_var2, ...)`. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)
 #'
-#' @return plot object
+#' @return a `ggplot` object
 #' @export
 #'
 #' @examples
 #' # Main effect plot with 1 categorical variable
-#' fit_1 = iris %>% lm(data = ., Sepal.Length ~ Species)
-#' anova_plot(fit,predictor = Species)
+#' fit_1 = lavaan::HolzingerSwineford1939 %>% 
+#'   mutate(school = as.factor(school)) %>% 
+#'   lm(data = ., grade ~ school)
+#' anova_plot(fit_1)
 #'
 #' # Interaction effect plot with 2 categorical variables 
 #' fit_2 = lavaan::HolzingerSwineford1939 %>% 
-#'   mutate(sex = as.factor(sex)) %>% 
+#'   mutate(across(c(school,sex),as.factor)) %>% 
 #'   lm(data = ., grade ~ school*sex)
 #' anova_plot(fit_2)
 #' 
 #' # Interaction effect plot with 1 categorical variable and 1 continuous variable
 #' fit_3 = lavaan::HolzingerSwineford1939 %>% 
+#'   mutate(school = as.factor(school)) %>% 
 #'   mutate(ageyr = as.numeric(ageyr)) %>% 
 #'   lm(data = ., grade ~ ageyr*school)
 #' anova_plot(fit_3)

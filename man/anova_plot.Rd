@@ -14,7 +14,7 @@ anova_plot(model, predictor = NULL, graph_label_name = NULL)
 \item{graph_label_name}{vector or function. Vector should be passed in the form of \code{c(response_var, predict_var1, predict_var2, ...)}. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)}
 }
 \value{
-plot object
+a \code{ggplot} object
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
@@ -22,17 +22,20 @@ Plot categorical variable with barplot. Continuous moderator are plotted at ± 1
 }
 \examples{
 # Main effect plot with 1 categorical variable
-fit_1 = iris \%>\% lm(data = ., Sepal.Length ~ Species)
-anova_plot(fit,predictor = Species)
+fit_1 = lavaan::HolzingerSwineford1939 \%>\% 
+  mutate(school = as.factor(school)) \%>\% 
+  lm(data = ., grade ~ school)
+anova_plot(fit_1)
 
 # Interaction effect plot with 2 categorical variables 
 fit_2 = lavaan::HolzingerSwineford1939 \%>\% 
-  mutate(sex = as.factor(sex)) \%>\% 
+  mutate(across(c(school,sex),as.factor)) \%>\% 
   lm(data = ., grade ~ school*sex)
 anova_plot(fit_2)
 
 # Interaction effect plot with 1 categorical variable and 1 continuous variable
 fit_3 = lavaan::HolzingerSwineford1939 \%>\% 
+  mutate(school = as.factor(school)) \%>\% 
   mutate(ageyr = as.numeric(ageyr)) \%>\% 
   lm(data = ., grade ~ ageyr*school)
 anova_plot(fit_3)
