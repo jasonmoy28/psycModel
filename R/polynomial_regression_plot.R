@@ -15,7 +15,9 @@
 #' @details It appears that `predict` cannot handle categorical factors. All variables are converted to numeric before plotting.
 #' @return an object of class `ggplot`
 #' @export
-#'
+#' @example 
+#' fit = lm(data = iris, Sepal.Length ~ poly(Petal.Length,2))
+#' polynomial_regression_plot(model = fit,predictor = 'Petal.Length')
 
 polynomial_regression_plot <- function(model,
                                        model_data = NULL,
