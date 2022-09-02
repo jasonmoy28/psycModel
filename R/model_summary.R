@@ -43,17 +43,16 @@ model_summary <- function(model,
                           streamline = TRUE,
                           return_result = FALSE,
                           standardize = 'basic') {
-
   ################################################ Linear Mixed Effect Model ################################################
   ## lme package
-  if (inherits(model,'lme')) {
+  if (inherits(model, 'lme')) {
     model_type <- "Linear Mixed Effect Model (fitted using nlme)"
     predict_var <- as.character(attributes(model$terms)$variables)
     DV <- predict_var[2]
     IV <- predict_var[c(3:length(predict_var))]
     IV <- paste0(IV, collapse = ", ")
     family <- NULL
-
+    
     # Assumptions check
     convergence_check <- FALSE
     normality_check <- FALSE
@@ -62,7 +61,7 @@ model_summary <- function(model,
     heteroscedasticity_check <- TRUE
     collinearity_check <- TRUE
     singular_check <- TRUE
-
+    
     lme_param <- parameters::model_parameters(model)
     model_summary_df <- lme_param %>%
       as.data.frame() %>%
@@ -70,12 +69,14 @@ model_summary <- function(model,
       dplyr::rename(ci.lower = .data$CI_low) %>%
       dplyr::rename(ci.upper = .data$CI_high) %>%
       dplyr::select(-"CI") %>%
-      dplyr::select(-'p',tidyselect::everything(),"p")
+      dplyr::select(-'p', tidyselect::everything(), "p")
     
     ## lmer package
-  } else if (inherits(model,'lmerMod')) {
-    model_type <- "Linear Mixed Effect Model (fitted using lme4 or lmerTest)"
-    formula_attribute <- stats::terms(insight::find_formula(model)$conditional)
+  } else if (inherits(model, 'lmerMod')) {
+    model_type <-
+      "Linear Mixed Effect Model (fitted using lme4 or lmerTest)"
+    formula_attribute <-
+      stats::terms(insight::find_formula(model)$conditional)
     DV <- as.character(attributes(formula_attribute)$variables)[2]
     IV <- attributes(formula_attribute)$term.labels
     IV <- IV[!stringr::str_detect(IV, "\\+")]
@@ -89,17 +90,18 @@ model_summary <- function(model,
     heteroscedasticity_check <- TRUE
     collinearity_check <- TRUE
     singular_check <- TRUE
-    lme_param <- parameters::model_parameters(model,standardize = standardize)
+    lme_param <-
+      parameters::model_parameters(model, standardize = standardize)
     model_summary_df <- lme_param %>%
       as.data.frame() %>%
       dplyr::rename(df = .data$df_error) %>%
       dplyr::rename(ci.lower = .data$CI_low) %>%
       dplyr::rename(ci.upper = .data$CI_high) %>%
       dplyr::select(-"CI") %>%
-      dplyr::select(-'p',tidyselect::everything(),"p")
-
-################################################ Generalized Linear Mixed Effect Model ################################################
-  } else if (inherits(model,'glmerMod')) {
+      dplyr::select(-'p', tidyselect::everything(), "p")
+    
+    ################################################ Generalized Linear Mixed Effect Model ################################################
+  } else if (inherits(model, 'glmerMod')) {
     model_type <- "Generalized Linear Mixed Effect Model"
     formula_attribute <- stats::terms(model@call$formula)
     DV <- as.character(attributes(formula_attribute)$variables)[2]
@@ -107,7 +109,7 @@ model_summary <- function(model,
     IV <- IV[!stringr::str_detect(IV, "\\+")]
     IV <- paste0(IV, collapse = ", ")
     family <- model@call$family
-
+    
     # Assumptions check
     convergence_check <- TRUE
     normality_check <- FALSE
@@ -116,7 +118,7 @@ model_summary <- function(model,
     heteroscedasticity_check <- TRUE
     collinearity_check <- TRUE
     singular_check <- TRUE
-
+    
     glme_param <- parameters::parameters(model)
     model_summary_df <- glme_param %>%
       as.data.frame() %>%
@@ -124,10 +126,10 @@ model_summary <- function(model,
       dplyr::rename(ci.lower = .data$CI_low) %>%
       dplyr::rename(ci.upper = .data$CI_high) %>%
       dplyr::select(-"CI") %>%
-      dplyr::select(-'p',tidyselect::everything(),"p")
+      dplyr::select(-'p', tidyselect::everything(), "p")
     
     ################################################ Generalized Linear Regression  ################################################
-  } else if (inherits(model,"glm")) { 
+  } else if (inherits(model, "glm")) {
     model_type <- "Generazlied Linear regression"
     predict_var <- as.character(attributes(model$terms)$predvars)
     DV <- predict_var[2]
@@ -151,18 +153,18 @@ model_summary <- function(model,
       dplyr::rename(ci.lower = .data$CI_low) %>%
       dplyr::rename(ci.upper = .data$CI_high) %>%
       dplyr::select(-"CI") %>%
-      dplyr::select(-'p',tidyselect::everything(),"p")
+      dplyr::select(-'p', tidyselect::everything(), "p")
     
-    ################################################ Linear Regression  ################################################
-  } else if (inherits(model,'lm')) {
+    ################################################ ANOVA ################################################
+  } else if (inherits(model, 'aov')) {
     # Parameters for output table use
-    model_type <- "Linear regression"
+    model_type <- "ANOVA"
     predict_var <- as.character(attributes(model$terms)$predvars)
     DV <- predict_var[2]
     IV <- predict_var[c(3:length(predict_var))]
     IV <- paste0(IV, collapse = ", ")
     family <- NULL
-
+    
     # Assumptions check
     convergence_check <- FALSE
     normality_check <- TRUE
@@ -171,7 +173,31 @@ model_summary <- function(model,
     heteroscedasticity_check <- TRUE
     collinearity_check <- TRUE
     singular_check <- FALSE
-
+    
+    aov_param <- parameters::parameters(model)
+    model_summary_df <- aov_param %>%
+      as.data.frame() %>%
+      dplyr::select(-'p', tidyselect::everything(), "p")
+    
+    ################################################ Linear Regression ################################################
+  } else if (inherits(model, 'lm')) {
+    # Parameters for output table use
+    model_type <- "Linear regression"
+    predict_var <- as.character(attributes(model$terms)$predvars)
+    DV <- predict_var[2]
+    IV <- predict_var[c(3:length(predict_var))]
+    IV <- paste0(IV, collapse = ", ")
+    family <- NULL
+    
+    # Assumptions check
+    convergence_check <- FALSE
+    normality_check <- TRUE
+    outlier_check <- TRUE
+    autocorrelation_check <- TRUE
+    heteroscedasticity_check <- TRUE
+    collinearity_check <- TRUE
+    singular_check <- FALSE
+    
     lm_param <- parameters::parameters(model)
     model_summary_df <- lm_param %>%
       as.data.frame() %>%
@@ -179,14 +205,13 @@ model_summary <- function(model,
       dplyr::rename(ci.lower = .data$CI_low) %>%
       dplyr::rename(ci.upper = .data$CI_high) %>%
       dplyr::select(-"CI") %>%
-      dplyr::select(-'p',tidyselect::everything(),"p")
-    
+      dplyr::select(-'p', tidyselect::everything(), "p")
     ################################################ Non-tested situations  ################################################
-    } else {
+  } else {
     model_type <- "Unable to Determined for Unknown Model"
     DV <- "Unable to Determined for Unknown Model"
     IV <- "Unable to Determined for Unknown Model"
-
+    
     convergence_check <- TRUE
     normality_check <- TRUE
     outlier_check <- TRUE
@@ -194,8 +219,8 @@ model_summary <- function(model,
     heteroscedasticity_check <- TRUE
     collinearity_check <- TRUE
     singular_check <- TRUE
-
-
+    
+    
     other_param <- parameters::parameters(model)
     model_summary_df <- other_param %>%
       as.data.frame() %>%
@@ -203,35 +228,50 @@ model_summary <- function(model,
       dplyr::rename(ci.lower = .data$CI_low) %>%
       dplyr::rename(ci.upper = .data$CI_high) %>%
       dplyr::select(-"CI")
-
-    warning("This model is not formally supported. Please proceed with cautious. The model is passed to parameters::parameters() to extract relevant parameters")
+    
+    warning(
+      "This model is not formally supported. Please proceed with cautious. The model is passed to parameters::parameters() to extract relevant parameters"
+    )
   }
   
-    performance_warning <- utils::capture.output(model_performance_df <- performance::model_performance(model))
-    if (length(performance_warning) > 0) {
-      warning(performance_warning)
-    }
-    colnames(model_performance_df) <- stringr::str_replace_all(pattern = "R2", replacement = "R^2", string = colnames(model_performance_df))
-    colnames(model_performance_df) <- stringr::str_replace_all(pattern = "Sigma", replacement = "$sigma$", string = colnames(model_performance_df)) 
+  performance_warning <-
+    utils::capture.output(model_performance_df <-
+                            performance::model_performance(model))
+  if (length(performance_warning) > 0) {
+    warning(performance_warning)
+  }
+  colnames(model_performance_df) <-
+    stringr::str_replace_all(
+      pattern = "R2",
+      replacement = "R^2",
+      string = colnames(model_performance_df)
+    )
+  colnames(model_performance_df) <-
+    stringr::str_replace_all(
+      pattern = "Sigma",
+      replacement = "$sigma$",
+      string = colnames(model_performance_df)
+    )
   ################################################  Output Table  ################################################
-  if (quite == FALSE) { # check whether quite the entire output table
-      cat("\n \n")
-      super_print("underline|Model Summary")
-      super_print("Model Type = {model_type}")
-      super_print("Outcome = {DV}")
-      super_print("Predictors = {IV}")
-      if (!is.null(family)) {
-        super_print("Family = {family}")
-      }
-      super_print("\n")
-
+  if (quite == FALSE) {
+    # check whether quite the entire output table
+    cat("\n \n")
+    super_print("underline|Model Summary")
+    super_print("Model Type = {model_type}")
+    super_print("Outcome = {DV}")
+    super_print("Predictors = {IV}")
+    if (!is.null(family)) {
+      super_print("Family = {family}")
+    }
+    super_print("\n")
+    
     # super_print model estimates table
     super_print("underline|Model Estimates")
     print_table(model_summary_df)
     super_print("\n")
     # super_print model performance table
     super_print("underline|Goodness of Fit")
-    print_table(model_performance_df) 
+    print_table(model_performance_df)
     if (streamline == FALSE) {
       # Check assumption
       super_print("\n")
@@ -247,7 +287,7 @@ model_summary <- function(model,
           }
         })
       }
-
+      
       if (singular_check == TRUE) {
         try({
           singular_output <- performance::check_singularity(model)
@@ -258,64 +298,80 @@ model_summary <- function(model,
           }
         })
       }
-
+      
       if (autocorrelation_check == TRUE) {
+        tryCatch({
+          print(performance::check_autocorrelation(model))
+          super_print("\n")
+        },
+        error = function(cond) {
+          warning("Unable to check autocorrelation. Perhaps change na.action to na.omit")
+        })
+      }
+      
+      if (normality_check == TRUE) {
+        # first check_normality, if failed, fallback to check_distribution, if failed, super_print failed message
         tryCatch(
-          {print(performance::check_autocorrelation(model))
-            super_print("\n")
-          },
+          suppressMessages(print(
+            performance::check_normality(model)
+          )),
           error = function(cond) {
-            warning("Unable to check autocorrelation. Perhaps change na.action to na.omit")
-          }
-        )
-      }
-
-      if (normality_check == TRUE) { # first check_normality, if failed, fallback to check_distribution, if failed, super_print failed message
-        tryCatch(suppressMessages(print(performance::check_normality(model))),
-          error = function(cond) {
-            tryCatch(
-              {
-                # fall back to check_distribution
-                dist_prob <- performance::check_distribution(model)
-                norm_dist_pos <- which(dist_prob$Distribution == "normal")
-                residual_norm_prob <- round(dist_prob$p_Residuals[norm_dist_pos] * 100, 0)
-                response_norm_prob <- round(dist_prob$p_Response[norm_dist_pos] * 100, 0)
-                norm_prob <- c(residual_norm_prob, response_norm_prob)
-                if (all(norm_prob >= 80)) {
-                  residual_norm_prob <- paste(norm_prob[1], "%", sep = "")
-                  response_norm_prob <- paste(norm_prob[2], "%", sep = "")
-                  super_print("green|OK. No non-normality is detected. Normal distribution proability: residual ({residual_norm_prob}) and response ({response_norm_prob}). check_normality() failed use fallback")
-                } else if (any(norm_prob < 80) & all(norm_prob > 50)) {
-                  residual_norm_prob <- paste(norm_prob[1], "%", sep = "")
-                  response_norm_prob <- paste(norm_prob[2], "%", sep = "")
-                  super_print("yellow|Cautious: Moderate non-normality is detected. Normal distribution proability: residual ({residual_norm_prob}) and  response ({response_norm_prob}). check_normality() failed use fallback")
-                } else if (any(norm_prob <= 50)) {
-                  residual_norm_prob <- paste(norm_prob[1], "%", sep = "")
-                  response_norm_prob <- paste(norm_prob[2], "%", sep = "")
-                  super_print("red|Warning: Severe non-normality is detected. Normal distribution proability: residual ({residual_norm_prob}) and  response ({response_norm_prob}). check_normality() failed use fallback")
-                }
-              },
-              error = function(cond) {
-                super_print("blue|Unable to check normality. All fallback failed.")
+            tryCatch({
+              # fall back to check_distribution
+              dist_prob <- performance::check_distribution(model)
+              norm_dist_pos <-
+                which(dist_prob$Distribution == "normal")
+              residual_norm_prob <-
+                round(dist_prob$p_Residuals[norm_dist_pos] * 100, 0)
+              response_norm_prob <-
+                round(dist_prob$p_Response[norm_dist_pos] * 100, 0)
+              norm_prob <-
+                c(residual_norm_prob, response_norm_prob)
+              if (all(norm_prob >= 80)) {
+                residual_norm_prob <- paste(norm_prob[1], "%", sep = "")
+                response_norm_prob <-
+                  paste(norm_prob[2], "%", sep = "")
+                super_print(
+                  "green|OK. No non-normality is detected. Normal distribution proability: residual ({residual_norm_prob}) and response ({response_norm_prob}). check_normality() failed use fallback"
+                )
+              } else if (any(norm_prob < 80) &
+                         all(norm_prob > 50)) {
+                residual_norm_prob <- paste(norm_prob[1], "%", sep = "")
+                response_norm_prob <-
+                  paste(norm_prob[2], "%", sep = "")
+                super_print(
+                  "yellow|Cautious: Moderate non-normality is detected. Normal distribution proability: residual ({residual_norm_prob}) and  response ({response_norm_prob}). check_normality() failed use fallback"
+                )
+              } else if (any(norm_prob <= 50)) {
+                residual_norm_prob <- paste(norm_prob[1], "%", sep = "")
+                response_norm_prob <-
+                  paste(norm_prob[2], "%", sep = "")
+                super_print(
+                  "red|Warning: Severe non-normality is detected. Normal distribution proability: residual ({residual_norm_prob}) and  response ({response_norm_prob}). check_normality() failed use fallback"
+                )
               }
-            )
+            },
+            error = function(cond) {
+              super_print("blue|Unable to check normality. All fallback failed.")
+            })
           }
         )
       }
-
-
+      
+      
       if (outlier_check == TRUE) {
-        tryCatch(print(performance::check_outliers(model)),
+        tryCatch(
+          print(performance::check_outliers(model)),
           error = function(cond) {
             super_print("blue|Unable to check autocorrelation. Try changing na.action to na.omit.")
           }
         )
       }
-
+      
       if (heteroscedasticity_check == TRUE) {
         try(print(performance::check_heteroscedasticity(model)))
       }
-
+      
       if (collinearity_check == TRUE) {
         try({
           is_interaction = insight::find_interactions(model)
@@ -323,40 +379,49 @@ model_summary <- function(model,
             collinearity_df <- performance::check_collinearity(model)
             if (all(collinearity_df$VIF < 5)) {
               super_print("green|OK: No multicolinearity detected (VIF < 5)")
-            } else if (any(collinearity_df$VIF >= 5) & all(collinearity_df$VIF < 10)) {
-              super_print("yellow|Cautious: Moderate multicolinearity detected  (5 < VIF < 10). Please inspect the following table to identify high correlation factors.")
+            } else if (any(collinearity_df$VIF >= 5) &
+                       all(collinearity_df$VIF < 10)) {
+              super_print(
+                "yellow|Cautious: Moderate multicolinearity detected  (5 < VIF < 10). Please inspect the following table to identify high correlation factors."
+              )
               super_print("underline|Multicollinearity Table ")
               print_table(collinearity_df)
             } else if (any(collinearity_df$VIF > 10)) {
-              super_print("red|Warning: Severe multicolinearity detected (VIF > 10). Please inspect the following table to identify high correlation factors.")
+              super_print(
+                "red|Warning: Severe multicolinearity detected (VIF > 10). Please inspect the following table to identify high correlation factors."
+              )
               super_print("underline|Multicollinearity Table ")
               print_table(collinearity_df)
             }
           } else{
-            super_print('Multicollinearity is not checked for models with interaction terms. You may check multicollinearity among predictors of a model without interaction terms')
+            super_print(
+              'Multicollinearity is not checked for models with interaction terms. You may check multicollinearity among predictors of a model without interaction terms'
+            )
           }
         })
       }
     }
   } # quite stop here
-
-
+  
+  
   # Check assumption plot
   if (assumption_plot == TRUE) {
-    if (all(unlist(lapply(c("gridExtra", "qqplotr", "see"), requireNamespace)))) {
-      assumption_plot <- tryCatch(
-        {
-          assumption_plot <- suppressMessages(performance::check_model(model))
-          print(assumption_plot)
-        },
-        error = function(cond) {
-          warning("assumption_plot does not support this model type")
-          warning(cond)
-          return(NULL)
-        }
-      )
+    if (all(unlist(lapply(
+      c("gridExtra", "qqplotr", "see"), requireNamespace
+    )))) {
+      assumption_plot <- tryCatch({
+        assumption_plot <- suppressMessages(performance::check_model(model))
+        print(assumption_plot)
+      },
+      error = function(cond) {
+        warning("assumption_plot does not support this model type")
+        warning(cond)
+        return(NULL)
+      })
     } else {
-      stop("Please install.packages(c('gridExtra','qqplotr','see')) to use assumption_plot")
+      stop(
+        "Please install.packages(c('gridExtra','qqplotr','see')) to use assumption_plot"
+      )
     }
   } else {
     assumption_plot <- NULL
@@ -368,7 +433,7 @@ model_summary <- function(model,
       model_performance_df = model_performance_df,
       assumption_plot = assumption_plot
     )
-
+    
     return(return_list)
   }
 }
