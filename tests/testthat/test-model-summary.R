@@ -16,6 +16,18 @@ testthat::test_that("model_summary: lm model", {
   expect_false(is.null(summary$assumption_plot))
 })
 
+testthat::test_that("model_summary: anova model", {
+  model = stats::aov(Petal.Length ~ Species,data = iris)
+  summary <- model_summary(model,
+                           return_result = TRUE,
+                           assumption_plot = TRUE,
+                           quite = TRUE
+  )
+  expect_false(is.null(summary$model_summary))
+  expect_false(is.null(summary$model_performance_df))
+  expect_false(is.null(summary$assumption_plot))
+})
+
 testthat::test_that("model_summary: glm model", {
   model <- glm_model(
     response_variable = incidence,
