@@ -13,7 +13,7 @@ Description: A beginner-friendly R package for modeling in psychology or
     of fit, and model assumption violations all in one place. It also
     produces beautiful and easy-to-read output.
 License: GPL (>= 3)
-URL: https://jasonmoy28.github.io/psycModel/
+URL: https://github.com/jasonmoy28/psycModel
 Depends: 
     R (>= 3.2)
 Imports: 
