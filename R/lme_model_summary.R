@@ -123,21 +123,22 @@ lme_multilevel_model_summary <- function(data,
       interaction_plot <- FALSE
       warning("interaction_plot & simple_slope is not avaliable for glme model for now")
     }
-    model <- glme_model(
-      model = model,
-      data = data,
-      response_variable = tidyselect::all_of(response_variable),
-      random_effect_factors = tidyselect::all_of(random_effect_factors),
-      non_random_effect_factors = tidyselect::all_of(non_random_effect_factors),
-      two_way_interaction_factor = tidyselect::all_of(two_way_interaction_factor),
-      three_way_interaction_factor = tidyselect::all_of(three_way_interaction_factor),
-      family = family,
-      id = tidyselect::all_of(id),
-      opt_control = opt_control,
-      na.action = na.action,
-      estimation_method = estimation_method,
-      quite = TRUE
-    )
+    # model <- glme_model(
+    #   model = model,
+    #   data = data,
+    #   response_variable = tidyselect::all_of(response_variable),
+    #   random_effect_factors = tidyselect::all_of(random_effect_factors),
+    #   non_random_effect_factors = tidyselect::all_of(non_random_effect_factors),
+    #   two_way_interaction_factor = tidyselect::all_of(two_way_interaction_factor),
+    #   three_way_interaction_factor = tidyselect::all_of(three_way_interaction_factor),
+    #   family = family,
+    #   id = tidyselect::all_of(id),
+    #   opt_control = opt_control,
+    #   na.action = na.action,
+    #   estimation_method = estimation_method,
+    #   quite = TRUE
+    # )
+    return('glme model will be supported in the future.')
   }
   
   

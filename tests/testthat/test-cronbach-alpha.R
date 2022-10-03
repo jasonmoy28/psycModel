@@ -5,8 +5,8 @@ testthat::test_that("cronbach alpha: two-way interaction", {
     c(x1,x2,x3), # one way to pass the items of a factor is by wrapping it with c()
     x4:x6, # another way to pass the items is use tidyselect syntax 
     x7:x9,
-    quite = T,
-    return_result = T))
+    quite = TRUE,
+    return_result = TRUE))
   testthat::expect_true(inherits(return_df,'data.frame'))
 })
 
@@ -18,7 +18,7 @@ testthat::test_that("cronbach alpha: two-way interaction", {
     c(x1,x2,x3), # one way to pass the items of a factor is by wrapping it with c()
     x4:x6, # another way to pass the items is use tidyselect syntax 
     x7:x9,
-    quite = T,
-    return_result = T))
+    quite = TRUE,
+    return_result = TRUE))
   testthat::expect_true(inherits(return_df,'data.frame'))
 })
