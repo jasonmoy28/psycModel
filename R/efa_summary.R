@@ -71,7 +71,7 @@ efa_summary <- function(data,
     tibble::rownames_to_column(var = "Var")
   colnames(efa_variance) <- stringr::str_replace_all(string = colnames(efa_variance), pattern = "MR", replacement = "Factor ")
 
-  factor_structure_test <- parameters::check_factorstructure(data)
+  factor_structure_test <- performance::check_factorstructure(data)
   sphericity_p <- factor_structure_test$sphericity$p
 
   if (sphericity_p < 0.001) {
