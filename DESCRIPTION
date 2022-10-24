@@ -1,7 +1,7 @@
 Type: Package
 Package: psycModel
 Title: Integrated Toolkit for Psychological Analysis and Modeling in R
-Version: 0.4.0.9000
+Version: 0.4.1
 Authors@R: 
     person(given = "Jason",
            family = "Moy",
