@@ -10,6 +10,7 @@
 #' @param assumption_plot Generate an panel of plots that check major assumptions. It is usually recommended to inspect model assumption violation visually. In the background, it calls `performance::check_model()`.
 #' @param quite suppress printing output
 #' @param standardize The method used for standardizing the parameters. Can be NULL (default; no standardization), "refit" (for re-fitting the model on standardized data) or one of "basic", "posthoc", "smart", "pseudo". See 'Details' in parameters::standardize_parameters()
+#' @param ci_method see options in the `Mixed model` section in ?parameters::model_parameters()
 #'
 #' @references
 #' Nakagawa, S., & Schielzeth, H. (2013). A general and simple method for obtaining R2 from generalized linear mixed-effects models. Methods in Ecology and Evolution, 4(2), 133–142. https://doi.org/10.1111/j.2041-210x.2012.00261.x
@@ -42,7 +43,8 @@ model_summary <- function(model,
                           quite = FALSE,
                           streamline = TRUE,
                           return_result = FALSE,
-                          standardize = 'basic') {
+                          standardize = 'basic',
+                          ci_method = 'satterthwaite') {
   ################################################ Linear Mixed Effect Model ################################################
   ## lme package
   if (inherits(model, 'lme')) {
@@ -62,7 +64,7 @@ model_summary <- function(model,
     collinearity_check <- TRUE
     singular_check <- TRUE
     
-    lme_param <- parameters::model_parameters(model)
+    lme_param <- parameters::model_parameters(model,ci_method = ci_method)
     model_summary_df <- lme_param %>%
       as.data.frame() %>%
       dplyr::rename(df = .data$df_error) %>%
@@ -91,7 +93,7 @@ model_summary <- function(model,
     collinearity_check <- TRUE
     singular_check <- TRUE
     lme_param <-
-      parameters::model_parameters(model, standardize = standardize)
+      parameters::model_parameters(model, standardize = standardize,ci_method = ci_method)
     model_summary_df <- lme_param %>%
       as.data.frame() %>%
       dplyr::rename(df = .data$df_error) %>%
