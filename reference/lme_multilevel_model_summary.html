@@ -96,6 +96,8 @@ An integrated function for fitting a multilevel linear regression (also known as
 <span>  plot_color <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  use_package <span class="op">=</span> <span class="st">"lmerTest"</span>,</span>
+<span>  standardize <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ci_method <span class="op">=</span> <span class="st">"satterthwaite"</span>,</span>
 <span>  simple_slope <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  assumption_plot <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  quite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -186,6 +188,14 @@ An integrated function for fitting a multilevel linear regression (also known as
 <dd><p>Default is <code>lmerTest</code>. Only available for linear mixed effect model. Options are <code>nlme</code>, <code>lmerTest</code>, or <code>lme4</code>(<code>'lme4</code> return similar result as <code>lmerTest</code> except the return model)</p></dd>
 
 
+<dt>standardize</dt>
+<dd><p>The method used for standardizing the parameters. Can be NULL (default; no standardization), "refit" (for re-fitting the model on standardized data) or one of "basic", "posthoc", "smart", "pseudo". See 'Details' in parameters::standardize_parameters()</p></dd>
+
+
+<dt>ci_method</dt>
+<dd><p>see options in the <code>Mixed model</code> section in ?parameters::model_parameters()</p></dd>
+
+
 <dt>simple_slope</dt>
 <dd><p>Slope estimate at ± 1 SD and the mean of the moderator. Uses <code>interactions::sim_slope()</code> in the background.</p></dd>
 
@@ -228,8 +238,6 @@ An integrated function for fitting a multilevel linear regression (also known as
 <span class="r-in"><span>  plot_color <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># you can also request the plot in color</span></span></span>
 <span class="r-in"><span>  streamline <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># you can change this to get the least amount of info</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Standardizing coefficients only works for fixed effects of the mixed</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   model.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Summary</span></span>
@@ -238,13 +246,16 @@ An integrated function for fitting a multilevel linear regression (also known as
 <span class="r-out co"><span class="r-pr">#&gt;</span> Predictors = extrav, texp</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Estimates</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Parameter  Std_Coefficient     SE       t        df  Effects          p          95% CI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept)            0.000  0.000   4.985   238.069    fixed  0.000 ***  [0.000, 0.000]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        extrav            0.460  0.018  24.976  1961.702    fixed  0.000 ***  [0.424, 0.496]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          texp            0.470  0.050   9.385   101.830    fixed  0.000 ***  [0.370, 0.569]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Parameter  Coefficient     SE       t        df  Effects     Group          p          95% CI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         (Intercept)        1.035  0.208   4.985   238.069    fixed            0.000 ***  [0.626, 1.443]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              extrav        0.504  0.020  24.976  1961.702    fixed            0.000 ***  [0.464, 0.543]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                texp        0.099  0.011   9.385   101.830    fixed            0.000 ***  [0.078, 0.120]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      SD (Intercept)        0.652    NaN     NaN       NaN   random     class    NaN          [NaN, NaN]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   SD (Observations)        0.965    NaN     NaN       NaN   random  Residual    NaN          [NaN, NaN]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> *** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05, . p &lt; 0.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Goodness of Fit</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────────</span>
