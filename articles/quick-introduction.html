@@ -230,7 +230,7 @@ Predictors = Sepal.Width, Petal.Length, Petal.Width, Species
 ───────────────────────────────────────────────────────────
 
 <span style="text-decoration: underline;">Model Assumption Check</span>
-OK: Residuals appear to be independent and not autocorrelated (p = 0.836).
+OK: Residuals appear to be independent and not autocorrelated (p = 0.852).
 OK: residuals appear as normally distributed (p = 0.813).
 OK: No outliers detected.
 - Based on the following method and threshold: cook (0.91).
@@ -756,7 +756,7 @@ Dimensionality = multi-dimensionality
 different type of correlation based on the data structure. In the
 backend, I use the <code>correlation</code> package for this.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/cor_test.html">cor_test</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/cor_test.html">cor_test</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre class="fansi fansi-output"><code><span style="text-decoration: underline;">Model Summary</span>
 Model Type = Correlation
 Model Method = pearson
@@ -778,7 +778,7 @@ Adjustment Method = holm
 <p>It put together a nice table of some descriptive statistics and the
 correlation. Nothing fancy.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/descriptive_table.html">descriptive_table</a></span><span class="op">(</span><span class="va">iris</span>, cols <span class="op">=</span> <span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span> <span class="co"># all numeric columns</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/descriptive_table.html">descriptive_table</a></span><span class="op">(</span><span class="va">iris</span>, cols <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span> <span class="co"># all numeric columns</span></span></code></pre></div>
 <pre class="fansi fansi-output"><code>
 <span style="text-decoration: underline;">Model Summary</span>
 Model Type = Descriptive Statistics
