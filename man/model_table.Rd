@@ -12,7 +12,8 @@ model_table(
   control_variable = NULL,
   full_model = FALSE,
   alpha = 0.1,
-  return_result = FALSE
+  return_result = FALSE,
+  quite = FALSE
 )
 }
 \arguments{
@@ -29,6 +30,8 @@ model_table(
 \item{alpha}{the set alpha level for marginally significant (denoted by \code{.}). Set to 0.05 if do not want marginally significant denotation.}
 
 \item{return_result}{It set to \code{TRUE}, it return the model estimates data frame.}
+
+\item{quite}{suppress printing output}
 }
 \value{
 data.frame

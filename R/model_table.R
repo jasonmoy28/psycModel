@@ -8,6 +8,7 @@
 #' @param full_model Default is `FALSE`. If `TRUE`, it will report the full model with coefficients of the control variables
 #' @param alpha the set alpha level for marginally significant (denoted by `.`). Set to 0.05 if do not want marginally significant denotation.
 #' @param return_result It set to `TRUE`, it return the model estimates data frame.
+#' @param quite suppress printing output
 #'
 #' @return
 #' data.frame
@@ -25,7 +26,8 @@ model_table = function(data,
                        control_variable = NULL,
                        full_model = FALSE,
                        alpha = 0.1,
-                       return_result = FALSE
+                       return_result = FALSE,
+                       quite = FALSE
 ){
   # parse select syntax
   response_variable <- data %>%
@@ -118,7 +120,9 @@ model_table = function(data,
       }
     }
   }
-  print_table(model_summary_final,alpha = alpha)
+  if (quite == FALSE) {
+    print_table(model_summary_final,alpha = alpha)
+  }
   if (return_result) {
     return(model_summary_final)
   }
