@@ -24,7 +24,7 @@ cor_test <- function(data,
                      ...,
                      digits = 3,
                      method = "pearson",
-                     p_adjust = "holm",
+                     p_adjust = "none",
                      streamline = FALSE,
                      quite = FALSE,
                      return_result = FALSE) {
