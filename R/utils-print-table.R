@@ -8,6 +8,7 @@
 #' @return no return value
 #'
 print_table <- function(data_frame,
+                        alpha = 0.1,
                         digits = 3) {
   data_frame <- data_frame %>%
     tibble::as_tibble() %>%
@@ -26,8 +27,9 @@ print_table <- function(data_frame,
         x == "" ~ paste(x, "   "),
         x <= 0.001 ~ paste(x, "***"),
         x <= 0.01 & x > 0.001 ~ paste(x, "** "),
-        x < 0.05 & x > 0.01 ~ paste(x, "*  "),
-        x > 0.05 ~ paste(x, "   "),
+        x <= 0.05 & x > 0.01 ~ paste(x, "*  "),
+        x <= alpha & x > 0.05 ~ paste(x, ".  "),
+        x > alpha ~ paste(x, "   "),
         TRUE ~ paste(x, "   ")
       )
     }))
@@ -92,4 +94,8 @@ print_table <- function(data_frame,
   cat("\n")
   cat(paste(rep("\u2500", linewidth), collapse = "")) # print the last output line
   cat("\n")
+  if (any(colnames(data_frame) %in% c('p','P'))) {
+    cat(paste('*** p < 0.001, ** p < 0.01, * p < 0.05, . p <', alpha),sep = '')
+    cat("\n")
+  }
 }
