@@ -69,13 +69,12 @@ simple_slope <- function(model,
     simple_slope_output <-
       rbind(simple_slope_model$slopes) %>%
       dplyr::mutate(dplyr::across(1, function(x) {
-        dplyr::case_when(x > mean(x) ~ "High",
-                         x == mean(x) ~ "Mean",
+        dplyr::case_when(round(x,digits = 6) == round(mean(x),digits = 6) ~ "Mean",
+                         x > mean(x) ~ "High",
                          x < mean(x) ~ "Low")
-      })) %>%
+      })) %>% 
       dplyr::rename(ci.lower = "2.5%") %>%
       dplyr::rename(ci.upper = "97.5%")
-    
     colnames(simple_slope_output)[1] <-
       c(paste(interaction_factor[2], "Level"))
     jn_plot <- simple_slope_model$jnplot
@@ -105,8 +104,8 @@ simple_slope <- function(model,
           simple_slope_model$slopes[[3]]
         ) %>%
         dplyr::mutate(dplyr::across(1, function(x) {
-          dplyr::case_when(x > mean(x) ~ "High",
-                           x == mean(x) ~ "Mean",
+          dplyr::case_when(round(x,digits = 6) == round(mean(x),digits = 6) ~ "Mean",
+                           x > mean(x) ~ "High",
                            x < mean(x) ~ "Low")
         }))
       simple_slope_output <- simple_slope_output %>%
@@ -118,10 +117,11 @@ simple_slope <- function(model,
         rbind(simple_slope_model$slopes[[1]],
               simple_slope_model$slopes[[2]]) %>%
         dplyr::mutate(dplyr::across(1, function(x) {
-          dplyr::case_when(x > mean(x) ~ "High",
-                           x == mean(x) ~ "Mean",
+          dplyr::case_when(round(x,digits = 6) == round(mean(x),digits = 6) ~ "Mean",
+                           x > mean(x) ~ "High",
                            x < mean(x) ~ "Low")
         }))
+      
       simple_slope_output <- simple_slope_output %>%
         dplyr::mutate(Mod_1_Level = rep(c("Low", "High"), each = nrow(simple_slope_output) / 2)) %>%
         dplyr::select("Mod_1_Level", tidyselect::everything())

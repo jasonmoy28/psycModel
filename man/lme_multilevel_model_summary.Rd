@@ -25,6 +25,8 @@ lme_multilevel_model_summary(
   plot_color = FALSE,
   digits = 3,
   use_package = "lmerTest",
+  standardize = NULL,
+  ci_method = "satterthwaite",
   simple_slope = FALSE,
   assumption_plot = FALSE,
   quite = FALSE,
@@ -72,6 +74,10 @@ lme_multilevel_model_summary(
 \item{digits}{number of digits to round to}
 
 \item{use_package}{Default is \code{lmerTest}. Only available for linear mixed effect model. Options are \code{nlme}, \code{lmerTest}, or \code{lme4}(\verb{'lme4} return similar result as \code{lmerTest} except the return model)}
+
+\item{standardize}{The method used for standardizing the parameters. Can be NULL (default; no standardization), "refit" (for re-fitting the model on standardized data) or one of "basic", "posthoc", "smart", "pseudo". See 'Details' in parameters::standardize_parameters()}
+
+\item{ci_method}{see options in the \verb{Mixed model} section in ?parameters::model_parameters()}
 
 \item{simple_slope}{Slope estimate at ± 1 SD and the mean of the moderator. Uses \code{interactions::sim_slope()} in the background.}
 

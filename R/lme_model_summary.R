@@ -20,6 +20,8 @@
 #' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
 #' @param plot_color If it is set to `TRUE` (default is `FALSE`), the interaction plot will plot with color.
 #' @param use_package Default is `lmerTest`. Only available for linear mixed effect model. Options are `nlme`, `lmerTest`, or `lme4`(`'lme4` return similar result as `lmerTest` except the return model)
+#' @param standardize The method used for standardizing the parameters. Can be NULL (default; no standardization), "refit" (for re-fitting the model on standardized data) or one of "basic", "posthoc", "smart", "pseudo". See 'Details' in parameters::standardize_parameters()
+#' @param ci_method see options in the `Mixed model` section in ?parameters::model_parameters()
 #' @param quite suppress printing output
 #' @param digits number of digits to round to
 #' @param simple_slope Slope estimate at ± 1 SD and the mean of the moderator. Uses `interactions::sim_slope()` in the background.
@@ -67,6 +69,8 @@ lme_multilevel_model_summary <- function(data,
                                          plot_color = FALSE,
                                          digits = 3,
                                          use_package = "lmerTest",
+                                         standardize = NULL,
+                                         ci_method = 'satterthwaite',
                                          simple_slope = FALSE,
                                          assumption_plot = FALSE,
                                          quite = FALSE,
@@ -187,6 +191,8 @@ lme_multilevel_model_summary <- function(data,
   if (model_summary == TRUE) {
     model_summary_list <- model_summary(
       model = model,
+      standardize = standardize,
+      ci_method = ci_method,
       streamline = streamline,
       digits = digits,
       return_result = TRUE,

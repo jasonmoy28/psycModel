@@ -11,7 +11,8 @@ model_summary(
   quite = FALSE,
   streamline = TRUE,
   return_result = FALSE,
-  standardize = "basic"
+  standardize = NULL,
+  ci_method = "satterthwaite"
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ model_summary(
 \item{return_result}{It set to \code{TRUE}, it return the model estimates data frame.}
 
 \item{standardize}{The method used for standardizing the parameters. Can be NULL (default; no standardization), "refit" (for re-fitting the model on standardized data) or one of "basic", "posthoc", "smart", "pseudo". See 'Details' in parameters::standardize_parameters()}
+
+\item{ci_method}{see options in the \verb{Mixed model} section in ?parameters::model_parameters()}
 }
 \value{
 a list of model estimate data frame, model performance data frame, and the assumption plot (an \code{ggplot} object)
@@ -54,7 +57,7 @@ lm_fit <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width,
   data = iris
 )
 
-model_summary(lm_fit, assumption_plot = TRUE)
+model_summary(lm_fit)
 }
 \references{
 Nakagawa, S., & Schielzeth, H. (2013). A general and simple method for obtaining R2 from generalized linear mixed-effects models. Methods in Ecology and Evolution, 4(2), 133–142. https://doi.org/10.1111/j.2041-210x.2012.00261.x

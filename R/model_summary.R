@@ -36,18 +36,19 @@
 #'   data = iris
 #' )
 #'
-#' model_summary(lm_fit, assumption_plot = TRUE)
+#' model_summary(lm_fit)
 model_summary <- function(model,
                           digits = 3,
                           assumption_plot = FALSE,
                           quite = FALSE,
                           streamline = TRUE,
                           return_result = FALSE,
-                          standardize = 'basic',
+                          standardize = NULL,
                           ci_method = 'satterthwaite') {
   ################################################ Linear Mixed Effect Model ################################################
   ## lme package
   if (inherits(model, 'lme')) {
+    stop('Stop supporting nlme model temporaily. Please use lme4 instead')
     model_type <- "Linear Mixed Effect Model (fitted using nlme)"
     predict_var <- as.character(attributes(model$terms)$variables)
     DV <- predict_var[2]
@@ -64,7 +65,14 @@ model_summary <- function(model,
     collinearity_check <- TRUE
     singular_check <- TRUE
     
-    lme_param <- parameters::model_parameters(model,ci_method = ci_method)
+    if (all(unlist(lapply(
+      c("lavaSearch2"), requireNamespace
+    )))){
+      lme_param <- tryCatch(parameters::model_parameters(model,ci_method = ci_method))
+    } else{
+      "Please install.packages('lavaSearch2') to use nlme"
+    }
+      
     model_summary_df <- lme_param %>%
       as.data.frame() %>%
       dplyr::rename(df = .data$df_error) %>%

@@ -55,12 +55,13 @@ Suggests:
     semPlot,
     spelling,
     testthat (>= 3.0.0),
-    tidyselect
+    tidyselect,
+    lavaSearch2
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.3
 Language: en-US
