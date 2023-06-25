@@ -37,6 +37,9 @@
     <loc>https://jasonmoy28.github.io/psycModel/reference/cfa_summary.html</loc>
   </url>
   <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/coefficent_to_p.html</loc>
+  </url>
+  <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/compare_fit.html</loc>
   </url>
   <url>
@@ -91,6 +94,9 @@
     <loc>https://jasonmoy28.github.io/psycModel/reference/lm_model_summary.html</loc>
   </url>
   <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/lm_model_table.html</loc>
+  </url>
+  <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/lme_model.html</loc>
   </url>
   <url>
@@ -104,9 +110,6 @@
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/model_summary.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/model_table.html</loc>
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/pipe.html</loc>

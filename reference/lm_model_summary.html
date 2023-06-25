@@ -183,7 +183,7 @@ An integrated function for fitting a linear regression model.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">lm_model_summary</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">iris</span>,</span></span>
 <span class="r-in"><span>  response_variable <span class="op">=</span> <span class="st">"Sepal.Length"</span>,</span></span>
-<span class="r-in"><span>  predictor_variable <span class="op">=</span> <span class="fu">tidyselect</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  predictor_variable <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  two_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Sepal.Width</span>, <span class="va">Species</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  interaction_plot <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># you can also request the interaction plot</span></span></span>
 <span class="r-in"><span>  simple_slope <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># you can also request simple slope estimate </span></span></span>
@@ -220,10 +220,10 @@ An integrated function for fitting a linear regression model.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Assumption Check</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> OK: Residuals appear to be independent and not autocorrelated (p = 0.700).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> OK: Residuals appear to be independent and not autocorrelated (p = 0.706).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> OK: residuals appear as normally distributed (p = 0.855).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> OK: No outliers detected.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Based on the following method and threshold: cook (0.92).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Based on the following method and threshold: cook (0.843).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - For variable: (Whole model)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> OK: Error variance appears to be homoscedastic (p = 0.098).</span>

@@ -231,10 +231,10 @@ Predictors = Sepal.Width, Petal.Length, Petal.Width, Species
 ───────────────────────────────────────────────────────────
 
 <span style="text-decoration: underline;">Model Assumption Check</span>
-OK: Residuals appear to be independent and not autocorrelated (p = 0.886).
+OK: Residuals appear to be independent and not autocorrelated (p = 0.806).
 OK: residuals appear as normally distributed (p = 0.813).
 OK: No outliers detected.
-- Based on the following method and threshold: cook (0.91).
+- Based on the following method and threshold: cook (0.843).
 - For variable: (Whole model)
 
 OK: Error variance appears to be homoscedastic (p = 0.109).
@@ -317,7 +317,7 @@ Predictors = extrav, sex, texp, extrav:sex, extrav:texp, sex:texp, extrav:sex:te
 Warning: Autocorrelated residuals detected (p &lt; .001).
 OK: residuals appear as normally distributed (p = 0.425).
 OK: No outliers detected.
-- Based on the following method and threshold: cook (0.92).
+- Based on the following method and threshold: cook (0.9).
 - For variable: (Whole model)
 
 OK: Error variance appears to be homoscedastic (p = 0.758).
@@ -384,6 +384,7 @@ you a nice-looking path diagram.</p>
  
 <span style="text-decoration: underline;">Model Summary</span>
 Model Type = Confirmatory Factor Analysis
+Estimator: ML
 Model Formula = 
 . DV1 =~ x1 + x2 + x3
   DV2 =~ x4 + x5 + x6

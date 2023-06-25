@@ -86,6 +86,7 @@ All arguments (except the CFA items) must be explicitly named (e.g., model = you
 <span>  group <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ordered <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  estimator <span class="op">=</span> <span class="st">"ML"</span>,</span>
 <span>  model_covariance <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  model_variance <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -120,6 +121,10 @@ All arguments (except the CFA items) must be explicitly named (e.g., model = you
 
 <dt>digits</dt>
 <dd><p>number of digits to round to</p></dd>
+
+
+<dt>estimator</dt>
+<dd><p>estimator for lavaan. Default is <code>ML</code></p></dd>
 
 
 <dt>model_covariance</dt>
@@ -187,6 +192,7 @@ The model is considered an acceptable fit if CFI &gt; 0.9 and RMSEA &lt; 0.08. I
 <span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Summary</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Type = Confirmatory Factor Analysis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimator: ML</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Group = sex</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Formula = </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> . DV1 =~ x1 + x2 + x3</span>

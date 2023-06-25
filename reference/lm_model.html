@@ -122,8 +122,8 @@ Fit a linear regression using <code><a href="https://rdrr.io/r/stats/lm.html" cl
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">lm_model</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">iris</span>,</span></span>
-<span class="r-in"><span>  response_variable <span class="op">=</span> <span class="st">"Sepal.Length"</span>,</span></span>
-<span class="r-in"><span>  predictor_variable <span class="op">=</span> <span class="fu">tidyselect</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  response_variable <span class="op">=</span> <span class="va">Sepal.Length</span>,</span></span>
+<span class="r-in"><span>  predictor_variable <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  two_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Sepal.Width</span>, <span class="va">Species</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitting Model with lm:</span>
