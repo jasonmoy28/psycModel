@@ -4,10 +4,12 @@
 \alias{print_table}
 \title{print_table (internal use only)}
 \usage{
-print_table(data_frame, alpha = 0.1, digits = 3)
+print_table(data_frame, marginal_alpha = 0.1, digits = 3)
 }
 \arguments{
 \item{data_frame}{data frame object}
+
+\item{marginal_alpha}{marginal significant threshold}
 
 \item{digits}{number of digits to round to}
 }

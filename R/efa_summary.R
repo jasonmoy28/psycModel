@@ -60,7 +60,7 @@ efa_summary <- function(data,
   ######################################## Factor Analysis ##########################################################
   efa_result <- data %>% psych::fa(nfactors = n_factor, rotate = rotation)
   efa_loadings <- parameters::model_parameters(efa_result) %>%
-    dplyr::mutate(dplyr::across(tidyselect::contains("MR"), function(x) {
+    dplyr::mutate(dplyr::across(dplyr::contains("MR"), function(x) {
       dplyr::if_else(x < 0.4, true = "", false = as.character(format_round(x, digits = digits)))
     }))
 

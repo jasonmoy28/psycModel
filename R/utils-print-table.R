@@ -3,33 +3,35 @@
 #' Rich-text fitted table printing in console
 #'
 #' @param data_frame data frame object
+#' @param marginal_alpha marginal significant threshold 
 #' @param digits number of digits to round to
+#'
 #' @keywords internal
 #' @return no return value
 #'
 print_table <- function(data_frame,
-                        alpha = 0.1,
+                        marginal_alpha = 0.1,
                         digits = 3) {
   data_frame <- data_frame %>%
     tibble::as_tibble() %>%
     dplyr::mutate(dplyr::across(where(is.double), ~ format_round(x = ., digits = digits))) %>%
-    dplyr::mutate(dplyr::across(tidyselect::everything(), ~ as.character(.))) %>%
+    dplyr::mutate(dplyr::across(dplyr::everything(), ~ as.character(.))) %>%
     # replace na value with empty space
-    dplyr::mutate(dplyr::across(tidyselect::everything(), function(x) {
+    dplyr::mutate(dplyr::across(dplyr::everything(), function(x) {
       tidyr::replace_na(data = x, replace = "NaN")
     })) %>%
-    dplyr::mutate(dplyr::across(tidyselect::everything(), function(x) {
+    dplyr::mutate(dplyr::across(dplyr::everything(), function(x) {
       dplyr::if_else(stringr::str_detect(string = x, pattern = "NA"), true = "NaN", false = x)
     })) %>%
     # if p value exist, code p value
-    dplyr::mutate(dplyr::across(tidyselect::any_of(c("p", "P")), function(x) {
+    dplyr::mutate(dplyr::across(dplyr::any_of(c("p", "P")), function(x) {
       dplyr::case_when(
         x == "" ~ paste(x, "   "),
         x <= 0.001 ~ paste(x, "***"),
         x <= 0.01 & x > 0.001 ~ paste(x, "** "),
         x <= 0.05 & x > 0.01 ~ paste(x, "*  "),
-        x <= alpha & x > 0.05 ~ paste(x, ".  "),
-        x > alpha ~ paste(x, "   "),
+        x <= marginal_alpha & x > 0.05 ~ paste(x, ".  "),
+        x > marginal_alpha ~ paste(x, "   "),
         TRUE ~ paste(x, "   ")
       )
     }))
@@ -95,7 +97,7 @@ print_table <- function(data_frame,
   cat(paste(rep("\u2500", linewidth), collapse = "")) # print the last output line
   cat("\n")
   if (any(colnames(data_frame) %in% c('p','P'))) {
-    cat(paste('*** p < 0.001, ** p < 0.01, * p < 0.05, . p <', alpha),sep = '')
+    cat(paste('*** p < 0.001, ** p < 0.01, * p < 0.05, . p <', marginal_alpha),sep = '')
     cat("\n")
   }
 }

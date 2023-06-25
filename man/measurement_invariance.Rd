@@ -12,6 +12,7 @@ measurement_invariance(
   ordered = FALSE,
   group_partial = NULL,
   invariance_level = "scalar",
+  estimator = "ML",
   digits = 3,
   quite = FALSE,
   streamline = FALSE,
@@ -32,6 +33,8 @@ measurement_invariance(
 \item{group_partial}{items for partial equivalence. The form should be c('DV =~ item1', 'DV =~ item2'). See details for recommended practice.}
 
 \item{invariance_level}{"metric" or "scalar". Default is 'metric'. Set as 'metric' for configural-metric comparison, and set as 'scalar' for configural-metric-scalar comparison.}
+
+\item{estimator}{estimator for lavaan. Default is \code{ML}}
 
 \item{digits}{number of digits to round to}
 

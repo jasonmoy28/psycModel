@@ -73,7 +73,7 @@ An integrated function for fitting a linear regression model.
 fit <- lm_model_summary(
   data = iris,
   response_variable = "Sepal.Length",
-  predictor_variable = tidyselect::everything(),
+  predictor_variable = dplyr::everything(),
   two_way_interaction_factor = c(Sepal.Width, Species),
   interaction_plot = FALSE, # you can also request the interaction plot
   simple_slope = FALSE, # you can also request simple slope estimate 

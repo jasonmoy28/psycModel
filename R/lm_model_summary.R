@@ -29,7 +29,7 @@
 #' fit <- lm_model_summary(
 #'   data = iris,
 #'   response_variable = "Sepal.Length",
-#'   predictor_variable = tidyselect::everything(),
+#'   predictor_variable = dplyr::everything(),
 #'   two_way_interaction_factor = c(Sepal.Width, Species),
 #'   interaction_plot = FALSE, # you can also request the interaction plot
 #'   simple_slope = FALSE, # you can also request simple slope estimate 
@@ -57,16 +57,16 @@ lm_model_summary <- function(data,
   ##################################### Set up #########################################
   # parse select syntax
   response_variable <- data %>%
-    dplyr::select(!!enquo(response_variable)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(response_variable),strict = T) %>%
     names()
   predictor_variable <- data %>%
-    dplyr::select(!!enquo(predictor_variable)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(predictor_variable),strict = T) %>%
     names()
   two_way_interaction_factor <- data %>%
-    dplyr::select(!!enquo(two_way_interaction_factor)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(two_way_interaction_factor),strict = T) %>%
     names()
   three_way_interaction_factor <- data %>%
-    dplyr::select(!!enquo(three_way_interaction_factor)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(three_way_interaction_factor),strict = T) %>%
     names()
   
   ##################################### Running Model #########################################
@@ -87,10 +87,10 @@ lm_model_summary <- function(data,
     }
     model <- glm_model(
       data = data,
-      response_variable = tidyselect::all_of(response_variable),
-      predictor_variable = tidyselect::all_of(predictor_variable),
-      two_way_interaction_factor = tidyselect::all_of(two_way_interaction_factor),
-      three_way_interaction_factor = tidyselect::all_of(three_way_interaction_factor),
+      response_variable = dplyr::all_of(response_variable),
+      predictor_variable = dplyr::all_of(predictor_variable),
+      two_way_interaction_factor = dplyr::all_of(two_way_interaction_factor),
+      three_way_interaction_factor = dplyr::all_of(three_way_interaction_factor),
       family = family,
       quite = TRUE
     )
@@ -99,10 +99,10 @@ lm_model_summary <- function(data,
   
   ############################### Generate Interaction Plots ###############################
   two_way_interaction_factor <- data %>%
-    dplyr::select(!!enquo(two_way_interaction_factor)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(two_way_interaction_factor),strict = T) %>%
     names()
   three_way_interaction_factor <- data %>%
-    dplyr::select(!!enquo(three_way_interaction_factor)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(three_way_interaction_factor),strict = T) %>%
     names()
   interaction_plot_object <- NULL
   if (length(two_way_interaction_factor) != 0 &

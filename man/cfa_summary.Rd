@@ -11,6 +11,7 @@ cfa_summary(
   group = NULL,
   ordered = FALSE,
   digits = 3,
+  estimator = "ML",
   model_covariance = TRUE,
   model_variance = TRUE,
   plot = TRUE,
@@ -32,6 +33,8 @@ cfa_summary(
 \item{ordered}{Default is \code{FALSE}. If it is set to \code{TRUE}, \code{lavaan} will treat it as a ordinal variable and use \code{DWLS} instead of \code{ML}}
 
 \item{digits}{number of digits to round to}
+
+\item{estimator}{estimator for lavaan. Default is \code{ML}}
 
 \item{model_covariance}{print model covariance. Default is \code{TRUE}}
 

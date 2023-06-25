@@ -14,7 +14,7 @@
 #' fit <- lm_model(
 #'   data = iris,
 #'   response_variable = Sepal.Length,
-#'   predictor_variable = tidyselect::everything(),
+#'   predictor_variable = dplyr::everything(),
 #'   three_way_interaction_factor = c(Sepal.Width, Petal.Width, Petal.Length)
 #' )
 #'
@@ -110,7 +110,7 @@ simple_slope <- function(model,
         }))
       simple_slope_output <- simple_slope_output %>%
         dplyr::mutate(Mod_1_Level = rep(c("Low", "Mean", "High"), each = nrow(simple_slope_output) / 3)) %>%
-        dplyr::select("Mod_1_Level", tidyselect::everything())
+        dplyr::select("Mod_1_Level", dplyr::everything())
     } else if (length(simple_slope_model$slopes) == 2) {
       # if mod 2 is binary
       simple_slope_output <-
@@ -124,7 +124,7 @@ simple_slope <- function(model,
       
       simple_slope_output <- simple_slope_output %>%
         dplyr::mutate(Mod_1_Level = rep(c("Low", "High"), each = nrow(simple_slope_output) / 2)) %>%
-        dplyr::select("Mod_1_Level", tidyselect::everything())
+        dplyr::select("Mod_1_Level", dplyr::everything())
     }
     
     simple_slope_output <- simple_slope_output %>%

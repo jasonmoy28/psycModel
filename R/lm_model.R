@@ -16,8 +16,8 @@
 #' @examples
 #' fit <- lm_model(
 #'   data = iris,
-#'   response_variable = "Sepal.Length",
-#'   predictor_variable = tidyselect::everything(),
+#'   response_variable = Sepal.Length,
+#'   predictor_variable = dplyr::everything(),
 #'   two_way_interaction_factor = c(Sepal.Width, Species)
 #' )
 lm_model <- function(data,
@@ -51,17 +51,18 @@ lm_model <- function(data,
 
   ## parse tidyselect syntax
   response_variable <- data %>%
-    dplyr::select(!!enquo(response_variable)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(response_variable),strict = T) %>%
     names()
   predictor_variable <- data %>%
-    dplyr::select(!!enquo(predictor_variable)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(predictor_variable),strict = T) %>%
     names()
   two_way_interaction_factor <- data %>%
-    dplyr::select(!!enquo(two_way_interaction_factor)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(two_way_interaction_factor),strict = T) %>%
     names()
   three_way_interaction_factor <- data %>%
-    dplyr::select(!!enquo(three_way_interaction_factor)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(three_way_interaction_factor),strict = T) %>%
     names()
+  
   predictor_variable <- predictor_variable[!predictor_variable %in% c(response_variable)]
 
   ## remove response variable and id from random_effect_factors

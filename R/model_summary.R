@@ -75,11 +75,11 @@ model_summary <- function(model,
       
     model_summary_df <- lme_param %>%
       as.data.frame() %>%
-      dplyr::rename(df = .data$df_error) %>%
-      dplyr::rename(ci.lower = .data$CI_low) %>%
-      dplyr::rename(ci.upper = .data$CI_high) %>%
+      dplyr::rename(df = 'df_error') %>%
+      dplyr::rename(ci.lower = 'CI_low') %>%
+      dplyr::rename(ci.upper = 'CI_high') %>%
       dplyr::select(-"CI") %>%
-      dplyr::select(-'p', tidyselect::everything(), "p")
+      dplyr::select(-'p', dplyr::everything(), "p")
     
     ## lmer package
   } else if (inherits(model, 'lmerMod')) {
@@ -104,11 +104,11 @@ model_summary <- function(model,
       parameters::model_parameters(model, standardize = standardize,ci_method = ci_method)
     model_summary_df <- lme_param %>%
       as.data.frame() %>%
-      dplyr::rename(df = .data$df_error) %>%
-      dplyr::rename(ci.lower = .data$CI_low) %>%
-      dplyr::rename(ci.upper = .data$CI_high) %>%
+      dplyr::rename(df = 'df_error') %>%
+      dplyr::rename(ci.lower = 'CI_low') %>%
+      dplyr::rename(ci.upper = 'CI_high') %>%
       dplyr::select(-"CI") %>%
-      dplyr::select(-'p', tidyselect::everything(), "p")
+      dplyr::select(-'p', dplyr::everything(), "p")
     
     ################################################ Generalized Linear Mixed Effect Model ################################################
   } else if (inherits(model, 'glmerMod')) {
@@ -132,11 +132,11 @@ model_summary <- function(model,
     glme_param <- parameters::parameters(model)
     model_summary_df <- glme_param %>%
       as.data.frame() %>%
-      dplyr::rename(df = .data$df_error) %>%
-      dplyr::rename(ci.lower = .data$CI_low) %>%
-      dplyr::rename(ci.upper = .data$CI_high) %>%
+      dplyr::rename(df = 'df_error') %>%
+      dplyr::rename(ci.lower = 'CI_low') %>%
+      dplyr::rename(ci.upper = 'CI_high') %>%
       dplyr::select(-"CI") %>%
-      dplyr::select(-'p', tidyselect::everything(), "p")
+      dplyr::select(-'p', dplyr::everything(), "p")
     
     ################################################ Generalized Linear Regression  ################################################
   } else if (inherits(model, "glm")) {
@@ -159,11 +159,11 @@ model_summary <- function(model,
     glm_param <- parameters::parameters(model)
     model_summary_df <- glm_param %>%
       as.data.frame() %>%
-      dplyr::rename(df = .data$df_error) %>%
-      dplyr::rename(ci.lower = .data$CI_low) %>%
-      dplyr::rename(ci.upper = .data$CI_high) %>%
+      dplyr::rename(df = 'df_error') %>%
+      dplyr::rename(ci.lower = 'CI_low') %>%
+      dplyr::rename(ci.upper = 'CI_high') %>%
       dplyr::select(-"CI") %>%
-      dplyr::select(-'p', tidyselect::everything(), "p")
+      dplyr::select(-'p', dplyr::everything(), "p")
     
     ################################################ ANOVA ################################################
   } else if (inherits(model, 'aov')) {
@@ -187,7 +187,7 @@ model_summary <- function(model,
     aov_param <- parameters::parameters(model)
     model_summary_df <- aov_param %>%
       as.data.frame() %>%
-      dplyr::select(-'p', tidyselect::everything(), "p")
+      dplyr::select(-'p', dplyr::everything(), "p")
     
     ################################################ Linear Regression ################################################
   } else if (inherits(model, 'lm')) {
@@ -211,11 +211,11 @@ model_summary <- function(model,
     lm_param <- parameters::parameters(model)
     model_summary_df <- lm_param %>%
       as.data.frame() %>%
-      dplyr::rename(df = .data$df_error) %>%
-      dplyr::rename(ci.lower = .data$CI_low) %>%
-      dplyr::rename(ci.upper = .data$CI_high) %>%
+      dplyr::rename(df = 'df_error') %>%
+      dplyr::rename(ci.lower = 'CI_low') %>%
+      dplyr::rename(ci.upper = 'CI_high') %>%
       dplyr::select(-"CI") %>%
-      dplyr::select(-'p', tidyselect::everything(), "p")
+      dplyr::select(-'p', dplyr::everything(), "p")
     ################################################ Non-tested situations  ################################################
   } else {
     model_type <- "Unable to Determined for Unknown Model"
@@ -234,9 +234,9 @@ model_summary <- function(model,
     other_param <- parameters::parameters(model)
     model_summary_df <- other_param %>%
       as.data.frame() %>%
-      dplyr::rename(df = .data$df_error) %>%
-      dplyr::rename(ci.lower = .data$CI_low) %>%
-      dplyr::rename(ci.upper = .data$CI_high) %>%
+      dplyr::rename(df = 'df_error') %>%
+      dplyr::rename(ci.lower = 'CI_low') %>%
+      dplyr::rename(ci.upper = 'CI_high') %>%
       dplyr::select(-"CI")
     
     warning(

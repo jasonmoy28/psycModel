@@ -36,8 +36,8 @@ Fit a linear regression using \code{lm()}. Linear regression is used to explore 
 \examples{
 fit <- lm_model(
   data = iris,
-  response_variable = "Sepal.Length",
-  predictor_variable = tidyselect::everything(),
+  response_variable = Sepal.Length,
+  predictor_variable = dplyr::everything(),
   two_way_interaction_factor = c(Sepal.Width, Species)
 )
 }

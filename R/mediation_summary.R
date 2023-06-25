@@ -39,19 +39,19 @@ mediation_summary <- function(data,
                               return_result = FALSE) {
   data <- data_check(data)
   response_variable <- data %>%
-    dplyr::select(!!enquo(response_variable)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(response_variable),strict = T) %>%
     names()
   mediator <- data %>%
-    dplyr::select(!!enquo(mediator)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(mediator),strict = T) %>%
     names()
   predictor_variable <- data %>%
-    dplyr::select(!!enquo(predictor_variable)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(predictor_variable),strict = T) %>%
     names()
   control_variable <- data %>%
-    dplyr::select(!!enquo(control_variable)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(control_variable),strict = T) %>%
     names()
   group <- data %>%
-    dplyr::select(!!enquo(group)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(group),strict = T) %>%
     names()
   
   med_reg_formula <- paste0(mediator, " ~ ", "a*", predictor_variable)
@@ -65,7 +65,7 @@ mediation_summary <- function(data,
   # Cleaning up the output from parameters::model_parameters
   mediation_output <- mediation_param %>%
     tibble::as_tibble() %>%
-    dplyr::select("Label", tidyselect::everything()) %>%
+    dplyr::select("Label", dplyr::everything()) %>%
     dplyr::rename(Est = .data$Coefficient) %>%
     dplyr::rename(ci.lower = .data$CI_low) %>%
     dplyr::rename(ci.upper = .data$CI_high) %>%

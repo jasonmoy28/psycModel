@@ -23,7 +23,7 @@ Additionally, it will produce a Johnson-Newman plot that shows when the slope es
 fit <- lm_model(
   data = iris,
   response_variable = Sepal.Length,
-  predictor_variable = tidyselect::everything(),
+  predictor_variable = dplyr::everything(),
   three_way_interaction_factor = c(Sepal.Width, Petal.Width, Petal.Length)
 )
 

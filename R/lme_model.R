@@ -142,22 +142,22 @@ lme_model <- function(data,
   ###################################### Build model for models without explicit model #############################################
   ## parse tidyselect syntax
   response_variable <- data %>%
-    dplyr::select(!!enquo(response_variable)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(response_variable),strict = T) %>%
     names()
   random_effect_factors <- data %>%
-    dplyr::select(!!enquo(random_effect_factors)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(random_effect_factors),strict = T) %>%
     names()
   non_random_effect_factors <- data %>%
-    dplyr::select(!!enquo(non_random_effect_factors)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(non_random_effect_factors),strict = T) %>%
     names()
   two_way_interaction_factor <- data %>%
-    dplyr::select(!!enquo(two_way_interaction_factor)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(two_way_interaction_factor),strict = T) %>%
     names()
   three_way_interaction_factor <- data %>%
-    dplyr::select(!!enquo(three_way_interaction_factor)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(three_way_interaction_factor),strict = T) %>%
     names()
   id <- data %>%
-    dplyr::select(!!enquo(id)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(id),strict = T) %>%
     names()
 
 

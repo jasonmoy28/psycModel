@@ -59,7 +59,7 @@ cor_test <- function(data,
 
   cor_df <- tibble::tibble(Var = colnames(data)) %>%
     dplyr::full_join(cor_df, by = "Var") %>%
-    dplyr::mutate(dplyr::across(tidyselect::everything(), function(x) {
+    dplyr::mutate(dplyr::across(dplyr::everything(), function(x) {
       tidyr::replace_na(data = x, replace = "")
     }))
 

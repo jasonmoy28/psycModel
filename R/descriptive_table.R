@@ -56,7 +56,7 @@ descriptive_table <- function(data,
   if (any(descriptive_indicator %in% "missing")) {
     missing_df <- data %>%
       dplyr::summarize(dplyr::across(!!cols, ~ sum(is.na(.)))) %>%
-      tidyr::pivot_longer(tidyselect::everything(), names_to = "Var", values_to = "missing_n")
+      tidyr::pivot_longer(dplyr::everything(), names_to = "Var", values_to = "missing_n")
     return_df <- return_df %>% dplyr::full_join(missing_df, by = "Var")
   }
 
@@ -64,7 +64,7 @@ descriptive_table <- function(data,
   if (any(descriptive_indicator %in% "non_missing")) {
     non_missing_df <- data %>%
       dplyr::summarize(dplyr::across(!!cols, ~ sum(!is.na(.)))) %>%
-      tidyr::pivot_longer(tidyselect::everything(), names_to = "Var", values_to = "non_missing_n")
+      tidyr::pivot_longer(dplyr::everything(), names_to = "Var", values_to = "non_missing_n")
     return_df <- return_df %>% dplyr::full_join(non_missing_df, by = "Var")
   }
 

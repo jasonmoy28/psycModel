@@ -86,22 +86,22 @@ lme_multilevel_model_summary <- function(data,
   }
   
   response_variable <- data %>%
-    dplyr::select(!!enquo(response_variable)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(response_variable),strict = T) %>%
     names()
   random_effect_factors <- data %>%
-    dplyr::select(!!enquo(random_effect_factors)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(random_effect_factors),strict = T) %>%
     names()
   non_random_effect_factors <- data %>%
-    dplyr::select(!!enquo(non_random_effect_factors)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(non_random_effect_factors),strict = T) %>%
     names()
   two_way_interaction_factor <- data %>%
-    dplyr::select(!!enquo(two_way_interaction_factor)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(two_way_interaction_factor),strict = T) %>%
     names()
   three_way_interaction_factor <- data %>%
-    dplyr::select(!!enquo(three_way_interaction_factor)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(three_way_interaction_factor),strict = T) %>%
     names()
   id <- data %>%
-    dplyr::select(!!enquo(id)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(id),strict = T) %>%
     names()
   
   ##################################### Run Model #########################################
@@ -109,12 +109,12 @@ lme_multilevel_model_summary <- function(data,
     model <- lme_model(
       model = model,
       data = data,
-      response_variable = tidyselect::all_of(response_variable),
-      random_effect_factors = tidyselect::all_of(random_effect_factors),
-      non_random_effect_factors = tidyselect::all_of(non_random_effect_factors),
-      two_way_interaction_factor = tidyselect::all_of(two_way_interaction_factor),
-      three_way_interaction_factor = tidyselect::all_of(three_way_interaction_factor),
-      id = tidyselect::all_of(id),
+      response_variable = dplyr::all_of(response_variable),
+      random_effect_factors = dplyr::all_of(random_effect_factors),
+      non_random_effect_factors = dplyr::all_of(non_random_effect_factors),
+      two_way_interaction_factor = dplyr::all_of(two_way_interaction_factor),
+      three_way_interaction_factor = dplyr::all_of(three_way_interaction_factor),
+      id = dplyr::all_of(id),
       opt_control = opt_control,
       na.action = na.action,
       estimation_method = estimation_method,
@@ -130,13 +130,13 @@ lme_multilevel_model_summary <- function(data,
     # model <- glme_model(
     #   model = model,
     #   data = data,
-    #   response_variable = tidyselect::all_of(response_variable),
-    #   random_effect_factors = tidyselect::all_of(random_effect_factors),
-    #   non_random_effect_factors = tidyselect::all_of(non_random_effect_factors),
-    #   two_way_interaction_factor = tidyselect::all_of(two_way_interaction_factor),
-    #   three_way_interaction_factor = tidyselect::all_of(three_way_interaction_factor),
+    #   response_variable = dplyr::all_of(response_variable),
+    #   random_effect_factors = dplyr::all_of(random_effect_factors),
+    #   non_random_effect_factors = dplyr::all_of(non_random_effect_factors),
+    #   two_way_interaction_factor = dplyr::all_of(two_way_interaction_factor),
+    #   three_way_interaction_factor = dplyr::all_of(three_way_interaction_factor),
     #   family = family,
-    #   id = tidyselect::all_of(id),
+    #   id = dplyr::all_of(id),
     #   opt_control = opt_control,
     #   na.action = na.action,
     #   estimation_method = estimation_method,
@@ -148,10 +148,10 @@ lme_multilevel_model_summary <- function(data,
   
   ############################### Generate Interaction Plots ###############################
   two_way_interaction_factor <- data %>%
-    dplyr::select(!!enquo(two_way_interaction_factor)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(two_way_interaction_factor),strict = T) %>%
     names()
   three_way_interaction_factor <- data %>%
-    dplyr::select(!!enquo(three_way_interaction_factor)) %>%
+    tidyselect::eval_select(data = ., expr = enquo(three_way_interaction_factor),strict = T) %>%
     names()
   interaction_plot_object <- NULL
   if (length(two_way_interaction_factor) != 0 &
