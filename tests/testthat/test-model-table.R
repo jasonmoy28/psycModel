@@ -1,19 +1,17 @@
 testthat::test_that("model_table: linear regression", {
-  model_summary = model_table(data = iris,response_variable = 'Petal.Width',
-              predictor_variable = c('Petal.Length','Sepal.Length'),
-              return_result = T,
-              quite = T)
+  model_summary = lm_model_table(data = iris,
+                                 response_variable = Petal.Width,
+                                 predictor_variable = ends_with('Length'),
+                                 return_result = T,
+                                 verbose = F) %>%
+    .[1:2,] %>% 
+    dplyr::mutate(Petal.Length =  stringr::str_trim(stringr::str_replace(string = Petal.Length, pattern = '\\*\\*\\*',replacement = ""))) %>%
+    dplyr::mutate(Sepal.Length =  stringr::str_trim(stringr::str_replace(string = Sepal.Length, pattern = '\\*\\*\\*',replacement = ""))) %>% 
+    array()
   
-  testthat::expect_equal(format_round(model_summary$Coefficient,3),c('0.416','0.753'))
-})
+  lm_1_check = lm(data = iris,Petal.Width ~ Sepal.Length)$coefficients %>% format_round(3) %>% stringr::str_trim()
+  lm_2_check = lm(data = iris,Petal.Width ~ Petal.Length)$coefficients %>% format_round(3) %>% stringr::str_trim()
 
-testthat::test_that("model_table: linear regression full model", {
-  model_summary = model_table(data = iris,response_variable = 'Petal.Width',
-                              predictor_variable = c('Petal.Length','Sepal.Length'),
-                              return_result = T,
-                              full_model = T,
-                              quite = T)
-  
-  testthat::expect_equal(model_summary$Petal.Length,c('-0.363 ***',' 0.416 ***'))
-  testthat::expect_equal(model_summary$Sepal.Length,c('-3.200 ***',' 0.753 ***'))
+  testthat::expect_equal(lm_1_check,model_summary[[2]])
+  testthat::expect_equal(lm_2_check,model_summary[[3]])
 })

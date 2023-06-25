@@ -1,6 +1,6 @@
 testthat::test_that("anova plot: no interaction", {
   fit = iris %>% lm(data = ., Sepal.Length ~ Species)
-  plot = anova_plot(fit,predictor = 'Species')
+  plot = suppressMessages(anova_plot(fit,predictor = 'Species'))
   testthat::expect_true(!is.null(plot))
 })
 
@@ -17,7 +17,7 @@ testthat::test_that("anova plot: two-way interaction with 2 categorical predicto
   fit = lavaan::HolzingerSwineford1939 %>% 
     dplyr::mutate(dplyr::across(c(sex,school),as.factor)) %>% 
     lm(data = ., grade ~ sex*school)
-  plot = anova_plot(fit)
+  plot =  suppressMessages(anova_plot(fit))
   testthat::expect_true(inherits(plot,'ggplot'))
 })
   
@@ -43,6 +43,6 @@ testthat::test_that("anova plot: three-way interaction with 3 categorical modera
   fit = lavaan::HolzingerSwineford1939 %>% 
     dplyr::mutate(dplyr::across(c(sex,ageyr,school),as.factor)) %>% 
     lm(data = ., grade ~ ageyr*sex*school)
-  plot = anova_plot(fit)
+  plot =  suppressMessages(anova_plot(fit))
   testthat::expect_true(inherits(plot,'ggplot'))
 })

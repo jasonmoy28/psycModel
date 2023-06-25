@@ -28,24 +28,26 @@ testthat::test_that("model_summary: anova model", {
   expect_false(is.null(summary$assumption_plot))
 })
 
-testthat::test_that("model_summary: glm model", {
-  model <- glm_model(
-    response_variable = incidence,
-    predictor_variable = period,
-    family = "poisson",
-    data = lme4::cbpp,
-    quite = TRUE,
-  )
-  summary <- model_summary(model,
-    return_result = TRUE,
-    assumption_plot = TRUE,
-    quite = TRUE
-  )
-  expect_false(is.null(summary$model_summary))
-  expect_false(is.null(summary$model_performance_df))
-  expect_false(is.null(summary$assumption_plot))
-})
+# Stop supporting for glm models 
+# testthat::test_that("model_summary: glm model", {
+#   model <- glm_model(
+#     response_variable = incidence,
+#     predictor_variable = period,
+#     family = "poisson",
+#     data = lme4::cbpp,
+#     quite = TRUE,
+#   )
+#   summary <- model_summary(model,
+#     return_result = TRUE,
+#     assumption_plot = TRUE,
+#     quite = TRUE
+#   )
+#   expect_false(is.null(summary$model_summary))
+#   expect_false(is.null(summary$model_performance_df))
+#   expect_false(is.null(summary$assumption_plot))
+# })
 
+# 
 # testthat::test_that(desc = "model_summary: nlme model", {
 #   model <- lme_model(
 #     data = popular,
