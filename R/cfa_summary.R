@@ -18,6 +18,7 @@
 #' @param model_variance print model variance. Default is `TRUE`
 #' @param streamline print streamlined output
 #' @param plot print a path diagram. Default is `TRUE`
+#' @param estimator estimator for lavaan. Default is `ML`
 #'
 #' @return a `lavaan` object if return_result is `TRUE`
 #' @details
@@ -71,6 +72,7 @@ cfa_summary <- function(data,
                         group = NULL,
                         ordered = FALSE,
                         digits = 3,
+                        estimator = 'ML',
                         model_covariance = TRUE,
                         model_variance = TRUE,
                         plot = TRUE,
@@ -102,6 +104,7 @@ cfa_summary <- function(data,
   
   cfa_model <- lavaan::cfa(
     model = model,
+    estimator = estimator,
     data = data,
     group = group,
     ordered = ordered,
@@ -122,7 +125,7 @@ cfa_summary <- function(data,
     ) %>%
       tidyr::pivot_wider(names_from = .data$variable, values_from = .data$fit_measure) %>%
       dplyr::rename(p = .data$pvalue) %>%
-      dplyr::mutate(dplyr::across(tidyselect::everything(), ~ format_round(., digits = digits))) %>%
+      dplyr::mutate(dplyr::across(dplyr::everything(), ~ format_round(., digits = digits))) %>%
       dplyr::rename("$chi$^2" = .data$chisq)
 
     colnames(fit_measure_df) <- stringr::str_to_upper(colnames(fit_measure_df))
@@ -179,6 +182,7 @@ cfa_summary <- function(data,
       cat("\n \n")
       super_print("underline|Model Summary")
       super_print("Model Type = Confirmatory Factor Analysis")
+      super_print('Estimator: {estimator}')
       if (length(group) != 0) {
         super_print("Group = {group}")
       }

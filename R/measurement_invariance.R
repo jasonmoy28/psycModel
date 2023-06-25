@@ -16,6 +16,7 @@
 #' @param return_result If it is set to `TRUE`, it will return a data frame of the fit measure summary
 #' @param quite suppress printing output except the model summary.
 #' @param streamline print streamlined output
+#' @param estimator estimator for lavaan. Default is `ML`
 #'
 #' @details
 #' Chen (2007) suggested that change in CFI <= |-0.010| supplemented by RMSEA <= 0.015 indicate non-invariance when sample sizes were equal across groups and larger than 300 in each group (Chen, 2007).
@@ -85,6 +86,7 @@ measurement_invariance <- function(data,
                                    ordered = FALSE,
                                    group_partial = NULL,
                                    invariance_level = "scalar",
+                                   estimator = 'ML',
                                    digits = 3,
                                    quite = FALSE,
                                    streamline = FALSE,
@@ -120,6 +122,7 @@ measurement_invariance <- function(data,
     config_model <- lavaan::cfa(
       model = model,
       data = data,
+      estimator = estimator,
       group = group,
       ordered = ordered,
       group.partial = group_partial
@@ -132,6 +135,7 @@ measurement_invariance <- function(data,
     metric_model <- lavaan::cfa(
       model = model,
       data = data,
+      estimator = estimator,
       group = group,
       group.equal = "loadings",
       ordered = ordered,
@@ -146,6 +150,7 @@ measurement_invariance <- function(data,
     config_model <- lavaan::cfa(
       model = model,
       data = data,
+      estimator = estimator,
       group = group,
       ordered = ordered,
       group.partial = group_partial
@@ -158,6 +163,7 @@ measurement_invariance <- function(data,
       model = model,
       data = data,
       group = group,
+      estimator = estimator,
       group.equal = "loadings",
       ordered = ordered,
       group.partial = group_partial
@@ -169,6 +175,7 @@ measurement_invariance <- function(data,
     scalar_model <- lavaan::cfa(
       model = model,
       data = data,
+      estimator = estimator,
       group = group,
       group.equal = c("loadings", "intercepts"),
       ordered = ordered,
@@ -185,7 +192,7 @@ measurement_invariance <- function(data,
   } else if (invariance_level == "scalar") {
     invariance_level_print <- "Configural-Metric-Scalar Comparsion"
   }
-  fit <- fit %>% dplyr::rename(p = .data$pvalue)
+  fit <- fit %>% dplyr::rename(p = 'pvalue')
 
   colnames(fit) <- stringr::str_to_upper(colnames(fit))
   ################################################ Output Start ################################################################
@@ -203,7 +210,7 @@ measurement_invariance <- function(data,
     print_table(fit %>% tibble::rownames_to_column(var = 'Analysis Type'))
     cat("\n")
     super_print("Goodness of Fit:")
-    fit <- fit %>% dplyr::mutate(dplyr::across(tidyselect::everything(), as.numeric))
+    fit <- fit %>% dplyr::mutate(dplyr::across(dplyr::everything(), as.numeric))
     CFI <- fit["metric - config", "CFI"]
 
     # metric invariance
