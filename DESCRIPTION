@@ -33,7 +33,8 @@ Imports:
     stringr,
     tibble,
     tidyr,
-    utils
+    utils,
+    tidyselect
 Suggests:
     correlation,
     covr,
@@ -55,7 +56,6 @@ Suggests:
     semPlot,
     spelling,
     testthat (>= 3.0.0),
-    tidyselect,
     lavaSearch2
 VignetteBuilder: 
     knitr
