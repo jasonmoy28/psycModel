@@ -1,9 +1,8 @@
 #' Model Summary for Mixed Effect Model
 #'
-#' `r lifecycle::badge("superseded")` \cr
+#' `r lifecycle::badge("stable")` \cr
 #' An integrated function for fitting a multilevel linear regression (also known as hierarchical linear regression).
-#' The function will no longer be updated in future version. Please use individual functions in the package instead.
-
+#' 
 #' @param data `data.frame`
 #' @param model `lme4` model syntax. Support more complicated model structure from `lme4`. It is not well-tested to ensure accuracy `r lifecycle::badge("experimental")`
 #' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select()` syntax.
