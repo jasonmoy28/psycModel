@@ -1,7 +1,8 @@
 #' Model Summary for Linear Regression
 #'
-#' `r lifecycle::badge("stable")` \cr
-#' An integrated function for fitting a linear regression model.
+#' `r lifecycle::badge("superseded")` \cr 
+#' An integrated function for fitting a linear regression model. 
+#' The function will no longer be updated in future version. Please use individual functions in the package instead.
 #'
 #' @param data `data.frame`
 #' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select()` syntax.
