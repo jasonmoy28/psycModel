@@ -4,7 +4,7 @@
 
 <!-- badges: start -->
 [![CRAN version](https://img.shields.io/cran/v/psycModel)](https://cran.r-project.org/package=psycModel)
-[![R-CMD-check](https://github.com/jasonmoy28/psycModel/workflows/R-CMD-check/badge.svg)](https://github.com/jasonmoy28/psycModel/actions)
+[![R-CMD-check](https://github.com/jasonmoy28/psycModel/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jasonmoy28/psycModel/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/jasonmoy28/psycModel/branch/master/graph/badge.svg)](https://app.codecov.io/gh/jasonmoy28/psycModel?branch=master)
 [![download](https://cranlogs.r-pkg.org/badges/grand-total/psycModel)](https://cran.r-project.org/package=psycModel)
 <!-- badges: end -->
