@@ -39,19 +39,19 @@ mediation_summary <- function(data,
                               return_result = FALSE) {
   data <- data_check(data)
   response_variable <- data %>%
-    tidyselect::eval_select(data = ., expr = enquo(response_variable),strict = T) %>%
+    tidyselect::eval_select(data = ., expr = enquo(response_variable),strict = TRUE) %>%
     names()
   mediator <- data %>%
-    tidyselect::eval_select(data = ., expr = enquo(mediator),strict = T) %>%
+    tidyselect::eval_select(data = ., expr = enquo(mediator),strict = TRUE) %>%
     names()
   predictor_variable <- data %>%
-    tidyselect::eval_select(data = ., expr = enquo(predictor_variable),strict = T) %>%
+    tidyselect::eval_select(data = ., expr = enquo(predictor_variable),strict = TRUE) %>%
     names()
   control_variable <- data %>%
-    tidyselect::eval_select(data = ., expr = enquo(control_variable),strict = T) %>%
+    tidyselect::eval_select(data = ., expr = enquo(control_variable),strict = TRUE) %>%
     names()
   group <- data %>%
-    tidyselect::eval_select(data = ., expr = enquo(group),strict = T) %>%
+    tidyselect::eval_select(data = ., expr = enquo(group),strict = TRUE) %>%
     names()
   
   med_reg_formula <- paste0(mediator, " ~ ", "a*", predictor_variable)

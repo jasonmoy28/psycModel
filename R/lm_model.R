@@ -51,16 +51,16 @@ lm_model <- function(data,
 
   ## parse tidyselect syntax
   response_variable <- data %>%
-    tidyselect::eval_select(data = ., expr = enquo(response_variable),strict = T) %>%
+    tidyselect::eval_select(data = ., expr = enquo(response_variable),strict = TRUE) %>%
     names()
   predictor_variable <- data %>%
-    tidyselect::eval_select(data = ., expr = enquo(predictor_variable),strict = T) %>%
+    tidyselect::eval_select(data = ., expr = enquo(predictor_variable),strict = TRUE) %>%
     names()
   two_way_interaction_factor <- data %>%
-    tidyselect::eval_select(data = ., expr = enquo(two_way_interaction_factor),strict = T) %>%
+    tidyselect::eval_select(data = ., expr = enquo(two_way_interaction_factor),strict = TRUE) %>%
     names()
   three_way_interaction_factor <- data %>%
-    tidyselect::eval_select(data = ., expr = enquo(three_way_interaction_factor),strict = T) %>%
+    tidyselect::eval_select(data = ., expr = enquo(three_way_interaction_factor),strict = TRUE) %>%
     names()
   
   predictor_variable <- predictor_variable[!predictor_variable %in% c(response_variable)]

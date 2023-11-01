@@ -4,7 +4,7 @@ testthat::test_that("interaction_plot: lm model", {
     response_variable = 'Sepal.Length',
     predictor_variable = c('Sepal.Width', 'Petal.Width'),
     two_way_interaction_factor = c('Sepal.Width', 'Petal.Width'),
-    quite = T
+    quite = TRUE
   )
   plot <- interaction_plot(model)
   testthat::expect_false(is.null(plot))

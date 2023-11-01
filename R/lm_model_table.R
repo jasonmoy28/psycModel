@@ -31,13 +31,13 @@ lm_model_table = function(data,
 ){
   # parse select syntax
   response_variable <- data %>%
-    tidyselect::eval_select(data = ., expr = enquo(response_variable),strict = T) %>%
+    tidyselect::eval_select(data = ., expr = enquo(response_variable),strict = TRUE) %>%
     names()
   predictor_variable <- data %>%
-    tidyselect::eval_select(data = ., expr = enquo(predictor_variable),strict = T) %>%
+    tidyselect::eval_select(data = ., expr = enquo(predictor_variable),strict = TRUE) %>%
     names()
   control_variable = data %>%
-    tidyselect::eval_select(data = ., expr = enquo(control_variable),strict = T) %>%
+    tidyselect::eval_select(data = ., expr = enquo(control_variable),strict = TRUE) %>%
     names()
   
   # Multiple response variables
@@ -46,7 +46,7 @@ lm_model_table = function(data,
       model = lm_model(data = data,
                        response_variable = dplyr::all_of(response_variable[i]),
                        predictor_variable = dplyr::all_of(c(predictor_variable,control_variable)),
-                       quite = T)
+                       quite = TRUE)
       # Non-full model
       # if (full_model == FALSE) {
       #   model_summary = model %>%
@@ -89,7 +89,7 @@ lm_model_table = function(data,
       model = lm_model(data = data,
                        response_variable = dplyr::all_of(response_variable),
                        predictor_variable = dplyr::all_of(c(predictor_variable[i],control_variable)),
-                       quite = T)
+                       quite = TRUE)
       # if (full_model == FALSE) {
       #   model_summary = model %>%
       #     parameters::parameters() %>%

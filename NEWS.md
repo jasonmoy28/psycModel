@@ -1,3 +1,5 @@
+# psycModel 0.5.0
+
 # psycModel 0.4.1
 **Fixes**  
 * Fixed anova plot labelling issue with two-way interaction  

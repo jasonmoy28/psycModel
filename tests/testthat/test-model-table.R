@@ -2,8 +2,8 @@ testthat::test_that("model_table: linear regression", {
   model_summary = lm_model_table(data = iris,
                                  response_variable = Petal.Width,
                                  predictor_variable = ends_with('Length'),
-                                 return_result = T,
-                                 verbose = F) %>%
+                                 return_result = TRUE,
+                                 verbose = FALSE) %>%
     .[1:2,] %>% 
     dplyr::mutate(Petal.Length =  stringr::str_trim(stringr::str_replace(string = Petal.Length, pattern = '\\*\\*\\*',replacement = ""))) %>%
     dplyr::mutate(Sepal.Length =  stringr::str_trim(stringr::str_replace(string = Sepal.Length, pattern = '\\*\\*\\*',replacement = ""))) %>% 

@@ -23,7 +23,7 @@ coefficent_to_p = function(data_frame,
     })) %>% 
     dplyr::mutate(Coefficient = paste(format_round(.data$Coefficient,digits = 3),.data$p))
   
-  if (show_p == T) {
+  if (show_p == TRUE) {
     return_df = data_frame %>% 
       dplyr::mutate(Coefficient = paste0(format_round(.data$Coefficient,digits = 3),' (',format_round(.data$p,digits = 3),')')) %>% 
       dplyr::mutate(dplyr::across(dplyr::any_of(c("p", "P")), function(x) {
