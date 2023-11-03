@@ -3,6 +3,7 @@
 ## Integrated Toolkit for Psychological Analysis and Modeling in R
 
 <!-- badges: start -->
+[![CRAN latest release](https://www.r-pkg.org/badges/last-release/psycModel)](https://cran.r-project.org/package=psycModel)
 [![CRAN version](https://img.shields.io/cran/v/psycModel)](https://cran.r-project.org/package=psycModel)
 [![R-CMD-check](https://github.com/jasonmoy28/psycModel/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jasonmoy28/psycModel/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/jasonmoy28/psycModel/branch/master/graph/badge.svg)](https://app.codecov.io/gh/jasonmoy28/psycModel?branch=master)
