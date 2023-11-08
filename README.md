@@ -25,6 +25,9 @@ install.packages('psycModel',dependencies = c("Depends", "Imports","Suggests"))
 ```R
 devtools::install_github('jasonmoy28/psycModel')
 ```
+## Example Usage
+Please the example [here](https://jasonmoy28.github.io/psycModel//articles/quick-introduction.html)
+
 ## Key Features
 <span style="color:#009900">✓</span> A beginner-friendly R package for statistical analysis in social science (intermediate & advanced R users should also find it useful)  <br/>
 <span style="color:#009900">✓</span>  Tired of manually writing all variables in a model? You can use [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models  <br/>
