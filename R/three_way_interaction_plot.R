@@ -1,65 +1,86 @@
 #' Three-way Interaction Plot
 #'
-#' `r lifecycle::badge("deprecated")` \cr
-#' The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with `lm_model()`, `lme_model()`.
+#' `r lifecycle::badge("superseded")` \cr
+#' The function creates a three-way interaction plot. By default, it will create an interaction plot with -1 SD and +1 SD of the two continuous variables, or the two levels of the binary variables or dummy-coded multi-categorical variable
+#' It has been superseded by \code{\link{interaction_plot}}.
 #'
-#' @param model object from `lme`, `lme4`, `lmerTest` object.
-#' @param data `data.frame`. If the function is unable to extract data frame from the object, then you may need to pass it directly
-#' @param graph_label_name vector of length 4 or a switch function (see ?two_way_interaction_plot example). Vector should be passed in the form of c(response_var, predict_var1, predict_var2, predict_var3).
-#' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
+#'
+#' @param model a regression model object from \link[effects]{effect}.
+#' @param interaction_term default is the first interaction term in the model. The term should be given explicitly if you want to plot other interaction terms.
+#' @param response_var_name The name of the response variable can be changed using this setting. 
+#' @param predict_var1_name The name of the first predictor can be changed using this setting. 
+#' @param predict_var2_name The name of the second predictor can be changed using this setting. 
+#' @param predict_var3_name The name of the third predictor can be changed using this setting. 
+#' @param predict_var1_level The default is -1 SD and +1 SD for a continuous variable, and it is the two levels for a binary variable. These can be changed using this setting.
+#' @param predict_var2_level The default is -1 SD and +1 SD for a continuous variable, and it is the two levels for a binary variable. These can be changed using this setting.
+#' @param predict_var3_level The default is -1 SD and +1 SD for a continuous variable, and it is the two levels for a binary variable. These can be changed using this setting.
+#' @param predict_var1_level_name The labels of the level can be change using this value (e.g., `c('-1 SD','+1 SD')`). The order should be from the left to right on the x-axis. 
+#' @param predict_var2_level_name The labels of the level can be change using this value (e.g., `c('-1 SD','+1 SD')`). The order should be from the top to down on the legend. 
+#' @param predict_var3_level_name The labels of the level can be change using this value (e.g., `c('-1 SD','+1 SD')`). The order should be from the left to right on the facets. 
 #' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
 #' @param plot_color default if `FALSE`. Set to `TRUE` if you want to plot in color
+#' @param return_plot_data default is `FALSE`. Set to `TRUE` to return the plot data.
+#' @param return_plot default is `FALSE`. Set to `TRUE` to return the plot.
+#' @param print_plot default is `TRUE`. Set to `TRUE` to print the plot. 
+#' @param verbose deafult is `TRUE`.
+#' @param data Optional data.frame. Only used when it is not possible to extract data from the model object. 
 #'
-#'
-#' @details It appears that ``predict` cannot handle categorical factors. All variables are converted to numeric before plotting.
-#' @return a `ggplot` object
+#' @return an object of class `ggplot`
 #' @export
-#' 
 #'
 #' @examples
-#' lm_fit <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width +
-#'   Sepal.Width:Petal.Length:Petal.Width, data = iris)
-#'
-#' three_way_interaction_plot(lm_fit, data = iris)
+#' lm_fit <- lm(Sepal.Length ~ Sepal.Width*Petal.Width*Petal.Width ,
+#'   data = iris
+#' )
+#' 
+#' three_way_interaction_plot(lm_fit)
 #'
 three_way_interaction_plot <- function(model,
-                                       data = NULL,
-                                       cateogrical_var = NULL,
-                                       graph_label_name = NULL,
+                                       interaction_term = NULL,
+                                       response_var_name = NULL,
+                                       predict_var1_name = NULL,
+                                       predict_var2_name = NULL,
+                                       predict_var3_name = NULL,
+                                       predict_var1_level = NULL,
+                                       predict_var2_level = NULL,
+                                       predict_var3_level = NULL,
+                                       predict_var1_level_name = NULL,
+                                       predict_var2_level_name = NULL,
+                                       predict_var3_level_name = NULL,
                                        y_lim = NULL,
-                                       plot_color = FALSE) {
+                                       plot_color = FALSE,
+                                       return_plot_data = FALSE,
+                                       return_plot = FALSE,
+                                       verbose = TRUE,
+                                       print_plot = TRUE,
+                                       data = NULL) {
   model_data <- NULL
-  if (inherits(model,'lmerMod') | inherits(model,'lme') | inherits(model,'lm')) {
-    model_data <- insight::get_data(model)
-    predict_var <- model %>%
-      insight::find_predictors() %>%
-      .$conditional # maybe problem with unconditional?
-    response_var <- model %>% insight::find_response()
+  model_data <- insight::get_data(model)
+  predict_var <- model %>%
+    insight::find_predictors() %>%
+    .$conditional # maybe problem with unconditional?
+  
+  response_var <- model %>% insight::find_response()
+  
+  if (is.null(interaction_term)) {
     interaction_term <- model %>%
       insight::find_interactions() %>%
-      .$conditional
+      .$conditional 
+    interaction_term <- interaction_term[stringr::str_detect(":.+:", string = interaction_term)][1]
   }
-  else {
-    model_data <- insight::get_data(model)
-    predict_var <- model %>%
-      insight::find_predictors() %>%
-      .$conditional # maybe problem with unconditional?
-    response_var <- model %>% insight::find_response()
-    interaction_term <- model %>%
-      insight::find_interactions() %>%
-      .$conditional
-    warning("Only models from lm, nlme, lme4, and lmerTest are tested")
+  
+  
+  # get variable from model
+  if (length(interaction_term) == 0) {
+    stop("No Three-way interaction term is found in the model")
   }
-  interaction_term <- interaction_term[stringr::str_detect(":.+:", string = interaction_term)]
+  
   predict_var1 <- gsub(pattern = ":.+", "", x = interaction_term)
   predict_var3 <- gsub(pattern = ".+:", "", x = interaction_term)
   remove1 <- stringr::str_remove(pattern = predict_var1, string = interaction_term)
   remove2 <- stringr::str_remove(pattern = predict_var3, string = remove1)
   predict_var2 <- gsub(pattern = ":", "", x = remove2)
   
-  if (length(interaction_term) == 0) {
-    stop("No three-way interaction term is found in the model")
-  }
   
   if (any(class(model_data) == "data.frame")) {
     data <- model_data
@@ -68,144 +89,95 @@ three_way_interaction_plot <- function(model,
       stop("You need to pass the data directly")
     }
     if (!any(class(data) == "data.frame")) {
-      stop("Data must be dataframe like object")
+      stop("Data must be dataframe-like object")
     }
   }
   
-  
-  mean_df = get_predict_df(data = model_data)$mean_df
-  upper_df = get_predict_df(data = model_data)$upper_df
-  lower_df = get_predict_df(data = model_data)$lower_df
-  
-  # Specify the categorical variable upper and lower bound directly
-  if (!is.null(cateogrical_var)) {
-    for (name in names(cateogrical_var)) {
-      upper_df[name] <- cateogrical_var[[name]][1]
-      lower_df[name] <- cateogrical_var[[name]][2]
+  if (is.null(predict_var1_level)) {
+    if (length(unique(model_data[[predict_var1]])) != 2) {
+      predict_var1_level = c(round(mean(model_data[[predict_var1]],na.rm = T) - sd(model_data[[predict_var1]],na.rm = T),digits = 2),
+                             round(mean(model_data[[predict_var1]],na.rm = T) + sd(model_data[[predict_var1]],na.rm = T),digits = 2))
+    } else {
+      predict_var1_level = c(unique(model_data[[predict_var1]])[1],unique(model_data[[predict_var1]])[2])
     }
   }
-  # Get the variable names of the model
-  # Update values in the new_data_df to the values in predicted_df & get the predicted value
-  # Plot 1
-  upper_upper_upper_df <- mean_df
-  upper_upper_upper_df[predict_var1] <- upper_df[predict_var1]
-  upper_upper_upper_df[predict_var2] <- upper_df[predict_var2]
-  upper_upper_upper_df[predict_var3] <- upper_df[predict_var3]
   
-  upper_lower_upper_df <- mean_df
-  upper_lower_upper_df[predict_var1] <- upper_df[predict_var1]
-  upper_lower_upper_df[predict_var2] <- lower_df[predict_var2]
-  upper_lower_upper_df[predict_var3] <- upper_df[predict_var3]
-  
-  lower_upper_upper_df <- mean_df
-  lower_upper_upper_df[predict_var1] <- lower_df[predict_var1]
-  lower_upper_upper_df[predict_var2] <- upper_df[predict_var2]
-  lower_upper_upper_df[predict_var3] <- upper_df[predict_var3]
-  
-  
-  lower_lower_upper_df <- mean_df
-  lower_lower_upper_df[predict_var1] <- lower_df[predict_var1]
-  lower_lower_upper_df[predict_var2] <- lower_df[predict_var2]
-  lower_lower_upper_df[predict_var3] <- upper_df[predict_var3]
-  
-  if (inherits(model,'lme')) {
-    upper_upper_upper_predicted_value <- stats::predict(model, newdata = upper_upper_upper_df, level = 0)
-    upper_lower_upper_predicted_value <- stats::predict(model, newdata = upper_lower_upper_df, level = 0)
-    lower_upper_upper_predicted_value <- stats::predict(model, newdata = lower_upper_upper_df, level = 0)
-    lower_lower_upper_predicted_value <- stats::predict(model, newdata = lower_lower_upper_df, level = 0)
-  } else if (inherits(model,'lmerMod')) {
-    upper_upper_upper_predicted_value <- stats::predict(model, newdata = upper_upper_upper_df, allow.new.levels = TRUE)
-    upper_lower_upper_predicted_value <- stats::predict(model, newdata = upper_lower_upper_df, allow.new.levels = TRUE)
-    lower_upper_upper_predicted_value <- stats::predict(model, newdata = lower_upper_upper_df, allow.new.levels = TRUE)
-    lower_lower_upper_predicted_value <- stats::predict(model, newdata = lower_lower_upper_df, allow.new.levels = TRUE)
-  } else if (inherits(model,'lm')) {
-    upper_upper_upper_predicted_value <- stats::predict(model, newdata = upper_upper_upper_df)
-    upper_lower_upper_predicted_value <- stats::predict(model, newdata = upper_lower_upper_df)
-    lower_upper_upper_predicted_value <- stats::predict(model, newdata = lower_upper_upper_df)
-    lower_lower_upper_predicted_value <- stats::predict(model, newdata = lower_lower_upper_df)
-  }
-  # Plot 2
-  upper_upper_lower_df <- mean_df
-  upper_upper_lower_df[predict_var1] <- upper_df[predict_var1]
-  upper_upper_lower_df[predict_var2] <- upper_df[predict_var2]
-  upper_upper_lower_df[predict_var3] <- lower_df[predict_var3]
-  
-  upper_lower_lower_df <- mean_df
-  upper_lower_lower_df[predict_var1] <- upper_df[predict_var1]
-  upper_lower_lower_df[predict_var2] <- lower_df[predict_var2]
-  upper_lower_lower_df[predict_var3] <- lower_df[predict_var3]
-  
-  lower_upper_lower_df <- mean_df
-  lower_upper_lower_df[predict_var1] <- lower_df[predict_var1]
-  lower_upper_lower_df[predict_var2] <- upper_df[predict_var2]
-  lower_upper_lower_df[predict_var3] <- lower_df[predict_var3]
-  lower_lower_lower_df <- mean_df
-  
-  lower_lower_lower_df[predict_var1] <- lower_df[predict_var1]
-  lower_lower_lower_df[predict_var2] <- lower_df[predict_var2]
-  lower_lower_lower_df[predict_var3] <- lower_df[predict_var3]
-  
-  if (inherits(model,'lme')) {
-    upper_upper_lower_predicted_value <- stats::predict(model, newdata = upper_upper_lower_df, level = 0)
-    upper_lower_lower_predicted_value <- stats::predict(model, newdata = upper_lower_lower_df, level = 0)
-    lower_upper_lower_predicted_value <- stats::predict(model, newdata = lower_upper_lower_df, level = 0)
-    lower_lower_lower_predicted_value <- stats::predict(model, newdata = lower_lower_lower_df, level = 0)
-  } else if (inherits(model,'lmerMod')) {
-    upper_upper_lower_predicted_value <- stats::predict(model, newdata = upper_upper_lower_df, allow.new.levels = TRUE)
-    upper_lower_lower_predicted_value <- stats::predict(model, newdata = upper_lower_lower_df, allow.new.levels = TRUE)
-    lower_upper_lower_predicted_value <- stats::predict(model, newdata = lower_upper_lower_df, allow.new.levels = TRUE)
-    lower_lower_lower_predicted_value <- stats::predict(model, newdata = lower_lower_lower_df, allow.new.levels = TRUE)
-  } else if (inherits(model,'lm')) {
-    upper_upper_lower_predicted_value <- stats::predict(model, newdata = upper_upper_lower_df)
-    upper_lower_lower_predicted_value <- stats::predict(model, newdata = upper_lower_lower_df)
-    lower_upper_lower_predicted_value <- stats::predict(model, newdata = lower_upper_lower_df)
-    lower_lower_lower_predicted_value <- stats::predict(model, newdata = lower_lower_lower_df)
+  if (is.null(predict_var2_level)) {
+    if (length(unique(model_data[[predict_var2]])) != 2) {
+      predict_var2_level = c(round(mean(model_data[[predict_var2]],na.rm = T) - sd(model_data[[predict_var2]],na.rm = T),digits = 2),
+                             round(mean(model_data[[predict_var2]],na.rm = T) + sd(model_data[[predict_var2]],na.rm = T),digits = 2))
+    } else {
+      predict_var2_level = c(unique(model_data[[predict_var2]])[1],unique(model_data[[predict_var2]])[2])
+    }
   }
   
-  label_name = label_name(
-    graph_label_name = graph_label_name,
-    response_var_name = response_var,
-    predict_var1_name = predict_var1,
-    predict_var2_name = predict_var2,
+  if (is.null(predict_var3_level)) {
+    if (length(unique(model_data[[predict_var3]])) != 2) {
+      predict_var3_level = c(round(mean(model_data[[predict_var3]],na.rm = T) - sd(model_data[[predict_var3]],na.rm = T),digits = 2),
+                             round(mean(model_data[[predict_var3]],na.rm = T) + sd(model_data[[predict_var3]],na.rm = T),digits = 2))
+    } else {
+      predict_var3_level = c(unique(model_data[[predict_var3]])[1],unique(model_data[[predict_var3]])[2])
+    }
+  }
+  
+  final_df = as.data.frame(effects::effect(term = interaction_term,
+                                           mod = model,
+                                           xlevels = setNames(list(predict_var1_level,predict_var2_level,predict_var3_level),c(predict_var1,predict_var2,predict_var3)))) %>% 
+    dplyr::mutate(across(c(!!enquo(predict_var1),!!enquo(predict_var2),!!enquo(predict_var3)),as.character)) 
+  
+  ############## Renaming ##############
+  if (!is.null(predict_var3_level_name) & !is.null(predict_var3_name)) {
+    predict_var3_level_name_list = c(unique((final_df)[[predict_var3]]))
+    predict_var3_level_name = paste(predict_var3_name,' : ',predict_var3_level_name,sep = '')
+    names(predict_var3_level_name) = predict_var3_level_name_list
+    
+  } else if (!is.null(predict_var3_level_name) & is.null(predict_var3_name)) {
     predict_var3_name = predict_var3
-  )
-  
-  high <- stringr::str_c("High", " ", label_name[4])
-  low <- stringr::str_c("Low", " ", label_name[4])
-  
-  final_df <- data.frame(
-    value = c(
-      upper_upper_upper_predicted_value,
-      upper_lower_upper_predicted_value,
-      lower_upper_upper_predicted_value,
-      lower_lower_upper_predicted_value,
-      upper_upper_lower_predicted_value,
-      upper_lower_lower_predicted_value,
-      lower_upper_lower_predicted_value,
-      lower_lower_lower_predicted_value
-    ),
-    var1_category = factor(c("High", "High", "Low", "Low", "High", "High", "Low", "Low"), levels = c("Low", "High")),
-    var2_category = factor(c("High", "Low", "High", "Low", "High", "Low", "High", "Low"), levels = c("Low", "High")),
-    var3_category = factor(c(high, high, high, high, low, low, low, low), levels = c(low, high))
-  )
-  
-  # Set auto ylim
-  if (is.null(y_lim)) {
-    y_lim <- c(floor(min(final_df$value)) - 0.5, ceiling(max(final_df$value)) + 0.5)
+    predict_var3_level_name_list = c(unique((final_df)[[predict_var3]]))
+    predict_var3_level_name = paste(predict_var3_name,' : ',predict_var3_level_name,sep = '')
+    names(predict_var3_level_name) = predict_var3_level_name_list
+    
+  }  else if (is.null(predict_var3_level_name) & !is.null(predict_var3_name)) {
+    predict_var3_level_name_list = c(unique((final_df)[[predict_var3]]))
+    predict_var3_level_name = paste(predict_var3_name,' : ',predict_var3_level_name_list,sep = '')
+    names(predict_var3_level_name) = predict_var3_level_name_list
+
+  } else {
+    predict_var3_level_name = ggplot2::label_both
   }
   
   
+  
+  if (is.null(response_var_name)) {
+    response_var_name = response_var
+  }
+  
+  if (is.null(predict_var1_name)) {
+    predict_var1_name = predict_var1
+  }
+  if (is.null(predict_var2_name)) {
+    predict_var2_name = predict_var2
+  }
+  if (is.null(predict_var2_name)) {
+    predict_var3_name = predict_var2
+  }
+  
+  if (is.null(y_lim)) {
+    y_lim <- c(floor(min(final_df$fit)) - 0.5, ceiling(max(final_df$fit)) + 0.5)
+  }
+  
+  ################################## Plotting ################################## 
   if (plot_color) {
     plot <-
-      ggplot2::ggplot(data = final_df, ggplot2::aes(y = .data$value, x = .data$var1_category, color = .data$var2_category)) +
+      ggplot2::ggplot(data = final_df, ggplot2::aes(y = .data$fit, x = .data[[predict_var1]], color = .data[[predict_var2]])) +
       ggplot2::geom_point() +
-      ggplot2::geom_line(ggplot2::aes(group = .data$var2_category)) +
+      ggplot2::geom_line(ggplot2::aes(group = .data[[predict_var2]])) +
       ggplot2::labs(
-        y = label_name[1],
-        x = label_name[2],
-        color = label_name[3]
+        y = response_var_name,
+        x = predict_var1_name,
+        color = predict_var2_name,
       ) +
-      ggplot2::facet_wrap(~var3_category) +
+      ggplot2::facet_wrap(stats::as.formula(paste0('~',predict_var3)),labeller = ggplot2::as_labeller(predict_var3_level_name)) +
       ggplot2::theme_minimal() +
       ggplot2::theme(
         panel.grid.major = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_blank(),
@@ -214,15 +186,15 @@ three_way_interaction_plot <- function(model,
       ggplot2::ylim(y_lim[1], y_lim[2])
   } else {
     plot <-
-      ggplot2::ggplot(data = final_df, ggplot2::aes(y = .data$value, x = .data$var1_category, group = .data$var2_category)) +
+      ggplot2::ggplot(data = final_df, ggplot2::aes(y = .data$fit, x = .data[[predict_var1]], group = .data[[predict_var2]])) +
       ggplot2::geom_point() +
-      ggplot2::geom_line(ggplot2::aes(linetype = .data$var2_category)) +
+      ggplot2::geom_line(ggplot2::aes(linetype = .data[[predict_var2]])) +
       ggplot2::labs(
-        y = label_name[1],
-        x = label_name[2],
-        linetype = label_name[3]
+        y = response_var_name,
+        x = predict_var1_name,
+        linetype = predict_var2_name,
       ) +
-      ggplot2::facet_wrap(~var3_category) +
+      ggplot2::facet_wrap(stats::as.formula(paste0('~',predict_var3)),labeller = ggplot2::as_labeller(predict_var3_level_name)) +
       ggplot2::theme_minimal() +
       ggplot2::theme(
         panel.grid.major = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_blank(),
@@ -231,5 +203,31 @@ three_way_interaction_plot <- function(model,
       ggplot2::ylim(y_lim[1], y_lim[2])
   }
   
-  return(plot)
+  if (!is.null(predict_var1_level_name)) {
+    plot = plot+ggplot2::scale_x_discrete(labels = predict_var1_level_name)
+  }
+  
+  if (!is.null(predict_var2_level_name)) {
+    plot = plot+ggplot2::scale_linetype_discrete(labels = predict_var2_level_name)
+  }
+  
+  ################################## Printing ################################## 
+  if (print_plot == TRUE) {
+    print(plot)
+  }
+  
+  if (verbose == TRUE) {
+    super_print('underline|Plot Specification')
+    super_print('Interaction Term = {interaction_term}')
+    super_print('')
+    super_print('Plot Data')
+    print_table(final_df)
+  }
+  
+  if (return_plot_data == TRUE) {
+    return(final_df)
+  }
+  if (return_plot == TRUE){
+    return(plot)
+  }
 }

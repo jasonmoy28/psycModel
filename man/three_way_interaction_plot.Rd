@@ -6,40 +6,78 @@
 \usage{
 three_way_interaction_plot(
   model,
-  data = NULL,
-  cateogrical_var = NULL,
-  graph_label_name = NULL,
+  interaction_term = NULL,
+  response_var_name = NULL,
+  predict_var1_name = NULL,
+  predict_var2_name = NULL,
+  predict_var3_name = NULL,
+  predict_var1_level = NULL,
+  predict_var2_level = NULL,
+  predict_var3_level = NULL,
+  predict_var1_level_name = NULL,
+  predict_var2_level_name = NULL,
+  predict_var3_level_name = NULL,
   y_lim = NULL,
-  plot_color = FALSE
+  plot_color = FALSE,
+  return_plot_data = FALSE,
+  return_plot = FALSE,
+  verbose = TRUE,
+  print_plot = TRUE,
+  data = NULL
 )
 }
 \arguments{
-\item{model}{object from \code{lme}, \code{lme4}, \code{lmerTest} object.}
+\item{model}{a regression model object from \link[effects]{effect}.}
 
-\item{data}{\code{data.frame}. If the function is unable to extract data frame from the object, then you may need to pass it directly}
+\item{interaction_term}{default is the first interaction term in the model. The term should be given explicitly if you want to plot other interaction terms.}
 
-\item{cateogrical_var}{list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of \code{list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))}}
+\item{response_var_name}{The name of the response variable can be changed using this setting.}
 
-\item{graph_label_name}{vector of length 4 or a switch function (see ?two_way_interaction_plot example). Vector should be passed in the form of c(response_var, predict_var1, predict_var2, predict_var3).}
+\item{predict_var1_name}{The name of the first predictor can be changed using this setting.}
+
+\item{predict_var2_name}{The name of the second predictor can be changed using this setting.}
+
+\item{predict_var3_name}{The name of the third predictor can be changed using this setting.}
+
+\item{predict_var1_level}{The default is -1 SD and +1 SD for a continuous variable, and it is the two levels for a binary variable. These can be changed using this setting.}
+
+\item{predict_var2_level}{The default is -1 SD and +1 SD for a continuous variable, and it is the two levels for a binary variable. These can be changed using this setting.}
+
+\item{predict_var3_level}{The default is -1 SD and +1 SD for a continuous variable, and it is the two levels for a binary variable. These can be changed using this setting.}
+
+\item{predict_var1_level_name}{The labels of the level can be change using this value (e.g., \code{c('-1 SD','+1 SD')}). The order should be from the left to right on the x-axis.}
+
+\item{predict_var2_level_name}{The labels of the level can be change using this value (e.g., \code{c('-1 SD','+1 SD')}). The order should be from the top to down on the legend.}
+
+\item{predict_var3_level_name}{The labels of the level can be change using this value (e.g., \code{c('-1 SD','+1 SD')}). The order should be from the left to right on the facets.}
 
 \item{y_lim}{the plot's upper and lower limit for the y-axis. Length of 2. Example: \code{c(lower_limit, upper_limit)}}
 
 \item{plot_color}{default if \code{FALSE}. Set to \code{TRUE} if you want to plot in color}
+
+\item{return_plot_data}{default is \code{FALSE}. Set to \code{TRUE} to return the plot data.}
+
+\item{return_plot}{default is \code{FALSE}. Set to \code{TRUE} to return the plot.}
+
+\item{verbose}{deafult is \code{TRUE}.}
+
+\item{print_plot}{default is \code{TRUE}. Set to \code{TRUE} to print the plot.}
+
+\item{data}{Optional data.frame. Only used when it is not possible to extract data from the model object.}
 }
 \value{
-a \code{ggplot} object
+an object of class \code{ggplot}
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \cr
-The function creates a two-way interaction plot. It will creates a plot with ± 1 SD from the mean of the independent variable. See below for supported model. I recommend using concurrently with \code{lm_model()}, \code{lme_model()}.
-}
-\details{
-It appears that ``predict` cannot handle categorical factors. All variables are converted to numeric before plotting.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \cr
+The function creates a three-way interaction plot. By default, it will create an interaction plot with -1 SD and +1 SD of the two continuous variables, or the two levels of the binary variables or dummy-coded multi-categorical variable
+It has been superseded by \code{\link{interaction_plot}}.
 }
 \examples{
-lm_fit <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width +
-  Sepal.Width:Petal.Length:Petal.Width, data = iris)
+lm_fit <- lm(Sepal.Length ~ Sepal.Width*Petal.Width*Petal.Width ,
+  data = iris
+)
 
-three_way_interaction_plot(lm_fit, data = iris)
+three_way_interaction_plot(lm_fit)
 
 }
