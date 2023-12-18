@@ -1,7 +1,8 @@
 #' Model Summary for Linear Regression
 #'
-#' `r lifecycle::badge("stable")` \cr
+#' `r lifecycle::badge("superseded")` \cr
 #' An integrated function for fitting a linear regression model.
+#' This function will no longer be updated. Please use the these functions separately instead: \code{\link{model_summary}}, \code{\link{interaction_plot}},and \code{\link{simple_slope}}.  
 #'
 #' @param data `data.frame`
 #' @param response_variable DV (i.e., outcome variable / response variable). Length of 1. Support `dplyr::select()` syntax.
@@ -109,8 +110,6 @@ lm_model_summary <- function(data,
       (interaction_plot == TRUE | return_result == TRUE)) {
     interaction_plot_object <- two_way_interaction_plot(
       model = model,
-      cateogrical_var = cateogrical_var,
-      graph_label_name = graph_label_name,
       y_lim = y_lim,
       plot_color = plot_color
     )
@@ -118,8 +117,6 @@ lm_model_summary <- function(data,
              (interaction_plot == TRUE | return_result == TRUE)) {
     interaction_plot_object <- three_way_interaction_plot(
       model = model,
-      cateogrical_var = cateogrical_var,
-      graph_label_name = graph_label_name,
       y_lim = y_lim,
       plot_color = plot_color
     )

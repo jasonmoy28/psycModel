@@ -26,7 +26,7 @@
 #' @param data Optional data.frame. Only used when it is not possible to extract data from the model object. 
 #'
 #' @return an object of class `ggplot`
-#' @export
+#' 
 #'
 #' @examples
 #' lm_fit <- lm(Sepal.Length ~ Sepal.Width*Petal.Width*Petal.Width ,

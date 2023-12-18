@@ -13,9 +13,7 @@ lme_multilevel_model_summary(
   two_way_interaction_factor = NULL,
   three_way_interaction_factor = NULL,
   family = NULL,
-  cateogrical_var = NULL,
   id = NULL,
-  graph_label_name = NULL,
   estimation_method = "REML",
   opt_control = "bobyqa",
   na.action = stats::na.omit,
@@ -51,11 +49,7 @@ lme_multilevel_model_summary(
 
 \item{family}{a GLM family. It will passed to the family argument in glmer. See \code{?glmer} for possible options. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
 
-\item{cateogrical_var}{list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of \code{list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))}}
-
 \item{id}{the nesting variable (e.g. group, time). Length of 1. Support \code{dplyr::select()} syntax.}
-
-\item{graph_label_name}{optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)}
 
 \item{estimation_method}{character. \code{ML} or \code{REML} default is \code{REML}.}
 
@@ -93,8 +87,9 @@ lme_multilevel_model_summary(
 a list of all requested items in the order of model, model_summary, interaction_plot, simple_slope
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \cr
 An integrated function for fitting a multilevel linear regression (also known as hierarchical linear regression).
+This function will no longer be updated. Please use the these functions separately instead: \code{\link{model_summary}}, \code{\link{interaction_plot}},and \code{\link{simple_slope}}.
 }
 \examples{
 fit <- lme_multilevel_model_summary(

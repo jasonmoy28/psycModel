@@ -66,8 +66,9 @@ lm_model_summary(
 a list of all requested items in the order of model, model_summary, interaction_plot, simple_slope
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \cr
 An integrated function for fitting a linear regression model.
+This function will no longer be updated. Please use the these functions separately instead: \code{\link{model_summary}}, \code{\link{interaction_plot}},and \code{\link{simple_slope}}.
 }
 \examples{
 fit <- lm_model_summary(

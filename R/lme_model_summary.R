@@ -1,7 +1,8 @@
 #' Model Summary for Mixed Effect Model
 #'
-#' `r lifecycle::badge("stable")` \cr
+#' `r lifecycle::badge("superseded")` \cr
 #' An integrated function for fitting a multilevel linear regression (also known as hierarchical linear regression).
+#' This function will no longer be updated. Please use the these functions separately instead: \code{\link{model_summary}}, \code{\link{interaction_plot}},and \code{\link{simple_slope}}.   
 #' 
 #' @param data `data.frame`
 #' @param model `lme4` model syntax. Support more complicated model structure from `lme4`. It is not well-tested to ensure accuracy `r lifecycle::badge("experimental")`
@@ -11,11 +12,9 @@
 #' @param two_way_interaction_factor two-way interaction factors. You need to pass 2+ factor. Support `dplyr::select()` syntax.
 #' @param three_way_interaction_factor three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support `dplyr::select()` syntax.
 #' @param id the nesting variable (e.g. group, time). Length of 1. Support `dplyr::select()` syntax.
-#' @param graph_label_name optional vector or function. vector of length 2 for two-way interaction graph. vector of length 3 for three-way interaction graph. Vector should be passed in the form of c(response_var, predict_var1, predict_var2, ...). Function should be passed as a switch function (see ?two_way_interaction_plot for an example)
 #' @param estimation_method character. `ML` or `REML` default is `REML`.
 #' @param return_result If it is set to `TRUE` (default is `FALSE`), it will return the `model`, `model_summary`, and `plot` (`plot` if the interaction term is included)
 #' @param na.action default is `stats::na.omit`. Another common option is `na.exclude`
-#' @param cateogrical_var list. Specify the upper bound and lower bound directly instead of using ± 1 SD from the mean. Passed in the form of `list(var_name1 = c(upper_bound1, lower_bound1),var_name2 = c(upper_bound2, lower_bound2))`
 #' @param opt_control default is `optim` for `lme` and `bobyqa` for `lmerTest`.
 #' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
 #' @param plot_color If it is set to `TRUE` (default is `FALSE`), the interaction plot will plot with color.
@@ -57,9 +56,7 @@ lme_multilevel_model_summary <- function(data,
                                          two_way_interaction_factor = NULL,
                                          three_way_interaction_factor = NULL,
                                          family = NULL,
-                                         cateogrical_var = NULL,
                                          id = NULL,
-                                         graph_label_name = NULL,
                                          estimation_method = "REML",
                                          opt_control = "bobyqa",
                                          na.action = stats::na.omit,
@@ -158,8 +155,6 @@ lme_multilevel_model_summary <- function(data,
       (interaction_plot == TRUE | return_result == TRUE)) {
     interaction_plot_object <- two_way_interaction_plot(
       model = model,
-      cateogrical_var = cateogrical_var,
-      graph_label_name = graph_label_name,
       y_lim = y_lim,
       plot_color = plot_color
     )
@@ -167,8 +162,6 @@ lme_multilevel_model_summary <- function(data,
              (interaction_plot == TRUE | return_result == TRUE)) {
     interaction_plot_object <- three_way_interaction_plot(
       model = model,
-      cateogrical_var = cateogrical_var,
-      graph_label_name = graph_label_name,
       y_lim = y_lim,
       plot_color = plot_color
     )
