@@ -171,7 +171,7 @@ Linear mixed effect model is used to explore the effect of continuous / categori
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitting Model with lmer:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Formula = popular ~ extrav + sex + texp + (1 + extrav + sex | class)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> boundary (singular) fit: see help('isSingular')</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in initializePtr():</span> function 'cholmod_factor_ldetA' not provided by package 'Matrix'</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># added two-way interaction factor</span></span></span>
@@ -185,14 +185,14 @@ Linear mixed effect model is used to explore the effect of continuous / categori
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitting Model with lmer:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Formula = popular ~ extrav + sex + texp + extrav*texp + (1 + extrav + sex | class)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> boundary (singular) fit: see help('isSingular')</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in initializePtr():</span> function 'cholmod_factor_ldetA' not provided by package 'Matrix'</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># pass a explicit lme model (I don't why you want to do that, but you can)</span></span></span>
 <span class="r-in"><span><span class="va">lme_fit</span> <span class="op">&lt;-</span> <span class="fu">lme_model</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  model <span class="op">=</span> <span class="st">"popular ~ extrav*texp + (1 + extrav | class)"</span>,</span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">popular</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> boundary (singular) fit: see help('isSingular')</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in initializePtr():</span> function 'cholmod_factor_ldetA' not provided by package 'Matrix'</span>
 </code></pre></div>
     </div>
   </div>

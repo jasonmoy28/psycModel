@@ -105,264 +105,189 @@
 
     
     
-<p>Version Note: Up-to-date with v0.3.0</p>
+<p>Version Note: Up-to-date with v0.5.0</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jasonmoy28/psycModel" class="external-link">psycModel</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="why-should-you-use-this-pacakge">Why should you use this pacakge?<a class="anchor" aria-label="anchor" href="#why-should-you-use-this-pacakge"></a>
+<h2 id="why-would-you-want-to-use-this-package">Why would you want to use this package?<a class="anchor" aria-label="anchor" href="#why-would-you-want-to-use-this-package"></a>
 </h2>
-<p>TLDR:<br>
-1) It is a beginner-friendly R package for statistical analysis in
-social science.<br>
-2) Tired of manually writing all variables in a model? You can use <a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a>
-syntax for all models<br>
-3) Fitting models, plotting, checking goodness of fit, and model
-assumption violations all in one place.<br>
-4) Beautiful and easy-to-read output. Check out this <a href="https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html">example</a>
+<p><strong>TLDR:</strong><br>
+1) It’s a beginner-friendly R package for statistical analysis in social
+science.<br>
+2) Fitting models, plotting, checking the goodness of fit, and
+identifying model assumption violations all in one place.<br>
+3) Beautiful and easy-to-read output. Check out this <a href="https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html">example</a>
 now.</p>
-<p>Support models:<br>
-1. Linear regression (i.e., support ANOVA, ANCOVA), generalized linear
-regression.<br>
-2. Linear mixed effect model (or HLM to be more specific), generalized
-linear mixed effect model.<br>
-3. Confirmatory and exploratory factor analysis.<br>
-4. Simple mediation analysis.<br>
-5. Reliability analysis.<br>
-6. Correlation, descriptive statistics (e.g., mean, SD).</p>
-<p>At its core, this package allows people to analyze their data with
-one simple function call. For example, when you are running a linear
-regression, you need to fit the model, check the goodness of fit (e.g.,
-R2), check the model assumption, and plot the interaction (if the
-interaction is included). Without this package, you need several
-packages to do the above steps. Additionally, if you are an R beginner,
-you probably don’t know where to find all these R packages. This package
-has done all that work for you, so you can just do everything with one
-simple function call. </p>
-<p>Another good example is CFA. The most common (and probably the only)
-option to fit a CFA in R is using lavaan. Lavaan has its own unique set
-of syntax. It is very versatile and powerful, but you do need to spend
-some time learning it. It may not worth the time for people who just
-want to run a quick and simple CFA model. In my package, it’s very
-intuitive with <code>cfa_summary(data, x1:x3)</code>, and you get the
-model summary, the fit measures, and a nice-looking path diagram. The
-same logic also applies to HLM since <code>lme4</code> /
-<code>nlme</code> also has its own set of syntax that you need to
-learn. </p>
-<p>Moreover, I also made fitting the model even simpler by using
-the <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select</a></code> syntax. In short, traditionally, if you
-want to fit a linear regression model, the syntax looks like
-this <code>lm(y ~ x1 + x2 + x3 + x4 + ... + xn, data)</code>. Now, the
-syntax is much shorter and more
-intuitive: <code>lm_model(y, x1:xn, data)</code>. You can even replace
-<code>x1:xn</code> with <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>. I also wrote this
-very short <a href="https://jasonmoy28.github.io/psycModel/articles/brief-introduction-to-select-syntax.html">article</a>
-that teaches people how to use the <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> syntax
-(it is not comprehensive, and it is not intended to be).</p>
-<p>Finally, I made the output in R much more beautiful and easy to read.
-The default output from R, to be frank, look ugly. I spent a lot of time
-making sure it looks good in this package (see below for examples). I am
-sure that you will see how big the improvement is. </p>
 </div>
 <div class="section level2">
-<h2 id="regression-models">Regression Models<a class="anchor" aria-label="anchor" href="#regression-models"></a>
+<h2 id="some-examples">Some Examples:<a class="anchor" aria-label="anchor" href="#some-examples"></a>
 </h2>
 <div class="section level3">
-<h3 id="integrated-summary-for-linear-regression">Integrated Summary for Linear Regression<a class="anchor" aria-label="anchor" href="#integrated-summary-for-linear-regression"></a>
+<h3 id="model-summary">Model Summary<a class="anchor" aria-label="anchor" href="#model-summary"></a>
 </h3>
-<p><code>integrated_model_summary</code> is the integrated function for
-linear regression and generalized linear regression. It will first fit
-the model using <code>lm_model</code> or <code>glm_model</code>, then it
-will pass the fitted model object to <code>model_summary</code> which
-produces model estimates and assumption checks. If interaction terms are
-included, they will be passed to the relevant interaction_plot function
-for plotting (the package currently does not support generalized linear
-regression interaction plotting).</p>
-<p>Additionally, you can request <code>assumption_plot</code> and
-<code>simple_slope</code> (default is <code>FALSE</code>). By requesting
-<code>assumption_plot</code>, it produces a panel of graphs that allow
-you to visually inspect the model assumption (in addition to testing it
-statistically). <code>simple_slope</code> is another powerful way to
-probe further into the interaction. It shows you the slope estimate at
-the mean and +1/-1 SD of the mean of the moderator. For example, you
-hypothesized that social-economic status (SES) moderates the effect of
-teacher experience on education quality. Then, simple_slope shows you
-the slope estimate of teacher experience on education quality at +1/-1
-SD and the mean level of SES. Additionally, it produces a Johnson-Newman
-plot that shows you at what level of the moderator that the
-slope_estimate is predicted to be insignificant.</p>
+<p>The <code>model_summary</code> function will produce all of the
+relevant test statistics for regression models. See an example
+below.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/lm_model_summary.html">lm_model_summary</a></span><span class="op">(</span></span>
-<span>   data <span class="op">=</span> <span class="va">iris</span>,</span>
-<span>   response_variable <span class="op">=</span> <span class="va">Sepal.Length</span>,</span>
-<span>   predictor_variable <span class="op">=</span> <span class="fu">tidyselect</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>   two_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Sepal.Width</span>, <span class="va">Petal.Width</span><span class="op">)</span>, </span>
-<span>   model_summary <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>   interaction_plot <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>   assumption_plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>   simple_slope <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>   plot_color <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span> <span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod_1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, <span class="va">Petal.Length</span> <span class="op">~</span> <span class="va">Petal.Width</span><span class="op">*</span><span class="va">Sepal.Length</span><span class="op">)</span></span>
+<span><span class="co"># you can also check assumption_plot by setting assumption_plot = TRUE</span></span>
+<span><span class="fu"><a href="../reference/model_summary.html">model_summary</a></span><span class="op">(</span><span class="va">mod_1</span>,assumption_plot <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> </span></code></pre></div>
 <pre class="fansi fansi-output"><code>
  
 <span style="text-decoration: underline;">Model Summary</span>
 Model Type = Linear regression
-Outcome = Sepal.Length
-Predictors = Sepal.Width, Petal.Length, Petal.Width, Species
+Outcome = Petal.Length
+Predictors = Petal.Width, Sepal.Length
 
 <span style="text-decoration: underline;">Model Estimates</span>
-───────────────────────────────────────────────────────────────────────────────────────
-                Parameter  Coefficient     SE       t   df          p            95% CI
-───────────────────────────────────────────────────────────────────────────────────────
-              (Intercept)        1.652  0.434   3.807  143  0.000 ***  [ 0.794,  2.510]
-              Sepal.Width        0.645  0.128   5.023  143  0.000 ***  [ 0.391,  0.899]
-             Petal.Length        0.837  0.068  12.240  143  0.000 ***  [ 0.702,  0.972]
-              Petal.Width        0.220  0.375   0.588  143  0.558      [-0.520,  0.961]
-        Speciesversicolor       -0.770  0.241  -3.196  143  0.002 **   [-1.246, -0.294]
-         Speciesvirginica       -1.110  0.337  -3.296  143  0.001 ***  [-1.775, -0.444]
-  Sepal.Width:Petal.Width       -0.159  0.102  -1.560  143  0.121      [-0.360,  0.042]
-───────────────────────────────────────────────────────────────────────────────────────
+────────────────────────────────────────────────────────────────────────────────────────
+                 Parameter  Coefficient     SE       t   df          p            95% CI
+────────────────────────────────────────────────────────────────────────────────────────
+               (Intercept)       -3.248  0.596  -5.451  146  0.000 ***  [-4.426, -2.070]
+               Petal.Width        2.971  0.358   8.291  146  0.000 ***  [ 2.263,  3.679]
+              Sepal.Length        0.876  0.117   7.504  146  0.000 ***  [ 0.645,  1.106]
+  Petal.Width:Sepal.Length       -0.222  0.064  -3.485  146  0.001 ***  [-0.349, -0.096]
+────────────────────────────────────────────────────────────────────────────────────────
 *** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05, . p &lt; 0.1
 
 <span style="text-decoration: underline;">Goodness of Fit</span>
-───────────────────────────────────────────────────────────
-     AIC    AICc      BIC     R²  R²_adjusted   RMSE      σ
-───────────────────────────────────────────────────────────
-  78.584  79.605  102.669  0.870        0.864  0.298  0.305
-───────────────────────────────────────────────────────────
-
-<span style="text-decoration: underline;">Model Assumption Check</span>
-OK: Residuals appear to be independent and not autocorrelated (p = 0.864).
-OK: residuals appear as normally distributed (p = 0.813).
-OK: No outliers detected.
-- Based on the following method and threshold: cook (0.843).
-- For variable: (Whole model)
-
-OK: Error variance appears to be homoscedastic (p = 0.109).
-Multicollinearity is not checked for models with interaction terms. You may check multicollinearity among predictors of a model without interaction terms
+─────────────────────────────────────────────────────────────
+      AIC     AICc      BIC     R²  R²_adjusted   RMSE      σ
+─────────────────────────────────────────────────────────────
+  148.192  148.608  163.245  0.952        0.952  0.384  0.389
+─────────────────────────────────────────────────────────────
 </code></pre>
-<img src="quick-introduction_files/figure-html/unnamed-chunk-2-1.png" width="700" height="400"><pre class="fansi fansi-output"><code>
-<span style="text-decoration: underline;">Slope Estimates at Each Level of Moderators</span>
-────────────────────────────────────────────────────────────────────
-  Petal.Width Level   Est.   S.E.  t val.          p          95% CI
-────────────────────────────────────────────────────────────────────
-                Low  0.576  0.100   5.770  0.000 ***  [0.379, 0.773]
-               Mean  0.455  0.090   5.075  0.000 ***  [0.278, 0.632]
-               High  0.334  0.135   2.476  0.014 *    [0.067, 0.600]
-────────────────────────────────────────────────────────────────────
-*** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05, . p &lt; 0.1
-<span style="font-style: italic;">Note: For continuous variable, low and high represent -1 and +1 SD from the mean, respectively.</span>
-</code></pre>
-<p><img src="quick-introduction_files/figure-html/unnamed-chunk-2-2.png" width="700" height="400"><img src="quick-introduction_files/figure-html/unnamed-chunk-2-3.png" width="700" height="400"></p>
 </div>
 <div class="section level3">
-<h3 id="integrated-summary-for-multilevel-model">Integrated summary for Multilevel Model<a class="anchor" aria-label="anchor" href="#integrated-summary-for-multilevel-model"></a>
+<h3 id="interaction-plot">Interaction Plot<a class="anchor" aria-label="anchor" href="#interaction-plot"></a>
 </h3>
-<p>This is the multilevel-variation of
-<code>integrated_model_summary</code>. It works exactly the same way as
-<code>integrated_model_summary</code> except you need to specify the
-non_random_effect_factors (i.e., level-2 factors) and the
-random_effect_factors (i.e., the level-1 factors) instead of
-<code>predictor_variable</code>.</p>
+<p>Since our models have an interaction, we may want to visualize it.
+Let’s create an interaction plot first. You can modify the plot using
+some of the settings. You can also try out the polynomial regression
+plots and the ANOVA plots.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/lme_multilevel_model_summary.html">lme_multilevel_model_summary</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">popular</span>,</span>
-<span>    response_variable <span class="op">=</span> <span class="va">popular</span>,</span>
-<span>    random_effect_factors <span class="op">=</span> <span class="va">extrav</span>,</span>
-<span>    non_random_effect_factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">texp</span><span class="op">)</span>,</span>
-<span>    three_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">extrav</span>, <span class="va">sex</span>, <span class="va">texp</span><span class="op">)</span>,</span>
-<span>   graph_label_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"popular"</span>, <span class="st">"extraversion"</span>, <span class="st">"sex"</span>, <span class="st">"teacher experience"</span><span class="op">)</span>, <span class="co"># change interaction plot label</span></span>
-<span>   id <span class="op">=</span> <span class="va">class</span>,</span>
-<span>   model_summary <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>   interaction_plot <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>   assumption_plot <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># you can try set to TRUE</span></span>
-<span>   simple_slope <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># you can try set to TRUE</span></span>
-<span>   plot_color <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span> <span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/interaction_plot.html">interaction_plot</a></span><span class="op">(</span><span class="va">mod_1</span>,verbose <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="co"># verbose is set to TRUE by default to show the plot data. </span></span></code></pre></div>
+<p><img src="quick-introduction_files/figure-html/unnamed-chunk-3-1.png" width="700" height="400"></p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># You can also modify the </span></span>
+<span><span class="fu"><a href="../reference/interaction_plot.html">interaction_plot</a></span><span class="op">(</span><span class="va">mod_1</span>,</span>
+<span>                 response_var_name <span class="op">=</span> <span class="st">'Petal Length'</span>, <span class="co"># you can rename the variable names (e.g., getting rid of the dot)</span></span>
+<span>                 predict_var1_name <span class="op">=</span> <span class="st">'Petal Width'</span>,</span>
+<span>                 predict_var2_name <span class="op">=</span> <span class="st">'Sepal Length'</span>,</span>
+<span>                 predict_var1_level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.44</span>,<span class="fl">1.19</span>,<span class="fl">1.96</span><span class="op">)</span>, <span class="co"># you may want to show the mean of the variable</span></span>
+<span>                 predict_var1_level_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'-1 SD'</span>,<span class="st">'Mean'</span>,<span class="st">'+1 SD'</span><span class="op">)</span>, <span class="co"># you may also want to adjust the labels to be more intuitive</span></span>
+<span>                 verbose <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<p><img src="quick-introduction_files/figure-html/unnamed-chunk-3-2.png" width="700" height="400"></p>
+</div>
+<div class="section level3">
+<h3 id="simple-slopes">Simple Slopes<a class="anchor" aria-label="anchor" href="#simple-slopes"></a>
+</h3>
+<p>After obtaining the interaction plot, you may also want to get the
+simple slopes of the interaction.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/simple_slope.html">simple_slope</a></span><span class="op">(</span><span class="va">mod_1</span><span class="op">)</span></span></code></pre></div>
+<pre><code>$simple_slope_df
+  Sepal.Length Level     Est.       S.E. ci.lower ci.upper   t val.
+1                Low 1.855359 0.07887932 1.699467 2.011252 23.52149
+2               Mean 1.671132 0.07591186 1.521104 1.821160 22.01411
+3               High 1.486904 0.10436269 1.280648 1.693161 14.24747
+             p
+1 1.615129e-51
+2 3.090242e-48
+3 2.027575e-29
+
+$jn_plot</code></pre>
+<p><img src="quick-introduction_files/figure-html/unnamed-chunk-4-1.png" width="700" height="400"></p>
+</div>
+<div class="section level3">
+<h3 id="descriptive-table">Descriptive Table<a class="anchor" aria-label="anchor" href="#descriptive-table"></a>
+</h3>
+<p>This package can also help you in preparing a table that includes
+means, standard deviations, and correlations. For additional options,
+refer to <code><a href="../reference/descriptive_table.html">?descriptive_table</a></code>.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/descriptive_table.html">descriptive_table</a></span><span class="op">(</span><span class="va">iris</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Petal.Width</span>,<span class="va">Sepal.Length</span>,<span class="va">Petal.Length</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code>
+<span style="text-decoration: underline;">Model Summary</span>
+Model Type = Descriptive Statistics
+
+───────────────────────────────────────────────────────
+           Var   mean     sd  Petal.Width  Sepal.Length
+───────────────────────────────────────────────────────
+   Petal.Width  1.199  0.762                           
+  Sepal.Length  5.843  0.828    0.818 ***              
+  Petal.Length  3.758  1.765    0.963 ***     0.872 ***
+───────────────────────────────────────────────────────
+</code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/descriptive_table.html">descriptive_table</a></span><span class="op">(</span><span class="va">iris</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Petal.Width</span>,<span class="va">Sepal.Length</span>,<span class="va">Petal.Length</span><span class="op">)</span>,descriptive_indicator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'mean'</span>,<span class="st">'sd'</span>,<span class="st">'cor'</span>,<span class="st">'missing'</span>,<span class="st">'kurtosis'</span><span class="op">)</span><span class="op">)</span> <span class="co"># you can request more parameters optionally</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code>
+<span style="text-decoration: underline;">Model Summary</span>
+Model Type = Descriptive Statistics
+
+────────────────────────────────────────────────────────────────────────────
+           Var  missing_n   mean     sd  kurtosis  Petal.Width  Sepal.Length
+────────────────────────────────────────────────────────────────────────────
+   Petal.Width          0  1.199  0.762    -1.358                           
+  Sepal.Length          0  5.843  0.828    -0.606    0.818 ***              
+  Petal.Length          0  3.758  1.765    -1.417    0.963 ***     0.872 ***
+────────────────────────────────────────────────────────────────────────────
+</code></pre>
+</div>
+<div class="section level3">
+<h3 id="cronbach-alpha">Cronbach alpha<a class="anchor" aria-label="anchor" href="#cronbach-alpha"></a>
+</h3>
+<p>You can get the Cronbach alphas very simply (it will call the
+<code><a href="https://rdrr.io/pkg/psych/man/alpha.html" class="external-link">psych::alpha()</a></code> function). If you need, you can also get
+separate Cronbach alphas by groups (e.g., when using multilevel
+analyses).</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/cronbach_alpha.html">cronbach_alpha</a></span><span class="op">(</span><span class="va">x1</span><span class="op">:</span><span class="va">x3</span>,<span class="va">x4</span><span class="op">:</span><span class="va">x6</span>,<span class="va">x7</span><span class="op">:</span><span class="va">x9</span>, </span>
+<span>               var_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'visual'</span>,<span class="st">'textual'</span>,<span class="st">'verbal'</span><span class="op">)</span>,</span>
+<span>               data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span><span class="op">)</span></span></code></pre></div>
 <pre class="fansi fansi-output"><code>
  
 <span style="text-decoration: underline;">Model Summary</span>
-Model Type = Linear Mixed Effect Model (fitted using lme4 or lmerTest)
-Outcome = popular
-Predictors = extrav, sex, texp, extrav:sex, extrav:texp, sex:texp, extrav:sex:texp
+Model Type = Cronbach Alpha Reliability Analysis
+Model Specification: 
+ visual = x1 + x2 + x3 
+ textual = x4 + x5 + x6 
+ verbal = x7 + x8 + x9 
 
-<span style="text-decoration: underline;">Model Estimates</span>
-──────────────────────────────────────────────────────────────────────────────────────────────────────────────
-               Parameter  Coefficient     SE       t        df  Effects     Group          p            95% CI
-──────────────────────────────────────────────────────────────────────────────────────────────────────────────
-             (Intercept)       -0.935  0.329  -2.839   180.938    fixed            0.005 **   [-1.585, -0.285]
-                  extrav        0.753  0.052  14.345   166.756    fixed            0.000 ***  [ 0.649,  0.857]
-                     sex        0.654  0.379   1.726  1142.420    fixed            0.085 .    [-0.089,  1.397]
-                    texp        0.215  0.021  10.198   184.819    fixed            0.000 ***  [ 0.174,  0.257]
-              extrav:sex        0.103  0.064   1.610  1050.473    fixed            0.108      [-0.023,  0.229]
-             extrav:texp       -0.023  0.004  -6.451   192.392    fixed            0.000 ***  [-0.030, -0.016]
-                sex:texp        0.024  0.024   1.017   977.961    fixed            0.309      [-0.022,  0.071]
-         extrav:sex:texp       -0.004  0.004  -0.961   909.727    fixed            0.337      [-0.012,  0.004]
-          SD (Intercept)        0.721    NaN     NaN       NaN   random     class    NaN            [NaN, NaN]
-             SD (extrav)        0.079    NaN     NaN       NaN   random     class    NaN            [NaN, NaN]
-  Cor (Intercept~extrav)       -0.679    NaN     NaN       NaN   random     class    NaN            [NaN, NaN]
-       SD (Observations)        0.743    NaN     NaN       NaN   random  Residual    NaN            [NaN, NaN]
-──────────────────────────────────────────────────────────────────────────────────────────────────────────────
-*** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05, . p &lt; 0.1
-
-<span style="text-decoration: underline;">Goodness of Fit</span>
-────────────────────────────────────────────────────────────────────────────────
-       AIC      AICc       BIC  R²_conditional  R²_marginal    ICC   RMSE      σ
-────────────────────────────────────────────────────────────────────────────────
-  4823.684  4823.841  4890.894           0.709        0.554  0.349  0.721  0.743
-────────────────────────────────────────────────────────────────────────────────
-
-<span style="text-decoration: underline;">Model Assumption Check</span>
-<span style="color: #00BB00;">OK: Model is converged</span>
-<span style="color: #00BB00;">OK: No singularity is detected</span>
-Warning: Autocorrelated residuals detected (p &lt; .001).
-OK: residuals appear as normally distributed (p = 0.425).
-OK: No outliers detected.
-- Based on the following method and threshold: cook (0.9).
-- For variable: (Whole model)
-
-OK: Error variance appears to be homoscedastic (p = 0.758).
-Multicollinearity is not checked for models with interaction terms. You may check multicollinearity among predictors of a model without interaction terms
+───────────────────────────────
+      Var  raw_alpha  std_alpha
+───────────────────────────────
+   visual      0.626      0.627
+  textual      0.883      0.885
+   verbal      0.688      0.690
+───────────────────────────────
 </code></pre>
-<p><img src="quick-introduction_files/figure-html/unnamed-chunk-3-1.png" width="700" height="400"></p>
-</div>
-<div class="section level3">
-<h3 id="model-comparison">Model comparison<a class="anchor" aria-label="anchor" href="#model-comparison"></a>
-</h3>
-<p>This can be used to compared model. All type of model comparison
-supported by <code><a href="https://easystats.github.io/performance/reference/compare_performance.html" class="external-link">performance::compare_performance()</a></code> are
-supported since this is just a wrapper for that function.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span> <span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lm_model.html">lm_model</a></span><span class="op">(</span></span>
-<span>   data <span class="op">=</span> <span class="va">popular</span>,</span>
-<span>   response_variable <span class="op">=</span> <span class="va">popular</span>,</span>
-<span>   predictor_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,</span>
-<span>   quite <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span> <span class="op">)</span></span>
-<span></span>
-<span> <span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lm_model.html">lm_model</a></span><span class="op">(</span></span>
-<span>   data <span class="op">=</span> <span class="va">popular</span>,</span>
-<span>   response_variable <span class="op">=</span> <span class="va">popular</span>,</span>
-<span>   predictor_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,</span>
-<span>   two_way_interaction_factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sex</span>, <span class="va">extrav</span><span class="op">)</span>,</span>
-<span>   quite <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span> <span class="op">)</span></span>
-<span></span>
-<span> <span class="fu"><a href="../reference/compare_fit.html">compare_fit</a></span><span class="op">(</span><span class="va">fit1</span>, <span class="va">fit2</span><span class="op">)</span></span></code></pre></div>
-<pre class="fansi fansi-output"><code><span style="text-decoration: underline;">Model Summary</span>
-Model Type = Model Comparison
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/cronbach_alpha.html">cronbach_alpha</a></span><span class="op">(</span><span class="va">x1</span><span class="op">:</span><span class="va">x3</span>,<span class="va">x4</span><span class="op">:</span><span class="va">x6</span>,<span class="va">x7</span><span class="op">:</span><span class="va">x9</span>, </span>
+<span>               var_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'visual'</span>,<span class="st">'textual'</span>,<span class="st">'verbal'</span><span class="op">)</span>,</span>
+<span>               group <span class="op">=</span> <span class="st">'sex'</span>,</span>
+<span>               data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span><span class="op">)</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code>
+ 
+<span style="text-decoration: underline;">Model Summary</span>
+Model Type = Cronbach Alpha Reliability Analysis
+Model Specification: 
+ visual = x1 + x2 + x3 
+ textual = x4 + x5 + x6 
+ verbal = x7 + x8 + x9 
 
-────────────────────────────────────────────────────────────────────────────────────────────────
-  Model       AIC  AIC_wt      AICc  AICc_wt       BIC  BIC_wt     R2  R2_adjusted   RMSE  Sigma
-────────────────────────────────────────────────────────────────────────────────────────────────
-     lm  5977.415   0.727  5977.435    0.728  5999.819   0.978  0.394        0.393  1.076  1.077
-     lm  5979.369   0.273  5979.399    0.272  6007.374   0.022  0.394        0.393  1.076  1.077
-────────────────────────────────────────────────────────────────────────────────────────────────
+────────────────────────────────────
+      Var  sex  raw_alpha  std_alpha
+────────────────────────────────────
+   visual    1      0.568      0.572
+   visual    2      0.664      0.663
+  textual    1      0.872      0.874
+  textual    2      0.892      0.895
+   verbal    1      0.697      0.693
+   verbal    2      0.686      0.697
+────────────────────────────────────
 </code></pre>
 </div>
-</div>
-<div class="section level2">
-<h2 id="structure-equation-modeling">Structure Equation Modeling<a class="anchor" aria-label="anchor" href="#structure-equation-modeling"></a>
-</h2>
 <div class="section level3">
 <h3 id="confirmatory-factor-analysis">Confirmatory Factor Analysis<a class="anchor" aria-label="anchor" href="#confirmatory-factor-analysis"></a>
 </h3>
@@ -371,9 +296,9 @@ multiple factor (in the below example, x1, x2, x3 represent one factor,
 x4,x5,x6 represent another factor etc.). It will show you the fit
 measure, factor loading, and goodness of fit based on cut-off criteria
 (you should review literature for the cut-off criteria as the
-recommendations are subjected to changes). Additionally, it will show
-you a nice-looking path diagram.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+recommendations are subjected to changes). You can also try
+<code><a href="../reference/measurement_invariance.html">measurement_invariance()</a></code>.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cfa_summary.html">cfa_summary</a></span><span class="op">(</span></span>
 <span>   data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>,</span>
 <span>   <span class="va">x1</span><span class="op">:</span><span class="va">x3</span>,</span>
@@ -455,368 +380,14 @@ Goodness of Fit:
 <span style="color: #BB0000;"> Warning. Poor TLI fit (TLI &lt; 0.90)</span>
 <span style="color: #BBBB00;"> OK. Barely acceptable factor loadings (0.4 &lt; some loadings &lt; 0.7)</span>
 </code></pre>
-<p><img src="quick-introduction_files/figure-html/unnamed-chunk-5-1.png" width="700" height="400"></p>
-</div>
-<div class="section level3">
-<h3 id="exploratory-factor-analysis">Exploratory Factor Analysis<a class="anchor" aria-label="anchor" href="#exploratory-factor-analysis"></a>
-</h3>
-<p>EFA model is fitted using <code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa()</a></code>. It first find the
-optimal number of factor. Then, it will show you the factor loading,
-uniqueness, complexity of the latent factor (loading &lt; 0.4 are hided
-for better viewing experience). You can additionally request running a
-post-hoc CFA model based on the EFA model.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/efa_summary.html">efa_summary</a></span><span class="op">(</span><span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>, </span>
-<span>            <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>, <span class="co"># x1, x2, x3 ... x9</span></span>
-<span>            post_hoc_cfa <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># run a post-hoc CFA </span></span></code></pre></div>
-<pre class="fansi fansi-output"><code>
- 
- 
-<span style="text-decoration: underline;">Model Summary</span>
-Model Type = Exploratory Factor Analysis
-Optimal Factors = 3
-
-<span style="text-decoration: underline;">Factor Loadings</span>
-────────────────────────────────────────────────────────────────
-  Variable  Factor 1  Factor 3  Factor 2  Complexity  Uniqueness
-────────────────────────────────────────────────────────────────
-        x1               0.613                 1.539       0.523
-        x2               0.494                 1.093       0.745
-        x3               0.660                 1.084       0.547
-        x4     0.832                           1.104       0.272
-        x5     0.859                           1.043       0.246
-        x6     0.799                           1.167       0.309
-        x7                         0.709       1.062       0.481
-        x8                         0.699       1.131       0.480
-        x9               0.415     0.521       2.046       0.540
-────────────────────────────────────────────────────────────────
-
-
-<span style="text-decoration: underline;">Explained Variance</span>
-─────────────────────────────────────────────────────
-                    Var  Factor 1  Factor 3  Factor 2
-─────────────────────────────────────────────────────
-            SS loadings     2.187     1.342     1.329
-         Proportion Var     0.243     0.149     0.148
-         Cumulative Var     0.243     0.392     0.540
-   Proportion Explained     0.450     0.276     0.274
-  Cumulative Proportion     0.450     0.726     1.000
-─────────────────────────────────────────────────────
-
-
-EFA Model Assumption Test:
-<span style="color: #00BB00;">OK. Bartlett's test of sphericity suggest the data is appropriate for factor analysis. χ²(36) = 904.097, p &lt; 0.001</span>
-<span style="color: #00BB00;">OK. KMO measure of sampling adequacy suggests the data is appropriate for factor analysis. KMO = 0.752</span>
-
-<span style="text-decoration: underline;">KMO Measure of Sampling Adequacy</span>
-────────────────────
-      Var  KMO Value
-────────────────────
-  Overall      0.752
-       x1      0.805
-       x2      0.778
-       x3      0.734
-       x4      0.763
-       x5      0.739
-       x6      0.808
-       x7      0.593
-       x8      0.683
-       x9      0.788
-────────────────────
-</code></pre>
-<img src="quick-introduction_files/figure-html/unnamed-chunk-6-1.png" width="700" height="400"><pre class="fansi fansi-output"><code>
-<span style="text-decoration: underline;">Post-hoc CFA Model Summary</span>
-
-<span style="text-decoration: underline;">Fit Measure</span>
-─────────────────────────────────────────────────────────────────────────────────────
-      Χ²      DF          P    CFI  RMSEA   SRMR    TLI       AIC       BIC      BIC2
-─────────────────────────────────────────────────────────────────────────────────────
-  85.306  24.000  0.000 ***  0.931  0.092  0.065  0.896  7517.490  7595.339  7528.739
-─────────────────────────────────────────────────────────────────────────────────────
-*** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05, . p &lt; 0.1
-
- 
-<span style="text-decoration: underline;">Factor Loadings</span>
-────────────────────────────────────────────────────────────────────────────────
-  Latent.Factor  Observed.Var  Std.Est     SE       Z          P          95% CI
-────────────────────────────────────────────────────────────────────────────────
-       Factor.1            x4    0.852  0.023  37.776  0.000 ***  [0.807, 0.896]
-                           x5    0.855  0.022  38.273  0.000 ***  [0.811, 0.899]
-                           x6    0.838  0.023  35.881  0.000 ***  [0.792, 0.884]
-       Factor.3            x1    0.772  0.055  14.041  0.000 ***  [0.664, 0.880]
-                           x2    0.424  0.060   7.105  0.000 ***  [0.307, 0.540]
-                           x3    0.581  0.055  10.539  0.000 ***  [0.473, 0.689]
-       Factor.2            x7    0.570  0.053  10.714  0.000 ***  [0.465, 0.674]
-                           x8    0.723  0.051  14.309  0.000 ***  [0.624, 0.822]
-                           x9    0.665  0.051  13.015  0.000 ***  [0.565, 0.765]
-────────────────────────────────────────────────────────────────────────────────
-*** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05, . p &lt; 0.1
-
- 
-Goodness of Fit:
-<span style="color: #BBBB00;"> Warning. Poor χ² fit (p &lt; 0.05). It is common to get p &lt; 0.05. Check other fit measure.</span>
-<span style="color: #00BB00;"> OK. Acceptable CFI fit (CFI &gt; 0.90)</span>
-<span style="color: #BB0000;"> Warning. Poor RMSEA fit (RMSEA &gt; 0.08)</span>
-<span style="color: #00BB00;"> OK. Good SRMR fit (SRMR &lt; 0.08)</span>
-<span style="color: #BB0000;"> Warning. Poor TLI fit (TLI &lt; 0.90)</span>
-<span style="color: #BBBB00;"> OK. Barely acceptable factor loadings (0.4 &lt; some loadings &lt; 0.7)</span>
-</code></pre>
-<p><img src="quick-introduction_files/figure-html/unnamed-chunk-6-2.png" width="700" height="400"></p>
-</div>
-<div class="section level3">
-<h3 id="measurement-invariance">Measurement Invariance<a class="anchor" aria-label="anchor" href="#measurement-invariance"></a>
-</h3>
-<p>Measurement invariance is fitted using <code><a href="https://rdrr.io/pkg/lavaan/man/cfa.html" class="external-link">lavaan::cfa()</a></code>. It
-uses the multi-group confirmatory factor analysis approach. You can
-request metric or scalar invariance by specifying the
-<code>invariance_level</code> (mainly to save time. If you have a large
-model, it doesn’t make sense to fit a unnecessary scalar invariance
-model if you are only interested in metric invariance)</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span> <span class="fu"><a href="../reference/measurement_invariance.html">measurement_invariance</a></span><span class="op">(</span></span>
-<span>   <span class="va">x1</span><span class="op">:</span><span class="va">x3</span>,</span>
-<span>   <span class="va">x4</span><span class="op">:</span><span class="va">x6</span>,</span>
-<span>   <span class="va">x7</span><span class="op">:</span><span class="va">x9</span>,</span>
-<span>   data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>,</span>
-<span>   group <span class="op">=</span> <span class="st">"school"</span>,</span>
-<span>   invariance_level <span class="op">=</span> <span class="st">"scalar"</span> <span class="co"># you can change this to metric</span></span>
-<span> <span class="op">)</span></span></code></pre></div>
-<pre class="fansi fansi-output"><code>Computing CFA using:
-  DV1 =~ x1 + x2 + x3
-  DV2 =~ x4 + x5 + x6
-  DV3 =~ x7 + x8 + x9
- [1] "Computing for configural model"
-[1] "Computing for metric model"
-[1] "Computing for scalar model"
- 
-<span style="text-decoration: underline;">Model Summary</span>
-Model Type = Measurement Invariance
-Comparsion Type = Configural-Metric-Scalar Comparsion
-Group = school
-Model Formula = 
-. DV1 =~ x1 + x2 + x3
-  DV2 =~ x4 + x5 + x6
-  DV3 =~ x7 + x8 + x9
- 
- 
-<span style="text-decoration: underline;">Fit Measure Summary</span>
-──────────────────────────────────────────────────────────────────────────────────────────────────────────
-    Analysis Type       Χ²      DF          P     CFI   RMSEA   SRMR     TLI       AIC       BIC      BIC2
-──────────────────────────────────────────────────────────────────────────────────────────────────────────
-       configural  115.851  48.000  0.000 ***   0.923   0.097  0.068   0.885  7484.395  7706.822  7516.536
-           metric  124.044  54.000  0.000 ***   0.921   0.093  0.072   0.895  7480.587  7680.771  7509.514
-           scalar  164.103  60.000  0.000 ***   0.882   0.107  0.082   0.859  7508.647  7686.588  7534.359
-                .                                                                                         
-  metric - config    8.192   6.000  0.000 ***  -0.002  -0.004  0.004   0.009    -3.808   -26.050    -7.022
-  scalar - metric   40.059   6.000  0.000 ***  -0.038   0.015  0.011  -0.036    28.059     5.817    24.845
-──────────────────────────────────────────────────────────────────────────────────────────────────────────
-*** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05, . p &lt; 0.1
-
-Goodness of Fit:
-<span style="color: #00BB00;"> OK. Excellent measurement metric-invariance based on |ΔCFI| &lt; 0.005</span>
-<span style="color: #00BB00;"> OK. Excellent measurement metric-invariance based on |ΔRMSEA| &lt; 0.01</span>
-<span style="color: #00BB00;"> OK. Good measurement metric-invariance based on ΔSRMR &lt; 0.03</span>
-<span style="color: #BB0000;"> Warning. Unacceptable measurement scalar-invariance based on |ΔCFI| &gt; 0.01</span>
-<span style="color: #BB0000;"> Warning. Unacceptable measurement scalar-invariance based on |ΔRMSEA| &gt; 0.015.</span>
-<span style="color: #00BB00;">OK. Good measurement scalar-invariance based on ΔSRMR &lt; 0.015</span>
-</code></pre>
-</div>
-<div class="section level3">
-<h3 id="mediation-model">Mediation Model<a class="anchor" aria-label="anchor" href="#mediation-model"></a>
-</h3>
-<p>Currently, the package only support simple mediation with covariate.
-You can try to fit a multi-group mediation by specifying the group
-argument. But, honestly, I don’t know that’s the correct approach to
-implement it. If you want more complicated mediation, I highly recommend
-using the <code>mediation</code> package. Eventually, I probably will
-switch to using that for this package.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/mediation_summary.html">mediation_summary</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="fu">lmerTest</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lmerTest/man/carrots.html" class="external-link">carrots</a></span>,</span>
-<span>  response_variable <span class="op">=</span> <span class="va">Preference</span>,</span>
-<span>  mediator <span class="op">=</span> <span class="va">Sweetness</span>,</span>
-<span>  predictor_variable <span class="op">=</span> <span class="va">Crisp</span>,</span>
-<span>  control_variable <span class="op">=</span> <span class="va">Age</span><span class="op">:</span><span class="va">Income</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<pre class="fansi fansi-output"><code><span style="text-decoration: underline;">Model Summary</span>
-Model Type = Mediation Analysis (fitted using lavaan)
-
-<span style="text-decoration: underline;">Effect Summary</span>
-────────────────────────────────────────────────────────────────
-  Effect Type  Est.Std     SE       z          p          95% CI
-────────────────────────────────────────────────────────────────
-       direct    0.238  0.028   8.400  0.000 ***  [0.182, 0.293]
-     indirect    0.222  0.017  12.987  0.000 ***  [0.188, 0.255]
-        total    0.459  0.022  20.583  0.000 ***  [0.416, 0.503]
-────────────────────────────────────────────────────────────────
-*** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05, . p &lt; 0.1
-
-<span style="text-decoration: underline;">Regression Summary</span>
-──────────────────────────────────────────────────────────────────────────────────────
-    Response  Operator    Predict  Est.Std     SE       z          p            95% CI
-──────────────────────────────────────────────────────────────────────────────────────
-   Sweetness         ~      Crisp    0.550  0.019  29.119  0.000 ***  [ 0.513,  0.587]
-  Preference         ~  Sweetness    0.403  0.027  14.862  0.000 ***  [ 0.350,  0.456]
-  Preference         ~      Crisp    0.238  0.028   8.400  0.000 ***  [ 0.182,  0.293]
-  Preference         ~        Age    0.130  0.027   4.776  0.000 ***  [ 0.077,  0.184]
-  Preference         ~   Homesize   -0.133  0.026  -5.061  0.000 ***  [-0.184, -0.081]
-  Preference         ~       Work   -0.048  0.027  -1.756  0.079 .    [-0.101,  0.006]
-  Preference         ~     Income    0.015  0.026   0.577  0.564      [-0.035,  0.065]
-──────────────────────────────────────────────────────────────────────────────────────
-*** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05, . p &lt; 0.1
-</code></pre>
-</div>
-</div>
-<div class="section level2">
-<h2 id="other-model">Other Model<a class="anchor" aria-label="anchor" href="#other-model"></a>
-</h2>
-<div class="section level3">
-<h3 id="reliability-analysis">Reliability Analysis<a class="anchor" aria-label="anchor" href="#reliability-analysis"></a>
-</h3>
-<p>It will first determine whether your item is uni- or
-multidimensionality. If it is unidimensional, then it will compute the
-alpha and the single-factor CFA model. If it is multidimensional, then
-it will compute the alpha and the omega. It also provide descriptive
-statistics. Here is an example for unidimensional items:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/reliability_summary.html">reliability_summary</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>, cols <span class="op">=</span> <span class="va">x1</span><span class="op">:</span><span class="va">x3</span><span class="op">)</span></span></code></pre></div>
-<pre class="fansi fansi-output"><code><span style="text-decoration: underline;">Model Summary</span>
-Model Type = Reliability Analysis
-Dimensionality = uni-dimensionality
-
-<span style="text-decoration: underline;">Composite Reliability Measures</span>
-────────────────────────────
-  Alpha  Alpha.Std  G6 (smc)
-────────────────────────────
-  0.626      0.627     0.535
-────────────────────────────
-
-<span style="text-decoration: underline;">Item Reliability (item dropped)</span>
-─────────────────────────────────
-  Var  Alpha  Alpha.Std  G6 (smc)
-─────────────────────────────────
-   x1  0.507      0.507     0.340
-   x2  0.612      0.612     0.441
-   x3  0.458      0.458     0.297
-─────────────────────────────────
-
-CFA Model:
-<span style="text-decoration: underline;">Factor Loadings</span>
-───────────────────────────────────────────────────────────────────────────────
-  Latent.Factor  Observed.Var  Std.Est     SE      Z          P          95% CI
-───────────────────────────────────────────────────────────────────────────────
-            DV1            x1    0.621  0.067  9.223  0.000 ***  [0.489, 0.753]
-                           x2    0.479  0.063  7.645  0.000 ***  [0.356, 0.602]
-                           x3    0.710  0.071  9.936  0.000 ***  [0.570, 0.850]
-───────────────────────────────────────────────────────────────────────────────
-*** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05, . p &lt; 0.1
-
-<span style="text-decoration: underline;">Descriptive Statistics Table:</span>
-
-─────────────────────────────────────────
-  Var   mean     sd         x1         x2
-─────────────────────────────────────────
-   x1  4.936  1.167                      
-   x2  6.088  1.177  0.297 ***           
-   x3  2.250  1.131  0.441 ***  0.340 ***
-─────────────────────────────────────────
-</code></pre>
-<p>Here is an example for multidimensional items:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/reliability_summary.html">reliability_summary</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lavaan/man/HolzingerSwineford1939.html" class="external-link">HolzingerSwineford1939</a></span>, cols <span class="op">=</span> <span class="va">x1</span><span class="op">:</span><span class="va">x9</span><span class="op">)</span></span></code></pre></div>
-<img src="quick-introduction_files/figure-html/unnamed-chunk-10-1.png" width="700" height="400"><pre class="fansi fansi-output"><code><span style="text-decoration: underline;">Model Summary</span>
-Model Type = Reliability Analysis
-Dimensionality = multi-dimensionality
-
-<span style="text-decoration: underline;">Composite Reliability Measures</span>
-──────────────────────────────────────────────────────────
-  Alpha  Alpha.Std    G.6  Omega.Hierarchical  Omega.Total
-──────────────────────────────────────────────────────────
-   0.76       0.76  0.808               0.449        0.851
-──────────────────────────────────────────────────────────
-
-<span style="text-decoration: underline;">Item Reliability (item dropped)</span>
-─────────────────────────────────
-  Var  Alpha  Alpha.Std  G6 (smc)
-─────────────────────────────────
-   x1  0.725      0.725     0.780
-   x2  0.764      0.763     0.811
-   x3  0.749      0.748     0.796
-   x4  0.715      0.719     0.761
-   x5  0.724      0.726     0.764
-   x6  0.714      0.717     0.764
-   x7  0.766      0.765     0.800
-   x8  0.748      0.747     0.789
-   x9  0.731      0.728     0.782
-─────────────────────────────────
-
-<span style="text-decoration: underline;">Descriptive Statistics Table:</span>
-
-───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  Var   mean     sd          x1          x2          x3          x4          x5          x6          x7          x8
-───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-   x1  4.936  1.167                                                                                                
-   x2  6.088  1.177   0.297 ***                                                                                    
-   x3  2.250  1.131   0.441 ***   0.340 ***                                                                        
-   x4  3.061  1.164   0.373 ***   0.153  **   0.159  **                                                            
-   x5  4.341  1.290   0.293 ***   0.139   *   0.077       0.733 ***                                                
-   x6  2.186  1.096   0.357 ***   0.193 ***   0.198 ***   0.704 ***   0.720 ***                                    
-   x7  4.186  1.090   0.067      -0.076       0.072       0.174  **   0.102       0.121   *                        
-   x8  5.527  1.013   0.224 ***   0.092       0.186  **   0.107       0.139   *   0.150  **   0.487 ***            
-   x9  5.374  1.009   0.390 ***   0.206 ***   0.329 ***   0.208 ***   0.227 ***   0.214 ***   0.341 ***   0.449 ***
-───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-</code></pre>
-</div>
-<div class="section level3">
-<h3 id="correlation">Correlation<a class="anchor" aria-label="anchor" href="#correlation"></a>
-</h3>
-<p>There isn’t much to say about correlation except that you can request
-different type of correlation based on the data structure. In the
-backend, I use the <code>correlation</code> package for this.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/cor_test.html">cor_test</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre class="fansi fansi-output"><code><span style="text-decoration: underline;">Model Summary</span>
-Model Type = Correlation
-Model Method = pearson
-Adjustment Method = none
-
-───────────────────────────────────────────────────────
-           Var  Sepal.Length  Sepal.Width  Petal.Length
-───────────────────────────────────────────────────────
-  Sepal.Length                                         
-   Sepal.Width    -0.118                               
-  Petal.Length     0.872 ***   -0.428 ***              
-   Petal.Width     0.818 ***   -0.366 ***     0.963 ***
-───────────────────────────────────────────────────────
-</code></pre>
-</div>
-<div class="section level3">
-<h3 id="descriptive-table">Descriptive Table<a class="anchor" aria-label="anchor" href="#descriptive-table"></a>
-</h3>
-<p>It put together a nice table of some descriptive statistics and the
-correlation. Nothing fancy.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/descriptive_table.html">descriptive_table</a></span><span class="op">(</span><span class="va">iris</span>, cols <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span> <span class="co"># all numeric columns</span></span></code></pre></div>
-<pre class="fansi fansi-output"><code>
-<span style="text-decoration: underline;">Model Summary</span>
-Model Type = Descriptive Statistics
-
-─────────────────────────────────────────────────────────────────────
-           Var   mean     sd  Sepal.Length  Sepal.Width  Petal.Length
-─────────────────────────────────────────────────────────────────────
-  Sepal.Length  5.843  0.828                                         
-   Sepal.Width  3.057  0.436    -0.118                               
-  Petal.Length  3.758  1.765     0.872 ***   -0.428 ***              
-   Petal.Width  1.199  0.762     0.818 ***   -0.366 ***     0.963 ***
-─────────────────────────────────────────────────────────────────────
-</code></pre>
+<p><img src="quick-introduction_files/figure-html/unnamed-chunk-7-1.png" width="700" height="400"></p>
 </div>
 <div class="section level3">
 <h3 id="knit-to-r-markdown">Knit to R Markdown<a class="anchor" aria-label="anchor" href="#knit-to-r-markdown"></a>
 </h3>
 <p>if you want to produce these beautiful output in R Markdown. Calls
 this function and see the most up-to-date advice.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/knit_to_Rmd.html">knit_to_Rmd</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="fansi fansi-output"><code><span style="color: #00BB00;">OK. Required package "fansi" is installed</span>
 
@@ -830,12 +401,9 @@ Note: Use html_to_pdf to convert it to PDF. See ?html_to_pdf for more info
 <div class="section level2">
 <h2 id="ending">Ending<a class="anchor" aria-label="anchor" href="#ending"></a>
 </h2>
-<p>This conclude my briefed discussion of this package. There are some
-more additionally functions (like <code>cfa_groupwise</code>) that
-probably have fewer use cases. You can check out what they do by enter
-<code><a href="../reference/cfa_groupwise.html">?cfa_groupwise</a></code>. Anyway, that’s it. I hope you enjoy the
-package, and please let me know if you have any feedback. If you like
-it, please considering giving a star on <a href="https://github.com/jasonmoy28/psycModel" class="external-link">GitHub</a>. Thank
+<p>This conclude my briefed discussion of this package. I hope you enjoy
+the package, and please let me know if you have any feedback. If you
+like it, please considering giving a star on <a href="https://github.com/jasonmoy28/psycModel" class="external-link">GitHub</a>. Thank
 you.</p>
 </div>
   </div>

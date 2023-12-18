@@ -142,33 +142,10 @@ The function will extract the relevant coefficients from the regression models (
 <span class="r-in"><span><span class="va">lme_fit</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="st">"popular ~ texp  + (1 | class)"</span>,</span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">popular</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in initializePtr():</span> function 'cholmod_factor_ldetA' not provided by package 'Matrix'</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">model_summary</span><span class="op">(</span><span class="va">lme_fit</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Summary</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Model Type = Linear Mixed Effect Model (fitted using lme4 or lmerTest)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outcome = popular</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Predictors = texp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Estimates</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ─────────────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           Parameter  Coefficient     SE       t      df  Effects     Group          p          95% CI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ─────────────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         (Intercept)        4.197  0.186  22.552  97.989    fixed            0.000 ***  [3.827, 4.566]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                texp        0.062  0.012   5.212  98.105    fixed            0.000 ***  [0.038, 0.085]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      SD (Intercept)        0.737    NaN     NaN     NaN   random     class    NaN          [NaN, NaN]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   SD (Observations)        1.105    NaN     NaN     NaN   random  Residual    NaN          [NaN, NaN]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ─────────────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05, . p &lt; 0.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Goodness of Fit</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        AIC      AICc       BIC  R²_conditional  R²_marginal    ICC   RMSE      σ</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   6321.320  6321.340  6343.724           0.366        0.085  0.308  1.080  1.105</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'lme_fit' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># lm example</span></span></span>
 <span class="r-in"><span></span></span>
