@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Version Note: Up-to-date with v0.3.0
+Version Note: Up-to-date with v0.5.0
 ```{r, include = FALSE}
 knitr::opts_chunk$set(message=FALSE,warning = FALSE, comment = NA)
 old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)
@@ -16,95 +16,68 @@ old.hooks <- fansi::set_knit_hooks(knitr::knit_hooks)
 ```{r setup}
 library(psycModel)
 ```
-# Why should you use this pacakge? 
+# Why would you want to use this package?
 
-TLDR:  
-1) It is a beginner-friendly R package for statistical analysis in social science.  
-2) Tired of manually writing all variables in a model? You can use [dplyr::select()](https://dplyr.tidyverse.org/reference/select.html) syntax for all models  
-3) Fitting models, plotting, checking goodness of fit, and model assumption violations all in one place.  
-4) Beautiful and easy-to-read output. Check out this [example](https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html) now.  
+**TLDR:**  
+1) It's a beginner-friendly R package for statistical analysis in social science.  
+2) Fitting models, plotting, checking the goodness of fit, and identifying model assumption violations all in one place.  
+3) Beautiful and easy-to-read output. Check out this [example](https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html) now.  
 
-Support models:  
-1. Linear regression (i.e., support ANOVA, ANCOVA), generalized linear regression.  
-2. Linear mixed effect model (or HLM to be more specific), generalized linear mixed effect model.  
-3. Confirmatory and exploratory factor analysis.  
-4. Simple mediation analysis.  
-5. Reliability analysis.  
-6. Correlation, descriptive statistics (e.g., mean, SD).  
+# Some Examples: 
 
-At its core, this package allows people to analyze their data with one simple function call. For example, when you are running a linear regression, you need to fit the model, check the goodness of fit (e.g., R2), check the model assumption, and plot the interaction (if the interaction is included). Without this package, you need several packages to do the above steps. Additionally, if you are an R beginner, you probably don't know where to find all these R packages. This package has done all that work for you, so you can just do everything with one simple function call. 
+## Model Summary
+The `model_summary` function will produce all of the relevant test statistics for regression models. See an example below. 
+```{r fig.width=14,fig.height=6,out.width=1000,out.height=400}
+mod_1 = lm(data = iris, Petal.Length ~ Petal.Width*Sepal.Length)
+# you can also check assumption_plot by setting assumption_plot = TRUE
+model_summary(mod_1,assumption_plot = F) 
 
-Another good example is CFA. The most common (and probably the only) option to fit a CFA in R is using lavaan. Lavaan has its own unique set of syntax. It is very versatile and powerful, but you do need to spend some time learning it. It may not worth the time for people who just want to run a quick and simple CFA model. In my package, it's very intuitive with `cfa_summary(data, x1:x3)`, and you get the model summary, the fit measures, and a nice-looking path diagram. The same logic also applies to HLM since `lme4` / `nlme` also has its own set of syntax that you need to learn. 
-
-Moreover, I also made fitting the model even simpler by using the `dplyr::select` syntax. In short, traditionally, if you want to fit a linear regression model, the syntax looks like this `lm(y ~ x1 + x2 + x3 + x4 + ... + xn, data)`. Now, the syntax is much shorter and more intuitive: `lm_model(y, x1:xn, data)`. You can even replace `x1:xn` with `everything()`. I also wrote this very short [article](https://jasonmoy28.github.io/psycModel/articles/brief-introduction-to-select-syntax.html) that teaches people how to use the `dplyr::select()` syntax (it is not comprehensive, and it is not intended to be). 
-
-Finally, I made the output in R much more beautiful and easy to read. The default output from R, to be frank, look ugly. I spent a lot of time making sure it looks good in this package (see below for examples). I am sure that you will see how big the improvement is. 
-
-# Regression Models 
-## Integrated Summary for Linear Regression 
-`integrated_model_summary` is the integrated function for linear regression and generalized linear regression. It will first fit the model using `lm_model` or `glm_model`, then it will pass the fitted model object to `model_summary` which produces model estimates and assumption checks. If interaction terms are included, they will be passed to the relevant interaction_plot function for plotting (the package currently does not support generalized linear regression interaction plotting). 
-
-Additionally, you can request `assumption_plot` and `simple_slope` (default is `FALSE`). By requesting `assumption_plot`, it produces a panel of graphs that allow you to visually inspect the model assumption (in addition to testing it statistically). `simple_slope` is another powerful way to probe further into the interaction. It shows you the slope estimate at the mean and +1/-1 SD of the mean of the moderator. For example, you hypothesized that social-economic status (SES) moderates the effect of teacher experience on education quality. Then, simple_slope shows you the slope estimate of teacher experience on education quality at +1/-1 SD and the mean level of SES. Additionally, it produces a Johnson-Newman plot that shows you at what level of the moderator that the slope_estimate is predicted to be insignificant. 
-
-```{r,fig.width=14, fig.height=8,out.width=700,out.height=400}
-lm_model_summary(
-   data = iris,
-   response_variable = Sepal.Length,
-   predictor_variable = tidyselect::everything(),
-   two_way_interaction_factor = c(Sepal.Width, Petal.Width), 
-   model_summary = TRUE, 
-   interaction_plot = TRUE, 
-   assumption_plot = TRUE,
-   simple_slope = TRUE,
-   plot_color = TRUE
- )
 ```
 
-## Integrated summary for Multilevel Model
-This is the multilevel-variation of `integrated_model_summary`. It works exactly the same way as `integrated_model_summary` except you need to specify the non_random_effect_factors (i.e., level-2 factors) and the random_effect_factors (i.e., the level-1 factors) instead of `predictor_variable`. 
-
+## Interaction Plot
+Since our models have an interaction, we may want to visualize it. Let's create an interaction plot first. You can modify the plot using some of the settings. You can also try out the polynomial regression plots and the ANOVA plots.
 ```{r,fig.width=14,fig.height=8,out.width=700,out.height=400}
-lme_multilevel_model_summary(
-    data = popular,
-    response_variable = popular,
-    random_effect_factors = extrav,
-    non_random_effect_factors = c(sex, texp),
-    three_way_interaction_factor = c(extrav, sex, texp),
-   graph_label_name = c("popular", "extraversion", "sex", "teacher experience"), # change interaction plot label
-   id = class,
-   model_summary = TRUE, 
-   interaction_plot = TRUE, 
-   assumption_plot = FALSE, # you can try set to TRUE
-   simple_slope = FALSE, # you can try set to TRUE
-   plot_color = TRUE
- )
+interaction_plot(mod_1,verbose = F) # verbose is set to TRUE by default to show the plot data. 
+
+# You can also modify the 
+interaction_plot(mod_1,
+                 response_var_name = 'Petal Length', # you can rename the variable names (e.g., getting rid of the dot)
+                 predict_var1_name = 'Petal Width',
+                 predict_var2_name = 'Sepal Length',
+                 predict_var1_level = c(0.44,1.19,1.96), # you may want to show the mean of the variable
+                 predict_var1_level_name = c('-1 SD','Mean','+1 SD'), # you may also want to adjust the labels to be more intuitive
+                 verbose = F)
 ```
 
-## Model comparison 
-This can be used to compared model. All type of model comparison supported by `performance::compare_performance()` are supported since this is just a wrapper for that function. 
+## Simple Slopes 
+After obtaining the interaction plot, you may also want to get the simple slopes of the interaction.
+```{r,fig.width=14,fig.height=8,out.width=700,out.height=400}
+simple_slope(mod_1)
+```
 
+## Descriptive Table 
+This package can also help you in preparing a table that includes means, standard deviations, and correlations. For additional options, refer to `?descriptive_table`.
 ```{r}
- fit1 <- lm_model(
-   data = popular,
-   response_variable = popular,
-   predictor_var = c(sex, extrav),
-   quite = TRUE
- )
+descriptive_table(iris,c(Petal.Width,Sepal.Length,Petal.Length))
 
- fit2 <- lm_model(
-   data = popular,
-   response_variable = popular,
-   predictor_var = c(sex, extrav),
-   two_way_interaction_factor = c(sex, extrav),
-   quite = TRUE
- )
-
- compare_fit(fit1, fit2)
+descriptive_table(iris,c(Petal.Width,Sepal.Length,Petal.Length),descriptive_indicator = c('mean','sd','cor','missing','kurtosis')) # you can request more parameters optionally
 ```
 
-# Structure Equation Modeling 
+## Cronbach alpha 
+You can get the Cronbach alphas very simply (it will call the `psych::alpha()` function). If you need, you can also get separate Cronbach alphas by groups (e.g., when using multilevel analyses).
+```{r}
+cronbach_alpha(x1:x3,x4:x6,x7:x9, 
+               var_name = c('visual','textual','verbal'),
+               data = lavaan::HolzingerSwineford1939)
+
+cronbach_alpha(x1:x3,x4:x6,x7:x9, 
+               var_name = c('visual','textual','verbal'),
+               group = 'sex',
+               data = lavaan::HolzingerSwineford1939)
+```
+
 ## Confirmatory Factor Analysis 
-CFA model is fitted using `lavaan::cfa()`. You can pass multiple factor (in the below example, x1, x2, x3 represent one factor, x4,x5,x6 represent another factor etc.). It will show you the fit measure, factor loading, and goodness of fit based on cut-off criteria (you should review literature for the cut-off criteria as the recommendations are subjected to changes). Additionally, it will show you a nice-looking path diagram. 
+CFA model is fitted using `lavaan::cfa()`. You can pass multiple factor (in the below example, x1, x2, x3 represent one factor, x4,x5,x6 represent another factor etc.). It will show you the fit measure, factor loading, and goodness of fit based on cut-off criteria (you should review literature for the cut-off criteria as the recommendations are subjected to changes). You can also try `measurement_invariance()`. 
 ```{r fig.width=10.5,fig.height=6,out.width=700,out.height=400}
 cfa_summary(
    data = lavaan::HolzingerSwineford1939,
@@ -114,69 +87,6 @@ cfa_summary(
  )
 ```
 
-## Exploratory Factor Analysis 
-EFA model is fitted using `psych::fa()`. It first find the optimal number of factor. Then, it will show you the factor loading, uniqueness, complexity of the latent factor (loading < 0.4 are hided for better viewing experience). You can additionally request running a post-hoc CFA model based on the EFA model. 
-
-```{r fig.width=10.5,fig.height=6,out.width=700,out.height=400}
-efa_summary(lavaan::HolzingerSwineford1939, 
-            starts_with("x"), # x1, x2, x3 ... x9
-            post_hoc_cfa = TRUE) # run a post-hoc CFA 
-```
-
-## Measurement Invariance
-Measurement invariance is fitted using `lavaan::cfa()`. It uses the multi-group confirmatory factor analysis approach. You can request metric or scalar invariance by specifying the `invariance_level` (mainly to save time. If you have a large model, it doesn't make sense to fit a unnecessary scalar invariance model if you are only interested in metric invariance)
-
-```{r}
- measurement_invariance(
-   x1:x3,
-   x4:x6,
-   x7:x9,
-   data = lavaan::HolzingerSwineford1939,
-   group = "school",
-   invariance_level = "scalar" # you can change this to metric
- )
-```
-
-## Mediation Model
-Currently, the package only support simple mediation with covariate. You can try to fit a multi-group mediation by specifying the group argument. But, honestly, I don't know that's the correct approach to implement it. If you want more complicated mediation, I highly recommend using the `mediation` package. Eventually, I probably will switch to using that for this package. 
-
-```{r}
-mediation_summary(
-  data = lmerTest::carrots,
-  response_variable = Preference,
-  mediator = Sweetness,
-  predictor_variable = Crisp,
-  control_variable = Age:Income
-)
-```
-
-# Other Model
-## Reliability Analysis 
-It will first determine whether your item is uni- or multidimensionality. If it is unidimensional, then it will compute the alpha and the single-factor CFA model. If it is multidimensional, then it will compute the alpha and the omega. It also provide descriptive statistics. 
-Here is an example for unidimensional items: 
-```{r}
-reliability_summary(data = lavaan::HolzingerSwineford1939, cols = x1:x3)
-```
-
-Here is an example for multidimensional items: 
-```{r fig.width=10.5,fig.height=6,out.width=700,out.height=400}
-reliability_summary(data = lavaan::HolzingerSwineford1939, cols = x1:x9)
-```
-
-## Correlation
-There isn't much to say about correlation except that you can request different type of correlation based on the data structure. In the backend, I use the `correlation` package for this. 
-
-```{r}
-cor_test(iris, where(is.numeric))
-```
-
-## Descriptive Table 
-It put together a nice table of some descriptive statistics and the correlation. Nothing fancy.
-
-```{r}
-descriptive_table(iris, cols = where(is.numeric)) # all numeric columns
-```
-
 ## Knit to R Markdown 
 if you want to produce these beautiful output in R Markdown. Calls this function and see the most up-to-date advice. 
 ```{r}
@@ -184,6 +94,6 @@ knit_to_Rmd()
 ```
 
 # Ending
-This conclude my briefed discussion of this package. There are some more additionally functions (like `cfa_groupwise`) that probably have fewer use cases. You can check out what they do by enter `?cfa_groupwise`. Anyway, that's it. I hope you enjoy the package, and please let me know if you have any feedback. If you like it, please considering giving a star on [GitHub](https://github.com/jasonmoy28/psycModel). Thank you. 
+This conclude my briefed discussion of this package. I hope you enjoy the package, and please let me know if you have any feedback. If you like it, please considering giving a star on [GitHub](https://github.com/jasonmoy28/psycModel). Thank you. 
 
 
