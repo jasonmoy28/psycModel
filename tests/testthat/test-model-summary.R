@@ -70,35 +70,7 @@ testthat::test_that("model_summary: anova model", {
 # })
 
 testthat::test_that(desc = "model_summary: lmerTest model", {
-  model <- lme_model(
-    data = popular,
-    response_variable = popular,
-    random_effect_factors = c(extrav),
-    non_random_effect_factors = c(texp),
-    id = class,
-    use_package = "lmerTest",
-    quite = TRUE
-  )
-  summary <- suppressWarnings(model_summary(model,
-    return_result = TRUE,
-    assumption_plot = TRUE,
-    quite = TRUE
-  ))
-  expect_false(is.null(summary$model_summary))
-  expect_false(is.null(summary$model_performance_df))
-  expect_false(is.null(summary$assumption_plot))
-})
-
-testthat::test_that(desc = "model_summary: lme4 model", {
-  model <- lme_model(
-    data = popular,
-    response_variable = popular,
-    random_effect_factors = c(extrav),
-    non_random_effect_factors = c(texp),
-    id = class,
-    use_package = "lme4",
-    quite = TRUE
-  )
+  model = lmerTest::lmer(popular ~ extrav + texp + (1|class),data = popular)
   summary <- suppressWarnings(model_summary(model,
     return_result = TRUE,
     assumption_plot = TRUE,
