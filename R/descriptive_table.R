@@ -82,7 +82,7 @@ descriptive_table <- function(data,
   }
   # compute the correlation table
   if (compute_cor_table == TRUE) {
-    cor_table <- data %>% cor_test(cols = !!cols, return_result = TRUE, quite = TRUE, ...)
+    cor_table <- data %>% cor_test(cols = !!cols, digits = digits,return_result = TRUE, quite = TRUE, ...)
     return_df <- return_df %>% dplyr::full_join(cor_table, by = "Var")
   }
 
