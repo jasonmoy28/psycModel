@@ -40,7 +40,6 @@
 #'   random_effect_factors = NULL, # you can add random effect predictors here 
 #'   non_random_effect_factors = c(extrav,texp),
 #'   two_way_interaction_factor = NULL, # you can add two-way interaction plot here 
-#'   graph_label_name = NULL, #you can also change graph lable name here
 #'   id = class,
 #'   simple_slope = FALSE, # you can also request simple slope estimate 
 #'   assumption_plot = FALSE, # you can also request assumption plot

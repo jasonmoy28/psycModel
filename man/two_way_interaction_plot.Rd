@@ -67,11 +67,3 @@ It has been superseded by \code{\link{interaction_plot}}.
 \details{
 It appears that ``predict` cannot handle categorical factors. All variables are converted to numeric before plotting.
 }
-\examples{
-lm_fit <- lm(Sepal.Length ~ Sepal.Width * Petal.Width,
-  data = iris
-)
-
-two_way_interaction_plot(lm_fit)
-
-}

@@ -73,11 +73,3 @@ an object of class \code{ggplot}
 The function creates a three-way interaction plot. By default, it will create an interaction plot with -1 SD and +1 SD of the two continuous variables, or the two levels of the binary variables or dummy-coded multi-categorical variable
 It has been superseded by \code{\link{interaction_plot}}.
 }
-\examples{
-lm_fit <- lm(Sepal.Length ~ Sepal.Width*Petal.Width*Petal.Width ,
-  data = iris
-)
-
-three_way_interaction_plot(lm_fit)
-
-}

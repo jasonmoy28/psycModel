@@ -3,6 +3,7 @@
 \name{lm_model_table}
 \alias{lm_model_table}
 \title{Linear Regression Model Table
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
 Generate tables with multiple response and predictor variable (only \code{lm} models are supported)}
 \usage{
 lm_model_table(
@@ -38,6 +39,7 @@ data.frame
 }
 \description{
 Linear Regression Model Table
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
 Generate tables with multiple response and predictor variable (only \code{lm} models are supported)
 }
 \examples{

@@ -26,12 +26,6 @@
 #' @return an object of class `ggplot`
 #'
 #'
-#' @examples
-#' lm_fit <- lm(Sepal.Length ~ Sepal.Width * Petal.Width,
-#'   data = iris
-#' )
-#' 
-#' two_way_interaction_plot(lm_fit)
 #'
 two_way_interaction_plot <- function(model,
                                      interaction_term = NULL,
@@ -87,8 +81,8 @@ two_way_interaction_plot <- function(model,
   
   if (is.null(predict_var1_level)) {
     if (length(unique(model_data[[predict_var1]])) != 2) {
-      predict_var1_level = c(round(mean(model_data[[predict_var1]],na.rm = T) - sd(model_data[[predict_var1]],na.rm = T),digits = 2),
-                             round(mean(model_data[[predict_var1]],na.rm = T) + sd(model_data[[predict_var1]],na.rm = T),digits = 2))
+      predict_var1_level = c(round(mean(model_data[[predict_var1]],na.rm = T) - stats::sd(model_data[[predict_var1]],na.rm = T),digits = 2),
+                             round(mean(model_data[[predict_var1]],na.rm = T) + stats::sd(model_data[[predict_var1]],na.rm = T),digits = 2))
     } else {
       predict_var1_level = c(unique(model_data[[predict_var1]])[1],unique(model_data[[predict_var1]])[2])
     }
@@ -96,8 +90,8 @@ two_way_interaction_plot <- function(model,
   
   if (is.null(predict_var2_level)) {
     if (length(unique(model_data[[predict_var2]])) != 2) {
-      predict_var2_level = c(round(mean(model_data[[predict_var2]],na.rm = T) - sd(model_data[[predict_var2]],na.rm = T),digits = 2),
-                             round(mean(model_data[[predict_var2]],na.rm = T) + sd(model_data[[predict_var2]],na.rm = T),digits = 2))
+      predict_var2_level = c(round(mean(model_data[[predict_var2]],na.rm = T) - stats::sd(model_data[[predict_var2]],na.rm = T),digits = 2),
+                             round(mean(model_data[[predict_var2]],na.rm = T) + stats::sd(model_data[[predict_var2]],na.rm = T),digits = 2))
     } else {
       predict_var2_level = c(unique(model_data[[predict_var2]])[1],unique(model_data[[predict_var2]])[2])
     }
@@ -107,8 +101,8 @@ two_way_interaction_plot <- function(model,
   
   final_df = as.data.frame(effects::effect(term = interaction_term,
                                            mod = model,
-                                           xlevels = setNames(list(predict_var1_level,predict_var2_level),c(predict_var1,predict_var2)))) %>% 
-    dplyr::mutate(across(c(!!enquo(predict_var1),!!enquo(predict_var2)),as.character))
+                                           xlevels = stats::setNames(list(predict_var1_level,predict_var2_level),c(predict_var1,predict_var2)))) %>% 
+    dplyr::mutate(dplyr::across(c(!!dplyr::enquo(predict_var1),!!dplyr::enquo(predict_var2)),as.character))
   
   
   if (is.null(response_var_name)) {

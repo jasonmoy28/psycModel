@@ -1,4 +1,5 @@
 #' Linear Regression Model Table
+#' `r lifecycle::badge("experimental")` \cr
 #' Generate tables with multiple response and predictor variable (only `lm` models are supported)
 #'
 #' @param data `data.frame`
