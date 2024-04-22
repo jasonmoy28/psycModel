@@ -1,14 +1,17 @@
-#' Linear Regression Model Table
+#' Linear Mixed Effect Model Table
 #' 
 #' `r lifecycle::badge("experimental")` \cr
-#' Generate tables with multiple response, predictor, or two-way interaction variables (only `lm` models are supported). 
+#' Generate tables with multiple response, predictor, or two-way interaction variables (only `lmer` models are supported). 
 #' You can pass multiple variables for one type of variable (either response, pred, or interaction) only. 
-#' If you want to pass multiple variables for multiple type of variable, try lm_model_explore instead.
+#' If you want to pass multiple variables for multiple type of variable, try lmer_model_explore instead.
 #' At the moment, multi-categorical variables are not supported as predictors or interactions (but control is fine). Binary variable should be `numeric` instead of `factor`
-#'
+#' This function also do not supports changing random slopes. 
+#' Please use `other_parameters` if you want to add non-changing interaction term.
+#' 
 #' @param data `data.frame`
 #' @param response_variable response variable. Support `dplyr::select()` syntax.
-#' @param predictor_variable predictor variable. Support `dplyr::select()` syntax. It will automatically remove the response variable from predictor variable, so you can use `contains()` or `start_with()` safely. 
+#' @param predictor_variable predictor variable. Support `dplyr::select()` syntax. It will automatically remove the response variable from predictor variable, so you can use `contains()` or `start_with()` safely.
+#' @param random_effect The random-effects terms in the format of `(|)`. See lm4::lmer for specifics. 
 #' @param two_way_interaction_variable Two-way interaction variable. Each two-way interaction variable will interact with the predictor variable. Support `dplyr::select()` syntax.
 #' @param control_variable control variables. Support `dplyr::select()` syntax. 
 #' @param other_parameters catch call for all other parameters that need to be entered (e.g., non-changing interaction terms). Have to be `character` type.
@@ -22,59 +25,34 @@
 #' @export
 #'
 #' @examples
-#' # If you want all varibles to be changing, try lm_model_explore.
+#' # If you want all varibles to be changing, try lmer_model_explore.
+#' # For more examples, see ?lm_model_table. 
 #' 
-#' test = data.frame(y1 = rnorm(1000,2,3),
-#' y2 = rnorm(1000,10,2),
-#' y3 = rnorm(1000,1,4),
-#' x1 = rnorm(1000,100,10),
-#' x2 = rnorm(1000,10,1),
-#' x3 = rnorm(1000,6,2),
-#' m1 = rnorm(1000,3,1),
-#' m2 = rnorm(1000,2,0.5),
-#' m3 = rnorm(1000,9,0.1),
-#' c1 = rnorm(1000,5,0.4),
-#' c2 = rnorm(1000,2,0.2),
-#' c3 = rnorm(1000,7,0.9)
-#' )
-#'
-#' # Changing response variable 
-#' lm_model_table(data = test, 
-#'                response_variable = c(y1,y2,y3),
-#'                predictor_variable = x1,
-#'                control_variable = c(c1,c2,c3))
-#'  
-#' # Changing predictors 
-#' lm_model_table(data = test, 
-#'                response_variable = y1,
-#'                predictor_variable = c(x1,x2,x3),
-#'                control_variable = c(c1,c2,c3))
-#'                  
-#'                  
 #' # Changing interaction terms with a non-changing response variable
-#' lm_model_table(data = test, 
-#'                response_variable = y1,
-#'                predictor_variable = x1,
-#'                two_way_interaction_variable = c(m1,m2,m3),
-#'                control_variable = c(c1,c2,c3))
-#'                  
-#' # A non-changing interaction term with changing response variables                 
-#' lm_model_table(data = test, 
-#'                response_variable = c(y1,y2,y3),
-#'                predictor_variable = x1,
-#'                other_parameters = c('x1*m1'),
-#'                control_variable = c(c1,c2,c3))                  
+#' lme_model_table(data = popular,
+#'                  response_variable = popular,
+#'                  predictor_variable = texp,
+#'                  two_way_interaction_variable = c(extrav,sex),
+#'                  random_effect = '(1 | class)')
+#' 
+#' # A non-changing interaction term with changing response variables
+#' lme_model_table(data = popular,
+#'                  response_variable = c(popular,sex),
+#'                  predictor_variable = texp,
+#'                  other_parameters = 'texp*extrav',
+#'                  random_effect = '(1 | class)')
 
-lm_model_table = function(data, 
-                          response_variable,
-                          predictor_variable,
-                          two_way_interaction_variable = NULL,
-                          control_variable = NULL,
-                          other_parameters = NULL,
-                          marginal_alpha = 0.1,
-                          return_result = FALSE,
-                          verbose = TRUE,
-                          show_p = FALSE
+lme_model_table = function(data, 
+                            response_variable,
+                            predictor_variable,
+                            two_way_interaction_variable = NULL,
+                            random_effect,
+                            control_variable = NULL,
+                            other_parameters = NULL,
+                            marginal_alpha = 0.1,
+                            return_result = FALSE,
+                            verbose = TRUE,
+                            show_p = FALSE
 ){
   # parse select syntax
   response_variable <- data %>%
@@ -96,7 +74,7 @@ lm_model_table = function(data,
   
   if (sum(variable_nums > 1) == 1) {
   } else {
-    stop('You can only pass multiple variables for one type of variable (either response, pred, or interaction). Try lm_model_explore instead.')
+    stop('You can only pass multiple variables for one type of variable (either response, pred, or interaction). Try lmer_model_explore instead.')
   }
   
   
@@ -111,8 +89,9 @@ lm_model_table = function(data,
         formula = paste(formula,"+",paste(other_parameters, collapse = " + "))
       }
       
+      formula = paste(formula,'+',random_effect)
       formula <- stats::as.formula(formula)
-      model = stats::lm(formula = formula, data = data)
+      model = lmerTest::lmer(formula = formula, data = data)
       
       model_summary = model %>%
         parameters::parameters() %>%
@@ -120,7 +99,8 @@ lm_model_table = function(data,
         dplyr::select(dplyr::any_of(c('Parameter', 'Coefficient', 'p'))) %>%
         coefficent_to_p(marginal_alpha = marginal_alpha,show_p = show_p) %>%
         tibble::add_row(tibble::tibble(Parameter = 'df', Coefficient = format_round(insight::get_df(model),digits = 3))) %>%
-        tibble::add_row(tibble::tibble(Parameter = 'r2', Coefficient = format_round(performance::r2(model)$R2,digits = 3))) %>%
+        tibble::add_row(tibble::tibble(Parameter = 'r2_conditional', Coefficient = format_round(performance::r2(model)$R2_conditional,digits = 3))) %>%
+        tibble::add_row(tibble::tibble(Parameter = 'r2_marginal', Coefficient = format_round(performance::r2(model)$R2_marginal,digits = 3))) %>%
         dplyr::rename(!!response_variable[i] := 'Coefficient')
       
       if (i == 1) {
@@ -145,8 +125,9 @@ lm_model_table = function(data,
       if (length(other_parameters) != 0) {
         formula = paste(formula,"+",paste(other_parameters, collapse = " + "))
       }
+      formula = paste(formula,'+',random_effect)
       formula <- stats::as.formula(formula)
-      model = stats::lm(formula = formula, data = data)
+      model = lmerTest::lmer(formula = formula, data = data)
       
       model_summary = model %>%
         parameters::parameters() %>%
@@ -155,7 +136,8 @@ lm_model_table = function(data,
         dplyr::mutate(Parameter = dplyr::if_else(.data$Parameter == predictor_variable[i],'Focal Predictor',.data$Parameter)) %>%
         coefficent_to_p(marginal_alpha = marginal_alpha,show_p = show_p) %>%
         tibble::add_row(tibble::tibble(Parameter = 'df', Coefficient = format_round(insight::get_df(model),digits = 3))) %>%
-        tibble::add_row(tibble::tibble(Parameter = 'r2', Coefficient = format_round(performance::r2(model)$R2,digits = 3))) %>%
+        tibble::add_row(tibble::tibble(Parameter = 'r2_conditional', Coefficient = format_round(performance::r2(model)$R2_conditional,digits = 3))) %>%
+        tibble::add_row(tibble::tibble(Parameter = 'r2_marginal', Coefficient = format_round(performance::r2(model)$R2_marginal,digits = 3))) %>%
         dplyr::rename(!!predictor_variable[i] := 'Coefficient')
       
       if (i == 1) {
@@ -172,6 +154,7 @@ lm_model_table = function(data,
   if (length(two_way_interaction_variable) > 1) {
     model_summary_final = tibble::tibble()
     for (i in 1:length(two_way_interaction_variable)) {
+      
       two_way_interaction_terms = two_way_interaction_terms(c(predictor_variable,two_way_interaction_variable[i]))
       formula = paste(response_variable,'~',predictor_variable,'+',two_way_interaction_terms)
       if (length(control_variable) != 0) {
@@ -180,8 +163,9 @@ lm_model_table = function(data,
       if (length(other_parameters) != 0) {
         formula = paste(formula,"+",paste(other_parameters, collapse = " + "))
       }
+      formula = paste(formula, '+',random_effect)
       formula <- stats::as.formula(formula)
-      model = stats::lm(formula = formula, data = data)
+      model = lmerTest::lmer(formula = formula, data = data)
       
       model_summary = model %>%
         parameters::parameters() %>%
@@ -191,7 +175,8 @@ lm_model_table = function(data,
         dplyr::mutate(Parameter = dplyr::if_else(.data$Parameter == stringr::str_replace(paste0(predictor_variable,':',two_way_interaction_variable[i]),pattern = '\\*', replacement = ':'),'Focal_interact_term',.data$Parameter)) %>%
         coefficent_to_p(marginal_alpha = marginal_alpha,show_p = show_p) %>%
         tibble::add_row(tibble::tibble(Parameter = 'df', Coefficient = format_round(insight::get_df(model),digits = 3))) %>%
-        tibble::add_row(tibble::tibble(Parameter = 'r2', Coefficient = format_round(performance::r2(model)$R2,digits = 3))) %>%
+        tibble::add_row(tibble::tibble(Parameter = 'r2_conditional', Coefficient = format_round(performance::r2(model)$R2_conditional,digits = 3))) %>%
+        tibble::add_row(tibble::tibble(Parameter = 'r2_marginal', Coefficient = format_round(performance::r2(model)$R2_marginal,digits = 3))) %>%
         dplyr::rename(!!two_way_interaction_terms := 'Coefficient')
       
       if (i == 1) {
