@@ -1,5 +1,6 @@
 #' APIM Actor-Partner Interdependence Model (SEM)
-#' `r lifecycle::badge("experimental")` \cr
+#' 
+#' `r lifecycle::badge("stable")` \cr
 #' 
 #' Actor-partner interdependence model using SEM approach (with lavaan). Indistinguishable dyads only. Results should be the same as those from Kenny (2015a, 2015b). 
 #' 

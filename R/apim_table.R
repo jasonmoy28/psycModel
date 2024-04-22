@@ -1,5 +1,6 @@
 #' APIM Actor-Partner Interdependence Model Table with Multiple Moderators
 #'
+#' `r lifecycle::badge("stable")` \cr
 #' Actor-partner interdependence model that test multiple moderators simultaneously.
 #' 
 #' @param data data frame object 

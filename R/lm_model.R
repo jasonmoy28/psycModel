@@ -1,6 +1,6 @@
 #' Linear Regressions / ANOVA / ANCOVA
 #'
-#' `r lifecycle::badge("stable")` \cr
+#' `r lifecycle::badge("superseded")` \cr
 #' Fit a linear regression using `lm()`. Linear regression is used to explore the effect of continuous variables / categorical variables in predicting a normally-distributed continuous variables.
 #'
 #' @param data `data.frame`

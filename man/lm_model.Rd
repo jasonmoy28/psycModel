@@ -30,7 +30,7 @@ lm_model(
 an object class of \code{lm} representing the linear regression fit
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \cr
 Fit a linear regression using \code{lm()}. Linear regression is used to explore the effect of continuous variables / categorical variables in predicting a normally-distributed continuous variables.
 }
 \examples{

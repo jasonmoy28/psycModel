@@ -2,8 +2,7 @@
 % Please edit documentation in R/apim_sem.R
 \name{APIM_sem}
 \alias{APIM_sem}
-\title{APIM Actor-Partner Interdependence Model (SEM)
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr}
+\title{APIM Actor-Partner Interdependence Model (SEM)}
 \usage{
 APIM_sem(
   data,
@@ -55,6 +54,9 @@ APIM_sem(
 data.frame from \code{lavaan::parameterestimates()}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
+}
+\details{
 Actor-partner interdependence model using SEM approach (with lavaan). Indistinguishable dyads only. Results should be the same as those from Kenny (2015a, 2015b).
 }
 \examples{

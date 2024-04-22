@@ -1,6 +1,6 @@
 #' Linear Mixed Effect Model
 #'
-#' `r lifecycle::badge("stable")` \cr
+#' `r lifecycle::badge("superseded")` \cr
 #' Fit a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the `nlme::lme()`  or the `lmerTest::lmer()` function.
 #' Linear mixed effect model is used to explore the effect of continuous / categorical variables in predicting a normally distributed continuous variable.
 #'

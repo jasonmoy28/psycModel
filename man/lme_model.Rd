@@ -51,7 +51,7 @@ lme_model(
 an object representing the linear mixed-effects model fit (it maybe an object from \code{lme} or \code{lmer} depending of the package you use)
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}} \cr
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \cr
 Fit a linear mixed effect model (i.e., hierarchical linear model, multilevel linear model) using the \code{nlme::lme()}  or the \code{lmerTest::lmer()} function.
 Linear mixed effect model is used to explore the effect of continuous / categorical variables in predicting a normally distributed continuous variable.
 }
