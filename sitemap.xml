@@ -100,6 +100,9 @@
     <loc>https://jasonmoy28.github.io/psycModel/reference/lm_model.html</loc>
   </url>
   <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/lm_model_explore.html</loc>
+  </url>
+  <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/lm_model_summary.html</loc>
   </url>
   <url>
@@ -107,6 +110,12 @@
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/lme_model.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/lme_model_explore.html</loc>
+  </url>
+  <url>
+    <loc>https://jasonmoy28.github.io/psycModel/reference/lme_model_table.html</loc>
   </url>
   <url>
     <loc>https://jasonmoy28.github.io/psycModel/reference/lme_multilevel_model_summary.html</loc>
