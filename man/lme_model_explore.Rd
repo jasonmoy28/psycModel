@@ -5,6 +5,7 @@
 \title{Exploratory Linear Mixed Effect Model Table}
 \usage{
 lme_model_explore(
+  ...,
   data,
   response_variable,
   predictor_variable,
@@ -15,10 +16,12 @@ lme_model_explore(
   return_result = FALSE,
   print_control = FALSE,
   verbose = TRUE,
-  show_p = FALSE
+  show_p = TRUE
 )
 }
 \arguments{
+\item{...}{additional parameters pass to lmerTest::lmer()}
+
 \item{data}{\code{data.frame}}
 
 \item{response_variable}{Response variable. Support \code{dplyr::select()} syntax.}
@@ -39,7 +42,7 @@ lme_model_explore(
 
 \item{verbose}{Default is \code{TRUE}. Set to \code{FALSE} to suppress outputs}
 
-\item{show_p}{Default is \code{FALSE}. If \code{TRUE}, show the p-value in parenthesis.}
+\item{show_p}{Default is \code{TRUE}. When \code{TRUE}, show the p-value in parenthesis.}
 }
 \value{
 data.frame

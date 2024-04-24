@@ -13,6 +13,7 @@ descriptive_table(
   file_path = NULL,
   streamline = FALSE,
   quite = FALSE,
+  show_p = FALSE,
   return_result = FALSE
 )
 }
@@ -32,6 +33,8 @@ descriptive_table(
 \item{streamline}{print streamlined output}
 
 \item{quite}{suppress printing output}
+
+\item{show_p}{Default is \code{FALSE}. If \code{TRUE}, show the p-value in parenthesis for correlations.}
 
 \item{return_result}{If it is set to \code{TRUE}, it will return the data frame of the descriptive table}
 }

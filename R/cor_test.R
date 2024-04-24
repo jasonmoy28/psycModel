@@ -12,6 +12,7 @@
 #' @param method Default is "pearson". Options are "kendall", "spearman","biserial", "polychoric", "tetrachoric", "biweight", "distance", "percentage", "blomqvist", "hoeffding", "gamma", "gaussian","shepherd", or "auto". See ?correlation::correlation for detail
 #' @param p_adjust Default is "holm". Options are "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "somers" or "none". See ?stats::p.adjust for more detail
 #' @param streamline print streamlined output.
+#' @param show_p Default is `FALSE`. If `TRUE`, show the p-value in parenthesis. 
 #'
 #' @return a `data.frame` of the correlation table
 #'
@@ -23,6 +24,7 @@ cor_test <- function(data,
                      cols,
                      ...,
                      digits = 3,
+                     show_p = FALSE,
                      method = "pearson",
                      p_adjust = "none",
                      streamline = FALSE,
@@ -41,22 +43,40 @@ cor_test <- function(data,
     p_adjust = p_adjust,
     ...
   )
-  cor_df <- cor %>%
-    as.data.frame() %>%
-    dplyr::select("Parameter1", "Parameter2", "r", "p") %>%
-    dplyr::mutate(
-      p =
-        dplyr::case_when(
-          p < 0.001 ~ paste(format_round(r, digits = digits), "***"),
-          p < 0.01 & p >= 0.001 ~ paste(format_round(r, digits = digits), " **"),
-          p < 0.05 & p >= 0.01 ~ paste(format_round(r, digits = digits), "  *"),
-          TRUE ~ paste(format_round(r, digits = digits), "   ")
-        )
-    ) %>%
-    dplyr::select(-"r") %>%
-    tidyr::pivot_wider(names_from = .data$Parameter1, values_from = .data$p) %>%
-    dplyr::rename(Var = .data$Parameter2)
-
+  if (show_p == FALSE) {
+    cor_df <- cor %>%
+      as.data.frame() %>%
+      dplyr::select("Parameter1", "Parameter2", "r", "p") %>%
+      dplyr::mutate(
+        p =
+          dplyr::case_when(
+            p < 0.001 ~ paste(format_round(r, digits = digits), "***"),
+            p < 0.01 & p >= 0.001 ~ paste(format_round(r, digits = digits), " **"),
+            p < 0.05 & p >= 0.01 ~ paste(format_round(r, digits = digits), "  *"),
+            TRUE ~ paste(format_round(r, digits = digits), "   ")
+          )
+      ) %>%
+      dplyr::select(-"r") %>%
+      tidyr::pivot_wider(names_from = 'Parameter1', values_from = "p") %>%
+      dplyr::rename(Var = 'Parameter2')
+  } else{
+    cor_df <- cor %>%
+      as.data.frame() %>%
+      dplyr::select("Parameter1", "Parameter2", "r", "p") %>%
+      dplyr::mutate(
+        p =
+          dplyr::case_when(
+            p < 0.001 ~ glue::glue("{format_round(r, digits = digits)} ({format_round(p,digits = digits)}) ***"),
+            p < 0.01 & p >= 0.001 ~ glue::glue("{format_round(r, digits = digits)} ({format_round(p,digits = digits)})  **"),
+            p < 0.05 & p >= 0.01 ~ glue::glue("{format_round(r, digits = digits)} ({format_round(p,digits = digits)})   *"),
+            TRUE ~ glue::glue("{format_round(r, digits = digits)} ({format_round(p,digits = digits)})    ")
+          )
+      ) %>%
+      dplyr::select(-"r") %>%
+      tidyr::pivot_wider(names_from = 'Parameter1', values_from = "p") %>%
+      dplyr::rename(Var = 'Parameter2')
+  }
+  
   cor_df <- tibble::tibble(Var = colnames(data)) %>%
     dplyr::full_join(cor_df, by = "Var") %>%
     dplyr::mutate(dplyr::across(dplyr::everything(), function(x) {
@@ -72,6 +92,12 @@ cor_test <- function(data,
       cat("\n")
     }
     print_table(cor_df, digits = digits)
+    if (show_p == TRUE) {
+      super_print(paste('Note: Coefficient (p-value); * p < 0.05, ** p < 0.01, *** p < 0.001',sep = ''))
+    } else{
+      super_print(paste('Note: * p < 0.05, ** p < 0.01, *** p < 0.001',sep = ''))
+      
+    }
   }
 
   if (return_result == TRUE) {

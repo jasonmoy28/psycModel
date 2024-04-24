@@ -2,18 +2,25 @@
 % Please edit documentation in R/utils-coefficent-to-p.R
 \name{coefficent_to_p}
 \alias{coefficent_to_p}
-\title{change coefficient to p value for model_table}
+\title{Change coefficient to p value}
 \usage{
-coefficent_to_p(data_frame, marginal_alpha = 0.1, show_p = FALSE)
+coefficent_to_p(
+  data_frame,
+  marginal_alpha = 0.1,
+  keep_column = FALSE,
+  show_p = FALSE
+)
 }
 \arguments{
 \item{data_frame}{data}
 
 \item{marginal_alpha}{marginal_alpha leve}
 
+\item{keep_column}{keep other columns}
+
 \item{show_p}{show por not}
 }
 \description{
-change coefficient to p value for model_table
+P-value column must be named as "p" or "P" and coefficient column must be named as "Coefficient"
 }
 \keyword{internal}

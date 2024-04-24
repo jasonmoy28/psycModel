@@ -5,6 +5,7 @@
 \title{Linear Mixed Effect Model Table}
 \usage{
 lme_model_table(
+  ...,
   data,
   response_variable,
   predictor_variable,
@@ -19,6 +20,8 @@ lme_model_table(
 )
 }
 \arguments{
+\item{...}{additional parameters pass to lmerTest::lmer()}
+
 \item{data}{\code{data.frame}}
 
 \item{response_variable}{response variable. Support \code{dplyr::select()} syntax.}

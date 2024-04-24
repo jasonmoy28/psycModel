@@ -14,7 +14,7 @@ lm_model_explore(
   return_result = FALSE,
   print_control = FALSE,
   verbose = TRUE,
-  show_p = FALSE
+  show_p = TRUE
 )
 }
 \arguments{
@@ -36,7 +36,7 @@ lm_model_explore(
 
 \item{verbose}{Default is \code{TRUE}. Set to \code{FALSE} to suppress outputs}
 
-\item{show_p}{Default is \code{FALSE}. If \code{TRUE}, show the p-value in parenthesis.}
+\item{show_p}{Default is \code{TRUE}. When \code{TRUE}, show the p-value in parenthesis.}
 }
 \value{
 data.frame

@@ -14,8 +14,9 @@
 #' @param marginal_alpha Set marginal_alpha level for marginally significant (denoted by `.`). Set to 0.05 if do not want marginally significant denotation.
 #' @param return_result Default is `FALSE`. If `TRUE`, it returns the model estimates as a data frame.
 #' @param verbose Default is `TRUE`. Set to `FALSE` to suppress outputs
-#' @param show_p Default is `FALSE`. If `TRUE`, show the p-value in parenthesis. 
+#' @param show_p Default is `TRUE`. When `TRUE`, show the p-value in parenthesis. 
 #' @param print_control Default is `FALSE`. If `TRUE`, print coefficients of control variables. 
+#' @param ... additional parameters pass to lmerTest::lmer()
 #'
 #' @return
 #' data.frame
@@ -31,34 +32,41 @@
 #' 
 #' 
 
-lme_model_explore = function(data, 
-                            response_variable,
-                            predictor_variable,
-                            two_way_interaction_variable = NULL,
-                            random_effect,
-                            control_variable = NULL,
-                            marginal_alpha = 0.1,
-                            return_result = FALSE,
-                            print_control = FALSE,
-                            verbose = TRUE,
-                            show_p = FALSE
+lme_model_explore = function(...,
+                             data, 
+                             response_variable,
+                             predictor_variable,
+                             two_way_interaction_variable = NULL,
+                             random_effect,
+                             control_variable = NULL,
+                             marginal_alpha = 0.1,
+                             return_result = FALSE,
+                             print_control = FALSE,
+                             verbose = TRUE,
+                             show_p = TRUE
 ){
   # parse select syntax
   response_variable <- data %>%
     tidyselect::eval_select(data = ., expr = dplyr::enquo(response_variable),strict = TRUE) %>%
     names()
-  predictor_variable <- data %>%
-    tidyselect::eval_select(data = ., expr = dplyr::enquo(predictor_variable),strict = TRUE) %>%
-    names()
-  predictor_variable <- predictor_variable[!predictor_variable %in% c(response_variable)]
   control_variable = data %>%
     tidyselect::eval_select(data = ., expr = dplyr::enquo(control_variable),strict = TRUE) %>%
     names()
+  
+  predictor_variable <- data %>%
+    tidyselect::eval_select(data = ., expr = dplyr::enquo(predictor_variable),strict = TRUE) %>%
+    names()
+  
+  predictor_variable <- predictor_variable[!predictor_variable %in% c(response_variable)]
+  predictor_variable <- predictor_variable[!predictor_variable %in% c(control_variable)]
+  
   
   two_way_interaction_variable = data %>%
     tidyselect::eval_select(data = ., expr = dplyr::enquo(two_way_interaction_variable),strict = TRUE) %>%
     names()
   two_way_interaction_variable = two_way_interaction_variable[!two_way_interaction_variable %in% c(response_variable)]
+  two_way_interaction_variable = two_way_interaction_variable[!two_way_interaction_variable %in% c(control_variable)]
+  two_way_interaction_variable = two_way_interaction_variable[!two_way_interaction_variable %in% c(predictor_variable)]
   
   model_summary_final = tibble::tibble()
   for (i in 1:length(response_variable)) {
@@ -73,10 +81,12 @@ lme_model_explore = function(data,
           }
           formula = paste(formula, '+',random_effect)
           formula <- stats::as.formula(formula)
-          model = lmerTest::lmer(formula = formula, data = data)
+          model = lmerTest::lmer(formula = formula, data = data,...)
           model_summary = model %>%
             parameters::parameters() %>%
             tibble::as_tibble() %>%
+            dplyr::filter(!'Parameter' == 'SD (Intercept)') %>% 
+            dplyr::filter(!'Parameter' == 'SD (Observations)') %>% 
             dplyr::select(dplyr::any_of(c('Parameter', 'Coefficient', 'p'))) %>%
             dplyr::mutate(Parameter = dplyr::if_else(.data$Parameter == predictor_variable[j],'Pred_coef',.data$Parameter)) %>%
             dplyr::mutate(Parameter = dplyr::if_else(.data$Parameter == two_way_interaction_variable[k],'Interact_pred_coef',.data$Parameter)) %>%
@@ -84,7 +94,6 @@ lme_model_explore = function(data,
             coefficent_to_p(marginal_alpha = marginal_alpha,show_p = show_p) %>%
             tidyr::pivot_wider(names_from = 'Parameter',values_from = 'Coefficient') %>% 
             dplyr::select('Interact_term_coef','Interact_pred_coef','Pred_coef',dplyr::everything()) %>% 
-            dplyr::select(-c('SD (Intercept)','SD (Observations)')) %>% 
             tibble::add_column(tibble::tibble(df = format_round(insight::get_df(model),digits = 3))) %>%
             tibble::add_column(tibble::tibble(conditional_r2 = format_round(performance::r2(model)$R2_conditional,digits = 3))) %>% 
             tibble::add_column(tibble::tibble(marginal_r2 = format_round(performance::r2(model)$R2_marginal,digits = 3))) %>% 
@@ -106,21 +115,23 @@ lme_model_explore = function(data,
         }
         formula = paste(formula,'+',random_effect)
         formula <- stats::as.formula(formula)
-        model = lmerTest::lmer(formula = formula, data = data)
+        model = lmerTest::lmer(formula = formula, data = data,...)
         model_summary = model %>%
           parameters::parameters() %>%
           tibble::as_tibble() %>%
+          dplyr::filter(!'Parameter' == 'SD (Intercept)') %>% 
+          dplyr::filter(!'Parameter' == 'SD (Observations)') %>% 
           dplyr::select(dplyr::any_of(c('Parameter', 'Coefficient', 'p'))) %>%
           dplyr::mutate(Parameter = dplyr::if_else(.data$Parameter == predictor_variable[j],'Pred_coef',.data$Parameter)) %>%
           coefficent_to_p(marginal_alpha = marginal_alpha,show_p = show_p) %>%
           tidyr::pivot_wider(names_from = 'Parameter',values_from = 'Coefficient') %>% 
           dplyr::select('Pred_coef',dplyr::everything()) %>% 
-          dplyr::select(-c('SD (Intercept)','SD (Observations)')) %>% 
           tibble::add_column(tibble::tibble(df = format_round(insight::get_df(model),digits = 3))) %>%
           tibble::add_column(tibble::tibble(conditional_r2 = format_round(performance::r2(model)$R2_conditional,digits = 3))) %>% 
           tibble::add_column(tibble::tibble(marginal_r2 = format_round(performance::r2(model)$R2_marginal,digits = 3))) %>% 
           tibble::add_column(tibble::tibble(Pred = predictor_variable[j]),.before = 0) %>% 
           tibble::add_column(tibble::tibble(Response = response_variable[i]),.before = 0)
+        
         if (print_control == FALSE) {
           model_summary = model_summary %>% dplyr::select(-dplyr::all_of(control_variable))
         }

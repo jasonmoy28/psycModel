@@ -5,7 +5,7 @@
 #' @param data_frame data frame object
 #' @param marginal_alpha marginal significant threshold 
 #' @param digits number of digits to round to
-#'
+#' @export
 #' @keywords internal
 #' @return no return value
 #'

@@ -9,6 +9,7 @@ cor_test(
   cols,
   ...,
   digits = 3,
+  show_p = FALSE,
   method = "pearson",
   p_adjust = "none",
   streamline = FALSE,
@@ -24,6 +25,8 @@ cor_test(
 \item{...}{additional arguments passed to correlation::correlation(). See ?correlation::correlation. Note that the return data.frame from correlation::correlation() must contains \code{r} and \code{p} (e.g., passing \code{baysesian = TRUE} will not work)}
 
 \item{digits}{number of digits to round to}
+
+\item{show_p}{Default is \code{FALSE}. If \code{TRUE}, show the p-value in parenthesis.}
 
 \item{method}{Default is "pearson". Options are "kendall", "spearman","biserial", "polychoric", "tetrachoric", "biweight", "distance", "percentage", "blomqvist", "hoeffding", "gamma", "gaussian","shepherd", or "auto". See ?correlation::correlation for detail}
 

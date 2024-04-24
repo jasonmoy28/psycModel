@@ -19,6 +19,7 @@
 #' @param return_result It set to `TRUE`, it return the model estimates data frame.
 #' @param verbose default is `TRUE`. Set to `FALSE` to suppress outputs
 #' @param show_p show the p-value in parenthesis
+#' @param ... additional parameters pass to lmerTest::lmer()
 #'
 #' @return
 #' data.frame
@@ -42,17 +43,18 @@
 #'                  other_parameters = 'texp*extrav',
 #'                  random_effect = '(1 | class)')
 
-lme_model_table = function(data, 
-                            response_variable,
-                            predictor_variable,
-                            two_way_interaction_variable = NULL,
-                            random_effect,
-                            control_variable = NULL,
-                            other_parameters = NULL,
-                            marginal_alpha = 0.1,
-                            return_result = FALSE,
-                            verbose = TRUE,
-                            show_p = FALSE
+lme_model_table = function(...,
+                           data, 
+                           response_variable,
+                           predictor_variable,
+                           two_way_interaction_variable = NULL,
+                           random_effect,
+                           control_variable = NULL,
+                           other_parameters = NULL,
+                           marginal_alpha = 0.1,
+                           return_result = FALSE,
+                           verbose = TRUE,
+                           show_p = FALSE
 ){
   # parse select syntax
   response_variable <- data %>%
@@ -91,7 +93,7 @@ lme_model_table = function(data,
       
       formula = paste(formula,'+',random_effect)
       formula <- stats::as.formula(formula)
-      model = lmerTest::lmer(formula = formula, data = data)
+      model = lmerTest::lmer(formula = formula, data = data,...)
       
       model_summary = model %>%
         parameters::parameters() %>%
@@ -127,7 +129,7 @@ lme_model_table = function(data,
       }
       formula = paste(formula,'+',random_effect)
       formula <- stats::as.formula(formula)
-      model = lmerTest::lmer(formula = formula, data = data)
+      model = lmerTest::lmer(formula = formula, data = data,...)
       
       model_summary = model %>%
         parameters::parameters() %>%
@@ -165,7 +167,7 @@ lme_model_table = function(data,
       }
       formula = paste(formula, '+',random_effect)
       formula <- stats::as.formula(formula)
-      model = lmerTest::lmer(formula = formula, data = data)
+      model = lmerTest::lmer(formula = formula, data = data,...)
       
       model_summary = model %>%
         parameters::parameters() %>%

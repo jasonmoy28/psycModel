@@ -12,6 +12,7 @@
 #' @param return_result If it is set to `TRUE`, it will return the data frame of the descriptive table
 #' @param streamline print streamlined output
 #' @param ... additional arguments passed to cor_test. See ?cor_test.
+#' @param show_p Default is `FALSE`. If `TRUE`, show the p-value in parenthesis for correlations.
 #'
 #' @return a `data.frame` of the descriptive table
 #'
@@ -33,6 +34,7 @@ descriptive_table <- function(data,
                               file_path = NULL,
                               streamline = FALSE,
                               quite = FALSE,
+                              show_p = FALSE,
                               return_result = FALSE) {
   
   if (!requireNamespace("correlation", quietly = TRUE)) {
@@ -82,7 +84,7 @@ descriptive_table <- function(data,
   }
   # compute the correlation table
   if (compute_cor_table == TRUE) {
-    cor_table <- data %>% cor_test(cols = !!cols, digits = digits,return_result = TRUE, quite = TRUE, ...)
+    cor_table <- data %>% cor_test(cols = !!cols, digits = digits,return_result = TRUE, quite = TRUE, show_p = show_p, ...)
     return_df <- return_df %>% dplyr::full_join(cor_table, by = "Var")
   }
 

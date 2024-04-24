@@ -12,7 +12,7 @@
 #' @param marginal_alpha Set marginal_alpha level for marginally significant (denoted by `.`). Set to 0.05 if do not want marginally significant denotation.
 #' @param return_result Default is `FALSE`. If `TRUE`, it returns the model estimates as a data frame.
 #' @param verbose Default is `TRUE`. Set to `FALSE` to suppress outputs
-#' @param show_p Default is `FALSE`. If `TRUE`, show the p-value in parenthesis. 
+#' @param show_p Default is `TRUE`. When `TRUE`, show the p-value in parenthesis. 
 #' @param print_control Default is `FALSE`. If `TRUE`, print coefficients of control variables. 
 #'
 #' @return
@@ -52,7 +52,7 @@ lm_model_explore = function(data,
                             return_result = FALSE,
                             print_control = FALSE,
                             verbose = TRUE,
-                            show_p = FALSE
+                            show_p = TRUE
 ){
   # parse select syntax
   response_variable <- data %>%
@@ -61,15 +61,19 @@ lm_model_explore = function(data,
   predictor_variable <- data %>%
     tidyselect::eval_select(data = ., expr = dplyr::enquo(predictor_variable),strict = TRUE) %>%
     names()
-  predictor_variable <- predictor_variable[!predictor_variable %in% c(response_variable)]
   control_variable = data %>%
     tidyselect::eval_select(data = ., expr = dplyr::enquo(control_variable),strict = TRUE) %>%
     names()
+  
+  predictor_variable <- predictor_variable[!predictor_variable %in% c(response_variable)]
+  predictor_variable <- predictor_variable[!predictor_variable %in% c(control_variable)]
   
   two_way_interaction_variable = data %>%
     tidyselect::eval_select(data = ., expr = dplyr::enquo(two_way_interaction_variable),strict = TRUE) %>%
     names()
   two_way_interaction_variable = two_way_interaction_variable[!two_way_interaction_variable %in% c(response_variable)]
+  two_way_interaction_variable = two_way_interaction_variable[!two_way_interaction_variable %in% c(control_variable)]
+  two_way_interaction_variable = two_way_interaction_variable[!two_way_interaction_variable %in% c(predictor_variable)]
   
   model_summary_final = tibble::tibble()
   for (i in 1:length(response_variable)) {

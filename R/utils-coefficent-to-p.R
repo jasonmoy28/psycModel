@@ -1,13 +1,18 @@
-#' change coefficient to p value for model_table
+#' Change coefficient to p value
+#' 
+#' P-value column must be named as "p" or "P" and coefficient column must be named as "Coefficient"
 #'
 #' @param data_frame data
 #' @param marginal_alpha marginal_alpha leve
+#' @param keep_column keep other columns
 #' @param show_p show por not
+#'
 #' @keywords internal
 #' @export
-#'
+#' 
 coefficent_to_p = function(data_frame,
                            marginal_alpha = 0.1,
+                           keep_column = FALSE,
                            show_p = FALSE) {
   return_df = data_frame %>%
     dplyr::mutate(dplyr::across(dplyr::any_of(c("p", "P")), function(x) {
@@ -41,9 +46,14 @@ coefficent_to_p = function(data_frame,
     
     
   }
+  if (keep_column == TRUE) {
+    return_df = return_df %>% 
+      dplyr::select(dplyr::any_of(c('Parameter','Coefficient',dplyr::everything())))
+  } else{
+    return_df = return_df %>% 
+      dplyr::select(dplyr::any_of(c('Parameter','Coefficient')))
+  }
   
-  return_df = return_df %>% 
-    dplyr::select(dplyr::any_of(c('Parameter','Coefficient')))
   
   return(return_df)
 }
