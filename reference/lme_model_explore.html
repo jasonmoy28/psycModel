@@ -80,6 +80,7 @@ This function also do not supports changing random slopes.</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lme_model_explore</span><span class="op">(</span></span>
+<span>  <span class="va">...</span>,</span>
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">response_variable</span>,</span>
 <span>  <span class="va">predictor_variable</span>,</span>
@@ -90,13 +91,17 @@ This function also do not supports changing random slopes.</p>
 <span>  return_result <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  print_control <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  show_p <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  show_p <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>data</dt>
+    <dl><dt>...</dt>
+<dd><p>additional parameters pass to lmerTest::lmer()</p></dd>
+
+
+<dt>data</dt>
 <dd><p><code>data.frame</code></p></dd>
 
 
@@ -137,7 +142,7 @@ This function also do not supports changing random slopes.</p>
 
 
 <dt>show_p</dt>
-<dd><p>Default is <code>FALSE</code>. If <code>TRUE</code>, show the p-value in parenthesis.</p></dd>
+<dd><p>Default is <code>TRUE</code>. When <code>TRUE</code>, show the p-value in parenthesis.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -155,13 +160,13 @@ This function also do not supports changing random slopes.</p>
 <span class="r-in"><span>                  predictor_variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">texp</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  two_way_interaction_variable <span class="op">=</span> <span class="va">sex</span>,</span></span>
 <span class="r-in"><span>                  random_effect <span class="op">=</span> <span class="st">'(1 | class)'</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Response  Pred  Interact_pred  Interact_term  Interact_term_coef  Interact_pred_coef   Pred_coef  (Intercept)        df  conditional_r2  marginal_r2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    popular  texp            sex       texp*sex          -0.016 *             1.577 ***   0.063 ***    3.502 ***  1994.000           0.540        0.344</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     extrav  texp            sex       texp*sex          -0.018 *             0.482 ***  -0.066 ***    6.047 ***  1994.000           0.261        0.160</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Note: . &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Response  Pred  Interact_pred  Interact_term  Interact_term_coef  Interact_pred_coef           Pred_coef         (Intercept)  SD (Intercept)  SD (Observations)        df  conditional_r2  marginal_r2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    popular  texp            sex       texp*sex  -0.016 (0.025) *     1.577 (0.000) ***   0.063 (0.000) ***   3.502 (0.000) ***             NaN                NaN  1994.000           0.540        0.344</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     extrav  texp            sex       texp*sex  -0.018 (0.029) *     0.482 (0.000) ***  -0.066 (0.000) ***   6.047 (0.000) ***             NaN                NaN  1994.000           0.261        0.160</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note: Coefficient (p-value): . p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

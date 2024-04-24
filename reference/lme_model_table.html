@@ -86,6 +86,7 @@ Please use <code>other_parameters</code> if you want to add non-changing interac
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lme_model_table</span><span class="op">(</span></span>
+<span>  <span class="va">...</span>,</span>
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">response_variable</span>,</span>
 <span>  <span class="va">predictor_variable</span>,</span>
@@ -102,7 +103,11 @@ Please use <code>other_parameters</code> if you want to add non-changing interac
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>data</dt>
+    <dl><dt>...</dt>
+<dd><p>additional parameters pass to lmerTest::lmer()</p></dd>
+
+
+<dt>data</dt>
 <dd><p><code>data.frame</code></p></dd>
 
 

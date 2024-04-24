@@ -80,6 +80,7 @@ This function uses the <code><a href="https://easystats.github.io/correlation/re
 <span>  <span class="va">cols</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  show_p <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"pearson"</span>,</span>
 <span>  p_adjust <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>  streamline <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -104,6 +105,10 @@ This function uses the <code><a href="https://easystats.github.io/correlation/re
 
 <dt>digits</dt>
 <dd><p>number of digits to round to</p></dd>
+
+
+<dt>show_p</dt>
+<dd><p>Default is <code>FALSE</code>. If <code>TRUE</code>, show the p-value in parenthesis.</p></dd>
 
 
 <dt>method</dt>
@@ -149,6 +154,7 @@ This function uses the <code><a href="https://easystats.github.io/correlation/re
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length     0.872 ***   -0.428 ***              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Petal.Width     0.818 ***   -0.366 ***     0.963 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note: * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</span>
 </code></pre></div>
     </div>
   </div>
