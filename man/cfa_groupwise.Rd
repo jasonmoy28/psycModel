@@ -21,7 +21,7 @@ cfa_groupwise(data, ..., group, model = NULL, ordered = FALSE)
 a \code{data.frame} with group-wise CFA result
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} \cr
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \cr
 This function will run N number of CFA where N = \code{length(group)}, and report the fit measures of CFA in each group.
 The function is intended to help you get a better understanding of which group has abnormal fit indicator
 }

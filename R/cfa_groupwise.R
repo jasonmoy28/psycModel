@@ -1,6 +1,6 @@
 #' Confirmatory Factor Analysis (groupwise)
 #'
-#' `r lifecycle::badge("experimental")` \cr
+#' `r lifecycle::badge("superseded")` \cr
 #' This function will run N number of CFA where N = `length(group)`, and report the fit measures of CFA in each group.
 #' The function is intended to help you get a better understanding of which group has abnormal fit indicator
 #'
