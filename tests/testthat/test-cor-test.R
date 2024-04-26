@@ -1,3 +1,8 @@
-testthat::expect_no_error(cor_test(iris, where(is.numeric),verbose = FALSE))
+test_that("cor_test", {
+  
+  testthat::expect_no_error(cor_test(iris, where(is.numeric),verbose = FALSE))
+  
+  testthat::expect_no_error(cor_test(iris, where(is.numeric),show_p = T,verbose = FALSE))
+  
+})
 
-testthat::expect_no_error(cor_test(iris, where(is.numeric),show_p = T,verbose = FALSE))

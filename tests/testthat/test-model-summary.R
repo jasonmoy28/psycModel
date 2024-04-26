@@ -1,4 +1,5 @@
-testthat::test_that("model_summary: lm model", {
+library(testthat)
+testthat::test_that(desc = "model_summary: lm model", {
   model <- lm_model(
     data = iris[1:4],
     response_variable = "Sepal.Length",
@@ -36,3 +37,4 @@ testthat::test_that(desc = "model_summary: lmerTest model", {
   expect_false(is.null(summary$model_summary))
   expect_false(is.null(summary$model_performance_df))
 })
+

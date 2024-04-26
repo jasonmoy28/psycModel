@@ -7,10 +7,10 @@
 #'
 #' @param text inputted text
 #' @param env environment.
-#'
+#' @export
 #' @return formatted text (greek letter, color, font style formatted)
 #'
-#' @keywords internal
+#' @keywords internal use
 #'
 super_print <- function(text,
                         env = parent.frame()) {

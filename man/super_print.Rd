@@ -21,3 +21,4 @@ Greek letter options are alpha, beta, gamma, delta, epsilon, eta, theta, lamda, 
 If you wish to print normal text, then the inputted text should '|text'
 }
 \keyword{internal}
+\keyword{use}
