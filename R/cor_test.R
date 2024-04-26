@@ -6,7 +6,7 @@
 #' @param data data frame
 #' @param cols correlation items. Support `dplyr::select()` syntax.
 #' @param digits number of digits to round to
-#' @param quite suppress printing output
+#' @param verbose deafult is `TRUE`.
 #' @param return_result If it is set to `TRUE`, it will return the data frame of the correlation table
 #' @param ... additional arguments passed to correlation::correlation(). See ?correlation::correlation. Note that the return data.frame from correlation::correlation() must contains `r` and `p` (e.g., passing `baysesian = TRUE` will not work)
 #' @param method Default is "pearson". Options are "kendall", "spearman","biserial", "polychoric", "tetrachoric", "biweight", "distance", "percentage", "blomqvist", "hoeffding", "gamma", "gaussian","shepherd", or "auto". See ?correlation::correlation for detail
@@ -28,7 +28,7 @@ cor_test <- function(data,
                      method = "pearson",
                      p_adjust = "none",
                      streamline = FALSE,
-                     quite = FALSE,
+                     verbose = TRUE,
                      return_result = FALSE) {
   if (!requireNamespace("correlation", quietly = TRUE)) {
     stop("please install.packages('correlation')")
@@ -83,7 +83,7 @@ cor_test <- function(data,
       tidyr::replace_na(data = x, replace = "")
     }))
 
-  if (quite == FALSE) {
+  if (verbose == TRUE) {
     if (streamline == FALSE) {
       super_print("underline|Model Summary")
       super_print("Model Type = Correlation")

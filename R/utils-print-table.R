@@ -97,7 +97,7 @@ print_table <- function(data_frame,
   cat(paste(rep("\u2500", linewidth), collapse = "")) # print the last output line
   cat("\n")
   if (any(colnames(data_frame) %in% c('p','P'))) {
-    cat(paste('*** p < 0.001, ** p < 0.01, * p < 0.05, . p <', marginal_alpha),sep = '')
+    cat(paste('*** p < 0.001, ** p < 0.01, * p < 0.05, + p <', marginal_alpha),sep = '')
     cat("\n")
   }
 }

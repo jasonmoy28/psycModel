@@ -13,7 +13,7 @@ cor_test(
   method = "pearson",
   p_adjust = "none",
   streamline = FALSE,
-  quite = FALSE,
+  verbose = TRUE,
   return_result = FALSE
 )
 }
@@ -34,7 +34,7 @@ cor_test(
 
 \item{streamline}{print streamlined output.}
 
-\item{quite}{suppress printing output}
+\item{verbose}{deafult is \code{TRUE}.}
 
 \item{return_result}{If it is set to \code{TRUE}, it will return the data frame of the correlation table}
 }

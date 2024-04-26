@@ -209,9 +209,9 @@ lm_model_table = function(data,
   if (verbose == TRUE) {
     print_table(model_summary_final,marginal_alpha = marginal_alpha)
     if (show_p == TRUE) {
-      super_print(paste('Note: Coefficient (p-value): . p < ',marginal_alpha,', * p < 0.05, ** p < 0.01, *** p < 0.001',sep = ''))
+      super_print(paste('Note: Coefficient (p-value): + p < ',marginal_alpha,', * p < 0.05, ** p < 0.01, *** p < 0.001',sep = ''))
     } else{
-      super_print(paste('Note: . < ',marginal_alpha,', * p < 0.05, ** p < 0.01, *** p < 0.001',sep = ''))
+      super_print(paste('Note: + < ',marginal_alpha,', * p < 0.05, ** p < 0.01, *** p < 0.001',sep = ''))
     }
   }
   if (return_result) {

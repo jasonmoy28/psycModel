@@ -21,7 +21,7 @@ coefficent_to_p = function(data_frame,
         x <= 0.001 ~ "***",
         x <= 0.01 & x > 0.001 ~ "** ",
         x <= 0.05 & x > 0.01 ~  "*  ",
-        x <= marginal_alpha & x > 0.05 ~  ".  ",
+        x <= marginal_alpha & x > 0.05 ~  "+  ",
         x > marginal_alpha ~  "   ",
         TRUE ~  "   "
       )
@@ -37,7 +37,7 @@ coefficent_to_p = function(data_frame,
           x <= 0.001 ~ "***",
           x <= 0.01 & x > 0.001 ~ "** ",
           x <= 0.05 & x > 0.01 ~  "*  ",
-          x <= marginal_alpha & x > 0.05 ~  ".  ",
+          x <= marginal_alpha & x > 0.05 ~  "+  ",
           x > marginal_alpha ~  "   ",
           TRUE ~  "   "
         )
