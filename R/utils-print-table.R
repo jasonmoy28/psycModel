@@ -30,7 +30,7 @@ print_table <- function(data_frame,
         x <= 0.001 ~ paste(x, "***"),
         x <= 0.01 & x > 0.001 ~ paste(x, "** "),
         x <= 0.05 & x > 0.01 ~ paste(x, "*  "),
-        x <= marginal_alpha & x > 0.05 ~ paste(x, ".  "),
+        x <= marginal_alpha & x > 0.05 ~ paste(x, "+  "),
         x > marginal_alpha ~ paste(x, "   "),
         TRUE ~ paste(x, "   ")
       )
@@ -99,5 +99,8 @@ print_table <- function(data_frame,
   if (any(colnames(data_frame) %in% c('p','P'))) {
     cat(paste('*** p < 0.001, ** p < 0.01, * p < 0.05, + p <', marginal_alpha),sep = '')
     cat("\n")
+  }
+  if (linewidth > getOption('width')) {
+    message('You can drag and resize the R console to view the entire table')
   }
 }

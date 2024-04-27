@@ -85,8 +85,8 @@ lme_model_explore = function(...,
           model_summary = model %>%
             parameters::parameters() %>%
             tibble::as_tibble() %>%
-            dplyr::filter(!'Parameter' == 'SD (Intercept)') %>% 
-            dplyr::filter(!'Parameter' == 'SD (Observations)') %>% 
+            dplyr::filter(!stringr::str_detect(.data$Parameter,'SD \\(Intercept\\)')) %>% 
+            dplyr::filter(!stringr::str_detect(.data$Parameter,'SD \\(Observations\\)')) %>% 
             dplyr::select(dplyr::any_of(c('Parameter', 'Coefficient', 'p'))) %>%
             dplyr::mutate(Parameter = dplyr::if_else(.data$Parameter == predictor_variable[j],'Pred_coef',.data$Parameter)) %>%
             dplyr::mutate(Parameter = dplyr::if_else(.data$Parameter == two_way_interaction_variable[k],'Interact_pred_coef',.data$Parameter)) %>%
@@ -119,8 +119,8 @@ lme_model_explore = function(...,
         model_summary = model %>%
           parameters::parameters() %>%
           tibble::as_tibble() %>%
-          dplyr::filter(!'Parameter' == 'SD (Intercept)') %>% 
-          dplyr::filter(!'Parameter' == 'SD (Observations)') %>% 
+          dplyr::filter(!stringr::str_detect(.data$Parameter,'SD \\(Intercept\\)')) %>% 
+          dplyr::filter(!stringr::str_detect(.data$Parameter,'SD \\(Observations\\)')) %>% 
           dplyr::select(dplyr::any_of(c('Parameter', 'Coefficient', 'p'))) %>%
           dplyr::mutate(Parameter = dplyr::if_else(.data$Parameter == predictor_variable[j],'Pred_coef',.data$Parameter)) %>%
           coefficent_to_p(marginal_alpha = marginal_alpha,show_p = show_p) %>%
