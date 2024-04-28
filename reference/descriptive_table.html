@@ -141,6 +141,20 @@ This function generates a table of descriptive statistics (mainly using <code><a
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">descriptive_table</span><span class="op">(</span><span class="va">iris</span>, cols <span class="op">=</span> <span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span> <span class="co"># all numeric columns</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Summary</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Type = Correlation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Method = pearson</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Adjustment Method = none</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            Var  Sepal.Length  Sepal.Width  Petal.Length</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Sepal.Width    -0.118                               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length     0.872 ***   -0.428 ***              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Petal.Width     0.818 ***   -0.366 ***     0.963 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note: * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Summary</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Type = Descriptive Statistics</span>
@@ -160,6 +174,20 @@ This function generates a table of descriptive statistics (mainly using <code><a
 <span class="r-in"><span>  <span class="co"># get missing count, non-missing count, and mean &amp; sd &amp; correlation table</span></span></span>
 <span class="r-in"><span>  descriptive_indicator <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"missing"</span>, <span class="st">"non_missing"</span>, <span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"cor"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Summary</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Type = Correlation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Method = pearson</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Adjustment Method = none</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            Var  Sepal.Length  Sepal.Width  Petal.Length</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Sepal.Width    -0.118                               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length     0.872 ***   -0.428 ***              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Petal.Width     0.818 ***   -0.366 ***     0.963 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note: * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="text-decoration: underline;">Model Summary</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Type = Descriptive Statistics</span>
@@ -172,6 +200,7 @@ This function generates a table of descriptive statistics (mainly using <code><a
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length          0            150  3.758  1.765     0.872 ***   -0.428 ***              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Petal.Width          0            150  1.199  0.762     0.818 ***   -0.366 ***     0.963 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ───────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> You can drag and resize the R console to view the entire table</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

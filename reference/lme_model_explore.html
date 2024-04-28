@@ -160,13 +160,14 @@ This function also do not supports changing random slopes.</p>
 <span class="r-in"><span>                  predictor_variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">texp</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  two_way_interaction_variable <span class="op">=</span> <span class="va">sex</span>,</span></span>
 <span class="r-in"><span>                  random_effect <span class="op">=</span> <span class="st">'(1 | class)'</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Response  Pred  Interact_pred  Interact_term  Interact_term_coef  Interact_pred_coef           Pred_coef         (Intercept)  SD (Intercept)  SD (Observations)        df  conditional_r2  marginal_r2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    popular  texp            sex       texp*sex  -0.016 (0.025) *     1.577 (0.000) ***   0.063 (0.000) ***   3.502 (0.000) ***             NaN                NaN  1994.000           0.540        0.344</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     extrav  texp            sex       texp*sex  -0.018 (0.029) *     0.482 (0.000) ***  -0.066 (0.000) ***   6.047 (0.000) ***             NaN                NaN  1994.000           0.261        0.160</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Note: Coefficient (p-value): . p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Response  Pred  Interact_pred  Interact_term  Interact_term_coef  Interact_pred_coef           Pred_coef         (Intercept)        df  conditional_r2  marginal_r2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    popular  texp            sex       texp*sex  -0.016 (0.025) *     1.577 (0.000) ***   0.063 (0.000) ***   3.502 (0.000) ***  1994.000           0.540        0.344</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     extrav  texp            sex       texp*sex  -0.018 (0.029) *     0.482 (0.000) ***  -0.066 (0.000) ***   6.047 (0.000) ***  1994.000           0.261        0.160</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> You can drag and resize the R console to view the entire table</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note: Coefficient (p-value): + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
