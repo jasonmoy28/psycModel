@@ -1,162 +1,57 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/404.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/articles/brief-introduction-to-select-syntax.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/index.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/APIM_sem.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/APIM_table.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/acitelli.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/anova_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/cfa_groupwise.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/cfa_summary.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/coefficent_to_p.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/compare_fit.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/cor_test.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/cronbach_alpha.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/data_check.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/descriptive_table.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/efa_summary.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/format_round.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/get_interaction_term.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/get_predict_df.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/glm_model.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/html_to_pdf.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/interaction_check.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/interaction_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/knit_to_Rmd.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/label_name.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/lm_model.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/lm_model_explore.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/lm_model_summary.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/lm_model_table.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/lme_model_explore.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/lme_model_table.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/measurement_invariance.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/mediation_summary.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/model_summary.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/polynomial_regression_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/popular.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/print_table.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/reliability_summary.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/simple_slope.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/super_print.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/text_convert.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/three_way_interaction_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/tidyeval.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/two_way_interaction_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://jasonmoy28.github.io/psycModel/reference/two_way_interaction_terms.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://jasonmoy28.github.io/psycModel/404.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/LICENSE.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/articles/brief-introduction-to-select-syntax.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/articles/index.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/articles/quick-introduction.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/authors.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/index.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/news/index.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/APIM_sem.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/APIM_table.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/acitelli.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/anova_plot.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/cfa_groupwise.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/cfa_summary.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/coefficent_to_p.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/compare_fit.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/cor_test.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/cronbach_alpha.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/data_check.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/descriptive_table.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/efa_summary.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/format_round.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/get_interaction_term.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/get_predict_df.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/glm_model.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/html_to_pdf.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/index.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/interaction_check.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/interaction_plot.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/knit_to_Rmd.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/label_name.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/lm_model.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/lm_model_explore.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/lm_model_summary.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/lm_model_table.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/lme_model_explore.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/lme_model_table.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/measurement_invariance.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/mediation_summary.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/model_summary.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/pipe.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/polynomial_regression_plot.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/popular.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/print_table.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/reliability_summary.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/simple_slope.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/super_print.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/text_convert.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/three_way_interaction_plot.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/three_way_interaction_terms.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/tidyeval.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/two_way_interaction_plot.html</loc></url>
+<url><loc>https://jasonmoy28.github.io/psycModel/reference/two_way_interaction_terms.html</loc></url>
 </urlset>
+
