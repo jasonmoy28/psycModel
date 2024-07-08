@@ -10,13 +10,20 @@ lme_model_explore(
   response_variable,
   predictor_variable,
   two_way_interaction_variable = NULL,
+  three_way_interaction_variable = NULL,
   random_effect,
   control_variable = NULL,
   marginal_alpha = 0.1,
   return_result = FALSE,
   print_control = FALSE,
   verbose = TRUE,
-  show_p = TRUE
+  show_p = TRUE,
+  plot_interaction = FALSE,
+  file_dir = NULL,
+  device = "jpeg",
+  width = 8.5,
+  height = 5,
+  units = "in"
 )
 }
 \arguments{
@@ -29,6 +36,8 @@ lme_model_explore(
 \item{predictor_variable}{Pred variable. Support \code{dplyr::select()} syntax.}
 
 \item{two_way_interaction_variable}{Two-way interaction variable. Each two-way interaction variable will interact with each pred variable. Support \code{dplyr::select()} syntax.}
+
+\item{three_way_interaction_variable}{Three-way interaction variable. Each three-way interaction variable will interact with each pred and two-way interaction variables. Support \code{dplyr::select()} syntax.}
 
 \item{random_effect}{The random-effects terms in the format of \verb{(|)}. See lm4::lmer for specifics.}
 
@@ -43,6 +52,18 @@ lme_model_explore(
 \item{verbose}{Default is \code{TRUE}. Set to \code{FALSE} to suppress outputs}
 
 \item{show_p}{Default is \code{TRUE}. When \code{TRUE}, show the p-value in parenthesis.}
+
+\item{plot_interaction}{Default is \code{FALSE}. If \code{TRUE}, interactions will be plotted and saved on your laptop.}
+
+\item{file_dir}{Path of the directory to save plot to}
+
+\item{device}{Default is "jpeg". See ggplot2::ggsave() for all options.}
+
+\item{width}{Default is 8.5 (i.e., letter size width).}
+
+\item{height}{Default is 5.}
+
+\item{units}{Default is inches. Options are "in", "cm", "mm" or "px".}
 }
 \value{
 data.frame
