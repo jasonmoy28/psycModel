@@ -9,7 +9,7 @@
 #' @param quite suppress printing output
 #' @param two_way_interaction_factor two-way interaction factors. You need to pass 2+ factor. Support `dplyr::select()` syntax.
 #' @param three_way_interaction_factor three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support `dplyr::select()` syntax.
-#' @param family a GLM family. It will passed to the family argument in glmer. See `?glmer` for possible options.
+#' @param family a GLM family. It will passed to the family argument in glm See `?glm` for possible options.
 #'
 #' @return an object class of `glm` representing the linear regression fit
 #' @export

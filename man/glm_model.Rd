@@ -25,7 +25,7 @@ glm_model(
 
 \item{three_way_interaction_factor}{three-way interaction factor. You need to pass exactly 3 factors. Specifying three-way interaction factors automatically included all two-way interactions, so please do not specify the two_way_interaction_factor argument. Support \code{dplyr::select()} syntax.}
 
-\item{family}{a GLM family. It will passed to the family argument in glmer. See \code{?glmer} for possible options.}
+\item{family}{a GLM family. It will passed to the family argument in glm See \code{?glm} for possible options.}
 
 \item{quite}{suppress printing output}
 }
