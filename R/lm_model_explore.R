@@ -21,6 +21,7 @@
 #' @param width Default is 8.5 (i.e., letter size width). 
 #' @param height Default is 5. 
 #' @param units Default is inches. Options are "in", "cm", "mm" or "px".
+#' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
 #'
 #' @return
 #' data.frame
@@ -66,7 +67,8 @@ lm_model_explore = function(data,
                             device = 'jpeg',
                             width = 8.5, 
                             height = 5,
-                            units = 'in'
+                            units = 'in',
+                            y_lim = NULL
 ){
   # parse select syntax
   response_variable <- data %>%
@@ -126,7 +128,7 @@ lm_model_explore = function(data,
 
           if (plot_interaction == TRUE) {
             if (stringr::str_detect(model_summary[['Interact_term_coef']],'[\\*\\+]+')) { # match significant or marginally significant
-              model_plot = interaction_plot(model,return_plot = TRUE,print_plot = FALSE,verbose = FALSE)
+              model_plot = interaction_plot(model,return_plot = TRUE,print_plot = FALSE,verbose = FALSE,y_lim = y_lim)
               if (is.null(file_dir)) {stop('Please specificy the directory (i.e., path) to save the plot.')} 
               ggplot2::ggsave(plot = model_plot,filename = paste0(file_dir,model_summary[['Response']],' ~ ',model_summary[['Interact_term']],'.',device),width = width,device = device, height = height, units = units)
             }
@@ -165,7 +167,7 @@ lm_model_explore = function(data,
             tibble::add_column(tibble::tibble(Response = response_variable[i]),.before = 0)
           if (plot_interaction == TRUE) {
             if (stringr::str_detect(model_summary[['Interact_term_coef']],'[\\*\\+]+')) { # match significant or marginally significant
-              model_plot = interaction_plot(model,return_plot = TRUE,print_plot = FALSE,verbose = FALSE)
+              model_plot = interaction_plot(model,return_plot = TRUE,print_plot = FALSE,verbose = FALSE,y_lim = y_lim)
               if (is.null(file_dir)) {stop('Please specificy the directory (i.e., path) to save the plot.')} 
               ggplot2::ggsave(plot = model_plot,filename = paste0(file_dir,model_summary[['Response']],' ~ ',model_summary[['Interact_term']],'.',device),width = width,device = device, height = height, units = units)
             }

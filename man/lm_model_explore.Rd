@@ -21,7 +21,8 @@ lm_model_explore(
   device = "jpeg",
   width = 8.5,
   height = 5,
-  units = "in"
+  units = "in",
+  y_lim = NULL
 )
 }
 \arguments{
@@ -58,6 +59,8 @@ lm_model_explore(
 \item{height}{Default is 5.}
 
 \item{units}{Default is inches. Options are "in", "cm", "mm" or "px".}
+
+\item{y_lim}{the plot's upper and lower limit for the y-axis. Length of 2. Example: \code{c(lower_limit, upper_limit)}}
 }
 \value{
 data.frame
