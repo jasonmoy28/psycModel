@@ -170,13 +170,13 @@ At the moment, multi-categorical variables are not supported as predictors or in
 <span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Parameter/Focal_response          y1          y2          y3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                (Intercept)   2.829      11.393 ***  -0.062    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         x1   0.001       0.002      -0.012    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         c1  -0.336      -0.112       0.454    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         c2   0.529      -0.132       0.302    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         c3  -0.034      -0.098      -0.088    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                (Intercept)  -1.350      11.248 ***   0.007    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         x1   0.013       0.003       0.006    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         c1   0.362       0.018      -0.088    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         c2  -0.111      -0.869 **   -0.721    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         c3   0.063       0.008       0.295 *  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         df     995.000     995.000     995.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         r2       0.003       0.003       0.004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         r2       0.004       0.008       0.006</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note: + &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</span>
 <span class="r-in"><span> </span></span>
@@ -188,13 +188,13 @@ At the moment, multi-categorical variables are not supported as predictors or in
 <span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Parameter/Focal_pred          x1          x2          x3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            (Intercept)   2.829       2.692       2.275    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        Focal Predictor   0.001       0.020       0.081 +  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     c1  -0.336      -0.333      -0.313    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     c2   0.529       0.536       0.542    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     c3  -0.034      -0.034      -0.031    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            (Intercept)  -1.350      -1.635       0.078    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        Focal Predictor   0.013       0.176 +    -0.027    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     c1   0.362       0.353       0.368    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     c2  -0.111      -0.153      -0.115    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     c3   0.063       0.053       0.063    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     df     995.000     995.000     995.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     r2       0.003       0.003       0.006</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     r2       0.004       0.006       0.003</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note: + &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</span>
 <span class="r-in"><span>                 </span></span>
@@ -205,19 +205,19 @@ At the moment, multi-categorical variables are not supported as predictors or in
 <span class="r-in"><span>               predictor_variable <span class="op">=</span> <span class="va">x1</span>,</span></span>
 <span class="r-in"><span>               two_way_interaction_variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">m1</span>,<span class="va">m2</span>,<span class="va">m3</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>               control_variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">c1</span>,<span class="va">c2</span>,<span class="va">c3</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ─────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Parameter/Focal_interact_term       x1*m1       x1*m2         x1*m3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ─────────────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     (Intercept)   2.794       1.723      -115.748    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              x1  -0.001       0.013         1.036    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Focal_interact_pred  -0.002       0.556        13.195    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              c1  -0.328      -0.334        -0.344    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              c2   0.527       0.533         0.473    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              c3  -0.034      -0.033        -0.038    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Focal_interact_term   0.001      -0.006        -0.115    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              df     993.000     993.000       993.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                              r2       0.004       0.004         0.007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ─────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Parameter/Focal_interact_term       x1*m1       x1*m2        x1*m3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     (Intercept)  -7.801 *    -1.431      106.016    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              x1   0.071 *     0.018       -1.061    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Focal_interact_pred   2.072 *     0.037      -11.916    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              c1   0.357       0.348        0.346    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              c2  -0.085      -0.074       -0.114    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              c3   0.080       0.064        0.054    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Focal_interact_term  -0.019 *    -0.003        0.119    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              df     993.000     993.000      993.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              r2       0.011       0.006        0.006</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ────────────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note: + &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</span>
 <span class="r-in"><span>                 </span></span>
 <span class="r-in"><span><span class="co"># A non-changing interaction term with changing response variables                 </span></span></span>
@@ -229,15 +229,15 @@ At the moment, multi-categorical variables are not supported as predictors or in
 <span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Parameter/Focal_response          y1          y2          y3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────────</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                (Intercept)   2.794      13.474 ***  -2.142    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         x1  -0.001      -0.022       0.005    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         c1  -0.328      -0.106       0.469    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         c2   0.527      -0.143       0.306    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         c3  -0.034      -0.097      -0.086    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         m1  -0.002      -0.711       0.674    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      x1:m1   0.001       0.008      -0.006    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                (Intercept)  -7.801 *    11.792 ***   3.658    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         x1   0.071 *    -0.002      -0.032    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         c1   0.357       0.018      -0.084    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         c2  -0.085      -0.871 **   -0.763    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         c3   0.080       0.007       0.292 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         m1   2.072 *    -0.175      -1.157    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      x1:m1  -0.019 *     0.002       0.012    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         df     993.000     993.000     993.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         r2       0.004       0.006       0.004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         r2       0.011       0.008       0.008</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ──────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note: + &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</span>
 </code></pre></div>
