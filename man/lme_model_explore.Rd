@@ -18,16 +18,11 @@ lme_model_explore(
   print_control = FALSE,
   verbose = TRUE,
   show_p = TRUE,
-  plot_interaction = FALSE,
-  file_dir = NULL,
-  device = "jpeg",
-  width = 8.5,
-  height = 5,
-  units = "in"
+  show_formula = FALSE
 )
 }
 \arguments{
-\item{...}{additional parameters pass to lmerTest::lmer()}
+\item{...}{additional parameters pass to lme4::lmer()}
 
 \item{data}{\code{data.frame}}
 
@@ -53,17 +48,7 @@ lme_model_explore(
 
 \item{show_p}{Default is \code{TRUE}. When \code{TRUE}, show the p-value in parenthesis.}
 
-\item{plot_interaction}{Default is \code{FALSE}. If \code{TRUE}, interactions will be plotted and saved on your laptop.}
-
-\item{file_dir}{Path of the directory to save plot to}
-
-\item{device}{Default is "jpeg". See ggplot2::ggsave() for all options.}
-
-\item{width}{Default is 8.5 (i.e., letter size width).}
-
-\item{height}{Default is 5.}
-
-\item{units}{Default is inches. Options are "in", "cm", "mm" or "px".}
+\item{show_formula}{Default is \code{FALSE}. Set to \code{TRUE} to show the formula.}
 }
 \value{
 data.frame

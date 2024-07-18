@@ -5,7 +5,7 @@
 #' At the moment, multi-categorical variables are not supported as predictors or interactions (but control is fine). Binary variable should be `numeric` instead of `factor`
 #' This function also do not supports changing random slopes. 
 #' 
-#' @param ... additional parameters pass to lmerTest::lmer()
+#' @param ... additional parameters pass to lme4::lmer()
 #' @param data `data.frame`
 #' @param response_variable Response variable. Support `dplyr::select()` syntax.
 #' @param predictor_variable Pred variable. Support `dplyr::select()` syntax.
@@ -18,12 +18,7 @@
 #' @param verbose Default is `TRUE`. Set to `FALSE` to suppress outputs
 #' @param show_p Default is `TRUE`. When `TRUE`, show the p-value in parenthesis. 
 #' @param print_control Default is `FALSE`. If `TRUE`, print coefficients of control variables. 
-#' @param plot_interaction Default is `FALSE`. If `TRUE`, interactions will be plotted and saved on your laptop.
-#' @param file_dir Path of the directory to save plot to
-#' @param device Default is "jpeg". See ggplot2::ggsave() for all options. 
-#' @param width Default is 8.5 (i.e., letter size width). 
-#' @param height Default is 5. 
-#' @param units Default is inches. Options are "in", "cm", "mm" or "px".
+#' @param show_formula Default is `FALSE`. Set to `TRUE` to show the formula. 
 #' 
 #' @return
 #' data.frame
@@ -52,12 +47,7 @@ lme_model_explore = function(...,
                              print_control = FALSE,
                              verbose = TRUE,
                              show_p = TRUE,
-                             plot_interaction = FALSE,
-                             file_dir = NULL,
-                             device = 'jpeg',
-                             width = 8.5, 
-                             height = 5,
-                             units = 'in'
+                             show_formula = FALSE
 ){
   # parse select syntax
   response_variable <- data %>%
@@ -88,13 +78,13 @@ lme_model_explore = function(...,
         for (k in 1:length(two_way_interaction_variable)) {
           for(l in 1:length(three_way_interaction_variable)){
             three_way_interaction_terms = three_way_interaction_terms(c(predictor_variable[j],two_way_interaction_variable[k],three_way_interaction_variable[l]))
-            formula = paste(response_variable[i],'~',predictor_variable[j],'+',three_way_interaction_terms)
+            formula_text = paste(response_variable[i],'~',predictor_variable[j],'+',three_way_interaction_terms)
             if (length(control_variable) != 0) {
-              formula = paste(formula,"+",paste(control_variable, collapse = " + "))
+              formula_text = paste(formula_text,"+",paste(control_variable, collapse = " + "))
             }
-            formula = paste(formula, '+',random_effect)
-            formula <- stats::as.formula(formula)
-            model = lmerTest::lmer(formula = formula, data = data,...)
+            formula_text = paste(formula_text, '+',random_effect)
+            formula <- stats::as.formula(formula_text)
+            model = lme4::lmer(formula = formula, data = data,...)
             model_summary = model %>%
               parameters::parameters() %>%
               tibble::as_tibble() %>%
@@ -118,18 +108,17 @@ lme_model_explore = function(...,
               tibble::add_column(tibble::tibble(Pred_3 =  three_way_interaction_variable[l]),.before = 0) %>% 
               tibble::add_column(tibble::tibble(Pred_2 = two_way_interaction_variable[k]),.before = 0) %>% 
               tibble::add_column(tibble::tibble(Pred_1 = predictor_variable[j]),.before = 0) %>% 
-              tibble::add_column(tibble::tibble(Response = response_variable[i]),.before = 0)
-            
-            if (plot_interaction == TRUE) {
-              if (stringr::str_detect(model_summary[['Interact_term_coef']],'[\\*\\+]+')) { # match significant or marginally significant
-                model_plot = interaction_plot(model,return_plot = TRUE,print_plot = FALSE,verbose = FALSE)
-                if (is.null(file_dir)) {stop('Please specificy the directory (i.e., path) to save the plot.')} 
-                ggplot2::ggsave(plot = model_plot,filename = paste0(file_dir,model_summary[['Response']],' ~ ',model_summary[['Interact_term']],'.',device),width = width,device = device, height = height, units = units)
-              }
-            }
+              tibble::add_column(tibble::tibble(Response = response_variable[i]),.before = 0) %>% 
+              dplyr::mutate(formula = formula_text)
+
             if (print_control == FALSE) {
               model_summary = model_summary %>% dplyr::select(-dplyr::all_of(control_variable))
             }
+            
+            if (show_formula == FALSE) {
+              model_summary = model_summary %>% dplyr::select(-dplyr::any_of('formula'))
+            }
+            
             model_summary_final = model_summary_final %>% dplyr::bind_rows(model_summary)
           }
         }
@@ -137,13 +126,13 @@ lme_model_explore = function(...,
       } else if (length(two_way_interaction_variable)!=0) {
         for (k in 1:length(two_way_interaction_variable)) {
           two_way_interaction_terms = two_way_interaction_terms(c(predictor_variable[j],two_way_interaction_variable[k]))
-          formula = paste(response_variable[i],'~',predictor_variable[j],'+',two_way_interaction_terms)
+          formula_text = paste(response_variable[i],'~',predictor_variable[j],'+',two_way_interaction_terms)
           if (length(control_variable) != 0) {
-            formula = paste(formula,"+",paste(control_variable, collapse = " + "))
+            formula_text = paste(formula_text,"+",paste(control_variable, collapse = " + "))
           }
-          formula = paste(formula, '+',random_effect)
-          formula <- stats::as.formula(formula)
-          model = lmerTest::lmer(formula = formula, data = data,...)
+          formula_text = paste(formula_text, '+',random_effect)
+          formula <- stats::as.formula(formula_text)
+          model = lme4::lmer(formula = formula, data = data,...)
           model_summary = model %>%
             parameters::parameters() %>%
             tibble::as_tibble() %>%
@@ -162,28 +151,30 @@ lme_model_explore = function(...,
             tibble::add_column(tibble::tibble(Interact_term = two_way_interaction_terms),.before = 0) %>% 
             tibble::add_column(tibble::tibble(Interact_pred = two_way_interaction_variable[k]),.before = 0) %>% 
             tibble::add_column(tibble::tibble(Pred = predictor_variable[j]),.before = 0) %>% 
-            tibble::add_column(tibble::tibble(Response = response_variable[i]),.before = 0)
-          if (plot_interaction == TRUE) {
-            if (stringr::str_detect(model_summary[['Interact_term_coef']],'[\\*\\+]+')) { # match significant or marginally significant
-              model_plot = interaction_plot(model,return_plot = TRUE,print_plot = FALSE,verbose = FALSE)
-              if (is.null(file_dir)) {stop('Please specificy the directory (i.e., path) to save the plot.')} 
-              ggplot2::ggsave(plot = model_plot,filename = paste0(file_dir,model_summary[['Response']],' ~ ',model_summary[['Interact_term']],'.',device),width = width,device = device, height = height, units = units)
-            }
+            tibble::add_column(tibble::tibble(Response = response_variable[i]),.before = 0) %>% 
+            dplyr::mutate(formula = formula_text)
+          
+          if (show_formula == FALSE) {
+            model_summary = model_summary %>% dplyr::select(-dplyr::any_of('formula'))
           }
+          
           if (print_control == FALSE) {
             model_summary = model_summary %>% dplyr::select(-dplyr::all_of(control_variable))
           }
+        
+          
+          
           model_summary_final = model_summary_final %>% dplyr::bind_rows(model_summary)
         }
       } else{      
         # for non-interactions
-        formula = paste(response_variable[i],'~',predictor_variable[j])
+        formula_text = paste(response_variable[i],'~',predictor_variable[j])
         if (length(control_variable) != 0) {
-          formula = paste(formula,"+",paste(control_variable, collapse = " + "))
+          formula_text = paste(formula_text,"+",paste(control_variable, collapse = " + "))
         }
-        formula = paste(formula,'+',random_effect)
-        formula <- stats::as.formula(formula)
-        model = lmerTest::lmer(formula = formula, data = data,...)
+        formula_text = paste(formula_text,'+',random_effect)
+        formula <- stats::as.formula(formula_text)
+        model = lme4::lmer(formula = formula, data = data,...)
         model_summary = model %>%
           parameters::parameters() %>%
           tibble::as_tibble() %>%
@@ -198,11 +189,18 @@ lme_model_explore = function(...,
           tibble::add_column(tibble::tibble(conditional_r2 = format_round(performance::r2(model)$R2_conditional,digits = 3))) %>% 
           tibble::add_column(tibble::tibble(marginal_r2 = format_round(performance::r2(model)$R2_marginal,digits = 3))) %>% 
           tibble::add_column(tibble::tibble(Pred = predictor_variable[j]),.before = 0) %>% 
-          tibble::add_column(tibble::tibble(Response = response_variable[i]),.before = 0)
+          tibble::add_column(tibble::tibble(Response = response_variable[i]),.before = 0) %>% 
+          dplyr::mutate(formula = formula_text)
+        
         
         if (print_control == FALSE) {
           model_summary = model_summary %>% dplyr::select(-dplyr::all_of(control_variable))
         }
+        
+        if (show_formula == FALSE) {
+          model_summary = model_summary %>% dplyr::select(-dplyr::any_of('formula'))
+        }
+        
         model_summary_final = model_summary_final %>% dplyr::bind_rows(model_summary)
       }
     }
