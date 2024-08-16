@@ -4,7 +4,7 @@
 \alias{anova_plot}
 \title{ANOVA Plot}
 \usage{
-anova_plot(model, predictor = NULL, graph_label_name = NULL)
+anova_plot(model, predictor = NULL, graph_label_name = NULL, y_lim = NULL)
 }
 \arguments{
 \item{model}{fitted model (usually \code{lm} or \code{aov} object). Variables must be converted to correct data type before fitting the model. Specifically,  continuous variables must be converted to type \code{numeric} and categorical variables to type \code{factor}.}
@@ -12,6 +12,8 @@ anova_plot(model, predictor = NULL, graph_label_name = NULL)
 \item{predictor}{predictor variable. Must specified for non-interaction plot and must not specify for interaction plot.}
 
 \item{graph_label_name}{vector or function. Vector should be passed in the form of \code{c(response_var, predict_var1, predict_var2, ...)}. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)}
+
+\item{y_lim}{the plot's upper and lower limit for the y-axis. Length of 2. Example: \code{c(lower_limit, upper_limit)}}
 }
 \value{
 a \code{ggplot} object

@@ -6,6 +6,7 @@
 #' @param model fitted model (usually `lm` or `aov` object). Variables must be converted to correct data type before fitting the model. Specifically,  continuous variables must be converted to type `numeric` and categorical variables to type `factor`. 
 #' @param predictor predictor variable. Must specified for non-interaction plot and must not specify for interaction plot. 
 #' @param graph_label_name vector or function. Vector should be passed in the form of `c(response_var, predict_var1, predict_var2, ...)`. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)
+#' @param y_lim the plot's upper and lower limit for the y-axis. Length of 2. Example: `c(lower_limit, upper_limit)`
 #'
 #' @return a `ggplot` object
 #' @export
@@ -33,7 +34,8 @@
 #' 
 anova_plot <- function(model,
                        predictor = NULL,
-                       graph_label_name = NULL) {
+                       graph_label_name = NULL,
+                       y_lim = NULL) {
   
   response_var_name = insight::find_response(model)
   response_var = dplyr::enquo(response_var_name)
@@ -41,7 +43,15 @@ anova_plot <- function(model,
   data = insight::get_data(x = model) %>% dplyr::mutate(dplyr::across(where(is.integer),as.numeric)) # temporary solution for treating integer as numeric
   
   interaction_term = get_interaction_term(model)
-  
+  if (all(unlist(lapply(
+    c("scales"), requireNamespace
+  )))) {
+    
+  } else {
+    stop(
+    "Please install.packages('scales') to use anova_plot"
+  )}
+    
   ########################################### ANOVA plot without interaction ##################################################################
   if (is.null(interaction_term)) {
     try({if(!rlang::is_symbol(predictor)) {predictor <- dplyr::sym(predictor)}},silent = TRUE)
@@ -62,6 +72,10 @@ anova_plot <- function(model,
     
     plot_df = mean %>% dplyr::full_join(se) %>%
       dplyr::rename(predict_var1 = !!predictor)
+    
+    if (is.null(y_lim)) {
+      y_lim <- c(floor(min(plot_df$mean)) - 2, ceiling(max(plot_df$mean)) + 2)
+    }
     
     # label name
     predictor_name = data %>% dplyr::select(!!predictor) %>% colnames()
@@ -86,7 +100,10 @@ anova_plot <- function(model,
                              position = ggplot2::position_dodge(0.9),
                              width = 0.1) +
       ggplot2::labs(y = label_name[1],
-                    x = label_name[2])
+                    x = label_name[2]) + 
+      ggplot2::scale_y_continuous(limits = c(y_lim[1],y_lim[2]),
+                                  oob=scales::rescale_none)
+    
     
     ########################################### ANOVA plot with interaction ##################################################################
   } else{
@@ -204,6 +221,10 @@ anova_plot <- function(model,
         )
       }
       
+      if (is.null(y_lim)) {
+        y_lim <- c(floor(min(plot_df$mean)) - 1, ceiling(max(plot_df$mean)) + 1)
+      }
+      
       main_plot = plot_df %>%
         ggplot2::ggplot(data = .,
                         ggplot2::aes(
@@ -218,7 +239,9 @@ anova_plot <- function(model,
           position = ggplot2::position_dodge(0.9)) +
         ggplot2::labs(y = label_name[1],
                       x = label_name[2],
-                      fill = label_name[3])
+                      fill = label_name[3]) + 
+        ggplot2::scale_y_continuous(limits = c(y_lim[1],y_lim[2]),
+                                    oob=scales::rescale_none)
       
       if (all(!is.na(plot_df$se))) {
         main_plot = main_plot +
@@ -384,6 +407,9 @@ anova_plot <- function(model,
           predict_var3_name = predict_var3
         )
       }
+      if (is.null(y_lim)) {
+        y_lim <- c(floor(min(plot_df$mean)) - 1, ceiling(max(plot_df$mean)) + 1)
+      }
       
       main_plot = plot_df %>%
         ggplot2::ggplot(data = .,
@@ -404,7 +430,9 @@ anova_plot <- function(model,
         ggplot2::labs(y = label_name[1],
                       x = label_name[2],
                       fill = label_name[3]) +
-        ggplot2::facet_wrap( ~ .data$predict_var3)
+        ggplot2::facet_wrap( ~ .data$predict_var3) + 
+        ggplot2::scale_y_continuous(limits = c(y_lim[1],y_lim[2]),
+                                    oob=scales::rescale_none)
     }
   }
   

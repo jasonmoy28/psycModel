@@ -106,8 +106,9 @@ glm_model_explore = function(data,
             }
             formula <- stats::as.formula(formula)
             model = stats::glm(formula = formula, data = data, family = family)
+            
             model_summary = model %>%
-              parameters::parameters() 
+              parameters::parameters() %>% 
               tibble::as_tibble() %>% 
               dplyr::select(dplyr::any_of(c('Parameter', 'Coefficient', 'p'))) %>%
               dplyr::mutate(Parameter = dplyr::if_else(.data$Parameter == predictor_variable[j],'Pred_1_coef',.data$Parameter)) %>%
@@ -175,7 +176,7 @@ glm_model_explore = function(data,
             }
           }
           if (print_control == FALSE) {
-            model_summary = model_summary %>% dplyr::select(-dplyr::all_of(control_variable))
+            model_summary = model_summary %>% dplyr::select(-dplyr::any_of(control_variable))
           }
           model_summary_final = model_summary_final %>% dplyr::bind_rows(model_summary)
         }
@@ -200,7 +201,7 @@ glm_model_explore = function(data,
           tibble::add_column(tibble::tibble(Pred = predictor_variable[j]),.before = 0) %>% 
           tibble::add_column(tibble::tibble(Response = response_variable[i]),.before = 0)
         if (print_control == FALSE) {
-          model_summary = model_summary %>% dplyr::select(-dplyr::all_of(control_variable))
+          model_summary = model_summary %>% dplyr::select(-dplyr::any_of(control_variable))
         }
         model_summary_final = model_summary_final %>% dplyr::bind_rows(model_summary)
       }

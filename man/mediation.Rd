@@ -2,7 +2,8 @@
 % Please edit documentation in R/mediation.R
 \name{mediation}
 \alias{mediation}
-\title{Mediation}
+\title{Mediation analysis
+A Monte Carlo simulation method to assess mediation based on Selig & Preacher (2008).}
 \usage{
 mediation(
   model_med,
@@ -51,7 +52,8 @@ mediation(
 Nothing to return. Print the indirect effect.
 }
 \description{
-Mediation
+Mediation analysis
+A Monte Carlo simulation method to assess mediation based on Selig & Preacher (2008).
 }
 \examples{
 new_dat = iris \%>\% 
@@ -73,4 +75,7 @@ mediation(model_med = model_1,
           mod_stage = 'model_y',
           digits = 3)
           
+}
+\references{
+Selig, J. P., & Preacher, K. J. (2008, June). Monte Carlo method for assessing mediation: An interactive tool for creating confidence intervals for indirect effects \link{Computer software}. Available from http://quantpsy.org/.
 }

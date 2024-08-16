@@ -134,7 +134,7 @@ lm_model_explore = function(data,
             }
           }
           if (print_control == FALSE) {
-            model_summary = model_summary %>% dplyr::select(-dplyr::all_of(control_variable))
+            model_summary = model_summary %>% dplyr::select(-dplyr::any_of(control_variable))
           }
           model_summary_final = model_summary_final %>% dplyr::bind_rows(model_summary)
         }
@@ -173,7 +173,7 @@ lm_model_explore = function(data,
             }
           }
           if (print_control == FALSE) {
-            model_summary = model_summary %>% dplyr::select(-dplyr::all_of(control_variable))
+            model_summary = model_summary %>% dplyr::select(-dplyr::any_of(control_variable))
           }
           model_summary_final = model_summary_final %>% dplyr::bind_rows(model_summary)
         }
