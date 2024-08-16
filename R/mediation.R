@@ -18,7 +18,7 @@
 #' @return
 #' Nothing to return. Print the indirect effect. 
 #' @export
-#' @references Selig, J. P., & Preacher, K. J. (2008, June). Monte Carlo method for assessing mediation: An interactive tool for creating confidence intervals for indirect effects [Computer software]. Available from http://quantpsy.org/.
+#' @references Selig, J. P., & Preacher, K. J. (2008, June). Monte Carlo method for assessing mediation: An interactive tool for creating confidence intervals for indirect effects. http://quantpsy.org/.
 #' @examples
 #' new_dat = iris %>% 
 #'   dplyr::rename(x = Petal.Length) %>% 
@@ -188,7 +188,7 @@ mediation <- function(model_med,
         }
         mod_level = interaction_value(mod_data,!!enquo(mod))
       }
-      mcmc <- MASS::mvrnorm(rep,pest,acov,empirical=FALSE)
+      
       
       if (mod_stage == 'model_y_') {
         indirect_low <- mcmc[,a_path]*mcmc[,b_path]*(mcmc[,c_path] + mcmc[,interaction_path]*mod_level[1])

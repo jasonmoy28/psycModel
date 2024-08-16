@@ -77,5 +77,5 @@ mediation(model_med = model_1,
           
 }
 \references{
-Selig, J. P., & Preacher, K. J. (2008, June). Monte Carlo method for assessing mediation: An interactive tool for creating confidence intervals for indirect effects \link{Computer software}. Available from http://quantpsy.org/.
+Selig, J. P., & Preacher, K. J. (2008, June). Monte Carlo method for assessing mediation: An interactive tool for creating confidence intervals for indirect effects. http://quantpsy.org/.
 }
