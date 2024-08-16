@@ -75,7 +75,7 @@ Plot categorical variable with barplot. Continuous moderator are plotted at ± 1
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">anova_plot</span><span class="op">(</span><span class="va">model</span>, predictor <span class="op">=</span> <span class="cn">NULL</span>, graph_label_name <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">anova_plot</span><span class="op">(</span><span class="va">model</span>, predictor <span class="op">=</span> <span class="cn">NULL</span>, graph_label_name <span class="op">=</span> <span class="cn">NULL</span>, y_lim <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -93,6 +93,10 @@ Plot categorical variable with barplot. Continuous moderator are plotted at ± 1
 <dt id="arg-graph-label-name">graph_label_name<a class="anchor" aria-label="anchor" href="#arg-graph-label-name"></a></dt>
 <dd><p>vector or function. Vector should be passed in the form of <code>c(response_var, predict_var1, predict_var2, ...)</code>. Function should be passed as a switch function that return the label based on the name passed (e.g., a switch function)</p></dd>
 
+
+<dt id="arg-y-lim">y_lim<a class="anchor" aria-label="anchor" href="#arg-y-lim"></a></dt>
+<dd><p>the plot's upper and lower limit for the y-axis. Length of 2. Example: <code>c(lower_limit, upper_limit)</code></p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -106,6 +110,7 @@ Plot categorical variable with barplot. Continuous moderator are plotted at ± 1
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>school <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">school</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span>, <span class="va">grade</span> <span class="op">~</span> <span class="va">school</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">anova_plot</span><span class="op">(</span><span class="va">fit_1</span>,predictor <span class="op">=</span> <span class="va">school</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: scales</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(school)`</span>
 <span class="r-plt img"><img src="anova_plot-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
