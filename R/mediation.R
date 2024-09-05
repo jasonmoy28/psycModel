@@ -195,19 +195,19 @@ mediation <- function(model_med,
         mod_level = interaction_value(mod_data,!!enquo(mod))
       }
       
-      
+      mcmc <- MASS::mvrnorm(rep,pest,acov,empirical=FALSE)
       if (mod_stage == 'model_y_') {
         indirect_low <- mcmc[,a_path]*mcmc[,b_path]*(mcmc[,c_path] + mcmc[,interaction_path]*mod_level[1])
         indirect_high <- mcmc[,a_path]*mcmc[,b_path]*(mcmc[,c_path] + mcmc[,interaction_path]*mod_level[2])
-        index_mod_med =  mcmc[,a_path]*mcmc[,b_path]*mcmc[,interaction_path]
+        index_mod_med = mcmc[,a_path]*mcmc[,b_path]*mcmc[,interaction_path]
       } else if (mod_stage == 'model_med2_') {
         indirect_low <- mcmc[,a_path]*mcmc[,c_path]*(mcmc[,b_path] + mcmc[,interaction_path]*mod_level[1])
         indirect_high <- mcmc[,a_path]*mcmc[,c_path]*(mcmc[,b_path] + mcmc[,interaction_path]*mod_level[2])
-        index_mod_med =  mcmc[,a_path]*mcmc[,c_path]*mcmc[,interaction_path]
+        index_mod_med = mcmc[,a_path]*mcmc[,c_path]*mcmc[,interaction_path]
       } else if (mod_stage == 'model_med_') {
         indirect_low <- mcmc[,b_path]*mcmc[,c_path]*(mcmc[,a_path] + mcmc[,interaction_path]*mod_level[1])
         indirect_low <- mcmc[,b_path]*mcmc[,c_path]*(mcmc[,a_path] + mcmc[,interaction_path]*mod_level[2])
-        index_mod_med =  mcmc[,b_path]*mcmc[,c_path]*mcmc[,interaction_path]
+        index_mod_med = mcmc[,b_path]*mcmc[,c_path]*mcmc[,interaction_path]
       } 
       
       low=(1-conf/100)/2
