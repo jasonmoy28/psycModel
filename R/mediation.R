@@ -109,9 +109,11 @@ mediation <- function(model_med,
       if (mod_stage == 'model_y_') {
         indirect_low <- mcmc[,a_path]*(mcmc[,b_path] + mcmc[,interaction_path]*mod_level[1])
         indirect_high <- mcmc[,a_path]*(mcmc[,b_path] + mcmc[,interaction_path]*mod_level[2])
+        index_mod_med =  mcmc[,a_path]*mcmc[,interaction_path]
       } else if (mod_stage == 'model_med_') {
         indirect_low <- (mcmc[,a_path] + mcmc[,interaction_path]*mod_level[1])*mcmc[,b_path]
         indirect_high <- (mcmc[,a_path] + mcmc[,interaction_path]*mod_level[2])*mcmc[,b_path]
+        index_mod_med =  mcmc[,b_path]*mcmc[,interaction_path]
       }
       low=(1-conf/100)/2
       upp=((1-conf/100)/2)+(conf/100)
@@ -119,10 +121,14 @@ mediation <- function(model_med,
       UL_low = round(stats::quantile(indirect_low,upp),digits)
       LL_high = round(stats::quantile(indirect_high,low),digits)
       UL_high = round(stats::quantile(indirect_high,upp),digits)
+      index_mod_med_low = round(stats::quantile(index_mod_med,low),digits)
+      index_mod_med_high = round(stats::quantile(index_mod_med,upp),digits)
       mediation_summary = data.frame(indirect_effect_low = round(mean(indirect_low),digits),
                                      indirect_effect_high = round(mean(indirect_high),digits),
                                      CI_low = glue::glue('[{LL_low},{UL_low}]'),
-                                     CI_high = glue::glue('[{LL_high},{UL_high}]'))
+                                     CI_high = glue::glue('[{LL_high},{UL_high}]'),
+                                     index_mod_med = round(mean(index_mod_med),digits),
+                                     CI_index_mod_med = glue::glue('[{index_mod_med_low},{index_mod_med_high}]'))
     }
   } else { # serial mediation
     if(is.null(mod)) {
@@ -193,12 +199,15 @@ mediation <- function(model_med,
       if (mod_stage == 'model_y_') {
         indirect_low <- mcmc[,a_path]*mcmc[,b_path]*(mcmc[,c_path] + mcmc[,interaction_path]*mod_level[1])
         indirect_high <- mcmc[,a_path]*mcmc[,b_path]*(mcmc[,c_path] + mcmc[,interaction_path]*mod_level[2])
+        index_mod_med =  mcmc[,a_path]*mcmc[,b_path]*mcmc[,interaction_path]
       } else if (mod_stage == 'model_med2_') {
         indirect_low <- mcmc[,a_path]*mcmc[,c_path]*(mcmc[,b_path] + mcmc[,interaction_path]*mod_level[1])
         indirect_high <- mcmc[,a_path]*mcmc[,c_path]*(mcmc[,b_path] + mcmc[,interaction_path]*mod_level[2])
+        index_mod_med =  mcmc[,a_path]*mcmc[,c_path]*mcmc[,interaction_path]
       } else if (mod_stage == 'model_med_') {
         indirect_low <- mcmc[,b_path]*mcmc[,c_path]*(mcmc[,a_path] + mcmc[,interaction_path]*mod_level[1])
         indirect_low <- mcmc[,b_path]*mcmc[,c_path]*(mcmc[,a_path] + mcmc[,interaction_path]*mod_level[2])
+        index_mod_med =  mcmc[,b_path]*mcmc[,c_path]*mcmc[,interaction_path]
       } 
       
       low=(1-conf/100)/2
@@ -207,10 +216,14 @@ mediation <- function(model_med,
       UL_low = round(stats::quantile(indirect_low,upp),digits)
       LL_high = round(stats::quantile(indirect_high,low),digits)
       UL_high = round(stats::quantile(indirect_high,upp),digits)
+      index_mod_med_low = round(stats::quantile(index_mod_med,low),digits)
+      index_mod_med_high = round(stats::quantile(index_mod_med,upp),digits)
       mediation_summary = data.frame(indirect_effect_low = round(mean(indirect_low),digits),
                                      indirect_effect_high = round(mean(indirect_high),digits),
                                      CI_low = glue::glue('[{LL_low},{UL_low}]'),
-                                     CI_high = glue::glue('[{LL_high},{UL_high}]'))
+                                     CI_high = glue::glue('[{LL_high},{UL_high}]'),
+                                     index_mod_med = round(mean(index_mod_med),digits),
+                                     CI_index_mod_med = glue::glue('[{index_mod_med_low},{index_mod_med_high}]'))
       
     }
   }
