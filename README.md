@@ -12,18 +12,11 @@
 
 # Installation
 
-**CRAN Stable Version**
-```R
-# Install the standard version 
-install.packages('psycModel')
-
-# Install all of the suggested dependencies for full functionality 
-install.packages('psycModel',dependencies = c("Depends", "Imports","Suggests")) 
-```
 **Dev Version (newest feature)**
 ```R
 devtools::install_github('jasonmoy28/psycModel')
 ```
+**Note**: The package is no longer published on CRAN, but all functionality remains intact.
 ## Example Usage
 Please the example [here](https://jasonmoy28.github.io/psycModel//articles/quick-introduction.html)
 
